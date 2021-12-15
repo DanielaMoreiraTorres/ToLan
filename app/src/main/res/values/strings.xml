@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">ToLan</string>
+    <string name="bienvenida">Bienvenido a ToLan</string>
+    <string name="bienvenido">Bienvenido</string>
+    <string name="mensaje_bienvenida_1">Cuando se abre la puerta de la comunicación todo es posible</string>
+    <string name="mensaje_bienvenida_2">El mejor experto tambien fue un día aprendiz</string>
+    <string name="mensaje_bienvenida_3">Poner mensaje</string>
+    <string name="registrarse">Sing up</string>
+    <string name="iniciar_sesion">Login</string>
+
 </resources>
