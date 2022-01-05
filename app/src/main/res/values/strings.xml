@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">ToLan</string>
+    <!-- Activity Welcome -->
     <string name="bienvenida">Bienvenido a ToLan</string>
     <string name="bienvenido">Bienvenido</string>
     <string name="mensaje_bienvenida_1">Cuando se abre la puerta de la comunicación todo es posible</string>
@@ -7,5 +8,10 @@
     <string name="mensaje_bienvenida_3">Poner mensaje</string>
     <string name="registrarse">Sing up</string>
     <string name="iniciar_sesion">Login</string>
+    <!-- Activity MenuAdmin -->
+    <string name="menu">Menú</string>
+    <string name="niveles">Niveles</string>
+    <string name="subniveles">Subniveles</string>
+    <string name="actividades">Actividades</string>
 
 </resources>

@@ -2,6 +2,7 @@ package com.example.tolan;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.view.View;
@@ -44,5 +45,10 @@ public class Welcome extends AppCompatActivity {
         list.add(new CarouselItem(R.drawable.nino,getString(R.string.mensaje_bienvenida_2)));
         list.add(new CarouselItem(R.drawable.ninos,getString(R.string.mensaje_bienvenida_3)));
         carousel.addData(list);
+    }
+
+    public void LoginClick(View v) {
+        Intent intent = new Intent(this, Login.class);
+        startActivity(intent);
     }
 }
