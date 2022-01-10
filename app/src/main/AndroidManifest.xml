@@ -10,18 +10,21 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
-        android:theme="@style/Theme.ToLan">
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
-            android:name=".MenuAdmin"
+            android:name=".Welcome"
+            android:exported="false" />
+        <activity
+            android:name=".Register"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".Login"
+            android:name=".MenuAdmin"
             android:exported="false" />
         <activity
-            android:name=".Welcome"
+            android:name=".Login"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
