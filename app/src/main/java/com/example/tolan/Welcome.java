@@ -8,6 +8,8 @@ import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.tolan.clases.Convertir_Texto_A_Voz;
+
 import org.imaginativeworld.whynotimagecarousel.CarouselItem;
 import org.imaginativeworld.whynotimagecarousel.ImageCarousel;
 

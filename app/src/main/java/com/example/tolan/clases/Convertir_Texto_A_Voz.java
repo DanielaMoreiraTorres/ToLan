@@ -1,4 +1,4 @@
-package com.example.tolan;
+package com.example.tolan.clases;
 
 import android.content.Context;
 import android.speech.tts.TextToSpeech;
