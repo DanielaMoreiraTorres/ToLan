@@ -92,6 +92,7 @@
                         android:text="@string/registrarse"
                         android:textColor="@color/secundario"
                         android:textSize="12sp"
+                        android:onClick="RegisterUser"
                         tools:ignore="ButtonStyle" />
 
                     <Button

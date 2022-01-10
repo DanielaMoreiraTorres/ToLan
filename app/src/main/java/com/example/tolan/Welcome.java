@@ -53,4 +53,10 @@ public class Welcome extends AppCompatActivity {
         Intent intent = new Intent(this, Login.class);
         startActivity(intent);
     }
+
+    public void RegisterUser(View v) {
+        Intent intent = new Intent(this, Register.class);
+        startActivity(intent);
+    }
+
 }
