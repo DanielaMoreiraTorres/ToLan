@@ -13,5 +13,10 @@
     <string name="niveles">Niveles</string>
     <string name="subniveles">Subniveles</string>
     <string name="actividades">Actividades</string>
+    <!-- Fragment Niveles -->
+    <string name="titleNiv">Niveles</string>
+    <!-- Item Niveles -->
+    <string name="nivel">Nombre:</string>
+    <string name="descripcion">Descripción:</string>
 
 </resources>

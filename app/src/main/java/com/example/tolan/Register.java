@@ -2,6 +2,7 @@ package com.example.tolan;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -11,9 +12,13 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.textfield.TextInputEditText;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -23,14 +28,14 @@ public class Register extends AppCompatActivity {
 
     private RequestQueue requestQueue;
     private StringRequest peticion;
-    private String url = "https://db-bartolucci.herokuapp.com/usuario/";
-    EditText nombre;
-    EditText apellido;
-    EditText telefono;
-    EditText email;
-    EditText usuario;
-    EditText clave;
-    EditText confirclave;
+    private String url = "https://db-bartolucci.herokuapp.com/usuario";
+    private TextInputEditText nombre;
+    private EditText apellido;
+    private EditText telefono;
+    private EditText email;
+    private EditText usuario;
+    private EditText clave;
+    private EditText confirclave;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,46 +49,50 @@ public class Register extends AppCompatActivity {
         apellido = findViewById(R.id.apellidos);
         telefono = findViewById(R.id.telefono);
         email = findViewById(R.id.email);
-        usuario = findViewById(R.id.usuario);
+        usuario = findViewById(R.id.txtusuario);
         clave = findViewById(R.id.clave);
         confirclave = findViewById(R.id.confclave);
-        createUsuario();
+        if(clave.getText().toString().equals(confirclave.getText().toString()))
+            createUsuario();
     }
 
     public void createUsuario(){
         // Crear nueva cola de peticiones
         requestQueue= Volley.newRequestQueue(Register.this);
-        peticion = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Toast.makeText(Register.this,"Usuario registrado", Toast.LENGTH_LONG).show();
-            }
-        }, new Response.ErrorListener() {
+        //Parámetros a enviar a la API
+        Map<String, String>  parameters = new HashMap<>();
+        parameters.put("usuario", usuario.getText().toString());
+        parameters.put("clave", clave.getText().toString());
+        parameters.put("tipousuario", "US");
+        parameters.put("nombre", nombre.getText().toString());
+        parameters.put("apellido", apellido.getText().toString());
+        parameters.put("fechanacimiento", "2005-01-22");
+        parameters.put("correo", email.getText().toString());
+        parameters.put("telefono", telefono.getText().toString());
+        parameters.put("direccion", "DIR");
+        JsonObjectRequest request_json = new JsonObjectRequest(url, new JSONObject(parameters),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Toast.makeText(Register.this,"Usuario Registrado",Toast.LENGTH_LONG).show();
+                        } catch (Exception e) {
+                            Toast.makeText(Register.this,"Error de conexión",Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(Register.this,error.toString(), Toast.LENGTH_LONG).show();
+                VolleyLog.e("Error: ", error.getMessage());
             }
-        })
-        {
-            @Override
-            protected Map<String, String> getParams()
-            {
-                Map<String, String>  parameters = new HashMap<>();
-                parameters.put("usuario", usuario.getText().toString());
-                parameters.put("clave", clave.getText().toString());
-                parameters.put("tipousuario", "");
-                parameters.put("nombre", nombre.getText().toString());
-                parameters.put("apellido", apellido.getText().toString());
-                parameters.put("fechanacimiento", "");
-                parameters.put("correo", email.getText().toString());
-                parameters.put("telefono", telefono.getText().toString());
-                parameters.put("direccion", "");
-                parameters.put("stockcaritas", "0");
-                return parameters;
-            }
-        };
+        });
         // Añadir petición a la cola
-        requestQueue.add(peticion);
+        requestQueue.add(request_json);
+        redirectLogin();
+    }
+
+    private void redirectLogin() {
+        Intent intent = new Intent(Register.this, Login.class);
+        startActivity(intent);
     }
 }
