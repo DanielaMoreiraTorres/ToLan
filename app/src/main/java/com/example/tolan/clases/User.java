@@ -14,6 +14,10 @@ public class User {
     int stockcaritas;
     boolean activo;
 
+    public User(String response) {
+
+    }
+
     public int getId() {
         return id;
     }

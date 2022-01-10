@@ -9,5 +9,5 @@ import retrofit2.http.Path;
 
 public interface UserApi {
     @GET("usuario/{id}")
-    public Call<User> getUserById(@Header("id") int id);
+    public Call<User> getUserById(@Header("id") String id);
 }
