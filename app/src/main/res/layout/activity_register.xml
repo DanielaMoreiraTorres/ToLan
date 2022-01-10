@@ -6,6 +6,20 @@
     tools:context=".Register"
     android:layout_height="wrap_content">
 
+    <View
+        android:id="@+id/view6"
+        android:layout_width="match_parent"
+        android:layout_height="81dp"
+        android:background="@color/principal" />
+
+    <View
+        android:id="@+id/view10"
+        android:layout_width="match_parent"
+        android:layout_height="78dp"
+        android:layout_alignBottom="@+id/view6"
+        android:layout_marginBottom="-77dp"
+        android:background="@drawable/ic_down" />
+
     <TextView
         android:id="@+id/textView2"
         android:layout_width="match_parent"
@@ -47,8 +61,10 @@
                         android:id="@+id/arcTxtName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/round_border"
                         android:fontFamily="sans-serif-medium"
-                        android:inputType="textPersonName" />
+                        android:inputType="textPersonName"
+                        android:padding="16dp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -63,8 +79,10 @@
                         android:id="@+id/txtusuario"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/round_border"
                         android:fontFamily="sans-serif-medium"
-                        android:inputType="textPersonName" />
+                        android:inputType="textPersonName"
+                        android:padding="16dp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -79,8 +97,10 @@
                         android:id="@+id/nombres"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/round_border"
                         android:fontFamily="sans-serif-medium"
-                        android:inputType="textPersonName" />
+                        android:inputType="textPersonName"
+                        android:padding="16dp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -95,8 +115,10 @@
                         android:id="@+id/apellidos"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/round_border"
                         android:fontFamily="sans-serif-medium"
-                        android:inputType="textPersonName" />
+                        android:inputType="textPersonName"
+                        android:padding="16dp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -111,8 +133,10 @@
                         android:id="@+id/telefono"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/round_border"
                         android:fontFamily="sans-serif-medium"
-                        android:inputType="textPersonName" />
+                        android:inputType="textPersonName"
+                        android:padding="16dp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -127,8 +151,10 @@
                         android:id="@+id/email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/round_border"
                         android:fontFamily="sans-serif-medium"
-                        android:inputType="textEmailAddress" />
+                        android:inputType="textEmailAddress"
+                        android:padding="16dp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -147,8 +173,10 @@
                         android:id="@+id/clave"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/round_border"
                         android:fontFamily="sans-serif-medium"
-                        android:inputType="textPassword" />
+                        android:inputType="textPassword"
+                        android:padding="16dp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -164,8 +192,10 @@
                         android:id="@+id/confclave"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/round_border"
                         android:fontFamily="sans-serif-medium"
-                        android:inputType="textPassword" />
+                        android:inputType="textPassword"
+                        android:padding="16dp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -175,10 +205,10 @@
                     android:layout_height="50dp"
                     android:layout_margin="10dp"
                     android:background="@drawable/layout_button_rounded_1"
+                    android:onClick="RegisterClick"
                     android:text="Crear"
                     android:textColor="@color/white"
                     android:textSize="18sp"
-                    android:onClick="RegisterClick"
                     android:textStyle="bold" />
 
             </LinearLayout>
