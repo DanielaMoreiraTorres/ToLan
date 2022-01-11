@@ -9,14 +9,26 @@
     <string name="registrarse">Sing up</string>
     <string name="iniciar_sesion">Login</string>
     <!-- Activity MenuAdmin -->
-    <string name="menu">Menú</string>
+    <string name="menu">Menú Administrador</string>
     <string name="niveles">Niveles</string>
     <string name="subniveles">Subniveles</string>
     <string name="actividades">Actividades</string>
-    <!-- Fragment Niveles -->
+    <string name="contenidos">Contenidos</string>
+    <string name="skins">Skins</string>
+    <string name="recompensas">Recompensas</string>
+    <!-- Menú Toolbar -->
+    <string name="cerrar">LogOut</string>
+    <string name="contactos">Contactos</string>
+    <!-- Activity Niveles -->
     <string name="titleNiv">Niveles</string>
+    <string name="niv">Nivel:</string>
     <!-- Item Niveles -->
     <string name="nivel">Nombre:</string>
     <string name="descripcion">Descripción:</string>
-
+    <!-- Activity Add Level -->
+    <string name="addnivel">Ingrese datos del nivel</string>
+    <string name="n">Nivel</string>
+    <string name="desc">Descripción</string>
+    <string name="registrar">Registrar</string>
+    <string name="cancelar">Cancellar</string>
 </resources>

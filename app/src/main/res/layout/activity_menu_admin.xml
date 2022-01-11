@@ -20,30 +20,47 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/toolbar"></include>
+
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:background="@drawable/fondo">
+                android:layout_height="110dp">
+
+                <View
+                    android:id="@+id/Viewfondo1"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@color/principal" />
+
+                <View
+                    android:id="@+id/Viewfondo2"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@+id/Viewfondo1"
+                    android:background="@drawable/ic_down" />
 
                 <TextView
                     android:id="@+id/txtMenu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_centerInParent="true"
+                    android:drawableEnd="@drawable/admin"
+                    android:drawablePadding="10dp"
+                    android:drawableTint="@color/white"
                     android:fontFamily="sans-serif-black"
+                    android:shadowColor="@color/secundario"
+                    android:shadowRadius="4"
                     android:text="@string/menu"
-                    android:textColor="@color/secundario"
-                    android:textSize="22sp" />
+                    android:textColor="@color/white"
+                    android:textSize="24sp" />
 
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="-80dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp">
 
@@ -75,7 +92,7 @@
                                 android:id="@+id/iconNiveles"
                                 android:layout_width="80dp"
                                 android:layout_height="80dp"
-                                app:srcCompat="@drawable/admin" />
+                                app:srcCompat="@drawable/nivel" />
 
                             <TextView
                                 android:id="@+id/textNiveles"
@@ -111,7 +128,7 @@
                                 android:id="@+id/iconSubNiveles"
                                 android:layout_width="80dp"
                                 android:layout_height="80dp"
-                                app:srcCompat="@drawable/admin" />
+                                app:srcCompat="@drawable/subnivel" />
 
                             <TextView
                                 android:id="@+id/textSubNiveles"
@@ -147,7 +164,7 @@
                                 android:id="@+id/iconActividades"
                                 android:layout_width="80dp"
                                 android:layout_height="80dp"
-                                app:srcCompat="@drawable/admin" />
+                                app:srcCompat="@drawable/actividad" />
 
                             <TextView
                                 android:id="@+id/textActividades"
@@ -180,16 +197,18 @@
                             android:padding="16dp">
 
                             <ImageView
+                                android:id="@+id/iconContenidos"
                                 android:layout_width="80dp"
                                 android:layout_height="80dp"
-                                app:srcCompat="@drawable/admin" />
+                                app:srcCompat="@drawable/contenido" />
 
                             <TextView
+                                android:id="@+id/txtContenidos"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="12dp"
                                 android:fontFamily="sans-serif-medium"
-                                android:text="@string/subniveles"
+                                android:text="@string/contenidos"
                                 android:textColor="@color/secundario"
                                 android:textSize="16sp" />
 
@@ -214,16 +233,18 @@
                             android:padding="16dp">
 
                             <ImageView
+                                android:id="@+id/iconSkins"
                                 android:layout_width="80dp"
                                 android:layout_height="80dp"
-                                app:srcCompat="@drawable/admin" />
+                                app:srcCompat="@drawable/skin" />
 
                             <TextView
+                                android:id="@+id/txtSkins"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="12dp"
                                 android:fontFamily="sans-serif-medium"
-                                android:text="@string/subniveles"
+                                android:text="@string/skins"
                                 android:textColor="@color/secundario"
                                 android:textSize="16sp" />
 
@@ -248,84 +269,18 @@
                             android:padding="16dp">
 
                             <ImageView
+                                android:id="@+id/iconRecompensas"
                                 android:layout_width="80dp"
                                 android:layout_height="80dp"
-                                app:srcCompat="@drawable/admin" />
+                                app:srcCompat="@drawable/carita" />
 
                             <TextView
+                                android:id="@+id/txtRecompensas"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="12dp"
                                 android:fontFamily="sans-serif-medium"
-                                android:text="@string/subniveles"
-                                android:textColor="@color/secundario"
-                                android:textSize="16sp" />
-
-                        </LinearLayout>
-
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_rowWeight="1"
-                        android:layout_columnWeight="1"
-                        android:layout_margin="12dp"
-                        app:cardCornerRadius="12dp"
-                        app:cardElevation="6dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:orientation="vertical"
-                            android:padding="16dp">
-
-                            <ImageView
-                                android:layout_width="80dp"
-                                android:layout_height="80dp"
-                                app:srcCompat="@drawable/admin" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="12dp"
-                                android:fontFamily="sans-serif-medium"
-                                android:text="@string/subniveles"
-                                android:textColor="@color/secundario"
-                                android:textSize="16sp" />
-
-                        </LinearLayout>
-
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_rowWeight="1"
-                        android:layout_columnWeight="1"
-                        android:layout_margin="12dp"
-                        app:cardCornerRadius="12dp"
-                        app:cardElevation="6dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:orientation="vertical"
-                            android:padding="16dp">
-
-                            <ImageView
-                                android:layout_width="80dp"
-                                android:layout_height="80dp"
-                                app:srcCompat="@drawable/admin" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="12dp"
-                                android:fontFamily="sans-serif-medium"
-                                android:text="@string/subniveles"
+                                android:text="@string/recompensas"
                                 android:textColor="@color/secundario"
                                 android:textSize="16sp" />
 

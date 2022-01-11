@@ -4,19 +4,28 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/drawable-anydpi/admin.xml" value="0.19583333333333333" />
+        <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/drawable-anydpi/contactos.xml" value="0.19583333333333333" />
+        <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/drawable-anydpi/logout.xml" value="0.19583333333333333" />
+        <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/drawable-anydpi/search.xml" value="0.16111111111111112" />
+        <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/drawable-xhdpi/round_border.xml" value="0.19583333333333333" />
+        <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/drawable/borde.xml" value="0.19583333333333333" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/drawable/fondo.xml" value="0.19583333333333333" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/drawable/fondo2.xml" value="0.19583333333333333" />
+        <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/drawable/ic_down.xml" value="0.15" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/drawable/user.xml" value="0.19583333333333333" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/drawable/user_name.xml" value="0.19583333333333333" />
+        <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/activity_add_level.xml" value="0.22" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/activity_login.xml" value="0.1796875" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/activity_loginn.xml" value="0.10733695652173914" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/activity_main.xml" value="0.13994565217391305" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/activity_menu_admin.xml" value="0.22" />
-        <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/activity_niveles.xml" value="0.10733695652173914" />
+        <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/activity_niveles.xml" value="0.13333333333333333" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/activity_register.xml" value="0.22" />
-        <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/activity_welcome.xml" value="0.22" />
+        <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/activity_welcome.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_niveles.xml" value="0.13333333333333333" />
-        <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/item_niveles.xml" value="0.10733695652173914" />
+        <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/item_niveles.xml" value="0.22" />
+        <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/toolbar.xml" value="0.22" />
+        <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/menu/menu_toolbar.xml" value="0.1796875" />
       </map>
     </option>
   </component>
