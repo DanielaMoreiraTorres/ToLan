@@ -44,6 +44,15 @@
             android:name=".ActivityLogin"
             android:exported="false" />
         <activity
+            android:name=".Multimedia_ImagActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Multimedia_TxtActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Subnivel"
+            android:exported="false" />
+        <activity
             android:name=".ActivityChooseVideo"
             android:exported="true">
             <intent-filter>
