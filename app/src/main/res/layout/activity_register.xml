@@ -26,9 +26,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
         android:fontFamily="sans-serif-black"
-        android:text="INGRESE DATOS"
+        android:text="Ingrese Datos"
         android:textAlignment="center"
-        android:textSize="20sp" />
+        android:textColor="@color/white"
+        android:textSize="24sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -43,8 +44,9 @@
         android:paddingEnd="5dp">
 
         <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_width="373dp"
+            android:layout_height="581dp"
+            android:layout_marginStart="20dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -53,42 +55,28 @@
                 android:paddingEnd="25dp">
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_margin="10dp"
-                    android:hint="Tipo DNI">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/arcTxtName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/round_border"
-                        android:fontFamily="sans-serif-medium"
-                        android:inputType="textPersonName"
-                        android:padding="16dp" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/usuario"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_margin="10dp"
-                    android:hint="DNI">
+                    android:hint="Usuario">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/txtusuario"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/round_border"
+                        android:drawableStart="@drawable/ic_id_24"
                         android:fontFamily="sans-serif-medium"
-                        android:inputType="textPersonName"
+                        android:inputType="text"
                         android:padding="16dp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/Lnombres"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_margin="10dp"
@@ -98,7 +86,7 @@
                         android:id="@+id/nombres"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/round_border"
+                        android:drawableStart="@drawable/user_name"
                         android:fontFamily="sans-serif-medium"
                         android:inputType="textPersonName"
                         android:padding="16dp" />
@@ -107,6 +95,7 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/Lapellidos"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_margin="10dp"
@@ -116,7 +105,7 @@
                         android:id="@+id/apellidos"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/round_border"
+                        android:drawableStart="@drawable/user_name"
                         android:fontFamily="sans-serif-medium"
                         android:inputType="textPersonName"
                         android:padding="16dp" />
@@ -125,34 +114,36 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/Ltelefono"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_margin="10dp"
-                    android:hint="Telefono">
+                    android:hint="Teléfono">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/telefono"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/round_border"
+                        android:drawableStart="@drawable/ic_phone"
                         android:fontFamily="sans-serif-medium"
-                        android:inputType="textPersonName"
+                        android:inputType="phone"
                         android:padding="16dp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/Lemail"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_margin="10dp"
-                    android:hint="Email">
+                    android:hint="Correo">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/round_border"
+                        android:drawableStart="@drawable/ic_email_24"
                         android:fontFamily="sans-serif-medium"
                         android:inputType="textEmailAddress"
                         android:padding="16dp" />
@@ -160,7 +151,26 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_margin="10dp"
+                    android:hint="Fecha de Nacimiento">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/arcTxtName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_calendar"
+                        android:fontFamily="sans-serif-medium"
+                        android:inputType="date"
+                        android:padding="16dp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/Lclave"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_margin="10dp"
@@ -174,7 +184,7 @@
                         android:id="@+id/clave"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/round_border"
+                        android:drawableStart="@drawable/password"
                         android:fontFamily="sans-serif-medium"
                         android:inputType="textPassword"
                         android:padding="16dp" />
@@ -183,6 +193,7 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/Lconfclave"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_margin="10dp"
@@ -193,7 +204,7 @@
                         android:id="@+id/confclave"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/round_border"
+                        android:drawableStart="@drawable/password"
                         android:fontFamily="sans-serif-medium"
                         android:inputType="textPassword"
                         android:padding="16dp" />

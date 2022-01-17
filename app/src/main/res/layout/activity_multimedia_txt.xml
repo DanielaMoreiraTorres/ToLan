@@ -9,7 +9,7 @@
     <View
         android:id="@+id/view12"
         android:layout_width="wrap_content"
-        android:layout_height="83dp"
+        android:layout_height="60dp"
         android:layout_marginTop="400dp"
         android:background="@color/principal"
         android:padding="83dp"
@@ -23,7 +23,7 @@
     <View
         android:id="@+id/view13"
         android:layout_width="wrap_content"
-        android:layout_height="83dp"
+        android:layout_height="60dp"
         android:background="@drawable/ic_up"
         app:layout_constraintBottom_toTopOf="@+id/view12"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,7 +32,7 @@
     <View
         android:id="@+id/view14"
         android:layout_width="wrap_content"
-        android:layout_height="83dp"
+        android:layout_height="60dp"
         android:background="@color/principal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,7 +41,7 @@
     <View
         android:id="@+id/view15"
         android:layout_width="wrap_content"
-        android:layout_height="83dp"
+        android:layout_height="60dp"
         android:background="@drawable/ic_down"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,10 +51,9 @@
         android:id="@+id/imageView4"
         android:layout_width="122dp"
         android:layout_height="94dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="40dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.861"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo" />
 
@@ -62,12 +61,12 @@
         android:id="@+id/textView13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="44dp"
         android:text="MULTIMEDIA: TEXTO"
         android:textColor="@color/white"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.147"
+        app:layout_constraintEnd_toStartOf="@+id/imageView4"
+        app:layout_constraintHorizontal_bias="0.59"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/view14" />
 
@@ -75,41 +74,40 @@
         android:id="@+id/textView12"
         android:layout_width="139dp"
         android:layout_height="34dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="272dp"
+        android:layout_marginTop="28dp"
         android:fontFamily="sans-serif-medium"
         android:text="Ingrese el texto"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.235"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view15" />
 
     <EditText
         android:id="@+id/editTextTextPersonName"
-        android:layout_width="409dp"
-        android:layout_height="214dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginTop="20dp"
+        android:layout_marginBottom="80dp"
         android:background="@drawable/round_border"
         android:ems="10"
         android:hint="Texto"
         android:inputType="text"
-        android:padding="20dp"
+        android:padding="10dp"
         app:layout_constraintBottom_toTopOf="@+id/view13"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView12"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.021" />
 
     <Button
         android:id="@+id/button4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="12dp"
         android:text="Registrar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
 
