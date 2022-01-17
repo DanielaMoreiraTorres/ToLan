@@ -4,13 +4,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto" >
 
     <item
+        android:id="@+id/btnNotifi"
+        android:icon="@drawable/icon_notification"
+        android:title="@string/notifi"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/btnLogIn"
-        android:icon="@drawable/logout"
+        android:icon="@drawable/icon_logout"
         android:title="@string/cerrar"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/btnContacts"
-        android:icon="@drawable/contactos"
+        android:icon="@drawable/icon_contacts"
         android:title="@string/contactos"
         app:showAsAction="ifRoom" />
 </menu>

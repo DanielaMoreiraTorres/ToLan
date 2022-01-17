@@ -8,7 +8,7 @@ import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.tolan.clases.Convertir_Texto_A_Voz;
+import com.example.tolan.clases.ClssConvertirTextoAVoz;
 
 import org.imaginativeworld.whynotimagecarousel.CarouselItem;
 import org.imaginativeworld.whynotimagecarousel.ImageCarousel;
@@ -17,11 +17,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class Welcome extends AppCompatActivity {
+public class ActivityWelcome extends AppCompatActivity {
     private List list;
     ImageCarousel carousel;
     static TextToSpeech textToSpeech;
-    Convertir_Texto_A_Voz tts;
+    ClssConvertirTextoAVoz tts;
     Button btnIniciar;
     Button btnRegistrarse;
 
@@ -29,7 +29,6 @@ public class Welcome extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-        getSupportActionBar().hide();
         textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int i) {
@@ -39,7 +38,7 @@ public class Welcome extends AppCompatActivity {
                 }
             }
         });
-        tts = new Convertir_Texto_A_Voz();
+        tts = new ClssConvertirTextoAVoz();
         tts.init(this);
         carousel = findViewById(R.id.carousel);
         list = new ArrayList();
@@ -50,12 +49,12 @@ public class Welcome extends AppCompatActivity {
     }
 
     public void LoginClick(View v) {
-        Intent intent = new Intent(this, Login.class);
+        Intent intent = new Intent(this, ActivityLogin.class);
         startActivity(intent);
     }
 
     public void RegisterUser(View v) {
-        Intent intent = new Intent(this, Register.class);
+        Intent intent = new Intent(this, ActivityRegister.class);
         startActivity(intent);
     }
 

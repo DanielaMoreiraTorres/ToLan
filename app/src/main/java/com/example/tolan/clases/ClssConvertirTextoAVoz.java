@@ -6,7 +6,7 @@ import android.util.Log;
 
 import java.util.Locale;
 
-public class Convertir_Texto_A_Voz {
+public class ClssConvertirTextoAVoz {
 
     private static TextToSpeech tts = null;
     TextToSpeech.OnInitListener onInitListener;

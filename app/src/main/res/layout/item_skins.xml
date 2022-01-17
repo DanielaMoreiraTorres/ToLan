@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewSkins"
+        style="@style/CardView.Light"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="5dp"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+
+            <ImageView
+                android:id="@+id/imgSkin"
+                android:layout_width="135dp"
+                android:layout_height="150dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_picture" />
+
+            <TextView
+                android:id="@+id/lblTitleSk"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_toEndOf="@+id/imgSkin"
+                android:text="@string/oobjeto"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtTitleSk"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_toEndOf="@+id/lblTitleSk"
+                android:text="@string/niv" />
+
+            <TextView
+                android:id="@+id/lblValor"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtTitleSk"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@+id/imgSkin"
+                android:text="@string/valor"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtValor"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtTitleSk"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@+id/lblValor"
+                android:text="@string/val" />
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

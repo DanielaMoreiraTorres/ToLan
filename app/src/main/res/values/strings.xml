@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">ToLan</string>
-    <!-- Activity Welcome -->
+    <!-- Activity ActivityWelcome -->
     <string name="bienvenida">Bienvenido a ToLan</string>
     <string name="bienvenido">Bienvenido</string>
     <string name="mensaje_bienvenida_1">Cuando se abre la puerta de la comunicación todo es posible</string>
@@ -8,7 +8,7 @@
     <string name="mensaje_bienvenida_3">Poner mensaje</string>
     <string name="registrarse">Sing up</string>
     <string name="iniciar_sesion">Login</string>
-    <!-- Activity MenuAdmin -->
+    <!-- Activity ActivityMenuAdmin -->
     <string name="menu">Menú Administrador</string>
     <string name="niveles">Niveles</string>
     <string name="subniveles">Subniveles</string>
@@ -17,18 +17,42 @@
     <string name="skins">Skins</string>
     <string name="recompensas">Recompensas</string>
     <!-- Menú Toolbar -->
+    <string name="notifi">Notificaciones</string>
     <string name="cerrar">LogOut</string>
     <string name="contactos">Contactos</string>
-    <!-- Activity Niveles -->
+    <!-- Activity ActivityLevels -->
     <string name="titleNiv">Niveles</string>
-    <string name="niv">Nivel:</string>
-    <!-- Item Niveles -->
-    <string name="nivel">Nombre:</string>
+    <string name="nivel">Nivel:</string>
+    <!-- Item ActivityLevels -->
+    <string name="niv">Nivel</string>
     <string name="descripcion">Descripción:</string>
+    <string name="desc">Descripción</string>
     <!-- Activity Add Level -->
     <string name="addnivel">Ingrese datos del nivel</string>
-    <string name="n">Nivel</string>
-    <string name="desc">Descripción</string>
-    <string name="registrar">Registrar</string>
-    <string name="cancelar">Cancellar</string>
+    <string name="addNSubnivel">Agregar subnivel</string>
+    <string name="eliminar">Eliminar</string>
+    <string name="aceptar">Aceptar</string>
+    <string name="cancelar">Cancelar</string>
+    <!-- Activity ActivitySkins -->
+    <string name="titleSkins">Skins</string>
+    <string name="skin">Skin:</string>
+    <string name="oobjeto">Objeto:</string>
+    <string name="objeto">Nombre Objeto:</string>
+    <string name="tipoRecomp">Recompensa:</string>
+    <string name="valor">Valor:</string>
+    <string name="lblobjeto">Nombre Objeto</string>
+    <string name="tipoRecom">Tipo Recompensa</string>
+    <string name="val">Valor:</string>
+    <!-- Activity Add Skin -->
+    <string name="addskin">Ingrese datos del Skin</string>
+    <!-- Activity Choose Video -->
+    <string name="choosevid">Escoja uno o varios videos</string>
+    <!-- Activity ActivityContacts -->
+    <string name="masinfo">Más información</string>
+    <string name="info">Este proyecto está enfocado en el aprendizaje de lenguaje y comunicación,
+        con el fin de brindar una aplicación móvil que sirva como herramienta de uso universal.</string>
+    <string name="equipo">EQUIPO DE DESARROLLO</string>
+    <string name="footerC">2022 Todos los derechos reservados \n ToLan</string>
+    <string name="cname">Contact Name</string>
+    <string name="cemail">Email</string>
 </resources>

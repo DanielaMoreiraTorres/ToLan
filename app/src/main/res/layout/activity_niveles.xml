@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Niveles">
+    tools:context=".ActivityLevels">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,12 +17,19 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="110dp">
+            android:layout_height="wrap_content">
+
+            <View
+                android:id="@+id/lineactniv"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/plomo"/>
 
             <View
                 android:id="@+id/Viewfondo1"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
+                android:layout_below="@+id/lineactniv"
                 android:background="@color/principal" />
 
             <View
@@ -38,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="30dp"
                 android:fontFamily="sans-serif-black"
                 android:shadowColor="@color/secundario"
                 android:shadowRadius="4"
@@ -46,12 +53,25 @@
                 android:textColor="@color/white"
                 android:textSize="24sp" />
 
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgNiv"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="50dp"
+                android:src="@drawable/nivel"
+                app:civ_border_color="@color/plomo"
+                app:civ_border_width="2dp"
+                app:civ_circle_background_color="@color/white" />
+
         </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginTop="20dp"
             android:padding="5dp">
 
             <TextView
@@ -61,8 +81,8 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
                 android:layout_marginEnd="20dp"
-                android:text="@string/niv"
-                android:fontFamily="sans-serif-black"
+                android:text="@string/nivel"
+                android:fontFamily="sans-serif-medium"
                 android:textColor="@color/secundario"
                 android:textSize="24sp" />
 
@@ -78,26 +98,9 @@
                 android:id="@+id/buscar"
                 android:layout_width="40dp"
                 android:layout_height="45dp"
-                android:layout_weight="0"
-                app:srcCompat="@drawable/search" />
+                app:srcCompat="@drawable/icon_search" />
 
         </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="5dp">
-
-        <Button
-            android:id="@+id/addNivel"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:backgroundTint="@color/principal"
-            android:fontFamily="sans-serif-black"
-            tools:ignore="ButtonStyle" />
-
-    </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcvNiveles"
@@ -110,4 +113,16 @@
 
     </LinearLayout>
 
-</RelativeLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addNivel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/icon_add"
+        app:maxImageSize="30dp"
+        app:backgroundTint="@color/principal"
+        app:tint="@color/white" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

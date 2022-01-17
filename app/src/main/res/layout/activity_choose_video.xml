@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ActivityChooseVideo">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar"></include>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <View
+                android:id="@+id/lineactaddniv"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/plomo" />
+
+            <View
+                android:id="@+id/Viewfondo1"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_below="@+id/lineactaddniv"
+                android:background="@color/principal" />
+
+            <View
+                android:id="@+id/Viewfondo2"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/Viewfondo1"
+                android:background="@drawable/ic_down" />
+
+            <TextView
+                android:id="@+id/txtTitleN"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="10dp"
+                android:fontFamily="sans-serif-black"
+                android:shadowColor="@color/secundario"
+                android:shadowRadius="2"
+                android:text="@string/choosevid"
+                android:textColor="@color/secundario"
+                android:textSize="20sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="3dp"
+            android:layout_marginEnd="3dp"
+            android:background="@drawable/borde">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcvVideos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="10dp" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/seleccionarimg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/icon_add_photo"
+        app:backgroundTint="@color/principal"
+        app:maxImageSize="30dp"
+        app:tint="@color/white" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

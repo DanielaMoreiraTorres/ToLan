@@ -1,6 +1,6 @@
 package com.example.tolan.clases;
 
-public class User {
+public class ClssUser {
     int id;
     String usuario;
     String clave;
@@ -14,7 +14,7 @@ public class User {
     int stockcaritas;
     boolean activo;
 
-    public User(String response) {
+    public ClssUser(String response) {
 
     }
 

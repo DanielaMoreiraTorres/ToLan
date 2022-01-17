@@ -8,26 +8,22 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.textfield.TextInputEditText;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class Register extends AppCompatActivity {
+public class ActivityRegister extends AppCompatActivity {
 
     private RequestQueue requestQueue;
-    private StringRequest peticion;
     private String url = "https://db-bartolucci.herokuapp.com/usuario";
     private TextInputEditText nombre;
     private EditText apellido;
@@ -58,7 +54,7 @@ public class Register extends AppCompatActivity {
 
     public void createUsuario(){
         // Crear nueva cola de peticiones
-        requestQueue= Volley.newRequestQueue(Register.this);
+        requestQueue= Volley.newRequestQueue(ActivityRegister.this);
         //Parámetros a enviar a la API
         Map<String, String>  parameters = new HashMap<>();
         parameters.put("usuario", usuario.getText().toString());
@@ -75,9 +71,9 @@ public class Register extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            Toast.makeText(Register.this,"Usuario Registrado",Toast.LENGTH_LONG).show();
+                            Toast.makeText(ActivityRegister.this,"Usuario Registrado",Toast.LENGTH_LONG).show();
                         } catch (Exception e) {
-                            Toast.makeText(Register.this,"Error de conexión",Toast.LENGTH_LONG).show();
+                            Toast.makeText(ActivityRegister.this,"Error de conexión",Toast.LENGTH_LONG).show();
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -92,7 +88,7 @@ public class Register extends AppCompatActivity {
     }
 
     private void redirectLogin() {
-        Intent intent = new Intent(Register.this, Login.class);
+        Intent intent = new Intent(ActivityRegister.this, ActivityLogin.class);
         startActivity(intent);
     }
 }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="20dp"
-    tools:context=".AddLevel">
+    tools:context=".ActivityAddLevel">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -19,19 +19,39 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/toolbar"></include>
+
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="10dp">
+                android:layout_height="wrap_content">
+
+                <View
+                    android:id="@+id/lineactaddniv"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/plomo" />
+
+                <View
+                    android:id="@+id/Viewfondo1"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_below="@+id/lineactaddniv"
+                    android:background="@color/principal" />
+
+                <View
+                    android:id="@+id/Viewfondo2"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@+id/Viewfondo1"
+                    android:background="@drawable/ic_down" />
 
                 <TextView
                     android:id="@+id/txtTitleN"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
+                    android:layout_centerInParent="true"
                     android:layout_marginTop="10dp"
                     android:fontFamily="sans-serif-black"
                     android:shadowColor="@color/secundario"
@@ -40,85 +60,127 @@
                     android:textColor="@color/secundario"
                     android:textSize="20sp" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/nameNivel"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            </RelativeLayout>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/delNivel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/icon_delete"
+                app:maxImageSize="30dp"
+                app:backgroundTint="@color/flat_red_1"
+                app:tint="@color/white" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp">
+
+                <LinearLayout
+                    android:id="@+id/content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/txtTitleN"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="24dp"
-                    android:hint="@string/n"
-                    tools:ignore="MissingConstraints">
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:orientation="vertical">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/nameNi"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/nameNivel"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/borde"
-                        android:drawableStart="@drawable/admin"
-                        android:drawablePadding="10dp"
-                        android:drawableTint="@color/principal"
-                        android:inputType="text"
-                        android:selectAllOnFocus="true" />
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_marginTop="15dp"
+                        android:hint="@string/niv"
+                        tools:ignore="MissingConstraints">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/descripcionNivel"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/nameNivel"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="24dp"
-                    android:hint="@string/desc"
-                    tools:ignore="MissingConstraints">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/nameNi"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/borde"
+                            android:drawableStart="@drawable/icon_edit"
+                            android:drawablePadding="10dp"
+                            android:drawableTint="@color/principal"
+                            android:inputType="text"
+                            android:selectAllOnFocus="true" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/txtdescripcionNivel"
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/descripcionNivel"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/borde"
-                        android:drawableStart="@drawable/admin"
-                        android:drawablePadding="10dp"
-                        android:drawableTint="@color/principal"
-                        android:inputType="text"
-                        android:selectAllOnFocus="true" />
+                        android:layout_marginTop="10dp"
+                        android:hint="@string/desc"
+                        tools:ignore="MissingConstraints">
 
-                </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/txtdescripcionNivel"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/borde"
+                            android:drawableStart="@drawable/icon_edit"
+                            android:drawablePadding="10dp"
+                            android:drawableTint="@color/principal"
+                            android:inputType="text"
+                            android:selectAllOnFocus="true" />
 
-                <ImageView
-                    android:id="@+id/imgniv"
-                    android:layout_width="200dp"
-                    android:layout_height="120dp"
-                    android:scaleType="fitXY"
-                    android:layout_below="@+id/descripcionNivel"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="20dp"
-                    app:srcCompat="@drawable/ic_picture" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                <Button
-                    android:id="@+id/seleccionarimg"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/imgniv"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="5dp"
-                    android:backgroundTint="@color/secundario" />
+                    <CheckBox
+                        android:id="@+id/checkBoxNivel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:checked="true"
+                        android:fontFamily="sans-serif-light"
+                        android:textColor="@color/secundario"
+                        android:textSize="18sp"
+                        android:text="Activo" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/seleccionarimg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_add_photo"
+                        android:layout_gravity="bottom|end"
+                        android:layout_marginTop="10dp"
+                        app:maxImageSize="30dp"
+                        app:backgroundTint="@color/principal"
+                        app:tint="@color/white" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/imgniv"
+                            android:layout_width="200dp"
+                            android:layout_height="120dp"
+                            android:layout_centerHorizontal="true"
+                            android:scaleType="fitXY"
+                            app:srcCompat="@drawable/ic_picture" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/relativeButtons"
-                    android:weightSum="2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/content"
+                    android:layout_centerHorizontal="true"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="20dp"
                     android:layout_marginBottom="10dp"
-                    android:layout_below="@+id/seleccionarimg"
-                    android:layout_centerInParent="true">
+                    android:weightSum="2">
 
                     <Button
                         android:id="@+id/acceptN"
@@ -126,11 +188,12 @@
                         android:layout_height="50dp"
                         android:layout_marginEnd="10dp"
                         android:layout_weight="1"
-                        android:backgroundTint="@color/white"
+                        android:backgroundTint="@color/principal"
                         android:fontFamily="sans-serif-black"
-                        android:text="@string/registrar"
+                        android:text="ACEPTAR"
                         android:textColor="@color/secundario"
                         android:textSize="12sp"
+                        android:onClick="registerMultimedia"
                         tools:ignore="ButtonStyle" />
 
                     <Button
@@ -138,12 +201,34 @@
                         android:layout_width="wrap_content"
                         android:layout_height="50dp"
                         android:layout_weight="1"
-                        android:backgroundTint="@color/principal"
+                        android:backgroundTint="@color/plomo"
                         android:fontFamily="sans-serif-black"
                         android:text="@string/cancelar"
                         android:textColor="@color/secundario"
                         android:textSize="12sp"
                         tools:ignore="ButtonStyle" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/btns"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/relativeButtons"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp">
+
+                    <Button
+                        android:id="@+id/addNSubnivel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="10dp"
+                        android:backgroundTint="@color/secundario"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="@string/addNSubnivel"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
 
                 </LinearLayout>
 

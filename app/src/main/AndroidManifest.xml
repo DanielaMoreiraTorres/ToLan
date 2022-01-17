@@ -11,28 +11,40 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
-        android:theme="@style/Theme.ToLan"
+        android:theme="@style/Theme.ToLan.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".AddLevel"
+            android:name=".ActivityContacts"
             android:exported="false" />
         <activity
-            android:name=".Niveles"
+            android:name=".ActivityWelcome"
             android:exported="false" />
         <activity
-            android:name=".MenuAdmin"
+            android:name=".ActivityAddSkin"
+            android:exported="false" />
+        <activity
+            android:name=".ActivitySkins"
+            android:exported="false" />
+        <activity
+            android:name=".ActivityAddLevel"
+            android:exported="false" />
+        <activity
+            android:name=".ActivityLevels"
+            android:exported="false" />
+        <activity
+            android:name=".ActivityMenuAdmin"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".Register"
+            android:name=".ActivityRegister"
             android:exported="false" />
         <activity
-            android:name=".Login"
+            android:name=".ActivityLogin"
             android:exported="false" />
         <activity
-            android:name=".Welcome"
+            android:name=".ActivityChooseVideo"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

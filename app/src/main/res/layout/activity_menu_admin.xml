@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".MenuAdmin">
+    tools:context=".ActivityMenuAdmin">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -26,12 +26,19 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="110dp">
+                android:layout_height="wrap_content">
+
+                <View
+                    android:id="@+id/lineactmenuadmin"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/plomo"/>
 
                 <View
                     android:id="@+id/Viewfondo1"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
+                    android:layout_below="@+id/lineactmenuadmin"
                     android:background="@color/principal" />
 
                 <View
@@ -46,7 +53,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:drawableEnd="@drawable/admin"
+                    android:drawableEnd="@drawable/icon_admin"
                     android:drawablePadding="10dp"
                     android:drawableTint="@color/white"
                     android:fontFamily="sans-serif-black"
@@ -73,6 +80,7 @@
                     android:rowCount="3">
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/nivel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_rowWeight="1"
@@ -92,6 +100,8 @@
                                 android:id="@+id/iconNiveles"
                                 android:layout_width="80dp"
                                 android:layout_height="80dp"
+                                android:onClick="OptionsMenu"
+                                android:tag="1"
                                 app:srcCompat="@drawable/nivel" />
 
                             <TextView
@@ -128,6 +138,8 @@
                                 android:id="@+id/iconSubNiveles"
                                 android:layout_width="80dp"
                                 android:layout_height="80dp"
+                                android:onClick="OptionsMenu"
+                                android:tag="2"
                                 app:srcCompat="@drawable/subnivel" />
 
                             <TextView
@@ -164,6 +176,8 @@
                                 android:id="@+id/iconActividades"
                                 android:layout_width="80dp"
                                 android:layout_height="80dp"
+                                android:onClick="OptionsMenu"
+                                android:tag="3"
                                 app:srcCompat="@drawable/actividad" />
 
                             <TextView
@@ -200,6 +214,7 @@
                                 android:id="@+id/iconContenidos"
                                 android:layout_width="80dp"
                                 android:layout_height="80dp"
+                                android:onClick="OptionsMenu"
                                 app:srcCompat="@drawable/contenido" />
 
                             <TextView
@@ -236,6 +251,8 @@
                                 android:id="@+id/iconSkins"
                                 android:layout_width="80dp"
                                 android:layout_height="80dp"
+                                android:onClick="OptionsMenu"
+                                android:tag="4"
                                 app:srcCompat="@drawable/skin" />
 
                             <TextView
@@ -272,6 +289,7 @@
                                 android:id="@+id/iconRecompensas"
                                 android:layout_width="80dp"
                                 android:layout_height="80dp"
+                                android:onClick="OptionsMenu"
                                 app:srcCompat="@drawable/carita" />
 
                             <TextView

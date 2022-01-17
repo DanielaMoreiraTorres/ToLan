@@ -8,8 +8,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
-public class MenuAdmin extends AppCompatActivity {
+public class ActivityMenuAdmin extends AppCompatActivity {
 
     Toolbar toolbar;
 
@@ -17,6 +18,7 @@ public class MenuAdmin extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_admin);
+
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
@@ -31,13 +33,37 @@ public class MenuAdmin extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
+        if(id == R.id.btnNotifi) {
+
+        }
         if(id == R.id.btnLogIn) {
-            Intent intent = new Intent(this, Login.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            Intent intent = new Intent(this, ActivityLogin.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
         }
         if(id == R.id.btnContacts) {
-
+            Intent intent = new Intent(this, ActivityContacts.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void OptionsMenu(View view){
+        int tag = Integer.parseInt(view.getTag().toString());
+        //Toast.makeText(ActivityMenuAdmin.this,String.valueOf(id),Toast.LENGTH_SHORT).show();
+        if(tag == 1) {
+            Intent intent = new Intent(ActivityMenuAdmin.this, ActivityLevels.class);
+            startActivity(intent);
+        }
+        else if(tag == 2){
+
+        }
+        else if(tag == 3){
+
+        }
+        else if(tag == 4){
+            Intent intent = new Intent(ActivityMenuAdmin.this, ActivitySkins.class);
+            startActivity(intent);
+        }
+
     }
 }
