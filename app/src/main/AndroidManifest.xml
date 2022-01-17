@@ -17,7 +17,7 @@
             android:name=".ActivityContacts"
             android:exported="false" />
         <activity
-            android:name=".ActivityWelcome"
+            android:name=".ActivityChooseVideo"
             android:exported="false" />
         <activity
             android:name=".ActivityAddSkin"
@@ -44,16 +44,16 @@
             android:name=".ActivityLogin"
             android:exported="false" />
         <activity
-            android:name=".Multimedia_ImagActivity"
+            android:name=".Multimedia_TxtActivity"
             android:exported="false" />
         <activity
-            android:name=".Multimedia_TxtActivity"
+            android:name=".Multimedia_ImagActivity"
             android:exported="false" />
         <activity
             android:name=".Subnivel"
             android:exported="false" />
         <activity
-            android:name=".ActivityChooseVideo"
+            android:name=".ActivityWelcome"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
