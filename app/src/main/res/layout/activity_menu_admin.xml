@@ -68,6 +68,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp">
 
@@ -211,43 +212,6 @@
                             android:padding="16dp">
 
                             <ImageView
-                                android:id="@+id/iconContenidos"
-                                android:layout_width="80dp"
-                                android:layout_height="80dp"
-                                android:onClick="OptionsMenu"
-                                app:srcCompat="@drawable/contenido" />
-
-                            <TextView
-                                android:id="@+id/txtContenidos"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="12dp"
-                                android:fontFamily="sans-serif-medium"
-                                android:text="@string/contenidos"
-                                android:textColor="@color/secundario"
-                                android:textSize="16sp" />
-
-                        </LinearLayout>
-
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_rowWeight="1"
-                        android:layout_columnWeight="1"
-                        android:layout_margin="12dp"
-                        app:cardCornerRadius="12dp"
-                        app:cardElevation="6dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:orientation="vertical"
-                            android:padding="16dp">
-
-                            <ImageView
                                 android:id="@+id/iconSkins"
                                 android:layout_width="80dp"
                                 android:layout_height="80dp"
@@ -262,43 +226,6 @@
                                 android:layout_marginTop="12dp"
                                 android:fontFamily="sans-serif-medium"
                                 android:text="@string/skins"
-                                android:textColor="@color/secundario"
-                                android:textSize="16sp" />
-
-                        </LinearLayout>
-
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_rowWeight="1"
-                        android:layout_columnWeight="1"
-                        android:layout_margin="12dp"
-                        app:cardCornerRadius="12dp"
-                        app:cardElevation="6dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:orientation="vertical"
-                            android:padding="16dp">
-
-                            <ImageView
-                                android:id="@+id/iconRecompensas"
-                                android:layout_width="80dp"
-                                android:layout_height="80dp"
-                                android:onClick="OptionsMenu"
-                                app:srcCompat="@drawable/carita" />
-
-                            <TextView
-                                android:id="@+id/txtRecompensas"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="12dp"
-                                android:fontFamily="sans-serif-medium"
-                                android:text="@string/recompensas"
                                 android:textColor="@color/secundario"
                                 android:textSize="16sp" />
 

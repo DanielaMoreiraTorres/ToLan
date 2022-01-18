@@ -2,6 +2,7 @@
 <resources>
     <color name="principal">#44cccc</color>
     <color name="secundario">#020001</color>
+    <color name="verde">#7CB342</color>
     <color name="plomo">#cccccc</color>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>

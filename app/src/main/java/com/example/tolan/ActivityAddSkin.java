@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class ActivityAddSkin extends AppCompatActivity {
@@ -73,10 +74,10 @@ public class ActivityAddSkin extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK && requestCode == PICK_IMAGE) {
             imageUri = data.getData();
-            imagen.setImageURI(imageUri);
-            @SuppressLint("Recycle") Cursor returnCursor = this.getContentResolver().query(imageUri, null, null, null, null);
-            int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
-            returnCursor.moveToFirst();
+            //imagen.setImageURI(imageUri);
+            Glide.with(this)
+                    .load(imageUri)
+                    .into(imagen);
         }
     }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -57,8 +57,8 @@
                     android:shadowColor="@color/secundario"
                     android:shadowRadius="2"
                     android:text="@string/addnivel"
-                    android:textColor="@color/secundario"
-                    android:textSize="20sp" />
+                    android:textColor="@color/white"
+                    android:textSize="24sp" />
 
             </RelativeLayout>
 
@@ -138,20 +138,20 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:checked="true"
-                        android:fontFamily="sans-serif-light"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="Activo"
                         android:textColor="@color/secundario"
-                        android:textSize="18sp"
-                        android:text="Activo" />
+                        android:textSize="18sp" />
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/seleccionarimg"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/icon_add_photo"
                         android:layout_gravity="bottom|end"
                         android:layout_marginTop="10dp"
-                        app:maxImageSize="30dp"
+                        android:src="@drawable/icon_add_photo"
                         app:backgroundTint="@color/principal"
+                        app:maxImageSize="30dp"
                         app:tint="@color/white" />
 
                     <RelativeLayout
@@ -164,7 +164,7 @@
                             android:layout_height="120dp"
                             android:layout_centerHorizontal="true"
                             android:scaleType="fitXY"
-                            app:srcCompat="@drawable/ic_picture" />
+                            app:srcCompat="@drawable/background_image" />
 
                     </RelativeLayout>
 
@@ -184,51 +184,16 @@
 
                     <Button
                         android:id="@+id/acceptN"
-                        android:layout_width="wrap_content"
-                        android:layout_height="50dp"
-                        android:layout_marginEnd="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:backgroundTint="@color/principal"
+                        android:backgroundTint="@color/verde"
                         android:fontFamily="sans-serif-black"
                         android:text="ACEPTAR"
-                        android:textColor="@color/secundario"
+                        android:textColor="@color/white"
                         android:textSize="12sp"
                         android:onClick="registerMultimedia"
                         tools:ignore="ButtonStyle" />
-
-                    <Button
-                        android:id="@+id/cancelN"
-                        android:layout_width="wrap_content"
-                        android:layout_height="50dp"
-                        android:layout_weight="1"
-                        android:backgroundTint="@color/plomo"
-                        android:fontFamily="sans-serif-black"
-                        android:text="@string/cancelar"
-                        android:textColor="@color/secundario"
-                        android:textSize="12sp"
-                        tools:ignore="ButtonStyle" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/btns"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/relativeButtons"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp">
-
-                    <Button
-                        android:id="@+id/addNSubnivel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:layout_marginEnd="10dp"
-                        android:backgroundTint="@color/secundario"
-                        android:fontFamily="sans-serif-medium"
-                        android:text="@string/addNSubnivel"
-                        android:textColor="@color/white"
-                        android:textSize="12sp" />
 
                 </LinearLayout>
 
@@ -238,4 +203,16 @@
 
     </ScrollView>
 
-</RelativeLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addNSubnivel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/icon_sig"
+        app:backgroundTint="@color/principal"
+        app:maxImageSize="30dp"
+        app:tint="@color/white" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

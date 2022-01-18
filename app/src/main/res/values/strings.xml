@@ -27,8 +27,9 @@
     <string name="niv">Nivel</string>
     <string name="descripcion">Descripción:</string>
     <string name="desc">Descripción</string>
+    <string name="searchNivel">Buscar Nivel</string>
     <!-- Activity Add Level -->
-    <string name="addnivel">Ingrese datos del nivel</string>
+    <string name="addnivel">Ingrese Datos del Nivel</string>
     <string name="addNSubnivel">Agregar subnivel</string>
     <string name="eliminar">Eliminar</string>
     <string name="aceptar">Aceptar</string>
@@ -44,7 +45,7 @@
     <string name="tipoRecom">Tipo Recompensa</string>
     <string name="val">Valor:</string>
     <!-- Activity Add Skin -->
-    <string name="addskin">Ingrese datos del Skin</string>
+    <string name="addskin">Ingrese Datos de la Skin</string>
     <!-- Activity Choose Video -->
     <string name="choosevid">Escoja uno o varios videos</string>
     <!-- Activity ActivityContacts -->

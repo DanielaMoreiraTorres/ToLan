@@ -21,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONObject;
@@ -86,7 +87,10 @@ public class ActivityAddLevel extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK && requestCode == PICK_IMAGE) {
             imageUri = data.getData();
-            imagen.setImageURI(imageUri);
+            //imagen.setImageURI(imageUri);
+            Glide.with(this)
+                    .load(imageUri)
+                    .into(imagen);
         }
     }
 
