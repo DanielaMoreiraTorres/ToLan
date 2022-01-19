@@ -21,6 +21,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/borde"
             android:padding="8dp">
 
             <ImageView
@@ -28,7 +29,7 @@
                 android:layout_width="135dp"
                 android:layout_height="150dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/ic_picture" />
+                android:src="@drawable/nivel" />
 
             <TextView
                 android:id="@+id/lblTitleNiv"
@@ -38,6 +39,8 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="15dp"
                 android:layout_toEndOf="@+id/imgNivel"
+                android:alpha="0.6"
+                android:fontFamily="sans-serif-medium"
                 android:text="@string/nivel"
                 android:textStyle="bold" />
 
@@ -49,6 +52,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="15dp"
                 android:layout_toEndOf="@+id/lblTitleNiv"
+                android:alpha="0.6"
                 android:text="@string/niv" />
 
             <TextView
@@ -60,6 +64,8 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toEndOf="@+id/imgNivel"
+                android:alpha="0.6"
+                android:fontFamily="sans-serif-medium"
                 android:text="@string/descripcion"
                 android:textStyle="bold" />
 
@@ -72,6 +78,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toEndOf="@+id/lblDescription"
+                android:alpha="0.6"
                 android:text="@string/desc" />
 
         </RelativeLayout>

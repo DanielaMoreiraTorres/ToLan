@@ -39,18 +39,37 @@
                 android:layout_below="@+id/Viewfondo1"
                 android:background="@drawable/ic_down" />
 
-            <TextView
-                android:id="@+id/txtTitleN"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_marginTop="10dp"
-                android:fontFamily="sans-serif-black"
-                android:shadowColor="@color/secundario"
-                android:shadowRadius="2"
-                android:text="@string/choosevid"
-                android:textColor="@color/secundario"
-                android:textSize="20sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="110dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtTitleN"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:layout_marginTop="30dp"
+                    android:fontFamily="sans-serif-black"
+                    android:shadowColor="@color/secundario"
+                    android:shadowRadius="2"
+                    android:text="@string/choosevid"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/txtLimVid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:layout_marginTop="5dp"
+                    android:shadowColor="@color/secundario"
+                    android:shadowRadius="0.5"
+                    android:text="@string/limitevid"
+                    android:textColor="@color/white"
+                    android:textStyle="italic" />
+
+            </LinearLayout>
 
         </RelativeLayout>
 
@@ -59,6 +78,7 @@
             android:layout_height="match_parent"
             android:layout_marginStart="3dp"
             android:layout_marginEnd="3dp"
+            android:layout_marginBottom="3dp"
             android:background="@drawable/borde">
 
             <androidx.recyclerview.widget.RecyclerView

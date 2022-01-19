@@ -21,6 +21,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/borde"
             android:padding="8dp">
 
             <ImageView
@@ -28,7 +29,7 @@
                 android:layout_width="135dp"
                 android:layout_height="150dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/ic_picture" />
+                android:src="@drawable/skin" />
 
             <TextView
                 android:id="@+id/lblTitleSk"
@@ -38,7 +39,9 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="15dp"
                 android:layout_toEndOf="@+id/imgSkin"
-                android:text="@string/oobjeto"
+                android:fontFamily="sans-serif-medium"
+                android:alpha="0.6"
+                android:text="@string/skin"
                 android:textStyle="bold" />
 
             <TextView
@@ -49,7 +52,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="15dp"
                 android:layout_toEndOf="@+id/lblTitleSk"
-                android:text="@string/niv" />
+                android:text="@string/lblobjeto" />
 
             <TextView
                 android:id="@+id/lblValor"
@@ -60,6 +63,8 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toEndOf="@+id/imgSkin"
+                android:fontFamily="sans-serif-medium"
+                android:alpha="0.6"
                 android:text="@string/valor"
                 android:textStyle="bold" />
 

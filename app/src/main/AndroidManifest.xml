@@ -14,6 +14,9 @@
         android:theme="@style/Theme.ToLan.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ActivityMenuDocente"
+            android:exported="false" />
+        <activity
             android:name=".ActivityContacts"
             android:exported="false" />
         <activity

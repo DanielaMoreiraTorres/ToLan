@@ -1,54 +1,58 @@
 <resources>
     <string name="app_name">ToLan</string>
-    <!-- Activity ActivityWelcome -->
+    <!-- Activity Activity Welcome -->
     <string name="bienvenida">Bienvenido a ToLan</string>
     <string name="bienvenido">Bienvenido</string>
     <string name="mensaje_bienvenida_1">Cuando se abre la puerta de la comunicación todo es posible</string>
-    <string name="mensaje_bienvenida_2">El mejor experto tambien fue un día aprendiz</string>
+    <string name="mensaje_bienvenida_2">El mejor experto también fue un día aprendiz</string>
     <string name="mensaje_bienvenida_3">Poner mensaje</string>
-    <string name="registrarse">Sing up</string>
-    <string name="iniciar_sesion">Login</string>
-    <!-- Activity ActivityMenuAdmin -->
+    <string name="registrarse">Registrarse</string>
+    <string name="iniciar_sesion">Ingresar</string>
+    <!-- Activity Activity Login -->
+    <string name="login">Inicio de Sesión</string>
+    <!-- Activity Activity Register User -->
+    <string name="reg">Registro de Usuario</string>
+    <string name="forget">Olvidó su clave?</string>
+    <!-- Activity Activity Menu Admin -->
     <string name="menu">Menú Administrador</string>
     <string name="niveles">Niveles</string>
     <string name="subniveles">Subniveles</string>
     <string name="actividades">Actividades</string>
-    <string name="contenidos">Contenidos</string>
-    <string name="skins">Skins</string>
-    <string name="recompensas">Recompensas</string>
+    <string name="skins">Artículos</string>
+    <string name="grupos">Grupos</string>
+    <string name="historial">Historial</string>
+    <!-- Activity Activity Menu Docente -->
+    <string name="menud">Menú Docente</string>
+    <string name="usuarios">Usuarios</string>
     <!-- Menú Toolbar -->
     <string name="notifi">Notificaciones</string>
-    <string name="cerrar">LogOut</string>
+    <string name="cerrar">Cerrar Sesión</string>
     <string name="contactos">Contactos</string>
-    <!-- Activity ActivityLevels -->
+    <!-- Activity Levels -->
     <string name="titleNiv">Niveles</string>
+    <!-- Item Activity Levels -->
     <string name="nivel">Nivel:</string>
-    <!-- Item ActivityLevels -->
     <string name="niv">Nivel</string>
     <string name="descripcion">Descripción:</string>
     <string name="desc">Descripción</string>
     <string name="searchNivel">Buscar Nivel</string>
     <!-- Activity Add Level -->
     <string name="addnivel">Ingrese Datos del Nivel</string>
-    <string name="addNSubnivel">Agregar subnivel</string>
-    <string name="eliminar">Eliminar</string>
     <string name="aceptar">Aceptar</string>
-    <string name="cancelar">Cancelar</string>
-    <!-- Activity ActivitySkins -->
-    <string name="titleSkins">Skins</string>
-    <string name="skin">Skin:</string>
-    <string name="oobjeto">Objeto:</string>
-    <string name="objeto">Nombre Objeto:</string>
-    <string name="tipoRecomp">Recompensa:</string>
+    <!-- Activity Activity Skins -->
+    <string name="titleSkins">Artículos</string>
+    <string name="skin">Artículo:</string>
     <string name="valor">Valor:</string>
-    <string name="lblobjeto">Nombre Objeto</string>
-    <string name="tipoRecom">Tipo Recompensa</string>
-    <string name="val">Valor:</string>
+    <string name="lblobjeto">Nombre Artículo</string>
+    <!-- Item Activity Skins -->
+    <string name="searchSkin">Buscar Artículo</string>
+    <string name="val">Valor</string>
     <!-- Activity Add Skin -->
-    <string name="addskin">Ingrese Datos de la Skin</string>
+    <string name="addskin">Ingrese Datos del Artículo</string>
     <!-- Activity Choose Video -->
-    <string name="choosevid">Escoja uno o varios videos</string>
-    <!-- Activity ActivityContacts -->
+    <string name="choosevid">Seleccione Uno o Varios Videos</string>
+    <string name="limitevid">Límite de 10 videos</string>
+    <!-- Activity Activity Contacts -->
     <string name="masinfo">Más información</string>
     <string name="info">Este proyecto está enfocado en el aprendizaje de lenguaje y comunicación,
         con el fin de brindar una aplicación móvil que sirva como herramienta de uso universal.</string>

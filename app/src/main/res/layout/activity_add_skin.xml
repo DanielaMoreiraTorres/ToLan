@@ -57,7 +57,7 @@
                     android:shadowColor="@color/secundario"
                     android:shadowRadius="2"
                     android:text="@string/addskin"
-                    android:textColor="@color/secundario"
+                    android:textColor="@color/white"
                     android:textSize="20sp" />
 
             </RelativeLayout>
@@ -123,7 +123,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/borde"
-                            android:drawableStart="@drawable/icon_value"
+                            android:drawableStart="@drawable/icon_valor"
                             android:drawablePadding="10dp"
                             android:drawableTint="@color/principal"
                             android:inputType="text"
@@ -137,7 +137,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:checked="true"
-                        android:fontFamily="sans-serif-light"
+                        android:fontFamily="sans-serif-medium"
                         android:textColor="@color/secundario"
                         android:textSize="18sp"
                         android:text="Activo" />
@@ -163,7 +163,7 @@
                             android:layout_height="120dp"
                             android:layout_centerHorizontal="true"
                             android:scaleType="fitXY"
-                            app:srcCompat="@drawable/ic_picture" />
+                            app:srcCompat="@drawable/background_image" />
 
                     </RelativeLayout>
 
@@ -183,26 +183,13 @@
 
                     <Button
                         android:id="@+id/acceptS"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:layout_marginEnd="10dp"
                         android:layout_weight="1"
-                        android:backgroundTint="@color/principal"
+                        android:backgroundTint="@color/verde"
                         android:fontFamily="sans-serif-black"
                         android:text="ACEPTAR"
-                        android:textColor="@color/secundario"
-                        android:textSize="12sp"
-                        tools:ignore="ButtonStyle" />
-
-                    <Button
-                        android:id="@+id/cancelS"
-                        android:layout_width="wrap_content"
-                        android:layout_height="50dp"
-                        android:layout_weight="1"
-                        android:backgroundTint="@color/plomo"
-                        android:fontFamily="sans-serif-black"
-                        android:text="@string/cancelar"
-                        android:textColor="@color/secundario"
+                        android:textColor="@color/white"
                         android:textSize="12sp"
                         tools:ignore="ButtonStyle" />
 

@@ -53,11 +53,11 @@
                     android:layout_marginStart="35dp"
                     android:layout_marginTop="0dp"
                     android:layout_marginEnd="10dp"
+                    android:shadowColor="@color/secundario"
+                    android:shadowRadius="0.5"
                     android:text="@string/masinfo"
                     android:textAlignment="textStart"
                     android:textColor="@color/principal"
-                    android:shadowColor="@color/secundario"
-                    android:shadowRadius="0.5"
                     android:textStyle="bold|italic" />
 
                 <com.codesgood.views.JustifiedTextView

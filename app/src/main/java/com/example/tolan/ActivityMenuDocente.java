@@ -10,14 +10,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-public class ActivityMenuAdmin extends AppCompatActivity {
+public class ActivityMenuDocente extends AppCompatActivity {
 
     Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu_admin);
+        setContentView(R.layout.activity_menu_docente);
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -51,24 +51,16 @@ public class ActivityMenuAdmin extends AppCompatActivity {
         int tag = Integer.parseInt(view.getTag().toString());
         //Toast.makeText(ActivityMenuAdmin.this,String.valueOf(id),Toast.LENGTH_SHORT).show();
         if(tag == 1) {
-            Intent intent = new Intent(ActivityMenuAdmin.this, ActivityLevels.class);
-            startActivity(intent);
+
         }
         else if(tag == 2){
-            Intent intent = new Intent(ActivityMenuAdmin.this, Subnivel.class);
+            Intent intent = new Intent(ActivityMenuDocente.this, ActivityRegister.class);
             startActivity(intent);
         }
         else if(tag == 3){
 
         }
         else if(tag == 4){
-            Intent intent = new Intent(ActivityMenuAdmin.this, ActivitySkins.class);
-            startActivity(intent);
-        }
-        else if(tag == 5){
-
-        }
-        else if(tag == 6){
 
         }
     }
