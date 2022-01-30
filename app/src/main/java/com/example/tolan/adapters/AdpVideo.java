@@ -15,14 +15,14 @@ import com.example.tolan.R;
 
 import java.util.List;
 
-public class AdpVideos extends RecyclerView.Adapter<AdpVideos.ViewHolder> implements View.OnClickListener {
+public class AdpVideo extends RecyclerView.Adapter<AdpVideo.ViewHolder> implements View.OnClickListener {
 
     List<Uri> videos;
     Context context;
     LayoutInflater layoutInflater;
     private View.OnClickListener listener;
 
-    public AdpVideos(List<Uri> videos, Context context) {
+    public AdpVideo(List<Uri> videos, Context context) {
         this.videos = videos;
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);

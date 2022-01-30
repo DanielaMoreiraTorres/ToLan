@@ -41,7 +41,7 @@ public class ActivityMenuDocente extends AppCompatActivity {
             startActivity(intent);
         }
         if(id == R.id.btnContacts) {
-            Intent intent = new Intent(this, ActivityContacts.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            Intent intent = new Intent(this, ActivityContact.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
@@ -54,7 +54,7 @@ public class ActivityMenuDocente extends AppCompatActivity {
 
         }
         else if(tag == 2){
-            Intent intent = new Intent(ActivityMenuDocente.this, ActivityRegister.class);
+            Intent intent = new Intent(ActivityMenuDocente.this, ActivityRegisterUser.class);
             startActivity(intent);
         }
         else if(tag == 3){

@@ -41,7 +41,7 @@ public class ActivityMenuAdmin extends AppCompatActivity {
             startActivity(intent);
         }
         if(id == R.id.btnContacts) {
-            Intent intent = new Intent(this, ActivityContacts.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            Intent intent = new Intent(this, ActivityContact.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
@@ -51,18 +51,18 @@ public class ActivityMenuAdmin extends AppCompatActivity {
         int tag = Integer.parseInt(view.getTag().toString());
         //Toast.makeText(ActivityMenuAdmin.this,String.valueOf(id),Toast.LENGTH_SHORT).show();
         if(tag == 1) {
-            Intent intent = new Intent(ActivityMenuAdmin.this, ActivityLevels.class);
+            Intent intent = new Intent(ActivityMenuAdmin.this, ActivityLevel.class);
             startActivity(intent);
         }
         else if(tag == 2){
-            Intent intent = new Intent(ActivityMenuAdmin.this, Subnivel.class);
+            Intent intent = new Intent(ActivityMenuAdmin.this, ActivitySublevel.class);
             startActivity(intent);
         }
         else if(tag == 3){
 
         }
         else if(tag == 4){
-            Intent intent = new Intent(ActivityMenuAdmin.this, ActivitySkins.class);
+            Intent intent = new Intent(ActivityMenuAdmin.this, ActivitySkin.class);
             startActivity(intent);
         }
         else if(tag == 5){

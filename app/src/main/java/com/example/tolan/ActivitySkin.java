@@ -12,7 +12,7 @@ import android.view.View;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class ActivityLevels extends AppCompatActivity {
+public class ActivitySkin extends AppCompatActivity {
 
     Toolbar toolbar;
     FloatingActionButton fab;
@@ -20,16 +20,16 @@ public class ActivityLevels extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_niveles);
+        setContentView(R.layout.activity_skin);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
 
-        fab = findViewById(R.id.addNivel);
+        fab = findViewById(R.id.addSkin);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ActivityLevels.this, ActivityAddLevel.class);
+                Intent intent = new Intent(ActivitySkin.this, ActivityAddSkin.class);
                 startActivity(intent);
             }
         });
@@ -52,7 +52,7 @@ public class ActivityLevels extends AppCompatActivity {
             startActivity(intent);
         }
         if(id == R.id.btnContacts) {
-            Intent intent = new Intent(this, ActivityContacts.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            Intent intent = new Intent(this, ActivityContact.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);

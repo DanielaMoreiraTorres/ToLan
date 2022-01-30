@@ -16,7 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.tolan.adapters.AdpVideos;
+import com.example.tolan.adapters.AdpVideo;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ public class ActivityChooseVideo extends AppCompatActivity {
     ClipData clipData;
     Uri uri;
     List<Uri> videos;
-    AdpVideos adapter;
+    AdpVideo adapter;
     Uri videoselected;
 
     @Override
@@ -67,7 +67,7 @@ public class ActivityChooseVideo extends AppCompatActivity {
             startActivity(intent);
         }
         if(id == R.id.btnContacts) {
-            Intent intent = new Intent(this, ActivityContacts.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            Intent intent = new Intent(this, ActivityContact.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
@@ -98,7 +98,7 @@ public class ActivityChooseVideo extends AppCompatActivity {
                         uri = item.getUri();
                         videos.add(uri);
                     }
-                    adapter = new AdpVideos(videos, this);
+                    adapter = new AdpVideo(videos, this);
                     rcvVideos.setLayoutManager(new GridLayoutManager(this,2));
                     rcvVideos.setAdapter(adapter);
                     adapter.setOnClickListener(new View.OnClickListener() {
@@ -117,7 +117,7 @@ public class ActivityChooseVideo extends AppCompatActivity {
                 //asignar video
                 videos.clear();
                 videos.add(uri);
-                adapter = new AdpVideos(videos, this);
+                adapter = new AdpVideo(videos, this);
                 rcvVideos.setLayoutManager(new GridLayoutManager(this,2));
                 rcvVideos.setAdapter(adapter);
                 adapter.setOnClickListener(new View.OnClickListener() {

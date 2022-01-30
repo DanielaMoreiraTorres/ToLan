@@ -7,13 +7,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-import com.android.volley.Request;
+
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -26,7 +25,6 @@ public class ActivityLogin extends AppCompatActivity {
 
     FloatingActionButton btnLogin;
     private RequestQueue requestQueue;
-    private StringRequest peticion;
     private String url = "https://db-bartolucci.herokuapp.com/usuario/login";
     static String tipousuario;
     private EditText user;
@@ -35,7 +33,7 @@ public class ActivityLogin extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_loginn);
+        setContentView(R.layout.activity_login);
 
         btnLogin = findViewById(R.id.btnSigin);
         btnLogin.setOnClickListener(v -> Login());
@@ -95,7 +93,7 @@ public class ActivityLogin extends AppCompatActivity {
     }
 
     public void RegisterUs(View v) {
-        Intent intent = new Intent(this, ActivityRegister.class);
+        Intent intent = new Intent(this, ActivityRegisterUser.class);
         startActivity(intent);
     }
 }

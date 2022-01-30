@@ -1,6 +1,7 @@
 package com.example.tolan.models;
 
-public class subnivel {
+public class ModelSubnivel {
+
     private int idnivel;
     private String nombre;
     private String descripcion;
@@ -47,13 +48,11 @@ public class subnivel {
         this.activo = activo;
     }
 
-    public subnivel(int idnivel, String nombre, String descripcion, int numactividades, boolean activo) {
+    public ModelSubnivel(int idnivel, String nombre, String descripcion, int numactividades, boolean activo) {
         this.idnivel = idnivel;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.numactividades = numactividades;
         this.activo = activo;
     }
-
-
 }

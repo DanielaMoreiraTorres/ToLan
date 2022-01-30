@@ -15,13 +15,15 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.gson.JsonObject;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class ActivityRegister extends AppCompatActivity {
+public class ActivityRegisterUser extends AppCompatActivity {
 
     private RequestQueue requestQueue;
     private String url = "https://db-bartolucci.herokuapp.com/usuario";
@@ -29,6 +31,7 @@ public class ActivityRegister extends AppCompatActivity {
     private EditText apellido;
     private EditText telefono;
     private EditText email;
+    private EditText fechaNac;
     private EditText usuario;
     private EditText clave;
     private EditText confirclave;
@@ -36,15 +39,15 @@ public class ActivityRegister extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
-
+        setContentView(R.layout.activity_register_user);
     }
 
-    public void RegisterClick(View view){
+    public void RegisterClick(View view) throws JSONException {
         nombre = findViewById(R.id.nombres);
         apellido = findViewById(R.id.apellidos);
         telefono = findViewById(R.id.telefono);
         email = findViewById(R.id.email);
+        fechaNac = findViewById(R.id.txtFechaNac);
         usuario = findViewById(R.id.txtusuario);
         clave = findViewById(R.id.clave);
         confirclave = findViewById(R.id.confclave);
@@ -52,28 +55,44 @@ public class ActivityRegister extends AppCompatActivity {
             createUsuario();
     }
 
-    public void createUsuario(){
+    public void createUsuario() throws JSONException {
         // Crear nueva cola de peticiones
-        requestQueue= Volley.newRequestQueue(ActivityRegister.this);
+        requestQueue= Volley.newRequestQueue(ActivityRegisterUser.this);
         //Parámetros a enviar a la API
+        JSONObject param = new JSONObject();
+        JSONObject selectedDocente = new JSONObject();
+        selectedDocente.put("id",1);
+        selectedDocente.put("nombres",1);
+        selectedDocente.put("apellidos",1);
+        param.put("usuario", usuario.getText().toString());
+        param.put("clave", clave.getText().toString());
+        param.put("isDocente", false);
+        param.put("selectedDocente", selectedDocente);
+        param.put("nombres", nombre.getText().toString());
+        param.put("apellidos", apellido.getText().toString());
+        param.put("telefono", telefono.getText().toString());
+        param.put("correo", email.getText().toString());
+        param.put("fechanacimiento", fechaNac.getText().toString());
+        /*
         Map<String, String>  parameters = new HashMap<>();
         parameters.put("usuario", usuario.getText().toString());
         parameters.put("clave", clave.getText().toString());
-        parameters.put("tipousuario", "US");
+        parameters.put("isDocente", "false");
         parameters.put("nombre", nombre.getText().toString());
         parameters.put("apellido", apellido.getText().toString());
-        parameters.put("fechanacimiento", "2005-01-22");
+        parameters.put("fechanacimiento", fechaNac.getText().toString());
         parameters.put("correo", email.getText().toString());
         parameters.put("telefono", telefono.getText().toString());
-        parameters.put("direccion", "DIR");
-        JsonObjectRequest request_json = new JsonObjectRequest(url, new JSONObject(parameters),
+         */
+        JsonObjectRequest request_json = new JsonObjectRequest(url, param,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            Toast.makeText(ActivityRegister.this,"Usuario Registrado",Toast.LENGTH_LONG).show();
+                            Toast.makeText(ActivityRegisterUser.this,"Usuario Registrado",Toast.LENGTH_LONG).show();
+                            redirectLogin();
                         } catch (Exception e) {
-                            Toast.makeText(ActivityRegister.this,"Error de conexión",Toast.LENGTH_LONG).show();
+                            Toast.makeText(ActivityRegisterUser.this,"Error de conexión",Toast.LENGTH_LONG).show();
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -84,11 +103,10 @@ public class ActivityRegister extends AppCompatActivity {
         });
         // Añadir petición a la cola
         requestQueue.add(request_json);
-        redirectLogin();
     }
 
     private void redirectLogin() {
-        Intent intent = new Intent(ActivityRegister.this, ActivityLogin.class);
+        Intent intent = new Intent(ActivityRegisterUser.this, ActivityLogin.class);
         startActivity(intent);
     }
 }

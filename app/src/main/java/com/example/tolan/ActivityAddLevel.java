@@ -16,19 +16,24 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
+import com.android.volley.toolbox.StringRequest;
 import com.bumptech.glide.Glide;
+import com.example.tolan.clases.ClssGetRealPath;
+import com.example.tolan.models.ModelUploadImage;
+import com.example.tolan.interfaces.MultimediaApi;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import org.json.JSONObject;
-
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
+import java.net.URISyntaxException;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ActivityAddLevel extends AppCompatActivity {
 
@@ -38,7 +43,13 @@ public class ActivityAddLevel extends AppCompatActivity {
     ImageView imagen;
     Uri imageUri;
     private RequestQueue requestQueue;
-    private String url = "https://db-bartolucci.herokuapp.com/multimedia/saveOtherMedia";
+    private String urlB = "https://db-bartolucci.herokuapp.com/multimedia/saveFileMedia";
+    private StringRequest stringRequest;
+    File file = null;
+    ClssGetRealPath clssGetRealPath = new ClssGetRealPath();
+    MultimediaApi multimediaApi;
+    public String url = null;
+    public String publicid = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +82,7 @@ public class ActivityAddLevel extends AppCompatActivity {
             startActivity(intent);
         }
         if(id == R.id.btnContacts) {
-            Intent intent = new Intent(this, ActivityContacts.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            Intent intent = new Intent(this, ActivityContact.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
@@ -94,35 +105,42 @@ public class ActivityAddLevel extends AppCompatActivity {
         }
     }
 
-    public void registerMultimedia(View view){
-        // Crear nueva cola de peticiones
-        requestQueue= Volley.newRequestQueue(ActivityAddLevel.this);
-        //Parámetros a enviar a la API
-        Map<String, File> parameters = new HashMap<>();
-        parameters.put("multipartFile", new File(imageUri.getPath()));
-        JsonObjectRequest request_json = new JsonObjectRequest(url, new JSONObject(parameters),
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            Toast.makeText(ActivityAddLevel.this,"Imagen Registrada",Toast.LENGTH_LONG).show();
-                        } catch (Exception e) {
-                            Toast.makeText(ActivityAddLevel.this,"Error al registrar",Toast.LENGTH_LONG).show();
-                        }
-                    }
-                }, new Response.ErrorListener() {
+    public void registerMultimedia(View view) throws URISyntaxException {
+        MultipartBody.Part requestImage = null;
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://db-bartolucci.herokuapp.com/")
+                .addConverterFactory(GsonConverterFactory.create()).build();
+        multimediaApi = retrofit.create(MultimediaApi.class);
+        if(file == null){
+            String path = clssGetRealPath.getRealPath(this,imageUri);
+            file = new File(path);
+        }
+        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"),file);
+        requestImage = MultipartBody.Part.createFormData("multipartFile",file.getName(),requestFile);
+
+        Call<ModelUploadImage> call = multimediaApi.uploadImage(requestImage);
+        call.enqueue(new Callback<ModelUploadImage>() {
             @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.e("Error: ", error.getMessage());
+            public void onResponse(Call<ModelUploadImage> call, Response<ModelUploadImage> response) {
+                if(response.isSuccessful()){
+                    response.body();
+                    url = response.body().getUrl();
+                    publicid = response.body().getPublicid();
+                    //Toast.makeText(ActivityAddLevel.this, "Imagen registrada correctamente", Toast.LENGTH_SHORT).show();
+
+                }
+                else
+                    Toast.makeText(ActivityAddLevel.this, response.errorBody().toString(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<ModelUploadImage> call, Throwable t) {
+                Toast.makeText(ActivityAddLevel.this, "Error: " + t, Toast.LENGTH_SHORT).show();
             }
         });
-        // Añadir petición a la cola
-        requestQueue.add(request_json);
-        redirectLevels();
     }
 
     private void redirectLevels() {
-        Intent intent = new Intent(ActivityAddLevel.this, ActivityLevels.class);
+        Intent intent = new Intent(ActivityAddLevel.this, ActivityLevel.class);
         startActivity(intent);
     }
 }

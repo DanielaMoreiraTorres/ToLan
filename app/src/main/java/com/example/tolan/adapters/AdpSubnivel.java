@@ -1,7 +1,7 @@
-package com.example.tolan.Adapter;
+package com.example.tolan.adapters;
 
 import com.example.tolan.R;
-import com.example.tolan.models.subnivel;
+import com.example.tolan.models.ModelSubnivel;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,23 +14,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class AdapRecy_SubNivel extends RecyclerView.Adapter<AdapRecy_SubNivel.RecyclerHolder> {
-    private List<subnivel> items;
+public class AdpSubnivel extends RecyclerView.Adapter<AdpSubnivel.RecyclerHolder> {
+    private List<ModelSubnivel> items;
 
-    public AdapRecy_SubNivel(List<subnivel> items) {
+    public AdpSubnivel(List<ModelSubnivel> items) {
         this.items = items;
     }
 
     @NonNull
     @Override
     public RecyclerHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.items_subnivel, parent, false);
+        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_sublevel, parent, false);
         return new RecyclerHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerHolder holder, int position) {
-        subnivel item = items.get(position);
+        ModelSubnivel item = items.get(position);
         holder.txtidnivel.setText(item.getIdnivel());
         holder.txtnombre.setText(item.getNombre());
         holder.txtdescripcion.setText(item.getDescripcion());

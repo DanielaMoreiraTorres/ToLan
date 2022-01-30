@@ -1,12 +1,12 @@
-package com.example.tolan.clases;
+package com.example.tolan.models;
 
-public class ClssContact {
+public class ModelContact {
 
     String name;
     String phone;
     String email;
 
-    public ClssContact(String name, String phone, String email) {
+    public ModelContact(String name, String phone, String email) {
         this.name = name;
         this.phone = phone;
         this.email = email;

@@ -1,6 +1,7 @@
-package com.example.tolan.clases;
+package com.example.tolan.models;
 
-public class ClssUser {
+public class ModelUser {
+
     int id;
     String usuario;
     String clave;
@@ -13,10 +14,6 @@ public class ClssUser {
     String direccion;
     int stockcaritas;
     boolean activo;
-
-    public ClssUser(String response) {
-
-    }
 
     public int getId() {
         return id;

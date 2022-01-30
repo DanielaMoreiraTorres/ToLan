@@ -54,7 +54,7 @@ public class ActivityWelcome extends AppCompatActivity {
     }
 
     public void RegisterUser(View v) {
-        Intent intent = new Intent(this, ActivityRegister.class);
+        Intent intent = new Intent(this, ActivityRegisterUser.class);
         startActivity(intent);
     }
 

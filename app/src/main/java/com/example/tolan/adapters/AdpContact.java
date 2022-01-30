@@ -10,15 +10,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tolan.R;
-import com.example.tolan.clases.ClssContact;
+import com.example.tolan.models.ModelContact;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.util.List;
 
-public class AdpContacts extends RecyclerView.Adapter<AdpContacts.ViewHolder> {
+public class AdpContact extends RecyclerView.Adapter<AdpContact.ViewHolder> {
 
-    private List<ClssContact> data;
-    public AdpContacts(List<ClssContact> data){this.data = data;}
+    private List<ModelContact> data;
+    public AdpContact(List<ModelContact> data){this.data = data;}
     public static boolean showShimmer = true;
     int cantShimmer = 4;
 
@@ -26,7 +26,7 @@ public class AdpContacts extends RecyclerView.Adapter<AdpContacts.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = null;
-        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_contacts,null,false);
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_contact,null,false);
         return new ViewHolder(view);
     }
 
@@ -69,7 +69,7 @@ public class AdpContacts extends RecyclerView.Adapter<AdpContacts.ViewHolder> {
             btnShimmer1 = itemView.findViewById(R.id.imageViewliEm);
         }
 
-        public void add_data(ClssContact valor) {
+        public void add_data(ModelContact valor) {
             txtContact.setText(valor.getName());
             txtEmail.setText(valor.getEmail());
         }

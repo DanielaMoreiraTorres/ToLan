@@ -36,7 +36,7 @@ public class Niveles extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ActivityLevels.
+     * @return A new instance of fragment ActivityLevel.
      */
     // TODO: Rename and change types and number of parameters
     public static Niveles newInstance(String param1, String param2) {
