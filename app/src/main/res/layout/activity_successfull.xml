@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ActivitySuccessfull">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="vertical"
+        tools:ignore="UselessParent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:id="@+id/lineactmenuadmin"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/plomo"/>
+
+                <View
+                    android:id="@+id/Viewfondo1"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_below="@+id/lineactmenuadmin"
+                    android:background="@color/principal" />
+
+                <View
+                    android:id="@+id/Viewfondo2"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@+id/Viewfondo1"
+                    android:background="@drawable/ic_down" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:fontFamily="sans-serif-black"
+                    android:shadowColor="@color/secundario"
+                    android:shadowRadius="4"
+                    android:text="¡Bien Hecho!"
+                    android:textColor="@color/white"
+                    android:textSize="24sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp">
+
+                <TextView
+                    android:id="@+id/punt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:fontFamily="sans-serif-black"
+                    android:shadowColor="@color/secundario"
+                    android:shadowRadius="4"
+                    android:text="Tu Recompensa"
+                    android:textColor="@color/secundario"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/txtPuntuacion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/punt"
+                    android:layout_centerHorizontal="true"
+                    android:fontFamily="sans-serif-black"
+                    android:shadowColor="@color/principal"
+                    android:shadowRadius="4"
+                    android:drawableStart="@drawable/icon_valor"
+                    android:drawablePadding="10dp"
+                    android:drawableTint="@color/secundario"
+                    android:text="4"
+                    android:textColor="@color/principal"
+                    android:textSize="30sp" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/txtPuntuacion"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@drawable/success" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

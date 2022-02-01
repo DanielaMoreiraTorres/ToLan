@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ActivityGraphomotricity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="vertical"
+        tools:ignore="UselessParent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <View
+            android:id="@+id/lineactmenuadmin"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/plomo"/>
+
+        <View
+            android:id="@+id/Viewfondo1"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_below="@+id/lineactmenuadmin"
+            android:background="@color/principal" />
+
+        <View
+            android:id="@+id/Viewfondo2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@+id/Viewfondo1"
+            android:background="@drawable/ic_down" />
+
+            <TextView
+                android:id="@+id/txtMenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:fontFamily="sans-serif-black"
+                android:shadowColor="@color/secundario"
+                android:shadowRadius="4"
+                android:text="Grafomotricidad"
+                android:textColor="@color/white"
+                android:textSize="24sp" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp">
+
+            <TextView
+                android:id="@+id/enunciado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:text="Graficar la siguiente letra:"
+                android:textColor="@color/secundario"
+                android:textSize="24sp" />
+
+            <ImageView
+                android:id="@+id/imgEnunciado"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="10dp"
+                android:layout_centerInParent="true"
+                android:layout_below="@+id/enunciado"
+                app:srcCompat="@drawable/letrae" />
+
+            <ImageView
+                android:id="@+id/sound"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_below="@+id/enunciado"
+                android:layout_alignBaseline="@+id/imgEnunciado"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@id/imgEnunciado"
+                app:srcCompat="@drawable/icon_audio" />
+
+            <RelativeLayout
+                android:id="@+id/grafo"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/borde2"
+                android:layout_below="@+id/imgEnunciado">
+
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/comprobar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/grafo"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="@color/verde"
+                android:fontFamily="sans-serif-black"
+                android:text="COMPROBAR"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                tools:ignore="ButtonStyle" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>
