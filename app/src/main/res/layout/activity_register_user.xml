@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-    <RelativeLayout
+        <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -62,6 +62,13 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Datos Personales"
+                android:textAlignment="center" />
+
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -71,24 +78,7 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/usuario"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:layout_margin="10dp"
-                        android:hint="Usuario">
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/txtusuario"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:drawableStart="@drawable/ic_id_24"
-                            android:fontFamily="sans-serif-medium"
-                            android:inputType="text"
-                            android:padding="16dp" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
 
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -103,6 +93,7 @@
                             android:id="@+id/nombres"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
                             android:drawableStart="@drawable/user_name"
                             android:fontFamily="sans-serif-medium"
                             android:inputType="textPersonName"
@@ -185,6 +176,62 @@
 
                     </com.google.android.material.textfield.TextInputLayout>
 
+                </LinearLayout>
+
+
+            </ScrollView>
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="Información de Usuario"
+                android:textAlignment="center" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/switch_docent"
+                        android:layout_width="252dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp"
+                        android:checked="false"
+                        android:fontFamily="sans-serif-medium"
+                        android:padding="16dp"
+                        android:text="Es Docente?"
+                        android:textStyle="normal" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/usuario"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_margin="10dp"
+                        android:hint="Usuario">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/txtusuario"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawableStart="@drawable/ic_id_24"
+                            android:fontFamily="sans-serif-medium"
+                            android:inputType="text"
+                            android:padding="16dp" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/Lclave"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -239,9 +286,7 @@
                         android:textColor="@color/white"
                         android:textSize="18sp"
                         android:textStyle="bold" />
-
                 </LinearLayout>
-
             </ScrollView>
 
         </LinearLayout>
