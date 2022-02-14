@@ -1,5 +1,6 @@
 package com.example.tolan.models;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class ModelGroup {

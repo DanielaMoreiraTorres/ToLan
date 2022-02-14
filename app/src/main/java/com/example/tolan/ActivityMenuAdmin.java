@@ -66,7 +66,8 @@ public class ActivityMenuAdmin extends AppCompatActivity {
             startActivity(intent);
         }
         else if(tag == 5){
-
+            Intent intent = new Intent(ActivityMenuAdmin.this, activity_group_admin.class);
+            startActivity(intent);
         }
         else if(tag == 6){
 

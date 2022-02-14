@@ -1,6 +1,7 @@
 package com.example.tolan.models;
 
-public class ModelEstudent {
+
+public class ModelEstudent  {
     private Integer id;
     private Integer idestudiante;
     private String estudiante;
@@ -52,6 +53,9 @@ public class ModelEstudent {
 
     public Boolean getActivo() {
         return activo;
+    }
+    public String getActivoS() {
+        return String.valueOf(activo);
     }
 
     public void setActivo(Boolean activo) {
