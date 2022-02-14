@@ -5,6 +5,7 @@ public class ModelEstudent {
     private Integer idestudiante;
     private String estudiante;
     private String fecha;
+    private Boolean activo;
 
     public ModelEstudent() {
     }
@@ -57,7 +58,7 @@ public class ModelEstudent {
         this.activo = activo;
     }
 
-    private Boolean activo;
+
 
 
 }

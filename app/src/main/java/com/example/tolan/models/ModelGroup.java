@@ -1,25 +1,42 @@
 package com.example.tolan.models;
 
+import java.util.List;
+
 public class ModelGroup {
     private Integer id;
     private Integer iddocente;
     private String docente;
-    private Integer idestudiante;
-    private String estudiante;
-    private String fecha;
-    private Boolean activo;
+    private List<ModelEstudent> estudiantes= null;
 
     public ModelGroup() {
     }
 
-    public ModelGroup(Integer id, Integer iddocente, String docente, Integer idestudiante, String estudiante, String fecha, Boolean activo) {
+    public ModelGroup(Integer id, Integer iddocente, String docente, List<ModelEstudent> estudiantes) {
         this.id = id;
         this.iddocente = iddocente;
         this.docente = docente;
-        this.idestudiante = idestudiante;
-        this.estudiante = estudiante;
-        this.fecha = fecha;
-        this.activo = activo;
+        this.estudiantes = estudiantes;
+    }
+
+    public List<ModelEstudent> getEstudiantes() {
+        return estudiantes;
+    }
+
+    public String getEstudiantesNombre() {
+        String Nombres="Alumnos"+"\n";
+        for(int i=0; i<estudiantes.size();i++)
+            Nombres+=estudiantes.get(i).getEstudiante()+"\n";
+        return Nombres;
+    }
+    public String getEstudiantesT() {
+        return String.valueOf(estudiantes.size());
+    }
+    public Boolean getEstudiantesActivo(Integer pos) {
+        return estudiantes.get(pos).getActivo();
+    }
+
+    public void setEstudiantes(List<ModelEstudent> estudiantes) {
+        this.estudiantes = estudiantes;
     }
 
     public Integer getId() {
@@ -46,35 +63,5 @@ public class ModelGroup {
         this.docente = docente;
     }
 
-    public Integer getIdestudiante() {
-        return idestudiante;
-    }
 
-    public void setIdestudiante(Integer idestudiante) {
-        this.idestudiante = idestudiante;
-    }
-
-    public String getEstudiante() {
-        return estudiante;
-    }
-
-    public void setEstudiante(String estudiante) {
-        this.estudiante = estudiante;
-    }
-
-    public String getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
-    }
-
-    public Boolean getActivo() {
-        return activo;
-    }
-
-    public void setActivo(Boolean activo) {
-        this.activo = activo;
-    }
 }

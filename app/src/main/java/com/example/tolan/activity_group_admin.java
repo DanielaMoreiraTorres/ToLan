@@ -23,7 +23,9 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.tolan.adapters.adpGrupo_Admin;
+import com.example.tolan.models.ModelEstudent;
 import com.example.tolan.models.ModelGroup;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,7 +42,8 @@ public class activity_group_admin extends AppCompatActivity {
     JsonArrayRequest jsArrayRequest;
 
     RecyclerView revistaRcl;
-    ProgressDialog progress;
+    ModelGroup modelGroup;
+    Gson gson;
     ArrayList<ModelGroup> lstGrupos;
 
     @Override
@@ -57,6 +60,7 @@ public class activity_group_admin extends AppCompatActivity {
         lstGrupos = new ArrayList<ModelGroup>();
         String url = "https://db-bartolucci.herokuapp.com/grupo";
         requestQueue = Volley.newRequestQueue(this);
+        gson = new Gson();
         jsArrayRequest = new JsonArrayRequest(Request.Method.GET, URL,null,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -74,35 +78,47 @@ public class activity_group_admin extends AppCompatActivity {
                         Toast.makeText(activity_group_admin.this, "No se ha podido establecer conexión con el servidor" +
                                 " " + volleyError.toString(), Toast.LENGTH_LONG).show();
                         Log.d("ERROR: ", volleyError.toString());
-                        progress.hide();
                     }
                 });
         requestQueue.add(jsArrayRequest);
     }
 
+
     public ArrayList<ModelGroup> parseJson(JSONArray jsonArray) {
         // Variables locales
         ArrayList<ModelGroup> Grupos = new ArrayList();
+        ModelGroup grupo;
 
         try {
             // Obtener el array del objeto
-
             for (int i = 0; i < jsonArray.length(); i++) {
-
+                List<ModelEstudent> estudentList = new ArrayList<>();
                 try {
                     JSONObject objeto = jsonArray.getJSONObject(i);
-
-                    ModelGroup grupo = new ModelGroup(
-                            objeto.getInt("id"),
+                    JSONArray estud = objeto.getJSONArray("estudiantes");
+                    for (int j=0; j < estud.length();j++)
+                    {
+                        if(estud.length()>0) {
+                            JSONObject estud_item = estud.getJSONObject(j);
+                            ModelEstudent tup = new ModelEstudent(
+                                    estud_item.getInt("id"),
+                                    estud_item.getInt("idestudiante"),
+                                    estud_item.getString("estudiante"),
+                                    estud_item.getString("fecha"),
+                                    estud_item.getBoolean("activo"));
+                            int e3= Log.e("datag", String.valueOf(estud_item.getInt("id")));
+                            estudentList.add(tup);
+                            int e5= Log.e("dataf", String.valueOf(estudentList.size()));
+                        }
+                    }
+                    grupo = new ModelGroup(
+                            null,
                             objeto.getInt("iddocente"),
                             objeto.getString("docente"),
-                            objeto.getInt("idestudiante"),
-                            objeto.getString("estudiante"),
-                            objeto.getString("fecha"),
-                            objeto.getBoolean("activo")
+                            estudentList
                     );
-
                     Grupos.add(grupo);
+                    int e2= Log.e("dataNollega",grupo.toString());
 
                 } catch (JSONException e) {
                     int e1 = Log.e("Resu", "Error de parsing: " + e.getMessage());

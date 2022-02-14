@@ -16,6 +16,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tolan.R;
+import com.example.tolan.models.ModelEstudent;
 import com.example.tolan.models.ModelGroup;
 
 import java.util.ArrayList;
@@ -64,9 +65,9 @@ public class adpGrupo_Admin extends RecyclerView.Adapter<adpGrupo_Admin.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull adpGrupo_Admin.MyViewHolder holder, int position) {
         try {
-            holder.lblNombreDocente.setText(mLista.get(position).getDocente());
-            holder.lblDescripcion.setText(mLista.get(position).getEstudiante());
-            holder.lblFecha.setText(mLista.get(position).getFecha());
+            holder.lblNombreDocente.setText("Docente Encargado: "+mLista.get(position).getDocente());
+            holder.lblDescripcion.setText(mLista.get(position).getEstudiantesNombre());
+            holder.lblFecha.setText("Alumnos Totales: "+mLista.get(position).getEstudiantesT());
         } catch (Exception e) {
 
         }
