@@ -54,7 +54,7 @@ public class AdpSubnivel extends RecyclerView.Adapter<AdpSubnivel.RecyclerHolder
         public RecyclerHolder(@NonNull View itemView) {
             super(itemView);
             txtidnivel = itemView.findViewById(R.id.txtID);
-            txtnombre = itemView.findViewById(R.id.txtNombre);
+            txtnombre = itemView.findViewById(R.id.txtNombreDocente);
             txtdescripcion = itemView.findViewById(R.id.txtDescrip);
             txtnumactividades = itemView.findViewById(R.id.txtNumAct);
             btactivo = itemView.findViewById(R.id.btEstado);
