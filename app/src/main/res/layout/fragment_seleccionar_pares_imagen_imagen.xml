@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ActivityIdentifyImg">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.Frg_SeleccionarParesImagenImagen">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -18,9 +18,15 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/toolbar"></include>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
 
                 <View
                     android:id="@+id/lineactmenuadmin"
@@ -28,30 +34,20 @@
                     android:layout_height="2dp"
                     android:background="@color/plomo"/>
 
-                <View
-                    android:id="@+id/Viewfondo1"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_below="@+id/lineactmenuadmin"
-                    android:background="@color/principal" />
-
-                <View
-                    android:id="@+id/Viewfondo2"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_below="@+id/Viewfondo1"
-                    android:background="@drawable/ic_down" />
 
                 <TextView
+
                     android:id="@+id/txtMenu"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:fontFamily="sans-serif-black"
+                    android:gravity="center"
+                    android:padding="30dp"
                     android:shadowColor="@color/secundario"
                     android:shadowRadius="4"
-                    android:text="Identificar la Imagen Correcta"
-                    android:textColor="@color/white"
+                    android:text="Seleccionar Pares"
+                    android:textColor="@color/black"
                     android:textSize="24sp" />
 
             </RelativeLayout>
@@ -59,7 +55,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp">
 
@@ -67,10 +63,10 @@
                     android:id="@+id/enunciado"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="¿Cuál es la bandera del Ecuador?"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text=" Instrucciones: \nSeleccione las imágenes similares y una vez este seguro presione en comprobar."
                     android:textColor="@color/secundario"
-                    android:textSize="24sp" />
+                    android:textSize="15sp" />
 
                 <LinearLayout
                     android:id="@+id/rcv"
@@ -79,7 +75,7 @@
                     android:layout_below="@+id/enunciado"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginBottom="10dp"
                     android:weightSum="2">
 
@@ -105,7 +101,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:tag="1"
-                                app:srcCompat="@drawable/espana" />
+                                app:srcCompat="@drawable/casa" />
 
                         </androidx.cardview.widget.CardView>
 
@@ -122,7 +118,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:tag="1"
-                                app:srcCompat="@drawable/colmbia" />
+                                app:srcCompat="@drawable/cama" />
 
                         </androidx.cardview.widget.CardView>
 
@@ -139,7 +135,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:tag="1"
-                                app:srcCompat="@drawable/ecuador" />
+                                app:srcCompat="@drawable/caja" />
 
                         </androidx.cardview.widget.CardView>
 
@@ -168,7 +164,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:tag="1"
-                                app:srcCompat="@drawable/mexico" />
+                                app:srcCompat="@drawable/casa" />
 
                         </androidx.cardview.widget.CardView>
 
@@ -185,7 +181,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:tag="1"
-                                app:srcCompat="@drawable/nigeria" />
+                                app:srcCompat="@drawable/caja" />
 
                         </androidx.cardview.widget.CardView>
 
@@ -202,7 +198,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:tag="1"
-                                app:srcCompat="@drawable/brasil" />
+                                app:srcCompat="@drawable/cama" />
 
                         </androidx.cardview.widget.CardView>
 
@@ -211,23 +207,26 @@
 
                 </LinearLayout>
 
-            </RelativeLayout>
 
+
+            </RelativeLayout>
             <Button
-                android:id="@+id/comprobar"
-                android:layout_width="match_parent"
+                android:id="@+id/btn_comprobar_actividades"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/rcv"
-                android:layout_marginTop="10dp"
-                android:backgroundTint="@color/verde"
-                android:fontFamily="sans-serif-black"
-                android:text="COMPROBAR"
+                android:layout_gravity="center"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/custom_button_edit"
+                android:minHeight="48dp"
+
+                android:text="Comprobar"
+                android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textSize="12sp"
-                tools:ignore="ButtonStyle" />
+                tools:ignore="TouchTargetSizeCheck" />
 
         </LinearLayout>
 
     </ScrollView>
 
-</RelativeLayout>
+</FrameLayout>
