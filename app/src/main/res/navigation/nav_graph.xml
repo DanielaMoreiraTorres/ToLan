@@ -48,4 +48,29 @@
         android:name="com.example.tolan.fragments.Frg_SeleccionarParesImagenImagen"
         android:label="fragment_seleccionar_pares_imagen_imagen"
         tools:layout="@layout/fragment_seleccionar_pares_imagen_imagen" />
+    <fragment
+        android:id="@+id/fragmentGrafomotricidad"
+        android:name="com.example.tolan.fragments.Frg_Grafomotricidad"
+        android:label="fragment_grafomotricidad"
+        tools:layout="@layout/fragment_grafomotricidad" />
+    <fragment
+        android:id="@+id/fragmentIdentificarRespuestaImagen"
+        android:name="com.example.tolan.fragments.Frg_IdentificarRespuestaImagen"
+        android:label="fragment_identificar_respuesta_imagen"
+        tools:layout="@layout/fragment_identificar_respuesta_imagen" />
+    <fragment
+        android:id="@+id/fragmentIdentificarRespuestaPalabra"
+        android:name="com.example.tolan.fragments.Frg_IdentificarRespuestaPalabra"
+        android:label="fragment_identificar_respuesta_palabra"
+        tools:layout="@layout/fragment_identificar_respuesta_palabra" />
+    <fragment
+        android:id="@+id/fragmentOrdenarSecuenciasImagenes"
+        android:name="com.example.tolan.fragments.Frg_OrdenarSecuenciasImagenes"
+        android:label="fragment_ordenar_secuencias_imagenes"
+        tools:layout="@layout/fragment_ordenar_secuencias_imagenes" />
+    <fragment
+        android:id="@+id/fragmentSeleccionarParesImagenTexto"
+        android:name="com.example.tolan.fragments.Frg_SeleccionarParesImagenTexto"
+        android:label="fragment_seleccionar_pares_imagen_texto"
+        tools:layout="@layout/fragment_seleccionar_pares_imagen_texto" />
 </navigation>

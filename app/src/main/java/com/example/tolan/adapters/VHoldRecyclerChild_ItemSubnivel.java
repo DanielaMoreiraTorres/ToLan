@@ -70,8 +70,21 @@ public class VHoldRecyclerChild_ItemSubnivel extends RecyclerView.ViewHolder imp
                     navController.navigate(R.id.fragmentReconocerFiguras, bundle);
                     break;
 
-                case "Identificar entre palabras":
-                    Toast.makeText(v.getContext(), "Layout Identificar entre palabras no existe", Toast.LENGTH_SHORT).show();
+                case "Ordenar la secuencia":
+                    Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
+                    navController.navigate(R.id.fragmentOrdenarSecuenciasImagenes, bundle);
+                    break;
+
+                case "Identificar respuesta entre palabras":
+                    Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
+                    navController.navigate(R.id.fragmentIdentificarRespuestaPalabra, bundle);
+                    //Toast.makeText(v.getContext(), "Layout Identificar entre palabras no existe", Toast.LENGTH_SHORT).show();
+                    break;
+
+                case "Identificar respuesta entre imagenes":
+                    Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
+                    navController.navigate(R.id.fragmentIdentificarRespuestaImagen, bundle);
+                    //Toast.makeText(v.getContext(), "Layout Identificar entre palabras no existe", Toast.LENGTH_SHORT).show();
                     break;
 
                 case "Armar rompecabezass":
@@ -79,11 +92,21 @@ public class VHoldRecyclerChild_ItemSubnivel extends RecyclerView.ViewHolder imp
                     break;
 
                 case "Seleccionar pares. - Imagen-Texto":
-                    Toast.makeText(v.getContext(), "Layout Seleccionar pares. - Imagen-Texto no existe", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
+                    navController.navigate(R.id.fragmentSeleccionarParesImagenTexto, bundle);
+                    //Toast.makeText(v.getContext(), "Layout Seleccionar pares. - Imagen-Texto no existe", Toast.LENGTH_SHORT).show();
+                    break;
+
+                case "Seleccionar pares. - Imagen-Imagen":
+                    Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
+                    navController.navigate(R.id.fragmentSeleccionarParesImagenImagen, bundle);
+                    //Toast.makeText(v.getContext(), "Layout Seleccionar pares. - Imagen-Texto no existe", Toast.LENGTH_SHORT).show();
                     break;
 
                 case "Grafomotricidad":
-                    Toast.makeText(v.getContext(), "Layout Grafomotricidad no existe", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
+                    navController.navigate(R.id.fragmentGrafomotricidad, bundle);
+                    //Toast.makeText(v.getContext(), "Layout Grafomotricidad no existe", Toast.LENGTH_SHORT).show();
                     break;
 
                 case "Arrastrar y Soltar":

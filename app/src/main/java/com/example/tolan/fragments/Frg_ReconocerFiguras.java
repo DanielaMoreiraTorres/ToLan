@@ -93,22 +93,33 @@ public class Frg_ReconocerFiguras extends Fragment implements View.OnClickListen
         if (lstitem_Activities.size() > 0) {
             //Pasamos al siguiente fragmento
             actividad = lstitem_Activities.get(0);
+            lstitem_Activities.remove(0);
+            bundle = new Bundle();
+            bundle.putStringArrayList("activities", lstitem_Activities);
 
 
             switch (actividad) {
+                //El case nos permitira redireccionar hacia el Layout correspondiente para navegar hacia el
                 case "Reconocer figuras":
-                    lstitem_Activities.remove(0);
                     Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
-                    bundle = new Bundle();
-
-                    bundle.putStringArrayList("activities", lstitem_Activities);
-
-
                     navController.navigate(R.id.fragmentReconocerFiguras, bundle);
                     break;
 
-                case "Identificar entre palabras":
-                    Toast.makeText(v.getContext(), "Layout Identificar entre palabras no existe", Toast.LENGTH_SHORT).show();
+                case "Ordenar la secuencia":
+                    Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
+                    navController.navigate(R.id.fragmentOrdenarSecuenciasImagenes, bundle);
+                    break;
+
+                case "Identificar respuesta entre palabras":
+                    Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
+                    navController.navigate(R.id.fragmentIdentificarRespuestaPalabra, bundle);
+                    //Toast.makeText(v.getContext(), "Layout Identificar entre palabras no existe", Toast.LENGTH_SHORT).show();
+                    break;
+
+                case "Identificar respuesta entre imagenes":
+                    Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
+                    navController.navigate(R.id.fragmentIdentificarRespuestaImagen, bundle);
+                    //Toast.makeText(v.getContext(), "Layout Identificar entre palabras no existe", Toast.LENGTH_SHORT).show();
                     break;
 
                 case "Armar rompecabezass":
@@ -116,19 +127,25 @@ public class Frg_ReconocerFiguras extends Fragment implements View.OnClickListen
                     break;
 
                 case "Seleccionar pares. - Imagen-Texto":
-                    Toast.makeText(v.getContext(), "Layout Seleccionar pares. - Imagen-Texto no existe", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
+                    navController.navigate(R.id.fragmentSeleccionarParesImagenTexto, bundle);
+                    //Toast.makeText(v.getContext(), "Layout Seleccionar pares. - Imagen-Texto no existe", Toast.LENGTH_SHORT).show();
+                    break;
+
+                case "Seleccionar pares. - Imagen-Imagen":
+                    Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
+                    navController.navigate(R.id.fragmentSeleccionarParesImagenImagen, bundle);
+                    //Toast.makeText(v.getContext(), "Layout Seleccionar pares. - Imagen-Texto no existe", Toast.LENGTH_SHORT).show();
                     break;
 
                 case "Grafomotricidad":
-                    Toast.makeText(v.getContext(), "Layout Grafomotricidad no existe", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
+                    navController.navigate(R.id.fragmentGrafomotricidad, bundle);
+                    //Toast.makeText(v.getContext(), "Layout Grafomotricidad no existe", Toast.LENGTH_SHORT).show();
                     break;
 
                 case "Arrastrar y Soltar":
-                    lstitem_Activities.remove(0);
                     Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
-                    bundle = new Bundle();
-                    bundle.putStringArrayList("activities", lstitem_Activities);
-
                     navController.navigate(R.id.fragmentArrastrarSoltar, bundle);
                     break;
             }
