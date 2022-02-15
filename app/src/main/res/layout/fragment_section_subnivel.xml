@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="25dp">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/profileCard"
+
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="100dp"
+                    android:layout_marginEnd="50dp"
+
+                    app:cardCornerRadius="10dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="100dp"
+                        android:layout_marginBottom="10dp"
+
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/sectionNameTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/baloo"
+                            android:text="Sección 1"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"
+                            android:textSize="25sp" />
+
+                        <ProgressBar
+                            android:id="@+id/barra_progreso"
+                            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                            android:layout_width="190dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/sectionNameTextView"
+                            android:layout_centerInParent="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginLeft="15dp"
+                            android:backgroundTint="#3F51B5"
+                            android:max="100"
+                            android:progress="50" />
+
+                        <ImageView
+
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_alignBottom="@id/barra_progreso"
+
+
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginBottom="-1.5dp"
+
+
+                            android:src="@drawable/img_3" />
+
+
+                        <TextView
+                            android:id="@+id/txtactividades_completadas"
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignTop="@id/barra_progreso"
+                            android:layout_alignBottom="@id/barra_progreso"
+                            android:layout_centerInParent="true"
+                            android:layout_marginLeft="10dp"
+
+                            android:layout_marginBottom="-3dp"
+
+
+                            android:fontFamily="@font/baloo"
+                            android:text="1 / 4"
+                            android:textColor="@color/black"
+                            android:textSize="10sp" />
+
+
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/imageView_section"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    android:elevation="60dp"
+                    android:src="@drawable/game_activity" />
+
+            </RelativeLayout>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/childRecyclerView"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-40dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="MissingConstraints" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="25dp">
+
+                <ImageView
+                    android:id="@+id/img"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+
+                    android:src="@drawable/img_4" />
+
+                <TextView
+                    android:id="@+id/txt_numeroNivel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/img"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/baloo"
+                    android:text="Nivel 1"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="25sp" />
+
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/civ1"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_below="@id/txt_numeroNivel"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="20dp"
+                    android:src="@color/plomo" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/civ2"
+
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_below="@id/civ1"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@color/plomo" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/civ3"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_below="@id/civ2"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@color/plomo" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</FrameLayout>

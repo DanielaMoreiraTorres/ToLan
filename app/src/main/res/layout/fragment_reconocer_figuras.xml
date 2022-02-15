@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.Frg_ReconocerFiguras">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar"></include>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rl_superior"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="sans-serif-black"
+            android:gravity="center"
+            android:padding="30dp"
+            android:text="Reconocer Figuras"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            tools:ignore="NotSibling" />
+
+
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed"
+            android:padding="10dp"
+            android:text="Instrucciones: \nLa actividad consiste en responder una pregunta acorde a la figura presentada al usuario"
+            android:textSize="15dp" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical"
+            android:padding="20dp"
+            tools:ignore="MissingConstraints">
+
+            <ImageView
+                android:id="@+id/civ_actividad_id"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:scaleType="fitXY"
+                android:src="@drawable/cuadrado" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-black"
+                android:text="¿Que figura es?, Elija la alternativa correcta por favor"
+                android:textAlignment="center"
+                android:textSize="20dp" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed-light"
+                android:padding="10dp"
+                android:text="Opción A.- Es un Triangulo"
+                android:textAlignment="textStart"
+                android:textSize="20dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed-light"
+                android:padding="10dp"
+                android:text="Opción B.- Es un Circulo"
+                android:textAlignment="textStart"
+                android:textSize="20dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed-light"
+                android:padding="10dp"
+                android:text="Opción C.- Es un Cuadrado"
+                android:textAlignment="textStart"
+                android:textSize="20dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed-light"
+                android:padding="10dp"
+                android:text="Opción A.- Es un Rectángulo"
+                android:textAlignment="textStart"
+                android:textSize="20dp" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_comprobar_actividades"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/custom_button_edit"
+            android:minHeight="48dp"
+
+            android:text="Comprobar"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            tools:ignore="TouchTargetSizeCheck" />
+
+
+    </LinearLayout>
+
+</ScrollView>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/inicioFragment">
+
+    <fragment
+        android:id="@+id/inicioFragment"
+        android:name="com.example.tolan.fragments.Frg_HomeFragment"
+        android:label="fragment_inicio"
+        tools:layout="@layout/fragment_inicio">
+
+        <!--
+       <action
+           android:id="@+id/action_inicioFragment_to_fragmentPrueba"
+           app:destination="@id/fragmentPrueba"
+           />
+           -->
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentReconocerFiguras"
+        android:name="com.example.tolan.fragments.Frg_ReconocerFiguras"
+        android:label="fragment_ReconocerFiguras"
+        tools:layout="@layout/fragment_reconocer_figuras">
+
+        <!--
+       <action
+           android:id="@+id/action_fragmentPrueba_to_tercerFragment"
+           app:destination="@id/tercerFragment" />
+           -->
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentArrastrarSoltar"
+        android:name="com.example.tolan.fragments.Frg_ArrastrarSoltar"
+        android:label="fragment_ArrastrarSoltar"
+        tools:layout="@layout/fragment_arrastrar_soltar">
+        <!--
+        <action
+            android:id="@+id/action_tercerFragment_to_inicioFragment"
+            app:destination="@id/inicioFragment"
+            app:popUpTo="@+id/inicioFragment"
+            app:popUpToInclusive="true"/>
+            -->
+    </fragment>
+</navigation>

@@ -16,6 +16,9 @@
         android:theme="@style/Theme.ToLan.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ActivityHomeUser"
+            android:exported="false" />
+        <activity
             android:name=".ActivityEstudents"
             android:exported="false" />
         <activity

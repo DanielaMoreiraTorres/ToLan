@@ -39,18 +39,18 @@ public class ActivityLogin extends AppCompatActivity {
         btnLogin.setOnClickListener(v -> Login());
     }
 
-    public void Login(){
+    public void Login() {
         user = findViewById(R.id.txtuser);
         password = findViewById(R.id.txtPass);
-        if(!user.getText().toString().isEmpty() & !password.getText().toString().isEmpty())
-                getUsuario();
+        if (!user.getText().toString().isEmpty() & !password.getText().toString().isEmpty())
+            getUsuario();
         else
-            Toast.makeText(ActivityLogin.this,"Usuario y/o clave incorrectos",Toast.LENGTH_LONG).show();
+            Toast.makeText(ActivityLogin.this, "Usuario y/o clave incorrectos", Toast.LENGTH_LONG).show();
     }
 
-    public void getUsuario(){
+    public void getUsuario() {
         // Crear nueva cola de peticiones
-        requestQueue= Volley.newRequestQueue(ActivityLogin.this);
+        requestQueue = Volley.newRequestQueue(ActivityLogin.this);
         //Parámetros a enviar a la API
         Map<String, String> parameters = new HashMap<>();
         parameters.put("username", user.getText().toString());
@@ -63,7 +63,7 @@ public class ActivityLogin extends AppCompatActivity {
                             tipousuario = response.get("tipousuario").toString();
                             Iniciar(tipousuario);
                         } catch (Exception e) {
-                            Toast.makeText(ActivityLogin.this,"Usuario y/o clave incorrectos",Toast.LENGTH_LONG).show();
+                            Toast.makeText(ActivityLogin.this, "Usuario y/o clave incorrectos", Toast.LENGTH_LONG).show();
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -76,10 +76,12 @@ public class ActivityLogin extends AppCompatActivity {
         requestQueue.add(request_json);
     }
 
-    public void Iniciar(String tipouser){
+    public void Iniciar(String tipouser) {
         Intent intent;
-        if(tipouser.equals("AD"))
+        if (tipouser.equals("AD"))
             intent = new Intent(ActivityLogin.this, ActivityMenuAdmin.class);
+        else if (tipouser.equals("ES"))
+            intent = new Intent(ActivityLogin.this, ActivityHomeUser.class);
         else
             intent = new Intent(ActivityLogin.this, ActivityLogin.class);
         //Creamos la información a pasar entre actividades

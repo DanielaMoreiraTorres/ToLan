@@ -1,11 +1,11 @@
 package com.example.tolan.models;
 
-public class RecyclerItemActividad {
+public class ModelRecyclerItemActividad {
 
     private int id;
     private String activityName;
 
-    public RecyclerItemActividad(int id, String activityName) {
+    public ModelRecyclerItemActividad(int id, String activityName) {
         this.id = id;
         this.activityName = activityName;
     }
