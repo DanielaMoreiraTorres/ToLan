@@ -6,12 +6,13 @@ public class ModelUser {
     String usuario;
     String clave;
     String tipousuario;
-    String nombre;
-    String apellido;
+    String estudiante;
+    String docente;
+    String nombres;
+    String apellidos;
     String fechanacimiento;
     String correo;
     String telefono;
-    String direccion;
     int stockcaritas;
     boolean activo;
 
@@ -47,20 +48,36 @@ public class ModelUser {
         this.tipousuario = tipousuario;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getEstudiante() {
+        return estudiante;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setEstudiante(String estudiante) {
+        this.estudiante = estudiante;
     }
 
-    public String getApellido() {
-        return apellido;
+    public String getDocente() {
+        return docente;
     }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
+    public void setDocente(String docente) {
+        this.docente = docente;
+    }
+
+    public String getNombres() {
+        return nombres;
+    }
+
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
+    }
+
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
     }
 
     public String getFechanacimiento() {
@@ -85,14 +102,6 @@ public class ModelUser {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
     }
 
     public int getStockcaritas() {

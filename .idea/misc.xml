@@ -16,8 +16,10 @@
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/drawable-anydpi/icon_copyright.xml" value="0.19583333333333333" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/drawable-anydpi/icon_delete.xml" value="0.19583333333333333" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/drawable-anydpi/icon_edit.xml" value="0.19583333333333333" />
+        <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/drawable-anydpi/icon_editt.xml" value="0.10277777777777777" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/drawable-anydpi/icon_email.xml" value="0.19583333333333333" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/drawable-anydpi/icon_info.xml" value="0.19583333333333333" />
+        <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/drawable-anydpi/icon_login.xml" value="0.19583333333333333" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/drawable-anydpi/icon_logout.xml" value="0.19583333333333333" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/drawable-anydpi/icon_new.xml" value="0.19583333333333333" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/drawable-anydpi/icon_notification.xml" value="0.19583333333333333" />
@@ -48,6 +50,7 @@
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/activity_contacts.xml" value="0.22" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/activity_graphomotricity.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/activity_identify_img.xml" value="0.1796875" />
+        <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/activity_level.xml" value="0.22" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/activity_login.xml" value="0.1796875" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/activity_loginn.xml" value="0.22" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/activity_main.xml" value="0.13994565217391305" />
@@ -59,16 +62,28 @@
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/activity_niveles.xml" value="0.22" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/activity_order_sequences.xml" value="0.165625" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/activity_register.xml" value="0.22" />
-        <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/activity_register_user.xml" value="0.1796875" />
+        <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/activity_register_user.xml" value="0.20245398773006135" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/activity_select_pairs_img_img.xml" value="0.1796875" />
+        <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/activity_skin.xml" value="0.1" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/activity_skins.xml" value="0.1796875" />
+        <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/activity_sublevel.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/activity_subnivel.xml" value="0.1796875" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/activity_successfull.xml" value="0.22" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/activity_welcome.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_frg_level.xml" value="0.1796875" />
+        <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_frg_login.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_frg_menu_admin.xml" value="0.1796875" />
+        <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_frg_menu_docente.xml" value="0.1796875" />
+        <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_frg_register_user.xml" value="0.22" />
+        <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_frg_welcome.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_niveles.xml" value="0.13333333333333333" />
+        <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/item_contact.xml" value="0.1796875" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/item_contacts.xml" value="0.1796875" />
+        <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/item_level.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/item_niveles.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/item_skins.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/item_sublevel.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/item_suggestion_docente.xml" value="0.22" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/item_videos.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/items_subnivel.xml" value="0.1796875" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/items_subnv_editar.xml" value="0.3333333333333333" />
@@ -121,5 +136,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="SuppressABINotification">
+    <option name="modulesWithSuppressedNotConfigured">
+      <set>
+        <option value="ToLan.app" />
+      </set>
+    </option>
   </component>
 </project>

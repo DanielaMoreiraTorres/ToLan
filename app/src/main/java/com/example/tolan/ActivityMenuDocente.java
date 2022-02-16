@@ -12,7 +12,7 @@ import android.view.View;
 
 public class ActivityMenuDocente extends AppCompatActivity {
 
-    Toolbar toolbar;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,7 @@ public class ActivityMenuDocente extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void OptionsMenu(View view){
+    public void OptionsMenuDocente(View view){
         int tag = Integer.parseInt(view.getTag().toString());
         //Toast.makeText(ActivityMenuAdmin.this,String.valueOf(id),Toast.LENGTH_SHORT).show();
         if(tag == 1) {

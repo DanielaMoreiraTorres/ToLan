@@ -1,18 +1,22 @@
-package com.example.tolan;
+package com.example.tolan.fragments;
+
+import android.content.Intent;
+import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
-import com.example.tolan.R;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -21,6 +25,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.tolan.ActivityAddLevel;
+import com.example.tolan.ActivityContact;
+import com.example.tolan.ActivityLevel;
+import com.example.tolan.ActivitySublevel;
+import com.example.tolan.R;
 import com.example.tolan.adapters.AdpLevel;
 import com.example.tolan.models.ModelLevel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -34,9 +43,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class ActivityLevel extends AppCompatActivity {
+public class FrgLevel extends Fragment {
 
     private Toolbar toolbar;
+    private Fragment fragment;
     private FloatingActionButton fab;
     private RecyclerView rcvLevels;
     private RequestQueue requestQueue;
@@ -47,58 +57,51 @@ public class ActivityLevel extends AppCompatActivity {
     ModelLevel levelSelected = new ModelLevel();
     Bundle bundle;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_level);
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
+    public FrgLevel() {
+        // Required empty public constructor
+    }
 
+    public static FrgLevel newInstance(String param1, String param2) {
+        FrgLevel fragment = new FrgLevel();
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+        }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_frg_level, container, false);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
+        setHasOptionsMenu(true);
         levels = new ArrayList<>();
         //Vincular instancia del recyclerview
-        rcvLevels = (RecyclerView) findViewById(R.id.rcvNiveles);
+        rcvLevels = (RecyclerView) view.findViewById(R.id.rcvNiveles);
         //Definir la forma de la lista vertical
-        rcvLevels.setLayoutManager(new LinearLayoutManager(ActivityLevel.this));
+        rcvLevels.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        fab = findViewById(R.id.addNivel);
+        fab = view.findViewById(R.id.addNivel);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ActivityLevel.this, ActivityAddLevel.class);
+                Intent intent = new Intent(getContext(), ActivityAddLevel.class);
                 startActivity(intent);
             }
         });
 
         getLevels();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_toolbar,menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        if(id == R.id.btnNotifi) {
-
-        }
-        if(id == R.id.btnLogIn) {
-            Intent intent = new Intent(this, ActivityLogin.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivity(intent);
-        }
-        if(id == R.id.btnContacts) {
-            Intent intent = new Intent(this, ActivityContact.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivity(intent);
-        }
-        return super.onOptionsItemSelected(item);
+        return view;
     }
 
     public void getLevels(){
         // Crear nueva cola de peticiones
-        requestQueue = Volley.newRequestQueue(this);
+        requestQueue = Volley.newRequestQueue(getContext());
         jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -123,7 +126,7 @@ public class ActivityLevel extends AppCompatActivity {
                                     return new Integer(l1.getPrioridad()).compareTo(new Integer(l2.getPrioridad()));
                                 }
                             });
-                            adpLevel = new AdpLevel(ActivityLevel.this, levels);
+                            adpLevel = new AdpLevel(getContext(), levels);
                             rcvLevels.setAdapter(adpLevel);
                             adpLevel.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -132,14 +135,14 @@ public class ActivityLevel extends AppCompatActivity {
                                     levelSelected = levels.get(opcselec);
                                     bundle = new Bundle();
                                     bundle.putString("levelSelected", new Gson().toJson(levelSelected));
-                                    Intent intent = new Intent(ActivityLevel.this, ActivitySublevel.class);
+                                    Intent intent = new Intent(getContext(), ActivitySublevel.class);
                                     intent.putExtras(bundle);
                                     startActivity(intent);
                                 }
                             });
                         }catch (JSONException e){
                             e.printStackTrace();
-                            Toast.makeText(ActivityLevel.this,e.toString(),Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(),e.toString(),Toast.LENGTH_LONG).show();
                         }
                     }
                 },
@@ -148,7 +151,7 @@ public class ActivityLevel extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         VolleyLog.e("Error: ", error.getMessage());
                     }
-        });
+                });
         requestQueue.add(jsonArrayRequest);
     }
 }

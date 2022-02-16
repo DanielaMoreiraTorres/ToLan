@@ -1,35 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ActivitySublevel">
+    tools:context=".fragments.FrgLevel">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include
-            android:id="@+id/toolbar"
-            layout="@layout/toolbar"></include>
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <View
-                android:id="@+id/lineactsubniv"
+                android:id="@+id/lineactniv"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:background="@color/plomo"/>
+                android:background="@color/plomo" />
 
             <View
                 android:id="@+id/Viewfondo1"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:layout_below="@+id/lineactsubniv"
+                android:layout_below="@+id/lineactniv"
                 android:background="@color/principal" />
 
             <View
@@ -40,7 +36,7 @@
                 android:background="@drawable/ic_down" />
 
             <TextView
-                android:id="@+id/lblTiTleSubNiv"
+                android:id="@+id/lblTiTleNiv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -49,7 +45,7 @@
                 android:fontFamily="sans-serif-black"
                 android:shadowColor="@color/secundario"
                 android:shadowRadius="4"
-                android:text="@string/subniveles"
+                android:text="@string/niveles"
                 android:textColor="@color/white"
                 android:textSize="24sp" />
 
@@ -59,7 +55,7 @@
                 android:layout_height="130dp"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="10dp"
-                android:src="@drawable/subnivel"
+                android:src="@drawable/nivel"
                 app:civ_border_color="@color/plomo"
                 app:civ_border_width="2dp"
                 app:civ_circle_background_color="@color/white" />
@@ -74,7 +70,7 @@
             android:padding="5dp">
 
             <androidx.appcompat.widget.SearchView
-                android:id="@+id/busquedaSubniv"
+                android:id="@+id/busquedaNiv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -82,42 +78,12 @@
                 android:background="@drawable/borde2"
                 android:iconifiedByDefault="false"
                 app:defaultQueryHint="@string/searchNivel"
-                app:queryHint="@string/searchNivel" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp"
-            android:padding="5dp">
-
-            <TextView
-                android:id="@+id/lblNivel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginEnd="10dp"
-                android:layout_weight="1"
-                android:fontFamily="sans-serif-medium"
-                android:text="@string/nivel"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large.Inverse"
-                android:textColor="@color/secundario"
-                android:textSize="22sp"
-                android:textStyle="bold" />
-
-            <Spinner
-                android:id="@+id/cbbNivel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textSize="18sp" />
+                app:queryHint="@string/searchSubnivel" />
 
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcvSubnivel"
+            android:id="@+id/rcvNiveles"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
@@ -128,15 +94,15 @@
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addSubNivel"
+        android:id="@+id/addNivel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         android:src="@drawable/icon_new"
-        app:maxImageSize="30dp"
         app:backgroundTint="@color/principal"
+        app:maxImageSize="30dp"
         app:tint="@color/white" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</FrameLayout>

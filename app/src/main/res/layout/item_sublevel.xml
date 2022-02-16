@@ -1,91 +1,197 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewSubniveles"
+        style="@style/CardView.Light"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:padding="40dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="5dp"
+        app:cardCornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="144dp"
-        android:layout_height="246dp"
-        app:srcCompat="@drawable/nino" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="150dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/txtID"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/round_border"
-            android:padding="5dp"
-            android:text="TextView" />
+            android:background="@drawable/borde"
+            android:padding="8dp">
 
-        <TextView
-            android:id="@+id/txtNombreDocente"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/round_border"
-            android:padding="5dp"
-            android:text="TextView" />
+            <ImageView
+                android:id="@+id/imgSubnivel"
+                android:layout_width="135dp"
+                android:layout_height="170dp"
+                android:layout_centerVertical="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/subnivel" />
 
-        <TextView
-            android:id="@+id/txtDescrip"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/round_border"
-            android:padding="5dp"
-            android:text="TextView" />
-
-        <TextView
-            android:id="@+id/txtNumAct"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/round_border"
-            android:padding="5dp"
-            android:text="TextView" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btEditar"
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/lblId"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Editar" />
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_toEndOf="@+id/imgSubnivel"
+                android:alpha="0.6"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/idT"
+                android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/btEliminar"
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/txtId"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Eliminar" />
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_toEndOf="@+id/lblId"
+                android:alpha="0.6"
+                android:text="@string/id" />
 
-            <Button
-                android:id="@+id/btEstado"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Activo" />
-        </LinearLayout>
-    </LinearLayout>
+                android:orientation="vertical">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/editarN"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:fabSize="mini"
+                    android:layout_gravity="end"
+                    app:backgroundTint="@color/principal"
+                    app:srcCompat="@drawable/icon_editt"
+                    app:tint="@color/white" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/lblTitleSubniv"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblId"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_toEndOf="@+id/imgSubnivel"
+                android:alpha="0.6"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/subnivel"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtTitleSubnivel"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtId"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_toEndOf="@+id/lblId"
+                android:alpha="0.6"
+                android:text="@string/subniv" />
+
+            <TextView
+                android:id="@+id/lblDescription"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblTitleSubniv"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@+id/imgSubnivel"
+                android:alpha="0.6"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/descripcion"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtDescription"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtTitleSubnivel"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@+id/lblDescription"
+                android:alpha="0.6"
+                android:text="@string/desc" />
+
+            <TextView
+                android:id="@+id/lblNumAct"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblDescription"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@+id/imgSubnivel"
+                android:alpha="0.6"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/numact"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtNumAct"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtDescription"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@+id/lblDescription"
+                android:alpha="0.6"
+                android:text="@string/numac" />
+
+            <TextView
+                android:id="@+id/lblPrioridad"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblNumAct"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@+id/imgSubnivel"
+                android:alpha="0.6"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/prioriT"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtPrioridad"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblNumAct"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@+id/lblDescription"
+                android:alpha="0.6"
+                android:text="@string/priori" />
+
+            <CheckBox
+                android:id="@+id/checkBoxSubnivel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblPrioridad"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@+id/imgSubnivel"
+                android:alpha="0.6"
+                android:checked="true"
+                android:enabled="false"
+                android:fontFamily="sans-serif-medium"
+                android:text="Activo"
+                android:textColor="@color/secundario" />
+
+        </RelativeLayout>
+
     </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

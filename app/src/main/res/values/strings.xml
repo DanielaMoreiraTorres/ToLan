@@ -9,10 +9,14 @@
     <string name="registrarse">Registrarse</string>
     <string name="iniciar_sesion">Ingresar</string>
     <!-- Activity Activity Login -->
-    <string name="login">Inicio de Sesión</string>
-    <!-- Activity Activity Register User -->
-    <string name="reg">Registro de Usuario</string>
+    <string name="login">Inicio de sesión</string>
     <string name="forget">Olvidó su clave?</string>
+    <!-- Activity Activity Register User -->
+    <string name="reg">Registro de usuario</string>
+    <string name="dtperson">Datos personales</string>
+    <string name="dtusuario">Datos de usuario</string>
+    <string name="esDoc">Es docente?  </string>
+
     <!-- Activity Activity Menu Admin -->
     <string name="menu">Menú Administrador</string>
     <string name="niveles">Niveles</string>
@@ -26,31 +30,41 @@
     <string name="usuarios">Usuarios</string>
     <!-- Menú Toolbar -->
     <string name="notifi">Notificaciones</string>
-    <string name="cerrar">Cerrar Sesión</string>
+    <string name="cerrar">Cerrar sesión</string>
     <string name="contactos">Contactos</string>
     <!-- Activity Levels -->
-    <string name="titleNiv">Niveles</string>
+    <string name="searchNivel">Buscar nivel</string>
     <!-- Item Activity Levels -->
+    <string name="idT">Id:</string>
+    <string name="id">Id</string>
     <string name="nivel">Nivel:</string>
     <string name="niv">Nivel</string>
     <string name="descripcion">Descripción:</string>
     <string name="desc">Descripción</string>
-    <string name="searchNivel">Buscar Nivel</string>
+    <string name="prioriT">Prioridad:</string>
+    <string name="priori">Prioridad</string>
     <!-- Activity Add Level -->
-    <string name="addnivel">Ingrese Datos del Nivel</string>
+    <string name="addnivel">Ingrese datos del nivel</string>
     <string name="aceptar">Aceptar</string>
+    <!-- Activity Sublevels -->
+    <string name="searchSubnivel">Buscar subnivel</string>
+    <!-- Item Activity Levels -->
+    <string name="subnivel">Subnivel:</string>
+    <string name="subniv">Subnivel</string>
+    <string name="numact">Núm. Actividades:</string>
+    <string name="numac">Núm. Actividades</string>
     <!-- Activity Activity Skins -->
     <string name="titleSkins">Artículos</string>
     <string name="skin">Artículo:</string>
     <string name="valor">Valor:</string>
-    <string name="lblobjeto">Nombre Artículo</string>
+    <string name="lblobjeto">Nombre artículo</string>
     <!-- Item Activity Skins -->
-    <string name="searchSkin">Buscar Artículo</string>
+    <string name="searchSkin">Buscar artículo</string>
     <string name="val">Valor</string>
     <!-- Activity Add Skin -->
-    <string name="addskin">Ingrese Datos del Artículo</string>
+    <string name="addskin">Ingrese datos del artículo</string>
     <!-- Activity Choose Video -->
-    <string name="choosevid">Seleccione Uno o Varios Videos</string>
+    <string name="choosevid">Seleccione Uno o varios videos</string>
     <string name="limitevid">Límite de 10 videos</string>
     <!-- Activity Activity Contacts -->
     <string name="masinfo">Más información</string>

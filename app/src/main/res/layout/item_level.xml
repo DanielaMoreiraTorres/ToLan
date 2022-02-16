@@ -9,10 +9,7 @@
         style="@style/CardView.Light"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="5dp"
+        android:layout_margin="5dp"
         app:cardCornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,15 +24,59 @@
             <ImageView
                 android:id="@+id/imgNivel"
                 android:layout_width="135dp"
-                android:layout_height="150dp"
+                android:layout_height="170dp"
+                android:layout_centerVertical="true"
                 android:scaleType="fitXY"
                 android:src="@drawable/nivel" />
+
+            <TextView
+                android:id="@+id/lblId"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_toEndOf="@+id/imgNivel"
+                android:alpha="0.6"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/idT"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtId"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_toEndOf="@+id/lblId"
+                android:alpha="0.6"
+                android:text="@string/id" />
+
+            <LinearLayout
+                android:id="@+id/content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/editarN"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    app:backgroundTint="@color/principal"
+                    app:fabSize="mini"
+                    app:srcCompat="@drawable/icon_editt"
+                    app:tint="@color/white" />
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/lblTitleNiv"
                 style="@style/TextAppearance.AppCompat.Body1"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/txtId"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="15dp"
                 android:layout_toEndOf="@+id/imgNivel"
@@ -49,9 +90,10 @@
                 style="@style/TextAppearance.AppCompat.Body1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/txtId"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="15dp"
-                android:layout_toEndOf="@+id/lblTitleNiv"
+                android:layout_toEndOf="@+id/lblId"
                 android:alpha="0.6"
                 android:text="@string/niv" />
 
@@ -80,6 +122,47 @@
                 android:layout_toEndOf="@+id/lblDescription"
                 android:alpha="0.6"
                 android:text="@string/desc" />
+
+            <TextView
+                android:id="@+id/lblPrioridad"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtDescription"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@+id/imgNivel"
+                android:alpha="0.6"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/prioriT"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtPrioridad"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtDescription"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@+id/lblDescription"
+                android:alpha="0.6"
+                android:text="@string/priori" />
+
+            <CheckBox
+                android:id="@+id/checkBoxNivel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lblPrioridad"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@+id/imgNivel"
+                android:alpha="0.6"
+                android:checked="true"
+                android:enabled="false"
+                android:fontFamily="sans-serif-medium"
+                android:text="Activo"
+                android:textColor="@color/secundario" />
 
         </RelativeLayout>
 

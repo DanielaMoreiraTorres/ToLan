@@ -31,18 +31,6 @@
             android:name=".MoreInfoMultimedia"
             android:exported="false" />
         <activity
-            android:name=".ActivityOrderSequences"
-            android:exported="false" />
-        <activity
-            android:name=".ActivityIdentifyImg"
-            android:exported="false" />
-        <activity
-            android:name=".ActivitySelectPairsImgImg"
-            android:exported="false" />
-        <activity
-            android:name=".ActivityGraphomotricity"
-            android:exported="false" />
-        <activity
             android:name=".ActivityMenuDocente"
             android:exported="false" />
         <activity
@@ -67,7 +55,7 @@
             android:name=".ActivityMenuAdmin"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ActivityWelcome"
             android:exported="false" />
         <activity
             android:name=".ActivityChooseVideo"
@@ -85,7 +73,7 @@
             android:name=".ActivitySublevel"
             android:exported="false" />
         <activity
-            android:name=".ActivityWelcome"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

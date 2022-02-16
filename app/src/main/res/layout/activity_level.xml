@@ -60,6 +60,8 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="10dp"
                 android:src="@drawable/nivel"
+                app:civ_border_color="@color/plomo"
+                app:civ_border_width="2dp"
                 app:civ_circle_background_color="@color/white" />
 
         </RelativeLayout>
@@ -75,10 +77,12 @@
                 android:id="@+id/busquedaNiv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
                 android:background="@drawable/borde2"
                 android:iconifiedByDefault="false"
                 app:defaultQueryHint="@string/searchNivel"
-                app:queryHint="@string/searchNivel" />
+                app:queryHint="@string/searchSubnivel" />
 
         </LinearLayout>
 

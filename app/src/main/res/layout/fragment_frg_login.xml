@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.FrgLogin">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <View
+                android:id="@+id/view6"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@color/principal" />
+
+            <View
+                android:id="@+id/view10"
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:layout_below="@+id/view6"
+                android:background="@drawable/ic_down" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif-black"
+                    android:shadowColor="@color/secundario"
+                    android:shadowRadius="2"
+                    android:text="@string/login"
+                    android:textColor="@color/white"
+                    android:textSize="24sp" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/imgLogin"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:layout_weight="0"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="40dp"
+                    android:src="@drawable/loginuser" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical"
+            android:fillViewport="true"
+            android:layout_marginTop="30dp"
+            tools:ignore="UselessParent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="20dp">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/Lusuario"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Usuario"
+                            app:errorEnabled="true">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/txtuser"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:drawableStart="@drawable/user_name"
+                                android:drawablePadding="10dp"
+                                android:fontFamily="sans-serif-medium"
+                                android:inputType="text"
+                                android:maxLength="20"
+                                android:padding="16dp" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/Lclave"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:hint="Contraseña"
+                            app:endIconMode="password_toggle"
+                            app:errorEnabled="true">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/txtPass"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:drawableStart="@drawable/password"
+                                android:drawablePadding="10dp"
+                                android:fontFamily="sans-serif-medium"
+                                android:inputType="textPassword"
+                                android:padding="16dp" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="-10dp"
+                        android:layout_weight="4"
+                        android:orientation="vertical">
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/btnSigin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginEnd="15dp"
+                            android:src="@drawable/icon_login"
+                            app:backgroundTint="@color/principal"
+                            app:maxImageSize="30dp"
+                            app:tint="@color/white" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/relativeButtons"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <Button
+                            android:id="@+id/forget"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="10dp"
+                            android:backgroundTint="@color/verde"
+                            android:fontFamily="sans-serif-black"
+                            android:text="@string/forget"
+                            android:textColor="@color/white"
+                            android:textSize="12sp"
+                            tools:ignore="ButtonStyle" />
+
+                        <Button
+                            android:id="@+id/register"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:backgroundTint="@color/principal"
+                            android:fontFamily="sans-serif-black"
+                            android:text="@string/registrarse"
+                            android:textColor="@color/white"
+                            android:textSize="12sp"
+                            tools:ignore="ButtonStyle" />
+
+                    </LinearLayout>
+
+            </RelativeLayout>
+
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="bottom">
+
+            <View
+                android:id="@+id/Viewfondo1"
+                android:layout_width="match_parent"
+                android:layout_height="85dp"
+                android:background="@drawable/ic_up"
+                app:layout_constraintBottom_toTopOf="@id/Viewfondo2" />
+
+            <View
+                android:id="@+id/Viewfondo2"
+                android:layout_width="match_parent"
+                android:layout_height="95dp"
+                android:background="@color/principal"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

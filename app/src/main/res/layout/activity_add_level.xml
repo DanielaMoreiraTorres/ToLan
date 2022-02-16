@@ -188,10 +188,10 @@
                         android:layout_weight="1"
                         android:backgroundTint="@color/verde"
                         android:fontFamily="sans-serif-black"
+                        android:onClick="registerMultimedia"
                         android:text="ACEPTAR"
                         android:textColor="@color/white"
                         android:textSize="12sp"
-                        android:onClick="registerMultimedia"
                         tools:ignore="ButtonStyle" />
 
                 </LinearLayout>
