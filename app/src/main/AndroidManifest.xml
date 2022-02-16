@@ -55,13 +55,7 @@
             android:name=".ActivityMenuAdmin"
             android:exported="false" />
         <activity
-            android:name=".ActivityWelcome"
-            android:exported="false" />
-        <activity
             android:name=".ActivityChooseVideo"
-            android:exported="false" />
-        <activity
-            android:name=".ActivityLogin"
             android:exported="false" />
         <activity
             android:name=".Multimedia_TxtActivity"

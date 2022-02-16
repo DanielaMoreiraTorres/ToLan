@@ -341,7 +341,8 @@ public class ActivityRegisterUser extends AppCompatActivity {
     }
 
     private void redirectLogin() {
+        /*
         Intent intent = new Intent(ActivityRegisterUser.this, ActivityLogin.class);
-        startActivity(intent);
+        startActivity(intent);*/
     }
 }

@@ -1,6 +1,5 @@
 package com.example.tolan.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,9 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.tolan.ActivityLogin;
-import com.example.tolan.ActivityRegisterUser;
-import com.example.tolan.MainActivity;
 import com.example.tolan.R;
 import com.example.tolan.clases.ClssConvertirTextoAVoz;
 
@@ -66,33 +62,28 @@ public class FrgWelcome extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_frg_welcome, container, false);
+        View view = inflater.inflate(R.layout.fragment_welcome, container, false);
         ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
         carousel = view.findViewById(R.id.carousel);
         btnRegistrarse = view.findViewById(R.id.register);
+        btnRegistrarse.setOnClickListener(v -> Register());
         btnIniciar = view.findViewById(R.id.login);
+        btnIniciar.setOnClickListener(v -> Iniciar());
         list = new ArrayList();
         list.add(new CarouselItem(R.drawable.aprendizaje,getString(R.string.mensaje_bienvenida_1)));
         list.add(new CarouselItem(R.drawable.nino,getString(R.string.mensaje_bienvenida_2)));
         list.add(new CarouselItem(R.drawable.ninos,getString(R.string.mensaje_bienvenida_3)));
         carousel.addData(list);
-
-        btnRegistrarse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                fragment = new FrgRegisterUser();
-                getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
-            }
-        });
-
-        btnIniciar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                fragment = new FrgLogin();
-                getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
-            }
-        });
-
         return view;
+    }
+
+    public void Register() {
+        fragment = new FrgRegisterUser();
+        getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
+    }
+
+    public void Iniciar() {
+        fragment = new FrgLogin();
+        getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
     }
 }

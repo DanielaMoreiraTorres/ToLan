@@ -49,6 +49,7 @@
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/activity_choose_video.xml" value="0.14666666666666667" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/activity_contacts.xml" value="0.22" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/activity_graphomotricity.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/activity_group_admin.xml" value="0.1796875" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/activity_identify_img.xml" value="0.1796875" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/activity_level.xml" value="0.22" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/activity_login.xml" value="0.1796875" />
@@ -71,7 +72,7 @@
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/activity_successfull.xml" value="0.22" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/activity_welcome.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_frg_level.xml" value="0.1796875" />
-        <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_frg_login.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_frg_login.xml" value="0.14666666666666667" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_frg_menu_admin.xml" value="0.1796875" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_frg_menu_docente.xml" value="0.1796875" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_frg_register_user.xml" value="0.22" />

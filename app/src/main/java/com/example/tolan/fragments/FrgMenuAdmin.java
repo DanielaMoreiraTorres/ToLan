@@ -1,5 +1,6 @@
 package com.example.tolan.fragments;
 
+import android.app.ActivityGroup;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -21,6 +22,7 @@ import com.example.tolan.ActivityLevel;
 import com.example.tolan.ActivitySkin;
 import com.example.tolan.ActivitySublevel;
 import com.example.tolan.R;
+import com.example.tolan.activity_group_admin;
 
 public class FrgMenuAdmin extends Fragment {
 
@@ -86,7 +88,8 @@ public class FrgMenuAdmin extends Fragment {
             startActivity(intent);
         }
         else if(tag == 5){
-
+            Intent intent = new Intent(getContext(), activity_group_admin.class);
+            startActivity(intent);
         }
         else if(tag == 6){
 

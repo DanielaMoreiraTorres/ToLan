@@ -1,19 +1,23 @@
 package com.example.tolan.models;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 public class ModelUser {
 
     int id;
     String usuario;
     String clave;
     String tipousuario;
-    String estudiante;
-    String docente;
+    JSONObject estudiante;
+    JSONObject docente;
     String nombres;
     String apellidos;
     String fechanacimiento;
     String correo;
     String telefono;
     int stockcaritas;
+    JSONArray grupo;
     boolean activo;
 
     public int getId() {
@@ -48,19 +52,19 @@ public class ModelUser {
         this.tipousuario = tipousuario;
     }
 
-    public String getEstudiante() {
+    public JSONObject getEstudiante() {
         return estudiante;
     }
 
-    public void setEstudiante(String estudiante) {
+    public void setEstudiante(JSONObject estudiante) {
         this.estudiante = estudiante;
     }
 
-    public String getDocente() {
+    public JSONObject getDocente() {
         return docente;
     }
 
-    public void setDocente(String docente) {
+    public void setDocente(JSONObject docente) {
         this.docente = docente;
     }
 
@@ -110,6 +114,14 @@ public class ModelUser {
 
     public void setStockcaritas(int stockcaritas) {
         this.stockcaritas = stockcaritas;
+    }
+
+    public JSONArray getGrupo() {
+        return grupo;
+    }
+
+    public void setGrupo(JSONArray grupo) {
+        this.grupo = grupo;
     }
 
     public boolean isActivo() {
