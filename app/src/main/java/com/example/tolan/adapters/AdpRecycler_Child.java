@@ -59,8 +59,6 @@ public class AdpRecycler_Child extends RecyclerView.Adapter<VHoldRecyclerChild_I
     }
 
 
-    List<ModelRecyclerItemActividad> lstitem_Activities;
-
     @Override
     public void onBindViewHolder(@NonNull VHoldRecyclerChild_ItemSubnivel holder, int position) {
 
@@ -199,20 +197,7 @@ public class AdpRecycler_Child extends RecyclerView.Adapter<VHoldRecyclerChild_I
             @Override
             public void onResponse(JSONArray response) {
 
-                try {
-                    lstitem_Activities = new ArrayList<>();
-                    for (int i = 0; i < response.length(); i++) {
-                        JSONObject activity = response.getJSONObject(i);
-                        lstitem_Activities.add(new ModelRecyclerItemActividad(activity.getInt("id"), activity.getString("nombre")));
-                    }
-                    holder.lstitem_Activities = lstitem_Activities;
-                } catch (
-                        JSONException e) {
-                    //holder.lstitem_Activities = lstitem_Activities;
-                    e.printStackTrace();
-                }
-
-
+                holder.lstitem_Activities = response;
             }
         }, new Response.ErrorListener() {
             @Override
