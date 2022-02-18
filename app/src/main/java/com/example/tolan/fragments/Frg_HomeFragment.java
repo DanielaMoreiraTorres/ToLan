@@ -99,9 +99,6 @@ public class Frg_HomeFragment extends Fragment implements Response.Listener<JSON
     private static final String TAG = "MainActivity";
 
 
-
-
-
     private RecyclerView courseRV;
 
 
@@ -197,8 +194,6 @@ public class Frg_HomeFragment extends Fragment implements Response.Listener<JSON
     }
 
 
-
-
     @Override
     public void onResponse(JSONArray response) {
         //nivelList= new ArrayList<>();
@@ -217,20 +212,21 @@ public class Frg_HomeFragment extends Fragment implements Response.Listener<JSON
                     JSONObject subnivel_item = subniveles.getJSONObject(j);
                     //System.out.println("-------------------------------------");
                     JSONArray item_subnivel = (JSONArray) subnivel_item.get("actividad");
+
+                    /*
                     if (item_subnivel.length() > 0) {
                         //lst_subniveles.add(item_subnivel);
                         for (int k = 0; k < item_subnivel.length(); k++) {
                             JSONObject element = item_subnivel.getJSONObject(k);
                             modelRecyclerItemActividades.add(new ModelRecyclerItemActividad(element.getInt("id"), element.getString("nombre")));
                         }
-                    }
+                    }*/
 
                     //System.out.println("-------------------------------------");
 
                     section.add(new ModelRecyclerItemSubnivel(subnivel_item.get("nombre").toString(),
-                            subnivel_item.get("url").toString(), subnivel_item.getInt("id"),
-                            modelRecyclerItemActividades));
-                    modelRecyclerItemActividades = new ArrayList<>();
+                            subnivel_item.get("url").toString(), subnivel_item.getInt("id")));
+                    //modelRecyclerItemActividades = new ArrayList<>();
                 }
 
                 // System.out.println(lst_subniveles);

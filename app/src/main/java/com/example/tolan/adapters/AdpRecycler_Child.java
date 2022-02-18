@@ -15,16 +15,24 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
 import com.android.volley.NoConnectionError;
 import com.android.volley.ParseError;
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.tolan.R;
+import com.example.tolan.clases.ClssStaticGrupo;
 import com.example.tolan.clases.ClssVolleySingleton;
 import com.example.tolan.models.ModelRecyclerItemActividad;
 import com.example.tolan.models.ModelRecyclerItemSubnivel;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class AdpRecycler_Child extends RecyclerView.Adapter<VHoldRecyclerChild_ItemSubnivel> {
@@ -51,18 +59,23 @@ public class AdpRecycler_Child extends RecyclerView.Adapter<VHoldRecyclerChild_I
     }
 
 
-
-
     List<ModelRecyclerItemActividad> lstitem_Activities;
+
     @Override
     public void onBindViewHolder(@NonNull VHoldRecyclerChild_ItemSubnivel holder, int position) {
-
 
 
         //holder.itemTextView.setText(items.get(position));
         holder.txt_actividad.setText(mData.get(position).getTitulo());
         holder.txt_actividad.setId(mData.get(position).getId());
-        holder.lstitem_Activities=mData.get(position).getRecyclerItemActividades();
+
+        cargarWebService("https://db-bartolucci.herokuapp.com/actividad/bySubnivelAndDocente?idSubnivel="
+                + mData.get(position).getId()
+                + "&idDocente="
+                + String.valueOf(ClssStaticGrupo.iddocente), holder);
+
+        //forma antigua de pasar las actividades
+        //holder.lstitem_Activities = mData.get(position).getRecyclerItemActividades();
 
        /* Glide.with(mContext)
                 .load(mData.get(position).getImage())
@@ -176,4 +189,40 @@ public class AdpRecycler_Child extends RecyclerView.Adapter<VHoldRecyclerChild_I
         }
     }
     */
+
+
+    // RequestQueue request;
+    JsonArrayRequest jsonArrayRequest;
+
+    private void cargarWebService(String url, VHoldRecyclerChild_ItemSubnivel holder) {
+        jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+
+                try {
+                    lstitem_Activities = new ArrayList<>();
+                    for (int i = 0; i < response.length(); i++) {
+                        JSONObject activity = response.getJSONObject(i);
+                        lstitem_Activities.add(new ModelRecyclerItemActividad(activity.getInt("id"), activity.getString("nombre")));
+                    }
+                    holder.lstitem_Activities = lstitem_Activities;
+                } catch (
+                        JSONException e) {
+                    //holder.lstitem_Activities = lstitem_Activities;
+                    e.printStackTrace();
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        ClssVolleySingleton.getIntanciaVolley(mContext).
+
+                addToRequestQueue(jsonArrayRequest);
+
+    }
 }

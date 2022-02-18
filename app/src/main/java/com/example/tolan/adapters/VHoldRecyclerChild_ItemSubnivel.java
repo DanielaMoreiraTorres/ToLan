@@ -49,7 +49,7 @@ public class VHoldRecyclerChild_ItemSubnivel extends RecyclerView.ViewHolder imp
 
         //Avanzar hacia la siguiente actividad
 
-        if (lstitem_Activities.size() > 0) {
+        if (lstitem_Activities!= null) {
             //Tomamos nuestra activiad del objeto
             String actividad = lstitem_Activities.get(0).getActivityName();
             //Consrutimos un objeto Bundle para pasarle la lista de actividades

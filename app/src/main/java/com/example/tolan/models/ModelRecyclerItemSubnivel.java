@@ -10,13 +10,13 @@ public class ModelRecyclerItemSubnivel {
 
     private String image ;
 
-    private List<ModelRecyclerItemActividad> modelRecyclerItemActividades;
+    //private List<ModelRecyclerItemActividad> modelRecyclerItemActividades;
 
-    public ModelRecyclerItemSubnivel(String titulo, String image, int id, List<ModelRecyclerItemActividad> modelRecyclerItemActividades) {
+    public ModelRecyclerItemSubnivel(String titulo, String image, int id) {
         this.titulo = titulo;
         this.image = image;
         this.id=id;
-        this.modelRecyclerItemActividades = modelRecyclerItemActividades;
+        //this.modelRecyclerItemActividades = modelRecyclerItemActividades;
     }
 
     public String getTitulo() {
@@ -43,11 +43,5 @@ public class ModelRecyclerItemSubnivel {
         this.id = id;
     }
 
-    public List<ModelRecyclerItemActividad> getRecyclerItemActividades() {
-        return modelRecyclerItemActividades;
-    }
 
-    public void setRecyclerItemActividades(List<ModelRecyclerItemActividad> modelRecyclerItemActividades) {
-        this.modelRecyclerItemActividades = modelRecyclerItemActividades;
-    }
 }

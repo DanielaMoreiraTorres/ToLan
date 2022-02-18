@@ -23,6 +23,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.tolan.ActivityHomeUser;
 import com.example.tolan.R;
+import com.example.tolan.clases.ClssStaticGrupo;
 import com.example.tolan.models.ModelUser;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -208,7 +209,7 @@ public class FrgLogin extends Fragment {
         requestQueue.add(request_json);
     }
 
-    public void Iniciar(ModelUser muser){
+    public void Iniciar(ModelUser muser) throws JSONException {
         Intent intent = null;
         Bundle b = new Bundle();
         if(muser.getTipousuario().equals("AD"))
@@ -217,7 +218,8 @@ public class FrgLogin extends Fragment {
             fragment = new FrgMenuDocente();
         else{
             intent = new Intent(getContext(), ActivityHomeUser.class);
-            b.putString("grupo", grupo.toString());
+            sendDataGroup(grupo);
+            //b.putString("grupo", grupo.toString());
         }
         //Creamos la información a pasar entre actividades
         b.putString("user", muser.getUsuario());
@@ -236,5 +238,16 @@ public class FrgLogin extends Fragment {
     public void RegisterUs() {
         fragment = new FrgRegisterUser();
         getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
+    }
+
+    public void sendDataGroup(JSONObject grupo) throws JSONException {
+
+        ClssStaticGrupo.id = grupo.getInt("id");
+        ClssStaticGrupo.iddocente = grupo.getInt("iddocente");
+        ClssStaticGrupo.docente = grupo.getString("docente");
+        ClssStaticGrupo.idestudiante = grupo.getInt("idestudiante");
+        ClssStaticGrupo.estudiante = grupo.getString("estudiante");
+        ClssStaticGrupo.fecha = grupo.getString("fecha");
+        ClssStaticGrupo.activo = grupo.getBoolean("activo");
     }
 }
