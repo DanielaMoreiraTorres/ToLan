@@ -81,6 +81,7 @@ public class FrgLogin extends Fragment {
         btnLogin = view.findViewById(R.id.btnSigin);
         btnLogin.setOnClickListener(v -> Login());
         forgetPass = view.findViewById(R.id.forget);
+        forgetPass.setOnClickListener(v -> Forget());
         register = view.findViewById(R.id.register);
         register.setOnClickListener(v -> RegisterUs());
         return view;
@@ -240,8 +241,12 @@ public class FrgLogin extends Fragment {
         getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
     }
 
-    public void sendDataGroup(JSONObject grupo) throws JSONException {
+    public void Forget() {
+        fragment = new FrgRecoveryPassword();
+        getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
+    }
 
+    public void sendDataGroup(JSONObject grupo) throws JSONException {
         ClssStaticGrupo.id = grupo.getInt("id");
         ClssStaticGrupo.iddocente = grupo.getInt("iddocente");
         ClssStaticGrupo.docente = grupo.getString("docente");

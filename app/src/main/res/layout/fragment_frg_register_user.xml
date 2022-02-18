@@ -128,13 +128,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             app:errorEnabled="true"
-                            android:hint="Teléfono o Celular">
+                            android:hint="Celular">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/telefono"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:drawableStart="@drawable/ic_phone"
+                                android:drawableStart="@drawable/icon_cellphone"
+                                android:drawableTint="@color/principal"
                                 android:fontFamily="sans-serif-medium"
                                 android:inputType="phone"
                                 android:maxLength="16"
