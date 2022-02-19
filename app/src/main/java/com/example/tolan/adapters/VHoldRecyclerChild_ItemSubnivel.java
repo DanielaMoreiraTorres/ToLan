@@ -90,7 +90,7 @@ public class VHoldRecyclerChild_ItemSubnivel extends RecyclerView.ViewHolder imp
                         //Toast.makeText(v.getContext(), "Layout Identificar entre palabras no existe", Toast.LENGTH_SHORT).show();
                         break;
 
-                    case "Identificar respuesta entre imagenes":
+                    case "Identificar entre imágenes":
                         Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
                         navController.navigate(R.id.fragmentIdentificarRespuestaImagen, bundle);
                         //Toast.makeText(v.getContext(), "Layout Identificar entre palabras no existe", Toast.LENGTH_SHORT).show();

@@ -17,8 +17,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.tolan.ActivityContact;
-import com.example.tolan.ActivityMenuDocente;
-import com.example.tolan.ActivityRegisterUser;
 import com.example.tolan.R;
 
 public class FrgMenuDocente extends Fragment {

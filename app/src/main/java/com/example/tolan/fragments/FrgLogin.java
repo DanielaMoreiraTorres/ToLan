@@ -24,6 +24,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.tolan.ActivityHomeUser;
 import com.example.tolan.R;
 import com.example.tolan.clases.ClssStaticGrupo;
+import com.example.tolan.clases.ClssValidations;
 import com.example.tolan.models.ModelUser;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -42,7 +43,8 @@ public class FrgLogin extends Fragment {
     private Button forgetPass, register;
     private TextInputEditText user, password;
     private TextInputLayout Lusuario, Lclave;
-    String Merror= "Campo obligatorio";
+    private ClssValidations validate = new ClssValidations();
+    private String Merror= "Campo obligatorio";
     private Fragment fragment;
     private RequestQueue requestQueue;
     private String url = "https://db-bartolucci.herokuapp.com/usuario/login";
@@ -74,10 +76,10 @@ public class FrgLogin extends Fragment {
         ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
         Lusuario = view.findViewById(R.id.Lusuario);
         user = view.findViewById(R.id.txtuser);
-        TextChanged(user,Lusuario,Merror);
+        validate.TextChanged(user,null,Lusuario,Merror);
         Lclave = view.findViewById(R.id.Lclave);
         password = view.findViewById(R.id.txtPass);
-        TextChanged(password,Lclave,Merror);
+        validate.TextChanged(password,null,Lclave,Merror);
         btnLogin = view.findViewById(R.id.btnSigin);
         btnLogin.setOnClickListener(v -> Login());
         forgetPass = view.findViewById(R.id.forget);
@@ -87,53 +89,19 @@ public class FrgLogin extends Fragment {
         return view;
     }
 
-    public Boolean Validar(TextInputEditText txt, TextInputLayout layout, String error){
-        Boolean err = false;
-        if(txt != null){
-            if(txt.getText().length() > 0){
-                    layout.setError(null);
-                    err = true;
-            }
-            else{
-                layout.setError(error);
-                err = false;
-            }
-        }
-        return err;
-    }
-
-    public void TextChanged(TextInputEditText txt, TextInputLayout layout, String error){
-        if(txt != null){
-            txt.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                }
-
-                @Override
-                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                }
-
-                @Override
-                public void afterTextChanged(Editable editable) {
-                    Validar(txt,layout,error);
-                }
-            });
-        }
-    }
-
-    public void Login(){
-        if(Validar(user,Lusuario,Merror) & Validar(password,Lclave,Merror)){
+    private void Login(){
+        if(validate.Validar(user,null,Lusuario,Merror) & validate.Validar(password,null,Lclave,Merror)){
             getUsuario();
         }
     }
 
-    public void getUsuario(){
+    private void getUsuario(){
         // Crear nueva cola de peticiones
         requestQueue= Volley.newRequestQueue(getContext());
         //Parámetros a enviar a la API
         Map<String, String> parameters = new HashMap<>();
-        parameters.put("username", user.getText().toString());
-        parameters.put("password", password.getText().toString());
+        parameters.put("username", user.getText().toString().trim());
+        parameters.put("password", password.getText().toString().trim());
         JsonObjectRequest request_json = new JsonObjectRequest(url, new JSONObject(parameters),
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -141,9 +109,9 @@ public class FrgLogin extends Fragment {
                         try {
                             if(response.length() > 1){
                                 ModelUser user = new ModelUser();
-                                user.setUsuario(response.getString("usuario"));
-                                user.setClave(response.getString("clave"));
-                                user.setTipousuario(response.getString("tipousuario"));
+                                user.setUsuario(response.getString("usuario").trim());
+                                user.setClave(response.getString("clave").trim());
+                                user.setTipousuario(response.getString("tipousuario").trim());
                                 user.setActivo(response.getBoolean("activo"));
                                 if(user.getTipousuario().equals("ES")){
                                     JSONObject ObjDatos = (JSONObject) response.get("estudiante");
@@ -178,7 +146,7 @@ public class FrgLogin extends Fragment {
         requestQueue.add(request_json);
     }
 
-    public void ObtIdDocente(int idGrupo, ModelUser muser){
+    private void ObtIdDocente(int idGrupo, ModelUser muser){
         urlGrupo = urlGrupo + idGrupo;
         // Crear nueva cola de peticiones
         requestQueue= Volley.newRequestQueue(getContext());
@@ -210,12 +178,12 @@ public class FrgLogin extends Fragment {
         requestQueue.add(request_json);
     }
 
-    public void Iniciar(ModelUser muser) throws JSONException {
+    private void Iniciar(ModelUser muser) throws JSONException {
         Intent intent = null;
         Bundle b = new Bundle();
-        if(muser.getTipousuario().equals("AD"))
+        if(muser.getTipousuario().trim().equals("AD"))
             fragment = new FrgMenuAdmin();
-        else if(muser.getTipousuario().equals("DC"))
+        else if(muser.getTipousuario().trim().equals("DC"))
             fragment = new FrgMenuDocente();
         else{
             intent = new Intent(getContext(), ActivityHomeUser.class);
@@ -223,8 +191,8 @@ public class FrgLogin extends Fragment {
             //b.putString("grupo", grupo.toString());
         }
         //Creamos la información a pasar entre actividades
-        b.putString("user", muser.getUsuario());
-        b.putString("tipousuario", muser.getTipousuario());
+        b.putString("user", muser.getUsuario().trim());
+        b.putString("tipousuario", muser.getTipousuario().trim());
         //Añadimos la información e iniciamos el nuevo fragment o activity
         if(intent != null){
             intent.putExtras(b);
@@ -236,12 +204,12 @@ public class FrgLogin extends Fragment {
         }
     }
 
-    public void RegisterUs() {
+    private void RegisterUs() {
         fragment = new FrgRegisterUser();
         getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
     }
 
-    public void Forget() {
+    private void Forget() {
         fragment = new FrgRecoveryPassword();
         getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
     }
@@ -249,10 +217,10 @@ public class FrgLogin extends Fragment {
     public void sendDataGroup(JSONObject grupo) throws JSONException {
         ClssStaticGrupo.id = grupo.getInt("id");
         ClssStaticGrupo.iddocente = grupo.getInt("iddocente");
-        ClssStaticGrupo.docente = grupo.getString("docente");
+        ClssStaticGrupo.docente = grupo.getString("docente").trim();
         ClssStaticGrupo.idestudiante = grupo.getInt("idestudiante");
-        ClssStaticGrupo.estudiante = grupo.getString("estudiante");
-        ClssStaticGrupo.fecha = grupo.getString("fecha");
+        ClssStaticGrupo.estudiante = grupo.getString("estudiante").trim();
+        ClssStaticGrupo.fecha = grupo.getString("fecha").trim();
         ClssStaticGrupo.activo = grupo.getBoolean("activo");
     }
 }

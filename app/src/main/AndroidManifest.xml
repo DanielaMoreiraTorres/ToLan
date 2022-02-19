@@ -37,9 +37,6 @@
             android:name=".ActivityContact"
             android:exported="false" />
         <activity
-            android:name=".ActivityRegisterUser"
-            android:exported="false" />
-        <activity
             android:name=".ActivityAddSkin"
             android:exported="false" />
         <activity

@@ -24,11 +24,10 @@ import java.util.Locale;
 public class FrgWelcome extends Fragment {
 
     private List list;
-    ImageCarousel carousel;
+    private ImageCarousel carousel;
     static TextToSpeech textToSpeech;
     ClssConvertirTextoAVoz tts;
-    private Button btnIniciar;
-    private Button btnRegistrarse;
+    private Button btnIniciar, btnRegistrarse;
     private Fragment fragment;
 
     public FrgWelcome() {
@@ -77,12 +76,12 @@ public class FrgWelcome extends Fragment {
         return view;
     }
 
-    public void Register() {
+    private void Register() {
         fragment = new FrgRegisterUser();
         getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
     }
 
-    public void Iniciar() {
+    private void Iniciar() {
         fragment = new FrgLogin();
         getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
     }

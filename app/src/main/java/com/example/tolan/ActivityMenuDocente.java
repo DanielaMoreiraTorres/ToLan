@@ -54,8 +54,8 @@ public class ActivityMenuDocente extends AppCompatActivity {
 
         }
         else if(tag == 2){
-            Intent intent = new Intent(ActivityMenuDocente.this, ActivityRegisterUser.class);
-            startActivity(intent);
+            /*Intent intent = new Intent(ActivityMenuDocente.this, ActivityRegisterUser.class);
+            startActivity(intent);*/
         }
         else if(tag == 3){
 

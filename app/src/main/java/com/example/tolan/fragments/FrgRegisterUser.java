@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -28,6 +27,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.tolan.R;
 import com.example.tolan.adapters.AdpAutocompleteDocente;
+import com.example.tolan.clases.ClssValidations;
 import com.example.tolan.models.ModelUser;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputEditText;
@@ -52,13 +52,14 @@ public class FrgRegisterUser extends Fragment {
     private SwitchMaterial switch_docent;
     private AutoCompleteTextView docente;
     private Button btnRegistrarse;
+    private ClssValidations validate = new ClssValidations();
     private Fragment fragment;
-    String Merror= "Campo obligatorio";
-    int anio, mes, dia;
-    List<ModelUser> docentes;
-    AdpAutocompleteDocente adp;
-    JSONObject selectedDocente;
-    ModelUser selectedDoc;
+    private String Merror= "Campo obligatorio";
+    private int anio, mes, dia;
+    private List<ModelUser> docentes;
+    private AdpAutocompleteDocente adp;
+    private JSONObject selectedDocente;
+    private ModelUser selectedDoc;
 
     public FrgRegisterUser() {
         // Required empty public constructor
@@ -80,98 +81,61 @@ public class FrgRegisterUser extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_frg_register_user, container, false);
+        View view = inflater.inflate(R.layout.fragment_register_user, container, false);
         docentes = new ArrayList<>();
-
         Lnombres = view.findViewById(R.id.Lnombres);
         nombre = view.findViewById(R.id.nombres);
-        TextChanged(nombre,null,Lnombres,Merror);
-
+        validate.TextChanged(nombre,null,Lnombres,Merror);
         Lapellidos = view.findViewById(R.id.Lapellidos);
         apellido = view.findViewById(R.id.apellidos);
-        TextChanged(apellido,null,Lapellidos,Merror);
-
+        validate.TextChanged(apellido,null,Lapellidos,Merror);
         Ltelefono = view.findViewById(R.id.Ltelefono);
         telefono = view.findViewById(R.id.telefono);
-        TextChanged(telefono,null,Ltelefono,Merror);
-
+        validate.TextChanged(telefono,null,Ltelefono,Merror);
         Lemail = view.findViewById(R.id.Lemail);
         email = view.findViewById(R.id.email);
-        TextChanged(email,null,Lemail,Merror);
-
+        validate.TextChanged(email,null,Lemail,Merror);
         LFechaNac = view.findViewById(R.id.LFechaNac);
         fechaNac = view.findViewById(R.id.txtFechaNac);
-        TextChanged(fechaNac,null,LFechaNac,Merror);
-        fechaNac.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final Calendar calendar = Calendar.getInstance();
-                anio = calendar.get(Calendar.YEAR);
-                mes = calendar.get(Calendar.MONTH);
-                dia = calendar.get(Calendar.DAY_OF_MONTH);
-                DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),mDateSetListener,anio,mes,dia);
-                datePickerDialog.show();
-            }
-        });
-
+        validate.TextChanged(fechaNac,null,LFechaNac,Merror);
+        fechaNac.setOnClickListener(v -> showDialog());
         Lusuario = view.findViewById(R.id.Lusuario);
         usuario = view.findViewById(R.id.txtusuario);
-        TextChanged(usuario,null,Lusuario,Merror);
-
+        validate.TextChanged(usuario,null,Lusuario,Merror);
         Lclave = view.findViewById(R.id.Lclave);
         clave = view.findViewById(R.id.clave);
-        TextChanged(clave,null,Lclave,Merror);
-
+        validate.TextChanged(clave,null,Lclave,Merror);
         Lconfclave = view.findViewById(R.id.Lconfclave);
         confirclave = view.findViewById(R.id.confclave);
-        TextChanged(confirclave,null,Lconfclave,Merror);
-
+        validate.TextChanged(confirclave,null,Lconfclave,Merror);
         switch_docent = view.findViewById(R.id.switch_docent);
+        switch_docent.setOnCheckedChangeListener((compoundButton, b) -> isChecked());
         datosDocente = view.findViewById(R.id.datosDocente);
-
         Ldocente = view.findViewById(R.id.Ldocente);
         docente = view.findViewById(R.id.docente);
         docente.setThreshold(1);
         autocomplete();
-
-        switch_docent.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b)
-                    datosDocente.setVisibility(View.GONE);
-                else {
-                    datosDocente.setVisibility(View.VISIBLE);
-                    Validar(null,docente,Ldocente,Merror);
-                }
-            }
-        });
-
         btnRegistrarse = view.findViewById(R.id.btnRegister);
-        btnRegistrarse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(!switch_docent.isChecked()){
-                    if(!Validar(null,docente,Ldocente,Merror))
-                        return;
-                }
-                if(Validar(nombre,null,Lnombres,Merror) & Validar(apellido,null,Lapellidos,Merror) &
-                        Validar(telefono,null,Ltelefono,Merror) & Validar(email,null,Lemail,Merror) &
-                        Validar(fechaNac,null,LFechaNac,Merror) & Validar(usuario,null,Lusuario,Merror) &
-                        Validar(clave,null,Lclave,Merror) & Validar(confirclave,null,Lconfclave,Merror)){
-                    if(clave.getText().toString().equals(confirclave.getText().toString())){
-                        Lconfclave.setError(null);
-                        try {
-                            createUsuario();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    else
-                        Lconfclave.setError("Las contraseñas no coinciden");
-                }
-            }
-        });
+        btnRegistrarse.setOnClickListener(v -> RegisterUser());
         return view;
+    }
+
+    private void showDialog(){
+        final Calendar calendar = Calendar.getInstance();
+        anio = calendar.get(Calendar.YEAR);
+        mes = calendar.get(Calendar.MONTH);
+        dia = calendar.get(Calendar.DAY_OF_MONTH);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),mDateSetListener,anio,mes,dia);
+        datePickerDialog.show();
+    }
+
+    private void isChecked(){
+        if (switch_docent.isChecked())
+            datosDocente.setVisibility(View.GONE);
+        else {
+            datosDocente.setVisibility(View.VISIBLE);
+            validate.Validar(null,docente,Ldocente,Merror);
+        }
     }
 
     private DatePickerDialog.OnDateSetListener mDateSetListener =
@@ -185,79 +149,7 @@ public class FrgRegisterUser extends Fragment {
                 }
             };
 
-    public Boolean Validar(TextInputEditText txt, AutoCompleteTextView com, TextInputLayout layout, String error){
-        Boolean err = false;
-        if(txt != null){
-            if(txt.getText().length() > 0){
-                if(txt.equals(telefono)){
-                    if(txt.getText().length() >= 9){
-                        layout.setError(null);
-                        err = true;
-                    }
-                    else{
-                        layout.setError("Mínimo 9 dígitos");
-                        err = false;
-                    }
-                }
-                else {
-                    layout.setError(null);
-                    err = true;
-                }
-            }
-            else{
-                layout.setError(error);
-                err = false;
-            }
-        }
-        else {
-            if(com.getText().length() > 0){
-                layout.setError(null);
-                err = true;
-            }
-            else{
-                layout.setError(error);
-                err = false;
-            }
-        }
-        return err;
-    }
-
-    public void TextChanged(TextInputEditText txt, AutoCompleteTextView com, TextInputLayout layout, String error){
-        if(txt != null){
-            txt.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                }
-
-                @Override
-                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                }
-
-                @Override
-                public void afterTextChanged(Editable editable) {
-                    Validar(txt,com,layout,error);
-                }
-            });
-        }
-        else {
-            com.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                }
-
-                @Override
-                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                }
-
-                @Override
-                public void afterTextChanged(Editable editable) {
-                    Validar(txt,com,layout,error);
-                }
-            });
-        }
-    }
-
-    public void autocomplete(){
+    private void autocomplete(){
         try {
             // Crear nueva cola de peticiones
             requestQueue = Volley.newRequestQueue(getContext());
@@ -270,15 +162,15 @@ public class FrgRegisterUser extends Fragment {
                                 for (int i = 0; i < response.length(); i++) {
                                     user = new ModelUser();
                                     JSONObject objUser = response.getJSONObject(i);
-                                    if (objUser.getString("tipousuario").equals("DC")) {
+                                    if (objUser.getString("tipousuario").trim().equals("DC")) {
                                         if (!objUser.get("docente").equals(null)) {
                                             JSONObject ObjDatos = (JSONObject) objUser.get("docente");
                                             user.setId(ObjDatos.getInt("id"));
-                                            user.setNombres(ObjDatos.getString("nombres"));
-                                            user.setApellidos(ObjDatos.getString("apellidos"));
-                                            user.setTelefono(ObjDatos.getString("telefono"));
-                                            user.setCorreo(ObjDatos.getString("correo"));
-                                            user.setFechanacimiento(ObjDatos.getString("fechanacimiento"));
+                                            user.setNombres(ObjDatos.getString("nombres").trim());
+                                            user.setApellidos(ObjDatos.getString("apellidos").trim());
+                                            user.setTelefono(ObjDatos.getString("telefono").trim());
+                                            user.setCorreo(ObjDatos.getString("correo").trim());
+                                            user.setFechanacimiento(ObjDatos.getString("fechanacimiento").trim());
                                             user.setActivo(objUser.getBoolean("activo"));
                                             docentes.add(user);
                                         }
@@ -293,8 +185,8 @@ public class FrgRegisterUser extends Fragment {
                                         selectedDocente = new JSONObject();
                                         try {
                                             selectedDocente.put("id", selectedDoc.getId());
-                                            selectedDocente.put("nombres", selectedDoc.getNombres());
-                                            selectedDocente.put("apellidos", selectedDoc.getApellidos());
+                                            selectedDocente.put("nombres", selectedDoc.getNombres().trim());
+                                            selectedDocente.put("apellidos", selectedDoc.getApellidos().trim());
                                         } catch (JSONException e) {
                                             e.printStackTrace();
                                         }
@@ -317,7 +209,29 @@ public class FrgRegisterUser extends Fragment {
         catch (Exception e){}
     }
 
-    public void createUsuario() throws JSONException {
+    private void RegisterUser(){
+        if(!switch_docent.isChecked()){
+            if(!validate.Validar(null,docente,Ldocente,Merror))
+                return;
+        }
+        if(validate.Validar(nombre,null,Lnombres,Merror) & validate.Validar(apellido,null,Lapellidos,Merror) &
+                validate.Validar(telefono,null,Ltelefono,Merror) & validate.Validar(email,null,Lemail,Merror) &
+                validate.Validar(fechaNac,null,LFechaNac,Merror) & validate.Validar(usuario,null,Lusuario,Merror) &
+                validate.Validar(clave,null,Lclave,Merror) & validate.Validar(confirclave,null,Lconfclave,Merror)){
+            if(clave.getText().toString().trim().equals(confirclave.getText().toString().trim())){
+                Lconfclave.setError(null);
+                try {
+                    createUsuario();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            else
+                Lconfclave.setError("Las contraseñas no coinciden");
+        }
+    }
+
+    private void createUsuario() throws JSONException {
         // Crear nueva cola de peticiones
         requestQueue= Volley.newRequestQueue(getContext());
         //Parámetros a enviar a la API

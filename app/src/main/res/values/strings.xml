@@ -22,7 +22,6 @@
     <string name="msrecemail">Ingrese su correo para continuar</string>
     <string name="otro">Probar de otra manera</string>
     <string name="rec">Recuperar</string>
-
     <!-- Fragment Menu Admin -->
     <string name="menu">Menú Administrador</string>
     <string name="niveles">Niveles</string>
@@ -80,6 +79,11 @@
     <string name="footerC">2022 Todos los derechos reservados \n ToLan</string>
     <string name="cname">Contact Name</string>
     <string name="cemail">Email</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <!-- Fragment Identificar Respuesta magen -->
+    <string name="titulo">Identificar la imagen correcta</string>
+    <string name="comprobar">Comprobar</string>
+    <!-- Fragment Identificar Respuesta magen -->
+    <string name="tituloITxt">Identificar la opción correcta</string>
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

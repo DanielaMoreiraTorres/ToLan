@@ -3,241 +3,106 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.Frg_IdentificarRespuestaPalabra">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:scrollbars="vertical"
-        tools:ignore="UselessParent">
+        android:orientation="vertical">
 
-        <LinearLayout
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"></include>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:id="@+id/linea"
             android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/plomo" />
+
+        <View
+            android:id="@+id/view6"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_below="@+id/linea"
+            android:background="@color/principal" />
+
+        <View
+            android:id="@+id/view10"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@+id/view6"
+            android:background="@drawable/ic_down" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_centerInParent="true"
+            android:layout_marginTop="80dp"
+            android:fontFamily="sans-serif-black"
+            android:shadowColor="@color/secundario"
+            android:shadowRadius="2"
+            android:text="@string/tituloITxt"
+            android:textColor="@color/white"
+            android:textSize="24sp" />
 
-            <include
-                android:id="@+id/toolbar"
-                layout="@layout/toolbar"></include>
+    </RelativeLayout>
 
-            <RelativeLayout
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            android:fillViewport="true"
+            tools:ignore="UselessParent">
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp">
 
-                <View
-                    android:id="@+id/lineactmenuadmin"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@color/plomo" />
-
-
-                <TextView
-                    android:id="@+id/txtMenu"
+                <ListView
+                    android:id="@+id/lstEnunciado"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:fontFamily="sans-serif-black"
-                    android:gravity="center"
-                    android:padding="30dp"
-                    android:shadowColor="@color/secundario"
-                    android:shadowRadius="4"
-                    android:text="Identificar la Respuesta Correcta"
-                    android:textColor="@color/black"
-                    android:textSize="24sp" />
+                    android:divider="@color/white" />
 
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-
-                android:layout_marginEnd="10dp">
-
-                <TextView
-                    android:id="@+id/enunciado"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcvTxt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-medium"
-                    android:gravity="center"
-
-                    android:text="¿A que provincia pertenece la ciudad de Quevedo?"
-                    android:textColor="@color/secundario"
-
-                    android:textSize="25sp" />
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp" />
 
                 <LinearLayout
-                    android:id="@+id/rcv"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/enunciado"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginBottom="10dp"
-                    android:weightSum="2">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="bottom">
 
-                    <GridLayout
+                    <Button
+                        android:id="@+id/btn_comprobar_actividades"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:alignmentMode="alignMargins"
-                        android:columnCount="1"
-                        android:columnOrderPreserved="false"
-                        android:rowCount="3">
-
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_rowWeight="1"
-                            android:layout_columnWeight="1"
-                            android:layout_margin="12dp"
-                            app:cardCornerRadius="12dp"
-                            app:cardElevation="6dp">
-
-                            <TextView
-                                android:gravity="center"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="Los Rios"
-                                android:fontFamily="sans-serif-black"
-                                android:textSize="25dp"/>
-
-                        </androidx.cardview.widget.CardView>
-
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_rowWeight="1"
-                            android:layout_columnWeight="1"
-                            android:layout_margin="12dp"
-                            app:cardCornerRadius="12dp"
-                            app:cardElevation="6dp">
-
-                            <TextView
-                                android:gravity="center"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="Santo Domingo"
-                                android:fontFamily="sans-serif-black"
-                                android:textSize="25dp"/>
-
-                        </androidx.cardview.widget.CardView>
-
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_rowWeight="1"
-                            android:layout_columnWeight="1"
-                            android:layout_margin="12dp"
-                            app:cardCornerRadius="12dp"
-                            app:cardElevation="6dp">
-
-                            <TextView
-                                android:gravity="center"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="El Oro"
-                                android:fontFamily="sans-serif-black"
-                                android:textSize="25dp"/>
-
-                        </androidx.cardview.widget.CardView>
-
-
-                    </GridLayout>
-
-                    <GridLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:alignmentMode="alignMargins"
-                        android:columnCount="1"
-                        android:columnOrderPreserved="false"
-                        android:rowCount="3">
-
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_rowWeight="1"
-                            android:layout_columnWeight="1"
-                            android:layout_margin="12dp"
-                            app:cardCornerRadius="12dp"
-                            app:cardElevation="6dp">
-
-                            <TextView
-                                android:gravity="center"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="Esmeraldas"
-                                android:fontFamily="sans-serif-black"
-                                android:textSize="25dp"/>
-
-                        </androidx.cardview.widget.CardView>
-
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_rowWeight="1"
-                            android:layout_columnWeight="1"
-                            android:layout_margin="12dp"
-                            app:cardCornerRadius="12dp"
-                            app:cardElevation="6dp">
-
-                            <TextView
-                                android:gravity="center"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="Tungurahua"
-                                android:fontFamily="sans-serif-black"
-                                android:textSize="25dp"/>
-
-                        </androidx.cardview.widget.CardView>
-
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_rowWeight="1"
-                            android:layout_columnWeight="1"
-                            android:layout_margin="12dp"
-                            app:cardCornerRadius="12dp"
-                            app:cardElevation="6dp">
-
-                            <TextView
-                                android:gravity="center"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="Santa Elena"
-                                android:fontFamily="sans-serif-black"
-                                android:textSize="25dp"/>
-
-                        </androidx.cardview.widget.CardView>
-
-
-                    </GridLayout>
+                        android:layout_marginBottom="10dp"
+                        android:backgroundTint="@color/verde"
+                        android:fontFamily="sans-serif-black"
+                        android:text="@string/comprobar"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
 
                 </LinearLayout>
 
-            </RelativeLayout>
+            </LinearLayout>
 
-            <Button
-                android:id="@+id/btn_comprobar_actividades"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="0dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/custom_button_edit"
-                android:minHeight="48dp"
+        </ScrollView>
 
-                android:text="Comprobar"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                tools:ignore="TouchTargetSizeCheck" />
-
-        </LinearLayout>
-
-    </ScrollView>
+    </LinearLayout>
 
 </FrameLayout>

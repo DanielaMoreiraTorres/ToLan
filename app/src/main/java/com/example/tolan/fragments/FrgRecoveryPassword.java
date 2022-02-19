@@ -42,7 +42,7 @@ public class FrgRecoveryPassword extends Fragment {
     private Fragment fragment;
     private RequestQueue requestQueue;
     private String urlP = "https://db-bartolucci.herokuapp.com/usuario/recoveryPhone?telefono=";
-    private String urlE = "https://db-bartolucci.herokuapp.com/usuario/recoveryEmail?correo";
+    private String urlE = "https://db-bartolucci.herokuapp.com/usuario/recoveryEmail?correo=";
 
     public FrgRecoveryPassword() {
         // Required empty public constructor

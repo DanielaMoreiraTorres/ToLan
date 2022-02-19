@@ -8,55 +8,58 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.tolan.R;
+import com.example.tolan.adapters.AdpEnunciado;
+import com.example.tolan.adapters.AdpOptionIdentifyTxt;
+import com.example.tolan.clases.ClssStaticGrupo;
+import com.example.tolan.models.ModelContent;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Frg_IdentificarRespuestaPalabra#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class Frg_IdentificarRespuestaPalabra extends Fragment implements View.OnClickListener {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    JSONArray jsonActivities;
+    NavController navController;
+    private ListView lstLista;
+    private RecyclerView rcvOptions;
+    private JSONArray contenido;
+    List<ModelContent> modelContentsEnun;
+    ArrayList<ModelContent> modelContentsOp;
+    ArrayList<ModelContent> respuestas;
+    private AdpEnunciado adpEnunciado;
+    private AdpOptionIdentifyTxt adpOptiosIdentifyTxt;
+    ModelContent opSelected = new ModelContent();
+    private RequestQueue requestQueue;
+    private String url = "https://db-bartolucci.herokuapp.com/historial/completeActividad";
+    Boolean respuesta = false;
 
     public Frg_IdentificarRespuestaPalabra() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Frg_IdentificarRespuestaPalabra.
-     */
-    // TODO: Rename and change types and number of parameters
     public static Frg_IdentificarRespuestaPalabra newInstance(String param1, String param2) {
         Frg_IdentificarRespuestaPalabra fragment = new Frg_IdentificarRespuestaPalabra();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -64,8 +67,6 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment implements View.On
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -76,18 +77,48 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment implements View.On
         return inflater.inflate(R.layout.fragment_identificar_respuesta_palabra, container, false);
     }
 
-
-
-    JSONArray jsonActivities;
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         try {
             String lst_Activities = getArguments().getString("activities");
             jsonActivities = new JSONArray(lst_Activities);
-            Toast.makeText(view.getContext(), lst_Activities, Toast.LENGTH_LONG).show();
+            lstLista = view.findViewById(R.id.lstEnunciado);
+            rcvOptions = (RecyclerView) view.findViewById(R.id.rcvTxt);
+            rcvOptions.setLayoutManager(new GridLayoutManager(getContext(),2));
+            contenido = jsonActivities.getJSONObject(0).getJSONArray("contenido");
+            modelContentsEnun = new ArrayList<>();
+            modelContentsOp = new ArrayList<>();
+            respuestas = new ArrayList<>();
+            MapContenido();
+            if(respuestas.size() > 1)
+                view.findViewById(R.id.btn_comprobar_actividades).setVisibility(View.VISIBLE);
+            else
+                view.findViewById(R.id.btn_comprobar_actividades).setVisibility(View.GONE);
+            adpEnunciado = new AdpEnunciado(getContext(),modelContentsEnun);
+            lstLista.setAdapter(adpEnunciado);
+            adpOptiosIdentifyTxt = new AdpOptionIdentifyTxt(getContext(),modelContentsOp);
+            rcvOptions.setAdapter(adpOptiosIdentifyTxt);
+            adpOptiosIdentifyTxt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int opcselec = rcvOptions.getChildAdapterPosition(view);
+                    opSelected = modelContentsOp.get(opcselec);
+                    if(respuestas.size() == 0){
+                        Toast.makeText(getContext(),"La actividad no tiene respuesta",Toast.LENGTH_SHORT).show();
+                    }
+                    else if(respuestas.size() == 1){
+                        if(opSelected.getRespuesta().equals(true)){
+                            Toast.makeText(getContext(),"Respuesta correcta",Toast.LENGTH_SHORT).show();
+                            respuesta = true;
+                            CompleteActivity(view);
+                        }
+                        else
+                            Toast.makeText(getContext(),"Respuesta incorrecta",Toast.LENGTH_SHORT).show();
+                    }
+                    Toast.makeText(getContext(),opSelected.getDescripcion(),Toast.LENGTH_SHORT).show();
+                }
+            });
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -95,13 +126,74 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment implements View.On
         view.findViewById(R.id.btn_comprobar_actividades).setOnClickListener(this);
     }
 
-
-    NavController navController;
+    private void MapContenido(){
+        try {
+            ModelContent modelContent = null;
+            for (int i=0;i<contenido.length();i++){
+                modelContent = new ModelContent();
+                modelContent.setId(contenido.getJSONObject(i).getInt("id"));
+                modelContent.setDescripcion(contenido.getJSONObject(i).getString("descripcion"));
+                modelContent.setEnunciado(contenido.getJSONObject(i).getBoolean("enunciado"));
+                modelContent.setRespuesta(contenido.getJSONObject(i).getBoolean("respuesta"));
+                modelContent.setActivo(contenido.getJSONObject(i).getBoolean("activo"));
+                modelContent.setMultimedia((JSONArray) contenido.getJSONObject(i).get("multimedia"));
+                if(contenido.getJSONObject(i).get("enunciado").equals(true))
+                    modelContentsEnun.add(modelContent);
+                else{
+                    modelContentsOp.add(modelContent);
+                    if(contenido.getJSONObject(i).get("respuesta").equals(true))
+                        respuestas.add(modelContent);
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void onClick(View v) {
+        CompleteActivity(v);
+    }
 
+    private void CompleteActivity(View v){
+        try {
+            // Crear nueva cola de peticiones
+            requestQueue = Volley.newRequestQueue(getContext());
+            //Parámetros a enviar a la API
+            JSONObject param = new JSONObject();
+            param.put("idEstudiante", ClssStaticGrupo.idestudiante);
+            param.put("idActividad", jsonActivities.getJSONObject(0).getInt("id"));
+            param.put("statusRespuesta", respuesta);
+            //param.put("idsContenido",respuestas.get(0).getId());
+            JsonObjectRequest request_json = new JsonObjectRequest(url, param,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                if (response.length() > 1) {
+                                    Toast.makeText(getContext(), "Actividad exitosa", Toast.LENGTH_LONG).show();
+                                    //Navegacion(v);
+                                } else
+                                    Toast.makeText(getContext(), response.get("message").toString(), Toast.LENGTH_LONG).show();
+                            } catch (Exception e) {
+                                Toast.makeText(getContext(), "Error de conexión", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    VolleyLog.e("Error: ", error.getMessage());
+                    Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            });
+            // Añadir petición a la cola
+            requestQueue.add(request_json);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 
+    private void Navegacion(View v){
         navController = Navigation.findNavController(v);
         Bundle bundle;
         String actividad;
@@ -186,8 +278,6 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment implements View.On
         } catch (JSONException ex) {
             Toast.makeText(v.getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
         }
-
     }
-
 
 }
