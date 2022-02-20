@@ -1,5 +1,6 @@
 package com.example.tolan.fragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -42,10 +44,13 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment implements View.On
     NavController navController;
     private ListView lstLista;
     private RecyclerView rcvOptions;
+    private View state;
+    private TextView txtResponse;
     private JSONArray contenido;
     List<ModelContent> modelContentsEnun;
     ArrayList<ModelContent> modelContentsOp;
     ArrayList<ModelContent> respuestas;
+    ArrayList<ModelContent> resp;
     private AdpEnunciado adpEnunciado;
     private AdpOptionIdentifyTxt adpOptiosIdentifyTxt;
     ModelContent opSelected = new ModelContent();
@@ -83,6 +88,10 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment implements View.On
         try {
             String lst_Activities = getArguments().getString("activities");
             jsonActivities = new JSONArray(lst_Activities);
+            state = view.findViewById(R.id.state);
+            state.setVisibility(View.GONE);
+            txtResponse = view.findViewById(R.id.txtResponse);
+            txtResponse.setVisibility(View.GONE);
             lstLista = view.findViewById(R.id.lstEnunciado);
             rcvOptions = (RecyclerView) view.findViewById(R.id.rcvTxt);
             rcvOptions.setLayoutManager(new GridLayoutManager(getContext(),2));
@@ -108,13 +117,24 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment implements View.On
                         Toast.makeText(getContext(),"La actividad no tiene respuesta",Toast.LENGTH_SHORT).show();
                     }
                     else if(respuestas.size() == 1){
+                        state.setVisibility(View.VISIBLE);
+                        txtResponse.setVisibility(View.VISIBLE);
                         if(opSelected.getRespuesta().equals(true)){
-                            Toast.makeText(getContext(),"Respuesta correcta",Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getContext(),"Respuesta correcta",Toast.LENGTH_SHORT).show();
                             respuesta = true;
+                            state.setBackgroundColor(Color.parseColor("#7CB342"));
+                            txtResponse.setText(R.string.correcto);
                             CompleteActivity(view);
                         }
-                        else
-                            Toast.makeText(getContext(),"Respuesta incorrecta",Toast.LENGTH_SHORT).show();
+                        else {
+                            state.setBackgroundColor(Color.parseColor("#e74c3c"));
+                            txtResponse.setText(R.string.incorrecto);
+                            respuesta = false;
+                            //Toast.makeText(getContext(),"Respuesta incorrecta",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    else if(respuestas.size() > 1){
+                        resp.add(opSelected);
                     }
                     Toast.makeText(getContext(),opSelected.getDescripcion(),Toast.LENGTH_SHORT).show();
                 }
@@ -122,7 +142,6 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment implements View.On
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
         view.findViewById(R.id.btn_comprobar_actividades).setOnClickListener(this);
     }
 
@@ -152,7 +171,19 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment implements View.On
 
     @Override
     public void onClick(View v) {
-        CompleteActivity(v);
+        if(resp.equals(respuestas)){
+            respuesta = true;
+            state.setBackgroundColor(Color.parseColor("#7CB342"));
+            txtResponse.setText(R.string.correcto);
+            CompleteActivity(v);
+        }
+        else{
+            respuesta = false;
+            state.setBackgroundColor(Color.parseColor("#e74c3c"));
+            txtResponse.setText(R.string.incorrecto);
+            resp.clear();
+            //Toast.makeText(getContext(),"Respuesta incorrecta \n Vuelve a intentarlo",Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void CompleteActivity(View v){
@@ -164,15 +195,15 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment implements View.On
             param.put("idEstudiante", ClssStaticGrupo.idestudiante);
             param.put("idActividad", jsonActivities.getJSONObject(0).getInt("id"));
             param.put("statusRespuesta", respuesta);
-            //param.put("idsContenido",respuestas.get(0).getId());
+            param.put("idsContenido", new JSONObject());
             JsonObjectRequest request_json = new JsonObjectRequest(url, param,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
                             try {
                                 if (response.length() > 1) {
-                                    Toast.makeText(getContext(), "Actividad exitosa", Toast.LENGTH_LONG).show();
-                                    //Navegacion(v);
+                                    //Toast.makeText(getContext(), "Actividad exitosa", Toast.LENGTH_LONG).show();
+                                    Navegacion(v);
                                 } else
                                     Toast.makeText(getContext(), response.get("message").toString(), Toast.LENGTH_LONG).show();
                             } catch (Exception e) {
@@ -198,10 +229,8 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment implements View.On
         Bundle bundle;
         String actividad;
         NavController navController = Navigation.findNavController(v);
-
         //Eliminamos el item por el cual nos redirecccionamos aca
         jsonActivities.remove(0);
-
         //Avanzar hacia la siguiente actividad
         try {
             if (jsonActivities.length() > 0) {
@@ -209,35 +238,28 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment implements View.On
                 JSONObject activity = jsonActivities.getJSONObject(0);
                 //Tomamos nuestra activiad del objeto
                 actividad = activity.getString("nombre");
-
                 bundle = new Bundle();
                 bundle.putString("activities", jsonActivities.toString());
-
-
                 switch (actividad) {
                     //El case nos permitira redireccionar hacia el Layout correspondiente para navegar hacia el
                     case "Reconocer figuras":
                         Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
                         navController.navigate(R.id.fragmentReconocerFiguras, bundle);
                         break;
-
                     case "Ordenar la secuencia":
                         Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
                         navController.navigate(R.id.fragmentOrdenarSecuenciasImagenes, bundle);
                         break;
-
-                    case "Identificar respuesta entre palabras":
+                    case "Identificar entre palabras":
                         Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
                         navController.navigate(R.id.fragmentIdentificarRespuestaPalabra, bundle);
                         //Toast.makeText(v.getContext(), "Layout Identificar entre palabras no existe", Toast.LENGTH_SHORT).show();
                         break;
-
-                    case "Identificar respuesta entre imagenes":
+                    case "Identificar entre imágenes":
                         Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
                         navController.navigate(R.id.fragmentIdentificarRespuestaImagen, bundle);
                         //Toast.makeText(v.getContext(), "Layout Identificar entre palabras no existe", Toast.LENGTH_SHORT).show();
                         break;
-
                     case "Armar rompecabezass":
                         Toast.makeText(v.getContext(), "Layout Armar rompecabezass no existe", Toast.LENGTH_SHORT).show();
                         break;
@@ -247,26 +269,21 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment implements View.On
                         navController.navigate(R.id.fragmentSeleccionarParesImagenTexto, bundle);
                         //Toast.makeText(v.getContext(), "Layout Seleccionar pares. - Imagen-Texto no existe", Toast.LENGTH_SHORT).show();
                         break;
-
                     case "Seleccionar pares. - Imagen-Imagen":
                         Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
                         navController.navigate(R.id.fragmentSeleccionarParesImagenImagen, bundle);
                         //Toast.makeText(v.getContext(), "Layout Seleccionar pares. - Imagen-Texto no existe", Toast.LENGTH_SHORT).show();
                         break;
-
                     case "Grafomotricidad":
                         Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
                         navController.navigate(R.id.fragmentGrafomotricidad, bundle);
                         //Toast.makeText(v.getContext(), "Layout Grafomotricidad no existe", Toast.LENGTH_SHORT).show();
                         break;
-
                     case "Arrastrar y Soltar":
                         Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
                         navController.navigate(R.id.fragmentArrastrarSoltar, bundle);
                         break;
                 }
-
-
             } else {
                 Toast.makeText(getContext(), "Redirigiendo al menu principal..", Toast.LENGTH_SHORT).show();
                 //Volvemos al fragmento principal eliminando los recursos en pila
@@ -274,10 +291,8 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment implements View.On
                         .setPopUpTo(R.id.inicioFragment, true)
                         .build());
             }
-
         } catch (JSONException ex) {
             Toast.makeText(v.getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
-
 }

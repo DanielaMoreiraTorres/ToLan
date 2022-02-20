@@ -1,5 +1,7 @@
 package com.example.tolan.fragments;
 
+import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,7 +16,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -34,7 +38,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class Frg_IdentificarRespuestaImagen extends Fragment implements View.OnClickListener {
@@ -42,11 +45,14 @@ public class Frg_IdentificarRespuestaImagen extends Fragment implements View.OnC
     NavController navController;
     private ListView lstLista;
     private RecyclerView rcvOptions;
+    private View state;
+    private TextView txtResponse;
     JSONArray jsonActivities;
     private JSONArray contenido;
     List<ModelContent> modelContentsEnun;
     ArrayList<ModelContent> modelContentsOp;
     ArrayList<ModelContent> respuestas;
+    ArrayList<ModelContent> resp;
     private AdpEnunciado adpEnunciado;
     private AdpOptionIdentifyImg adpOptiosIdentifyImg;
     ModelContent opSelected = new ModelContent();
@@ -83,6 +89,11 @@ public class Frg_IdentificarRespuestaImagen extends Fragment implements View.OnC
         try {
             String lst_Activities = getArguments().getString("activities");
             jsonActivities = new JSONArray(lst_Activities);
+            ArrayList<JSONObject> activities = new ArrayList<>();
+            state = view.findViewById(R.id.state);
+            state.setVisibility(View.GONE);
+            txtResponse = view.findViewById(R.id.txtResponse);
+            txtResponse.setVisibility(View.GONE);
             lstLista = view.findViewById(R.id.lstEnunciado);
             rcvOptions = (RecyclerView) view.findViewById(R.id.rcvImg);
             rcvOptions.setLayoutManager(new GridLayoutManager(getContext(),2));
@@ -90,6 +101,7 @@ public class Frg_IdentificarRespuestaImagen extends Fragment implements View.OnC
             modelContentsEnun = new ArrayList<>();
             modelContentsOp = new ArrayList<>();
             respuestas = new ArrayList<>();
+            resp = new ArrayList<>();
             MapContenido();
             if(respuestas.size() > 1)
                 view.findViewById(R.id.btn_comprobar_actividades).setVisibility(View.VISIBLE);
@@ -100,6 +112,7 @@ public class Frg_IdentificarRespuestaImagen extends Fragment implements View.OnC
             adpOptiosIdentifyImg = new AdpOptionIdentifyImg(getContext(),modelContentsOp);
             rcvOptions.setAdapter(adpOptiosIdentifyImg);
             adpOptiosIdentifyImg.setOnClickListener(new View.OnClickListener() {
+                @SuppressLint("ResourceAsColor")
                 @Override
                 public void onClick(View view) {
                     int opcselec = rcvOptions.getChildAdapterPosition(view);
@@ -108,13 +121,23 @@ public class Frg_IdentificarRespuestaImagen extends Fragment implements View.OnC
                         Toast.makeText(getContext(),"La actividad no tiene respuesta",Toast.LENGTH_SHORT).show();
                     }
                     else if(respuestas.size() == 1){
+                        state.setVisibility(View.VISIBLE);
+                        txtResponse.setVisibility(View.VISIBLE);
                         if(opSelected.getRespuesta().equals(true)){
                             //Toast.makeText(getContext(),"Respuesta correcta",Toast.LENGTH_SHORT).show();
                             respuesta = true;
+                            state.setBackgroundColor(Color.parseColor("#7CB342"));
+                            txtResponse.setText(R.string.correcto);
                             CompleteActivity(view);
                         }
-                        else
-                            Toast.makeText(getContext(),"Respuesta incorrecta",Toast.LENGTH_SHORT).show();
+                        else{
+                            state.setBackgroundColor(Color.parseColor("#e74c3c"));
+                            txtResponse.setText(R.string.incorrecto);
+                            //Toast.makeText(getContext(),"Respuesta incorrecta",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    else if(respuestas.size() > 1){
+                        resp.add(opSelected);
                     }
                     //Toast.makeText(getContext(),opSelected.getDescripcion(),Toast.LENGTH_SHORT).show();
                 }
@@ -151,7 +174,19 @@ public class Frg_IdentificarRespuestaImagen extends Fragment implements View.OnC
 
     @Override
     public void onClick(View v) {
-        CompleteActivity(v);
+        if(resp.equals(respuestas)){
+            respuesta = true;
+            state.setBackgroundColor(Color.parseColor("#7CB342"));
+            txtResponse.setText(R.string.correcto);
+            CompleteActivity(v);
+        }
+        else{
+            respuesta = false;
+            state.setBackgroundColor(Color.parseColor("#e74c3c"));
+            txtResponse.setText(R.string.incorrecto);
+            resp.clear();
+            Toast.makeText(getContext(),"Respuesta incorrecta\n Vuelve a intentarlo",Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void CompleteActivity(View v){
@@ -170,7 +205,7 @@ public class Frg_IdentificarRespuestaImagen extends Fragment implements View.OnC
                         public void onResponse(JSONObject response) {
                             try {
                                 if (response.length() > 1) {
-                                    Toast.makeText(getContext(), "Actividad exitosa", Toast.LENGTH_LONG).show();
+                                    //Toast.makeText(getContext(), "Actividad exitosa", Toast.LENGTH_LONG).show();
                                     Navegacion(v);
                                 } else
                                     Toast.makeText(getContext(), response.get("message").toString(), Toast.LENGTH_LONG).show();
@@ -219,7 +254,7 @@ public class Frg_IdentificarRespuestaImagen extends Fragment implements View.OnC
                         Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
                         navController.navigate(R.id.fragmentOrdenarSecuenciasImagenes, bundle);
                         break;
-                    case "Identificar respuesta entre palabras":
+                    case "Identificar entre palabras":
                         Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
                         navController.navigate(R.id.fragmentIdentificarRespuestaPalabra, bundle);
                         //Toast.makeText(v.getContext(), "Layout Identificar entre palabras no existe", Toast.LENGTH_SHORT).show();

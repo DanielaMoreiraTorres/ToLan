@@ -20,43 +20,27 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:padding="5dp">
 
-            <RelativeLayout
+            <TextView
+                android:id="@+id/txtOp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dp" >
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:fontFamily="sans-serif-medium"
+                android:text="Opción"
+                android:textColor="@color/secundario"
+                android:textSize="16sp" />
 
-                <LinearLayout
-                    android:id="@+id/content"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="5dp">
-
-                    <ImageView
-                        android:id="@+id/imgView"
-                        android:layout_width="30dp"
-                        android:layout_height="38dp"
-                        android:layout_gravity="end"
-                        android:src="@drawable/icon_view"
-                        android:tint="@color/secundario"
-                        tools:ignore="UseAppTint" />
-
-                    <TextView
-                        android:id="@+id/txtOp"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:textAlignment="center"
-                        android:fontFamily="sans-serif-medium"
-                        android:text="Opción"
-                        android:textColor="@color/secundario"
-                        android:textSize="16sp" />
-
-                </LinearLayout>
-
-            </RelativeLayout>
+            <ImageView
+                android:id="@+id/imgView"
+                android:layout_width="20dp"
+                android:layout_height="28dp"
+                android:src="@drawable/icon_info"
+                android:tint="@color/secundario"
+                tools:ignore="UseAppTint" />
 
         </LinearLayout>
 

@@ -86,6 +86,34 @@
                     android:orientation="vertical"
                     android:gravity="bottom">
 
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <View
+                            android:id="@+id/state"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:background="@color/verdeclaro" />
+
+                        <TextView
+                            android:id="@+id/txtResponse"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:drawableEnd="@drawable/icon_valor"
+                            android:drawableTint="@color/white"
+                            android:drawablePadding="20dp"
+                            android:layout_marginTop="30dp"
+                            android:fontFamily="sans-serif-black"
+                            android:shadowColor="@color/secundario"
+                            android:shadowRadius="2"
+                            android:text="@string/correcto"
+                            android:textColor="@color/white"
+                            android:textSize="20sp" />
+
+                    </RelativeLayout>
+
                     <Button
                         android:id="@+id/btn_comprobar_actividades"
                         android:layout_width="match_parent"

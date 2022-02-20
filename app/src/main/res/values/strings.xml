@@ -69,7 +69,7 @@
     <!-- Activity Add Skin -->
     <string name="addskin">Ingrese datos del artículo</string>
     <!-- Activity Choose Video -->
-    <string name="choosevid">Seleccione Uno o varios videos</string>
+    <string name="choosevid">Seleccione uno o varios videos</string>
     <string name="limitevid">Límite de 10 videos</string>
     <!-- Activity Activity Contacts -->
     <string name="masinfo">Más información</string>
@@ -79,11 +79,15 @@
     <string name="footerC">2022 Todos los derechos reservados \n ToLan</string>
     <string name="cname">Contact Name</string>
     <string name="cemail">Email</string>
-    <!-- Fragment Identificar Respuesta magen -->
+    <!-- Fragment Identificar Respuesta imagen -->
     <string name="titulo">Identificar la imagen correcta</string>
     <string name="comprobar">Comprobar</string>
-    <!-- Fragment Identificar Respuesta magen -->
+    <string name="correcto">¡Correcto!</string>
+    <string name="incorrecto">¡Incorrecto!</string>
+    <!-- Fragment Identificar Respuesta txt -->
     <string name="tituloITxt">Identificar la opción correcta</string>
+    <!-- Fragment Reconocer Figuras -->
+    <string name="tituloReco">Reconocer figura</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
