@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cardview="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:layout_alignParentLeft="true"
+            android:id="@+id/cardview_imagen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            cardview:cardCornerRadius="0dp"
+            cardview:cardElevation="0dp"
+            tools:ignore="SpeakableTextPresentCheck">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="5dp"
+                    tools:ignore="MissingConstraints">
+
+                    <RelativeLayout
+                        android:id="@+id/ryl_fondo_bordes_imagen"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:background="@drawable/fondo_bordes_imagen"
+                        android:padding="7dp">
+
+                        <ImageView
+                            android:id="@+id/imagen"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/game_activity" />
+
+
+                    </RelativeLayout>
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_alignParentRight="true"
+            android:id="@+id/cardview_texto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            cardview:cardCornerRadius="0dp"
+            cardview:cardElevation="0dp"
+            tools:ignore="SpeakableTextPresentCheck">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF">
+
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="5dp"
+                    tools:ignore="MissingConstraints">
+
+                    <RelativeLayout
+                        android:id="@+id/ryl_fondo_bordes_texto"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:background="@drawable/fondo_bordes_imagen"
+                        android:padding="7dp">
+
+                        <TextView
+                            android:id="@+id/texto"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_centerInParent="true"
+                            android:fontFamily="@font/baloo"
+                            android:gravity="center"
+                            android:text="Not Load Text"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"
+                            android:textSize="40dp"
+                            android:textStyle="bold" />
+
+
+                    </RelativeLayout>
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+
+
+</FrameLayout>

@@ -28,6 +28,7 @@ import com.bumptech.glide.Glide;
 import com.example.tolan.R;
 import com.example.tolan.adapters.AdpEnunciado;
 import com.example.tolan.adapters.AdpOptionReconocerImg;
+import com.example.tolan.clases.ClssNavegacionActividades;
 import com.example.tolan.clases.ClssStaticGrupo;
 import com.example.tolan.models.ModelContent;
 
@@ -109,7 +110,7 @@ public class Frg_ReconocerFiguras extends Fragment implements View.OnClickListen
                 view.findViewById(R.id.btn_comprobar_actividades).setVisibility(View.VISIBLE);
             else
                 view.findViewById(R.id.btn_comprobar_actividades).setVisibility(View.GONE);*/
-            adpEnunciado = new AdpEnunciado(getContext(),modelContentsEnun);
+            adpEnunciado = new AdpEnunciado(getContext(), modelContentsEnun);
             lstLista.setAdapter(adpEnunciado);
             //FALTA CARGAR LA IMAGEN DE ENUNCIADO
 
@@ -119,7 +120,7 @@ public class Frg_ReconocerFiguras extends Fragment implements View.OnClickListen
                     .load(modelContentsEnun.get(0).getMultimedia().getJSONObject(0).getString("url"))
                     .into(img);
             //
-            adpOptionReconocerImg = new AdpOptionReconocerImg(getContext(),modelContentsOp);
+            adpOptionReconocerImg = new AdpOptionReconocerImg(getContext(), modelContentsOp);
             lstOptions.setAdapter(adpOptionReconocerImg);
 
         } catch (JSONException e) {
@@ -128,10 +129,10 @@ public class Frg_ReconocerFiguras extends Fragment implements View.OnClickListen
         view.findViewById(R.id.btn_comprobar_actividades).setOnClickListener(this);
     }
 
-    private void MapContenido(){
+    private void MapContenido() {
         try {
             ModelContent modelContent = null;
-            for (int i=0;i<contenido.length();i++){
+            for (int i = 0; i < contenido.length(); i++) {
                 modelContent = new ModelContent();
                 modelContent.setId(contenido.getJSONObject(i).getInt("id"));
                 modelContent.setDescripcion(contenido.getJSONObject(i).getString("descripcion"));
@@ -139,7 +140,7 @@ public class Frg_ReconocerFiguras extends Fragment implements View.OnClickListen
                 modelContent.setRespuesta(contenido.getJSONObject(i).getBoolean("respuesta"));
                 modelContent.setActivo(contenido.getJSONObject(i).getBoolean("activo"));
                 modelContent.setMultimedia((JSONArray) contenido.getJSONObject(i).get("multimedia"));
-                if(contenido.getJSONObject(i).get("enunciado").equals(true))
+                if (contenido.getJSONObject(i).get("enunciado").equals(true))
                     modelContentsEnun.add(modelContent);
                 else {
                     modelContentsOp.add(modelContent);
@@ -168,7 +169,7 @@ public class Frg_ReconocerFiguras extends Fragment implements View.OnClickListen
         }*/
     }
 
-    private void CompleteActivity(View v){
+    private void CompleteActivity(View v) {
         try {
             // Crear nueva cola de peticiones
             requestQueue = Volley.newRequestQueue(getContext());
@@ -206,74 +207,12 @@ public class Frg_ReconocerFiguras extends Fragment implements View.OnClickListen
         }
     }
 
-    private void Navegacion(View v){
+    private void Navegacion(View v) {
         navController = Navigation.findNavController(v);
-        Bundle bundle;
-        String actividad;
-        NavController navController = Navigation.findNavController(v);
         //Eliminamos el item por el cual nos redirecccionamos aca
         jsonActivities.remove(0);
-        //Avanzar hacia la siguiente actividad
-        try {
-            if (jsonActivities.length() > 0) {
-                //Pasamos al siguiente fragmento
-                JSONObject activity = jsonActivities.getJSONObject(0);
-                //Tomamos nuestra activiad del objeto
-                actividad = activity.getString("nombre");
-                bundle = new Bundle();
-                bundle.putString("activities", jsonActivities.toString());
-                switch (actividad) {
-                    //El case nos permitira redireccionar hacia el Layout correspondiente para navegar hacia el
-                    case "Reconocer figuras":
-                        Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
-                        navController.navigate(R.id.fragmentReconocerFiguras, bundle);
-                        break;
-                    case "Ordenar la secuencia":
-                        Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
-                        navController.navigate(R.id.fragmentOrdenarSecuenciasImagenes, bundle);
-                        break;
-                    case "Identificar respuesta entre palabras":
-                        Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
-                        navController.navigate(R.id.fragmentIdentificarRespuestaPalabra, bundle);
-                        //Toast.makeText(v.getContext(), "Layout Identificar entre palabras no existe", Toast.LENGTH_SHORT).show();
-                        break;
-                    case "Identificar respuesta entre imagenes":
-                        Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
-                        navController.navigate(R.id.fragmentIdentificarRespuestaImagen, bundle);
-                        //Toast.makeText(v.getContext(), "Layout Identificar entre palabras no existe", Toast.LENGTH_SHORT).show();
-                        break;
-                    case "Armar rompecabezass":
-                        Toast.makeText(v.getContext(), "Layout Armar rompecabezass no existe", Toast.LENGTH_SHORT).show();
-                        break;
-                    case "Seleccionar pares. - Imagen-Texto":
-                        Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
-                        navController.navigate(R.id.fragmentSeleccionarParesImagenTexto, bundle);
-                        //Toast.makeText(v.getContext(), "Layout Seleccionar pares. - Imagen-Texto no existe", Toast.LENGTH_SHORT).show();
-                        break;
-                    case "Seleccionar pares. - Imagen-Imagen":
-                        Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
-                        navController.navigate(R.id.fragmentSeleccionarParesImagenImagen, bundle);
-                        //Toast.makeText(v.getContext(), "Layout Seleccionar pares. - Imagen-Texto no existe", Toast.LENGTH_SHORT).show();
-                        break;
-                    case "Grafomotricidad":
-                        Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
-                        navController.navigate(R.id.fragmentGrafomotricidad, bundle);
-                        //Toast.makeText(v.getContext(), "Layout Grafomotricidad no existe", Toast.LENGTH_SHORT).show();
-                        break;
-                    case "Arrastrar y Soltar":
-                        Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
-                        navController.navigate(R.id.fragmentArrastrarSoltar, bundle);
-                        break;
-                }
-            } else {
-                Toast.makeText(getContext(), "Redirigiendo al menu principal..", Toast.LENGTH_SHORT).show();
-                //Volvemos al fragmento principal eliminando los recursos en pila
-                navController.navigate(R.id.inicioFragment, null, new NavOptions.Builder()
-                        .setPopUpTo(R.id.inicioFragment, true)
-                        .build());
-            }
-        } catch (JSONException ex) {
-            Toast.makeText(v.getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
-        }
+        ClssNavegacionActividades clssNavegacionActividades = new ClssNavegacionActividades(navController, jsonActivities, v);
+        clssNavegacionActividades.navegar();
+
     }
 }

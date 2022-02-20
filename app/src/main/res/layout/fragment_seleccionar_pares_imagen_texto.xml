@@ -58,179 +58,30 @@
 
                 <TextView
 
-                    android:id="@+id/enunciado"
+                    android:id="@+id/txt_enunciado"
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-condensed"
-                    android:text=" Instrucciones: \n Seleccione el texto con la imagen correspondiente y verifique si esta correcto"
+                    android:text=" Instrucciones: \nSeleccione el texto con la imagen correspondiente y verifique si esta correcto"
                     android:textColor="@color/secundario"
                     android:textSize="15dp" />
 
-                <LinearLayout
-                    android:id="@+id/rcv"
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcv_datosSeleccionarPares"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/enunciado"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginBottom="10dp"
-                    android:weightSum="2">
+                    android:layout_below="@id/txt_enunciado"
+                    android:layout_alignParentLeft="true"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-                    <GridLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:alignmentMode="alignMargins"
-                        android:columnCount="1"
-                        android:columnOrderPreserved="false"
-                        android:rowCount="3">
-
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_rowWeight="1"
-                            android:layout_columnWeight="1"
-                            android:layout_margin="12dp"
-                            app:cardCornerRadius="12dp"
-                            app:cardElevation="6dp">
-
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:tag="1"
-                                app:srcCompat="@drawable/contenido" />
-
-                        </androidx.cardview.widget.CardView>
-
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_rowWeight="1"
-                            android:layout_columnWeight="1"
-                            android:layout_margin="12dp"
-                            app:cardCornerRadius="12dp"
-                            app:cardElevation="6dp">
-
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:tag="1"
-                                app:srcCompat="@drawable/contenido" />
-
-                        </androidx.cardview.widget.CardView>
-
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_rowWeight="1"
-                            android:layout_columnWeight="1"
-                            android:layout_margin="12dp"
-                            app:cardCornerRadius="12dp"
-                            app:cardElevation="6dp">
-
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:tag="1"
-                                app:srcCompat="@drawable/contenido" />
-
-                        </androidx.cardview.widget.CardView>
-
-
-                    </GridLayout>
-
-                    <GridLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:alignmentMode="alignMargins"
-                        android:columnCount="1"
-                        android:columnOrderPreserved="false"
-                        android:rowCount="3">
-
-
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_rowWeight="1"
-                            android:layout_columnWeight="1"
-                            android:layout_margin="12dp"
-                            app:cardCornerRadius="0dp"
-                            app:cardElevation="6dp">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-
-                                android:layout_marginTop="5dp"
-                                android:fontFamily="sans-serif-condensed-light"
-                                android:gravity="center"
-                                android:padding="10dp"
-                                android:text="Cama"
-                                android:textAlignment="center"
-                                android:textSize="25dp" />
-
-
-                        </androidx.cardview.widget.CardView>
-
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_rowWeight="1"
-                            android:layout_columnWeight="1"
-                            android:layout_margin="12dp"
-                            app:cardCornerRadius="0dp"
-                            app:cardElevation="6dp">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-
-                                android:layout_marginTop="5dp"
-                                android:fontFamily="sans-serif-condensed-light"
-                                android:gravity="center"
-                                android:padding="10dp"
-                                android:text="Casa"
-                                android:textAlignment="center"
-                                android:textSize="25dp" />
-
-                        </androidx.cardview.widget.CardView>
-
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_rowWeight="1"
-                            android:layout_columnWeight="1"
-                            android:layout_margin="12dp"
-                            app:cardCornerRadius="0dp"
-                            app:cardElevation="6dp">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-
-                                android:layout_marginTop="5dp"
-                                android:fontFamily="sans-serif-condensed-light"
-                                android:gravity="center"
-                                android:padding="10dp"
-                                android:text="Caja"
-                                android:textAlignment="center"
-                                android:textSize="25dp" />
-
-                        </androidx.cardview.widget.CardView>
-
-
-                    </GridLayout>
-
-
-                </LinearLayout>
 
 
             </RelativeLayout>
 
             <LinearLayout
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
@@ -252,7 +103,12 @@
                     tools:ignore="TouchTargetSizeCheck" />
             </LinearLayout>
 
+
+
+
         </LinearLayout>
+
+
 
 
     </ScrollView>

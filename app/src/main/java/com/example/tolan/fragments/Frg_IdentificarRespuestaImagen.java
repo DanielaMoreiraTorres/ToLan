@@ -30,6 +30,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.tolan.R;
 import com.example.tolan.adapters.AdpEnunciado;
 import com.example.tolan.adapters.AdpOptionIdentifyImg;
+import com.example.tolan.clases.ClssNavegacionActividades;
 import com.example.tolan.clases.ClssStaticGrupo;
 import com.example.tolan.models.ModelContent;
 
@@ -228,75 +229,12 @@ public class Frg_IdentificarRespuestaImagen extends Fragment implements View.OnC
     }
 
     private void Navegacion(View v){
-        //Inicio Navegación
+
         navController = Navigation.findNavController(v);
-        Bundle bundle;
-        String actividad;
-        NavController navController = Navigation.findNavController(v);
         //Eliminamos el item por el cual nos redirecccionamos aca
         jsonActivities.remove(0);
-        //Avanzar hacia la siguiente actividad
-        try {
-            if (jsonActivities.length() > 0) {
-                //Pasamos al siguiente fragmento
-                JSONObject activity = jsonActivities.getJSONObject(0);
-                //Tomamos nuestra activiad del objeto
-                actividad = activity.getString("nombre");
-                bundle = new Bundle();
-                bundle.putString("activities", jsonActivities.toString());
-                switch (actividad) {
-                    //El case nos permitira redireccionar hacia el Layout correspondiente para navegar hacia el
-                    case "Reconocer figuras":
-                        Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
-                        navController.navigate(R.id.fragmentReconocerFiguras, bundle);
-                        break;
-                    case "Ordenar la secuencia":
-                        Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
-                        navController.navigate(R.id.fragmentOrdenarSecuenciasImagenes, bundle);
-                        break;
-                    case "Identificar entre palabras":
-                        Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
-                        navController.navigate(R.id.fragmentIdentificarRespuestaPalabra, bundle);
-                        //Toast.makeText(v.getContext(), "Layout Identificar entre palabras no existe", Toast.LENGTH_SHORT).show();
-                        break;
-                    case "Identificar entre imágenes":
-                        Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
-                        navController.navigate(R.id.fragmentIdentificarRespuestaImagen, bundle);
-                        //Toast.makeText(v.getContext(), "Layout Identificar entre palabras no existe", Toast.LENGTH_SHORT).show();
-                        break;
-                    case "Armar rompecabezass":
-                        Toast.makeText(v.getContext(), "Layout Armar rompecabezass no existe", Toast.LENGTH_SHORT).show();
-                        break;
-                    case "Seleccionar pares. - Imagen-Texto":
-                        Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
-                        navController.navigate(R.id.fragmentSeleccionarParesImagenTexto, bundle);
-                        //Toast.makeText(v.getContext(), "Layout Seleccionar pares. - Imagen-Texto no existe", Toast.LENGTH_SHORT).show();
-                        break;
-                    case "Seleccionar pares. - Imagen-Imagen":
-                        Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
-                        navController.navigate(R.id.fragmentSeleccionarParesImagenImagen, bundle);
-                        //Toast.makeText(v.getContext(), "Layout Seleccionar pares. - Imagen-Texto no existe", Toast.LENGTH_SHORT).show();
-                        break;
-                    case "Grafomotricidad":
-                        Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
-                        navController.navigate(R.id.fragmentGrafomotricidad, bundle);
-                        //Toast.makeText(v.getContext(), "Layout Grafomotricidad no existe", Toast.LENGTH_SHORT).show();
-                        break;
-                    case "Arrastrar y Soltar":
-                        Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
-                        navController.navigate(R.id.fragmentArrastrarSoltar, bundle);
-                        break;
-                }
-            } else {
-                Toast.makeText(getContext(), "Redirigiendo al menu principal..", Toast.LENGTH_SHORT).show();
-                //Volvemos al fragmento principal eliminando los recursos en pila
-                navController.navigate(R.id.inicioFragment, null, new NavOptions.Builder()
-                        .setPopUpTo(R.id.inicioFragment, true)
-                        .build());
-            }
-        } catch (JSONException ex) {
-            Toast.makeText(v.getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-        //Fin Navegación
+        ClssNavegacionActividades clssNavegacionActividades= new ClssNavegacionActividades(navController,jsonActivities,v);
+        clssNavegacionActividades.navegar();
+
     }
 }
