@@ -133,6 +133,7 @@ public class Frg_IdentificarRespuestaImagen extends Fragment implements View.OnC
                             } else {
                                 state.setBackgroundColor(Color.parseColor("#e74c3c"));
                                 txtResponse.setText(R.string.incorrecto);
+                                txtResponse.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.sad,0);
                                 //Toast.makeText(getContext(),"Respuesta incorrecta",Toast.LENGTH_SHORT).show();
                             }
                         } else if (respuestas.size() > 1) {

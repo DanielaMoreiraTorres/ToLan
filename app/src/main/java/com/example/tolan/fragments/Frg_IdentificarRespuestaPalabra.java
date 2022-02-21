@@ -129,6 +129,7 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment implements View.On
                             } else {
                                 state.setBackgroundColor(Color.parseColor("#e74c3c"));
                                 txtResponse.setText(R.string.incorrecto);
+                                txtResponse.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.sad,0);
                                 respuesta = false;
                                 //Toast.makeText(getContext(),"Respuesta incorrecta",Toast.LENGTH_SHORT).show();
                             }
