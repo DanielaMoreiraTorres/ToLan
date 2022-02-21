@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -42,7 +43,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-public class Frg_ReconocerFiguras extends Fragment implements View.OnClickListener {
+public class Frg_ReconocerFiguras extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener {
 
     JSONArray jsonActivities;
     NavController navController;
@@ -109,14 +110,23 @@ public class Frg_ReconocerFiguras extends Fragment implements View.OnClickListen
                 view.findViewById(R.id.btn_comprobar_actividades).setVisibility(View.VISIBLE);
             else
                 view.findViewById(R.id.btn_comprobar_actividades).setVisibility(View.GONE);*/
-            adpEnunciado = new AdpEnunciado(getContext(), modelContentsEnun);
-            lstLista.setAdapter(adpEnunciado);
-            Glide.with(getContext())
-                    .load(imgEnunciado.getMultimedia().getJSONObject(0).getString("url"))
-                    .into(img);
-            adpOptionReconocerImg = new AdpOptionReconocerImg(getContext(), modelContentsOp);
-            lstOptions.setAdapter(adpOptionReconocerImg);
-
+            if(modelContentsEnun.size() > 0 & modelContentsOp.size() >0) {
+                adpEnunciado = new AdpEnunciado(getContext(), modelContentsEnun);
+                lstLista.setAdapter(adpEnunciado);
+                Glide.with(getContext())
+                        .load(imgEnunciado.getMultimedia().getJSONObject(0).getString("url"))
+                        .into(img);
+                adpOptionReconocerImg = new AdpOptionReconocerImg(getContext(), modelContentsOp);
+                lstOptions.setAdapter(adpOptionReconocerImg);
+            }
+            else{
+                Toast.makeText(getContext(), "La actividad no tiene contenido", Toast.LENGTH_SHORT).show();
+                btn.setVisibility(View.VISIBLE);
+                img.setVisibility(View.GONE);
+                btn.setText("Continuar");
+                btn.setOnClickListener(v -> Navegacion(v));
+                //Navegacion(view);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -211,5 +221,12 @@ public class Frg_ReconocerFiguras extends Fragment implements View.OnClickListen
         ClssNavegacionActividades clssNavegacionActividades = new ClssNavegacionActividades(navController, jsonActivities, v);
         clssNavegacionActividades.navegar();
 
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        /*adapterView.getItemAtPosition(i);
+        int opcselec = 0;
+        opSelected = modelContentsOp.get(opcselec);*/
     }
 }
