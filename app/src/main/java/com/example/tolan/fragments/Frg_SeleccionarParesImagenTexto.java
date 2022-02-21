@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.example.tolan.R;
 
 import com.example.tolan.adapters.AdpRecycler_SeleccionarPares;
+import com.example.tolan.clases.ClssNavegacionActividades;
 import com.example.tolan.dialogs.Diag_Frg_OpcionIncorrecta;
 import com.google.android.flexbox.AlignItems;
 import com.google.android.flexbox.FlexDirection;
@@ -109,7 +110,6 @@ public class Frg_SeleccionarParesImagenTexto extends Fragment implements View.On
         super.onViewCreated(view, savedInstanceState);
 
 
-
         rcv_datosSeleccionarPares = view.findViewById(R.id.rcv_datosSeleccionarPares);
 
         txt_enunciado = view.findViewById(R.id.txt_enunciado);
@@ -157,7 +157,7 @@ public class Frg_SeleccionarParesImagenTexto extends Fragment implements View.On
             }
             Collections.shuffle(listRutasMultimedia);
             Collections.shuffle(listItemsMultimedia);
-            AdpRecycler_SeleccionarPares adpRecycler_seleccionarPares = new AdpRecycler_SeleccionarPares(getContext(), listItemsMultimedia, listRutasMultimedia, map_DatosEmparejados,this);
+            AdpRecycler_SeleccionarPares adpRecycler_seleccionarPares = new AdpRecycler_SeleccionarPares(getContext(), listItemsMultimedia, listRutasMultimedia, map_DatosEmparejados, this);
             rcv_datosSeleccionarPares.setAdapter(adpRecycler_seleccionarPares);
 
 
@@ -175,93 +175,11 @@ public class Frg_SeleccionarParesImagenTexto extends Fragment implements View.On
     @Override
     public void onClick(View v) {
 
-
-
-
         navController = Navigation.findNavController(v);
-        Bundle bundle;
-        String actividad;
-        NavController navController = Navigation.findNavController(v);
-
         //Eliminamos el item por el cual nos redirecccionamos aca
         jsonActivities.remove(0);
-
-        //Avanzar hacia la siguiente actividad
-        try {
-            if (jsonActivities.length() > 0) {
-                //Pasamos al siguiente fragmento
-                JSONObject activity = jsonActivities.getJSONObject(0);
-                //Tomamos nuestra activiad del objeto
-                actividad = activity.getString("nombre");
-
-                bundle = new Bundle();
-                bundle.putString("activities", jsonActivities.toString());
-
-
-                switch (actividad) {
-                    //El case nos permitira redireccionar hacia el Layout correspondiente para navegar hacia el
-                    case "Reconocer figuras":
-                        Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
-                        navController.navigate(R.id.fragmentReconocerFiguras, bundle);
-                        break;
-
-                    case "Ordenar la secuencia":
-                        Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
-                        navController.navigate(R.id.fragmentOrdenarSecuenciasImagenes, bundle);
-                        break;
-
-                    case "Identificar respuesta entre palabras":
-                        Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
-                        navController.navigate(R.id.fragmentIdentificarRespuestaPalabra, bundle);
-                        //Toast.makeText(v.getContext(), "Layout Identificar entre palabras no existe", Toast.LENGTH_SHORT).show();
-                        break;
-
-                    case "Identificar respuesta entre imagenes":
-                        Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
-                        navController.navigate(R.id.fragmentIdentificarRespuestaImagen, bundle);
-                        //Toast.makeText(v.getContext(), "Layout Identificar entre palabras no existe", Toast.LENGTH_SHORT).show();
-                        break;
-
-                    case "Armar rompecabezass":
-                        Toast.makeText(v.getContext(), "Layout Armar rompecabezass no existe", Toast.LENGTH_SHORT).show();
-                        break;
-
-                    case "Seleccionar pares. - Imagen-Texto":
-                        Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
-                        navController.navigate(R.id.fragmentSeleccionarParesImagenTexto, bundle);
-                        //Toast.makeText(v.getContext(), "Layout Seleccionar pares. - Imagen-Texto no existe", Toast.LENGTH_SHORT).show();
-                        break;
-
-                    case "Seleccionar pares. - Imagen-Imagen":
-                        Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
-                        navController.navigate(R.id.fragmentSeleccionarParesImagenImagen, bundle);
-                        //Toast.makeText(v.getContext(), "Layout Seleccionar pares. - Imagen-Texto no existe", Toast.LENGTH_SHORT).show();
-                        break;
-
-                    case "Grafomotricidad":
-                        Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
-                        navController.navigate(R.id.fragmentGrafomotricidad, bundle);
-                        //Toast.makeText(v.getContext(), "Layout Grafomotricidad no existe", Toast.LENGTH_SHORT).show();
-                        break;
-
-                    case "Arrastrar y Soltar":
-                        Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
-                        navController.navigate(R.id.fragmentArrastrarSoltar, bundle);
-                        break;
-                }
-
-
-            } else {
-                Toast.makeText(getContext(), "Redirigiendo al menu principal..", Toast.LENGTH_SHORT).show();
-                //Volvemos al fragmento principal eliminando los recursos en pila
-                navController.navigate(R.id.inicioFragment, null, new NavOptions.Builder()
-                        .setPopUpTo(R.id.inicioFragment, true)
-                        .build());
-            }
-
-        } catch (JSONException ex) {
-            Toast.makeText(v.getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
-        }
+        ClssNavegacionActividades clssNavegacionActividades = new ClssNavegacionActividades(navController, jsonActivities, v);
+        clssNavegacionActividades.navegar();
 
     }
 

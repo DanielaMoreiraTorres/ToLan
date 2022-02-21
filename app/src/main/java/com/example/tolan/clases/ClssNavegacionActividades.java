@@ -46,6 +46,7 @@ public class ClssNavegacionActividades {
                 switch (actividad) {
                     //El case nos permitira redireccionar hacia el Layout correspondiente para navegar hacia el
                     case "Reconocer figuras":
+                        //Toast.makeText(v.getContext(), "La actividad [" +actividad+"] no esta configurada aun", Toast.LENGTH_SHORT).show();
                         Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
                         navController.navigate(R.id.fragmentReconocerFiguras, bundle);
                         break;
@@ -84,6 +85,10 @@ public class ClssNavegacionActividades {
                     case "Arrastrar y soltar texto":
                         Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
                         navController.navigate(R.id.fragmentArrastrarSoltar, bundle);
+                        break;
+
+                    default :
+                        Toast.makeText(v.getContext(),"Revise que la actividad :"+ actividad +" esté configurada por favor", Toast.LENGTH_SHORT).show();
                         break;
 
 
