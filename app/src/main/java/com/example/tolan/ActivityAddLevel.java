@@ -216,7 +216,7 @@ public class ActivityAddLevel extends AppCompatActivity {
 
     void llenarComponents()
     {
-        if(!levelsel.equals(null)){
+        if(levelsel != null){
             btnaddNSubnivel.setVisibility(View.GONE);
             txttxtTitleN.setText("Modifique datos del nivel");
             checkBoxNivel.setEnabled(levelsel.getActivo());

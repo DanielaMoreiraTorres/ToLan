@@ -129,6 +129,7 @@ public class Frg_IdentificarRespuestaImagen extends Fragment implements View.OnC
                                 respuesta = true;
                                 state.setBackgroundColor(Color.parseColor("#7CB342"));
                                 txtResponse.setText(R.string.correcto);
+                                txtResponse.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.icon_valor,0);
                                 CompleteActivity(view);
                             } else {
                                 state.setBackgroundColor(Color.parseColor("#e74c3c"));
@@ -184,12 +185,14 @@ public class Frg_IdentificarRespuestaImagen extends Fragment implements View.OnC
             respuesta = true;
             state.setBackgroundColor(Color.parseColor("#7CB342"));
             txtResponse.setText(R.string.correcto);
+            txtResponse.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.icon_valor,0);
             CompleteActivity(v);
         }
         else{
             respuesta = false;
             state.setBackgroundColor(Color.parseColor("#e74c3c"));
             txtResponse.setText(R.string.incorrecto);
+            txtResponse.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.sad,0);
             resp.clear();
             Toast.makeText(getContext(),"Respuesta incorrecta\n Vuelve a intentarlo",Toast.LENGTH_SHORT).show();
         }

@@ -240,6 +240,7 @@ public class Frg_ReconocerFiguras extends Fragment implements View.OnClickListen
                 respuesta = true;
                 state.setBackgroundColor(Color.parseColor("#7CB342"));
                 txtResponse.setText(R.string.correcto);
+                txtResponse.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.icon_valor,0);
                 CompleteActivity(view);
             }
             else{
