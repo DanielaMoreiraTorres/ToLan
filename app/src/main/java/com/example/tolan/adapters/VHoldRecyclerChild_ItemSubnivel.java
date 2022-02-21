@@ -75,8 +75,8 @@ public class VHoldRecyclerChild_ItemSubnivel extends RecyclerView.ViewHolder imp
                 switch (actividad) {
                     //El case nos permitira redireccionar hacia el Layout correspondiente para navegar hacia el
                     case "Reconocer figuras":
-                        Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
-                        //navController.navigate(R.id.fragmentReconocerFiguras, bundle);
+                        //Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
+                        navController.navigate(R.id.fragmentReconocerFiguras, bundle);
                         break;
 
                     case "Ordenar la secuencia":
@@ -85,14 +85,14 @@ public class VHoldRecyclerChild_ItemSubnivel extends RecyclerView.ViewHolder imp
                         break;
 
                     case "Identificar entre palabras":
-                        Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
-                        //navController.navigate(R.id.fragmentIdentificarRespuestaPalabra, bundle);
+                        //Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
+                        navController.navigate(R.id.fragmentIdentificarRespuestaPalabra, bundle);
                         //Toast.makeText(v.getContext(), "Layout Identificar entre palabras no existe", Toast.LENGTH_SHORT).show();
                         break;
 
                     case "Identificar entre imágenes":
-                        Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
-                        //navController.navigate(R.id.fragmentIdentificarRespuestaImagen, bundle);
+                        //Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
+                        navController.navigate(R.id.fragmentIdentificarRespuestaImagen, bundle);
                         //Toast.makeText(v.getContext(), "Layout Identificar entre palabras no existe", Toast.LENGTH_SHORT).show();
                         break;
 

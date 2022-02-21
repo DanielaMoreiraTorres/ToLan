@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.tolan.fragments.FrgLevel;
 import com.example.tolan.fragments.FrgLogin;
+import com.example.tolan.fragments.FrgMenuAdmin;
 import com.example.tolan.fragments.FrgWelcome;
 
 public class MainActivity extends AppCompatActivity {
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         }
         if(id == R.id.btnLogIn) {
             fragment = new FrgLogin();
-            getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).disallowAddToBackStack().commit();
         }
         if(id == R.id.btnContacts) {
             Intent intent = new Intent(MainActivity.this, ActivityContact.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);

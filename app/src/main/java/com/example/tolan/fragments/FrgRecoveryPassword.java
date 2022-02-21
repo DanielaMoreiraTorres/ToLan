@@ -70,13 +70,14 @@ public class FrgRecoveryPassword extends Fragment {
         txtTittle = view.findViewById(R.id.txtRecoveryMetodo);
         Lcelular = view.findViewById(R.id.Ltelefono);
         celular = view.findViewById(R.id.telefono);
+        Lcelular.setVisibility(View.GONE);
         TextChanged(celular,Lcelular,Merror);
         Lcorreo = view.findViewById(R.id.Lemail);
-        Lcorreo.setVisibility(View.GONE);
         correo = view.findViewById(R.id.email);
         TextChanged(correo,Lcorreo,Merror);
         otro = view.findViewById(R.id.otro);
         otro.setOnClickListener(v -> OtroMetodo());
+        otro.setVisibility(View.GONE);
         recovery = view.findViewById(R.id.recovery);
         recovery.setOnClickListener(v -> Recovery());
         return view;

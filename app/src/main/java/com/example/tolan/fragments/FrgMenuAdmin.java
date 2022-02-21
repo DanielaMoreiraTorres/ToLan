@@ -26,7 +26,6 @@ import com.example.tolan.activity_group_admin;
 
 public class FrgMenuAdmin extends Fragment {
 
-    private Toolbar toolbar;
     private Fragment fragment;
     private ImageView iconNiveles, iconSubNiveles, iconActividades, iconSkins, iconGrupos, iconHistorial;
 

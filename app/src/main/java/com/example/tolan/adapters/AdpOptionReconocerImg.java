@@ -24,7 +24,7 @@ public class AdpOptionReconocerImg extends ArrayAdapter<ModelContent> {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View item = inflater.inflate(R.layout.item_option_reconocer_figura, null);
         TextView lblOp = (TextView)item.findViewById(R.id.lblOp);
-        lblOp.setText("Opción " + position + ". ");
+        lblOp.setText("Opción " + (position + 1) + ".- ");
         TextView txtOp = (TextView)item.findViewById(R.id.txtOp);
         txtOp.setText(getItem(position).getDescripcion());
         return(item);

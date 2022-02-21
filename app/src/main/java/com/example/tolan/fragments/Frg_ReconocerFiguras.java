@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -47,11 +48,13 @@ public class Frg_ReconocerFiguras extends Fragment implements View.OnClickListen
     NavController navController;
     private ListView lstLista;
     private ListView lstOptions;
+    private Button btn;
     private ImageView img;
     private View state;
     private TextView txtResponse;
     private JSONArray contenido;
     List<ModelContent> modelContentsEnun;
+    ModelContent imgEnunciado;
     ArrayList<ModelContent> modelContentsOp;
     List<Integer> lstIds;
     /*ArrayList<ModelContent> respuestas;
@@ -84,12 +87,7 @@ public class Frg_ReconocerFiguras extends Fragment implements View.OnClickListen
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_reconocer_figuras, container, false);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        View view = inflater.inflate(R.layout.fragment_reconocer_figuras, container, false);
         try {
             String lst_Activities = getArguments().getString("activities");
             jsonActivities = new JSONArray(lst_Activities);
@@ -97,13 +95,14 @@ public class Frg_ReconocerFiguras extends Fragment implements View.OnClickListen
             state.setVisibility(View.GONE);
             txtResponse = view.findViewById(R.id.txtResponse);
             txtResponse.setVisibility(View.GONE);
+            btn = view.findViewById(R.id.btn_comprobar_actividades);
+            btn.setVisibility(View.GONE);
             img = view.findViewById(R.id.imgOp);
             lstLista = view.findViewById(R.id.lstEnunciado);
             lstOptions = view.findViewById(R.id.lstOpciones);
             contenido = jsonActivities.getJSONObject(0).getJSONArray("contenido");
             modelContentsEnun = new ArrayList<>();
             modelContentsOp = new ArrayList<>();
-            lstIds = Arrays.asList();
             //respuestas = new ArrayList<>();
             MapContenido();
             /*if(respuestas.size() > 1)
@@ -112,21 +111,17 @@ public class Frg_ReconocerFiguras extends Fragment implements View.OnClickListen
                 view.findViewById(R.id.btn_comprobar_actividades).setVisibility(View.GONE);*/
             adpEnunciado = new AdpEnunciado(getContext(), modelContentsEnun);
             lstLista.setAdapter(adpEnunciado);
-            //FALTA CARGAR LA IMAGEN DE ENUNCIADO
-
-            Random aleatorio = new Random();
-            int idRandon = lstIds.get(aleatorio.nextInt(lstIds.size()));
             Glide.with(getContext())
-                    .load(modelContentsEnun.get(0).getMultimedia().getJSONObject(0).getString("url"))
+                    .load(imgEnunciado.getMultimedia().getJSONObject(0).getString("url"))
                     .into(img);
-            //
             adpOptionReconocerImg = new AdpOptionReconocerImg(getContext(), modelContentsOp);
             lstOptions.setAdapter(adpOptionReconocerImg);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        view.findViewById(R.id.btn_comprobar_actividades).setOnClickListener(this);
+        //view.findViewById(R.id.btn_comprobar_actividades).setOnClickListener(this);
+        return view;
     }
 
     private void MapContenido() {
@@ -140,12 +135,14 @@ public class Frg_ReconocerFiguras extends Fragment implements View.OnClickListen
                 modelContent.setRespuesta(contenido.getJSONObject(i).getBoolean("respuesta"));
                 modelContent.setActivo(contenido.getJSONObject(i).getBoolean("activo"));
                 modelContent.setMultimedia((JSONArray) contenido.getJSONObject(i).get("multimedia"));
-                if (contenido.getJSONObject(i).get("enunciado").equals(true))
-                    modelContentsEnun.add(modelContent);
-                else {
-                    modelContentsOp.add(modelContent);
-                    lstIds.add(modelContent.getId());
+                if (contenido.getJSONObject(i).get("enunciado").equals(true)){
+                    if(((JSONArray) contenido.getJSONObject(i).get("multimedia")).length() > 0)
+                        imgEnunciado = modelContent;
+                    else
+                        modelContentsEnun.add(modelContent);
                 }
+                else
+                    modelContentsOp.add(modelContent);
             }
         } catch (JSONException e) {
             e.printStackTrace();

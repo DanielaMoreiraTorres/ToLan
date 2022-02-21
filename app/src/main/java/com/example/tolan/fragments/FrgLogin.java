@@ -200,7 +200,7 @@ public class FrgLogin extends Fragment {
         }
         else{
             fragment.setArguments(b);
-            getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
+            getFragmentManager().beginTransaction().replace(R.id.content, fragment).disallowAddToBackStack().commit();
         }
     }
 

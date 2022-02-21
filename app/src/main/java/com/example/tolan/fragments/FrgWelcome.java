@@ -83,6 +83,6 @@ public class FrgWelcome extends Fragment {
 
     private void Iniciar() {
         fragment = new FrgLogin();
-        getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
+        getFragmentManager().beginTransaction().replace(R.id.content, fragment).disallowAddToBackStack().commit();
     }
 }
