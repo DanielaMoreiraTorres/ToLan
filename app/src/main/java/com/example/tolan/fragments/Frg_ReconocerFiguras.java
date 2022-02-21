@@ -58,8 +58,8 @@ public class Frg_ReconocerFiguras extends Fragment implements View.OnClickListen
     ModelContent imgEnunciado;
     ArrayList<ModelContent> modelContentsOp;
     List<Integer> lstIds;
-    /*ArrayList<ModelContent> respuestas;
-    ArrayList<ModelContent> resp;*/
+    ArrayList<ModelContent> respuestas;
+    //ArrayList<ModelContent> resp;
     private AdpEnunciado adpEnunciado;
     private AdpOptionReconocerImg adpOptionReconocerImg;
     ModelContent opSelected = new ModelContent();
@@ -104,7 +104,7 @@ public class Frg_ReconocerFiguras extends Fragment implements View.OnClickListen
             contenido = jsonActivities.getJSONObject(0).getJSONArray("contenido");
             modelContentsEnun = new ArrayList<>();
             modelContentsOp = new ArrayList<>();
-            //respuestas = new ArrayList<>();
+            respuestas = new ArrayList<>();
             MapContenido();
             /*if(respuestas.size() > 1)
                 view.findViewById(R.id.btn_comprobar_actividades).setVisibility(View.VISIBLE);
@@ -118,6 +118,7 @@ public class Frg_ReconocerFiguras extends Fragment implements View.OnClickListen
                         .into(img);
                 adpOptionReconocerImg = new AdpOptionReconocerImg(getContext(), modelContentsOp);
                 lstOptions.setAdapter(adpOptionReconocerImg);
+                lstOptions.setOnItemClickListener(this);
             }
             else{
                 Toast.makeText(getContext(), "La actividad no tiene contenido", Toast.LENGTH_SHORT).show();
@@ -125,7 +126,6 @@ public class Frg_ReconocerFiguras extends Fragment implements View.OnClickListen
                 img.setVisibility(View.GONE);
                 btn.setText("Continuar");
                 btn.setOnClickListener(v -> Navegacion(v));
-                //Navegacion(view);
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -151,8 +151,11 @@ public class Frg_ReconocerFiguras extends Fragment implements View.OnClickListen
                     else
                         modelContentsEnun.add(modelContent);
                 }
-                else
+                else {
                     modelContentsOp.add(modelContent);
+                    if(contenido.getJSONObject(i).get("respuesta").equals(true))
+                        respuestas.add(modelContent);
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -225,8 +228,25 @@ public class Frg_ReconocerFiguras extends Fragment implements View.OnClickListen
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        /*adapterView.getItemAtPosition(i);
-        int opcselec = 0;
-        opSelected = modelContentsOp.get(opcselec);*/
+        opSelected = ((ModelContent) adapterView.getItemAtPosition(i));
+        if(respuestas.size() == 0){
+            Toast.makeText(getContext(),"La actividad no tiene respuesta",Toast.LENGTH_SHORT).show();
+        }
+        else if(respuestas.size() == 1){
+            state.setVisibility(View.VISIBLE);
+            txtResponse.setVisibility(View.VISIBLE);
+            if(opSelected.getRespuesta().equals(true)){
+                //Toast.makeText(getContext(),"Respuesta correcta",Toast.LENGTH_SHORT).show();
+                respuesta = true;
+                state.setBackgroundColor(Color.parseColor("#7CB342"));
+                txtResponse.setText(R.string.correcto);
+                CompleteActivity(view);
+            }
+            else{
+                state.setBackgroundColor(Color.parseColor("#e74c3c"));
+                txtResponse.setText(R.string.incorrecto);
+                //Toast.makeText(getContext(),"Respuesta incorrecta",Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

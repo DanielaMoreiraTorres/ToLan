@@ -101,45 +101,49 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment implements View.On
             modelContentsOp = new ArrayList<>();
             respuestas = new ArrayList<>();
             MapContenido();
-            if(respuestas.size() > 1)
+            if(modelContentsEnun.size() > 0 & modelContentsOp.size() >0) {
+                if (respuestas.size() > 1)
+                    view.findViewById(R.id.btn_comprobar_actividades).setVisibility(View.VISIBLE);
+                else
+                    view.findViewById(R.id.btn_comprobar_actividades).setVisibility(View.GONE);
+                adpEnunciado = new AdpEnunciado(getContext(), modelContentsEnun);
+                lstLista.setAdapter(adpEnunciado);
+                adpOptiosIdentifyTxt = new AdpOptionIdentifyTxt(getContext(), modelContentsOp);
+                rcvOptions.setAdapter(adpOptiosIdentifyTxt);
+                adpOptiosIdentifyTxt.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        int opcselec = rcvOptions.getChildAdapterPosition(view);
+                        opSelected = modelContentsOp.get(opcselec);
+                        if (respuestas.size() == 0) {
+                            Toast.makeText(getContext(), "La actividad no tiene respuesta", Toast.LENGTH_SHORT).show();
+                        } else if (respuestas.size() == 1) {
+                            state.setVisibility(View.VISIBLE);
+                            txtResponse.setVisibility(View.VISIBLE);
+                            if (opSelected.getRespuesta().equals(true)) {
+                                //Toast.makeText(getContext(),"Respuesta correcta",Toast.LENGTH_SHORT).show();
+                                respuesta = true;
+                                state.setBackgroundColor(Color.parseColor("#7CB342"));
+                                txtResponse.setText(R.string.correcto);
+                                CompleteActivity(view);
+                            } else {
+                                state.setBackgroundColor(Color.parseColor("#e74c3c"));
+                                txtResponse.setText(R.string.incorrecto);
+                                respuesta = false;
+                                //Toast.makeText(getContext(),"Respuesta incorrecta",Toast.LENGTH_SHORT).show();
+                            }
+                        } else if (respuestas.size() > 1) {
+                            resp.add(opSelected);
+                        }
+                        Toast.makeText(getContext(), opSelected.getDescripcion(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+            else{
+                Toast.makeText(getContext(), "La actividad no tiene contenido", Toast.LENGTH_SHORT).show();
                 view.findViewById(R.id.btn_comprobar_actividades).setVisibility(View.VISIBLE);
-            else
-                view.findViewById(R.id.btn_comprobar_actividades).setVisibility(View.GONE);
-            adpEnunciado = new AdpEnunciado(getContext(),modelContentsEnun);
-            lstLista.setAdapter(adpEnunciado);
-            adpOptiosIdentifyTxt = new AdpOptionIdentifyTxt(getContext(),modelContentsOp);
-            rcvOptions.setAdapter(adpOptiosIdentifyTxt);
-            adpOptiosIdentifyTxt.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int opcselec = rcvOptions.getChildAdapterPosition(view);
-                    opSelected = modelContentsOp.get(opcselec);
-                    if(respuestas.size() == 0){
-                        Toast.makeText(getContext(),"La actividad no tiene respuesta",Toast.LENGTH_SHORT).show();
-                    }
-                    else if(respuestas.size() == 1){
-                        state.setVisibility(View.VISIBLE);
-                        txtResponse.setVisibility(View.VISIBLE);
-                        if(opSelected.getRespuesta().equals(true)){
-                            //Toast.makeText(getContext(),"Respuesta correcta",Toast.LENGTH_SHORT).show();
-                            respuesta = true;
-                            state.setBackgroundColor(Color.parseColor("#7CB342"));
-                            txtResponse.setText(R.string.correcto);
-                            CompleteActivity(view);
-                        }
-                        else {
-                            state.setBackgroundColor(Color.parseColor("#e74c3c"));
-                            txtResponse.setText(R.string.incorrecto);
-                            respuesta = false;
-                            //Toast.makeText(getContext(),"Respuesta incorrecta",Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                    else if(respuestas.size() > 1){
-                        resp.add(opSelected);
-                    }
-                    Toast.makeText(getContext(),opSelected.getDescripcion(),Toast.LENGTH_SHORT).show();
-                }
-            });
+                view.findViewById(R.id.btn_comprobar_actividades).setOnClickListener(v -> Navegacion(v));
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
