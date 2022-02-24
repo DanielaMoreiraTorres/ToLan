@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="80dp"
-                android:fontFamily="sans-serif-black"
+                android:fontFamily="@font/baloo"
                 android:shadowColor="@color/secundario"
                 android:shadowRadius="2"
                 android:text="@string/reg"
@@ -66,11 +66,11 @@
                         android:id="@+id/textView3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/dtperson"
-                        android:textAlignment="center"
-                        android:fontFamily="sans-serif-black"
+                        android:fontFamily="@font/baloo"
                         android:shadowColor="@color/secundario"
                         android:shadowRadius="0.6"
+                        android:text="@string/dtperson"
+                        android:textAlignment="center"
                         android:textColor="@color/principal"
                         android:textSize="22sp" />
 
@@ -85,8 +85,9 @@
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:errorEnabled="true"
-                            android:hint="Nombres">
+                            android:layout_marginTop="5dp"
+                            android:hint="Nombres"
+                            app:errorEnabled="true">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/nombres"
@@ -107,8 +108,8 @@
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:errorEnabled="true"
-                            android:hint="Apellidos">
+                            android:hint="Apellidos"
+                            app:errorEnabled="true">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/apellidos"
@@ -127,8 +128,8 @@
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:errorEnabled="true"
-                            android:hint="Celular">
+                            android:hint="Celular"
+                            app:errorEnabled="true">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/telefono"
@@ -148,8 +149,8 @@
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:errorEnabled="true"
-                            android:hint="Correo">
+                            android:hint="Correo"
+                            app:errorEnabled="true">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/email"
@@ -168,11 +169,11 @@
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:hint="Fecha de nacimiento"
+                            app:errorEnabled="true"
                             app:helperText="Seleccione una fecha"
                             app:helperTextEnabled="true"
-                            app:helperTextTextColor="@color/principal"
-                            app:errorEnabled="true"
-                            android:hint="Fecha de nacimiento">
+                            app:helperTextTextColor="@color/principal">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/txtFechaNac"
@@ -196,12 +197,12 @@
                         android:id="@+id/textView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="@string/dtusuario"
-                        android:textAlignment="center"
-                        android:fontFamily="sans-serif-black"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/baloo"
                         android:shadowColor="@color/secundario"
                         android:shadowRadius="0.6"
+                        android:text="@string/dtusuario"
+                        android:textAlignment="center"
                         android:textColor="@color/principal"
                         android:textSize="22sp" />
 
@@ -211,45 +212,63 @@
                         android:layout_margin="10dp"
                         android:orientation="vertical">
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        <RadioGroup
+                            android:id="@+id/rgTipoUser"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:helperText="Marque este opción si ud es un docente"
-                            app:helperTextEnabled="true"
-                            app:helperTextTextColor="@color/secundario">
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginBottom="10dp"
+                            android:orientation="horizontal">
 
-                            <com.google.android.material.switchmaterial.SwitchMaterial
-                                android:id="@+id/switch_docent"
-                                android:layout_width="wrap_content"
+                            <TextView
+                                android:id="@+id/tipoUsuario"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/baloo"
+                                android:gravity="center_vertical"
+                                android:text="@string/tipo"
+                                android:textColor="@color/secundario"
+                                android:textSize="14sp" />
+
+                            <com.google.android.material.radiobutton.MaterialRadioButton
+                                android:id="@+id/rbDocente"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:text="@string/docente">
+
+                            </com.google.android.material.radiobutton.MaterialRadioButton>
+
+                            <com.google.android.material.radiobutton.MaterialRadioButton
+                                android:id="@+id/rbEstudiante"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:checked="false"
-                                android:padding="10dp"
-                                android:gravity="top"
-                                android:fontFamily="sans-serif-medium"
-                                android:text="@string/esDoc" >
+                                android:layout_weight="1"
+                                android:text="@string/estudiante">
 
-                            </com.google.android.material.switchmaterial.SwitchMaterial>
+                            </com.google.android.material.radiobutton.MaterialRadioButton>
 
-                        </com.google.android.material.textfield.TextInputLayout>
+                        </RadioGroup>
 
                         <LinearLayout
                             android:id="@+id/datosDocente"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:layout_marginBottom="10dp">
 
                             <com.google.android.material.textfield.TextInputLayout
                                 android:id="@+id/Ldocente"
                                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:hint="Docente"
                                 app:endIconMode="none"
+                                app:errorEnabled="true"
                                 app:helperText="Nombre o apellido del docente a cargo"
                                 app:helperTextEnabled="true"
-                                app:helperTextTextColor="@color/principal"
-                                app:errorEnabled="true"
-                                android:hint="Docente">
+                                app:helperTextTextColor="@color/principal">
 
                                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
                                     android:id="@+id/docente"
@@ -271,8 +290,8 @@
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:errorEnabled="true"
-                            android:hint="Usuario">
+                            android:hint="Usuario"
+                            app:errorEnabled="true">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/txtusuario"
@@ -291,9 +310,9 @@
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:errorEnabled="true"
                             android:hint="Contraseña"
-                            app:endIconMode="password_toggle" >
+                            app:endIconMode="password_toggle"
+                            app:errorEnabled="true">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/clave"
@@ -311,9 +330,9 @@
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:errorEnabled="true"
                             android:hint="Confirmar contraseña"
-                            app:endIconMode="password_toggle">
+                            app:endIconMode="password_toggle"
+                            app:errorEnabled="true">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/confclave"
@@ -329,7 +348,7 @@
                         <Button
                             android:id="@+id/btnRegister"
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
+                            android:layout_height="match_parent"
                             android:layout_marginBottom="10dp"
                             android:backgroundTint="@color/verde"
                             android:fontFamily="sans-serif-black"

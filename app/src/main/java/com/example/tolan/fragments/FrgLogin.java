@@ -1,17 +1,18 @@
 package com.example.tolan.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -26,7 +27,6 @@ import com.example.tolan.R;
 import com.example.tolan.clases.ClssStaticGrupo;
 import com.example.tolan.clases.ClssValidations;
 import com.example.tolan.models.ModelUser;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -39,17 +39,16 @@ import java.util.Map;
 
 public class FrgLogin extends Fragment {
 
-    private FloatingActionButton btnLogin;
-    private Button forgetPass, register;
+    private Button btnLogin, register;
+    private TextView forgetPass;
     private TextInputEditText user, password;
     private TextInputLayout Lusuario, Lclave;
-    private ClssValidations validate = new ClssValidations();
+    private ClssValidations validate;
     private String Merror= "Campo obligatorio";
     private Fragment fragment;
     private RequestQueue requestQueue;
-    private String url = "https://db-bartolucci.herokuapp.com/usuario/login";
-    private String urlGrupo = "https://db-bartolucci.herokuapp.com/grupo/";
-    JSONObject grupo = new JSONObject();
+    private String url, urlGrupo;
+    JSONObject grupo;
     int idDocente = 0;
 
     public FrgLogin() {
@@ -74,7 +73,11 @@ public class FrgLogin extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+        validate = new ClssValidations();
+        grupo = new JSONObject();
         Lusuario = view.findViewById(R.id.Lusuario);
+        url = getString(R.string.urlBase) + "usuario/login";
+        urlGrupo = getString(R.string.urlBase) + "grupo/";
         user = view.findViewById(R.id.txtuser);
         validate.TextChanged(user,null,Lusuario,Merror);
         Lclave = view.findViewById(R.id.Lclave);
@@ -200,7 +203,8 @@ public class FrgLogin extends Fragment {
         }
         else{
             fragment.setArguments(b);
-            getFragmentManager().beginTransaction().replace(R.id.content, fragment).disallowAddToBackStack().commit();
+            getFragmentManager().popBackStack();
+            getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
         }
     }
 
@@ -209,7 +213,9 @@ public class FrgLogin extends Fragment {
         getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
     }
 
+    @SuppressLint("ResourceAsColor")
     private void Forget() {
+        forgetPass.setTextColor(Color.parseColor("#44cccc"));
         fragment = new FrgRecoveryPassword();
         getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
     }

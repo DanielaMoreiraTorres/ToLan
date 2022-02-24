@@ -4,18 +4,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto" >
 
     <item
-        android:id="@+id/btnNotifi"
-        android:icon="@drawable/icon_notification"
-        android:title="@string/notifi"
+        android:id="@+id/btnMyInfo"
+        android:icon="@drawable/user"
+        android:iconTint="@color/secundario"
+        android:title="@string/myinfo"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/btnLogIn"
         android:icon="@drawable/icon_logout"
+        android:iconTint="@color/secundario"
         android:title="@string/cerrar"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/btnContacts"
         android:icon="@drawable/icon_contacts"
+        android:iconTint="@color/secundario"
         android:title="@string/contactos"
         app:showAsAction="ifRoom" />
 </menu>

@@ -90,7 +90,7 @@ public class Frg_IdentificarRespuestaImagen extends Fragment implements View.OnC
         try {
             String lst_Activities = getArguments().getString("activities");
             jsonActivities = new JSONArray(lst_Activities);
-            ArrayList<JSONObject> activities = new ArrayList<>();
+            //ArrayList<JSONObject> activities = new ArrayList<>();
             state = view.findViewById(R.id.state);
             state.setVisibility(View.GONE);
             txtResponse = view.findViewById(R.id.txtResponse);
@@ -237,12 +237,10 @@ public class Frg_IdentificarRespuestaImagen extends Fragment implements View.OnC
     }
 
     private void Navegacion(View v){
-
         navController = Navigation.findNavController(v);
         //Eliminamos el item por el cual nos redirecccionamos aca
         jsonActivities.remove(0);
         ClssNavegacionActividades clssNavegacionActividades= new ClssNavegacionActividades(navController,jsonActivities,v);
         clssNavegacionActividades.navegar();
-
     }
 }

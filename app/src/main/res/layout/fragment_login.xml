@@ -38,11 +38,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerInParent="true"
                     android:layout_marginStart="5dp"
                     android:layout_weight="1"
-                    android:fontFamily="sans-serif-black"
+                    android:fontFamily="@font/baloo"
                     android:shadowColor="@color/secundario"
                     android:shadowRadius="2"
                     android:text="@string/login"
@@ -54,8 +52,6 @@
                     android:layout_width="160dp"
                     android:layout_height="160dp"
                     android:layout_weight="0"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
                     android:layout_marginTop="40dp"
                     android:src="@drawable/loginuser" />
 
@@ -65,31 +61,30 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scrollbars="vertical"
+            android:layout_height="match_parent"
             android:fillViewport="true"
-            android:layout_marginTop="30dp"
+            android:scrollbars="vertical"
             tools:ignore="UselessParent">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:id="@+id/content"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_weight="1">
 
                     <LinearLayout
-                        android:id="@+id/linearLayout"
+                        android:id="@+id/content"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
                         android:orientation="vertical"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
                         android:padding="20dp">
 
                         <com.google.android.material.textfield.TextInputLayout
@@ -97,7 +92,7 @@
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Usuario"
+                            android:hint="@string/usuario"
                             app:errorEnabled="true">
 
                             <com.google.android.material.textfield.TextInputEditText
@@ -119,7 +114,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
-                            android:hint="Contraseña"
+                            android:hint="@string/contrasenia"
                             app:endIconMode="password_toggle"
                             app:errorEnabled="true">
 
@@ -135,93 +130,91 @@
 
                         </com.google.android.material.textfield.TextInputLayout>
 
+                        <TextView
+                            android:id="@+id/forget"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:fontFamily="@font/baloo"
+                            android:shadowRadius="2"
+                            android:shadowColor="@color/secundario"
+                            android:padding="10dp"
+                            android:text="@string/forget"
+                            android:textAllCaps="false"
+                            android:textColor="@color/secundario"
+                            android:textSize="14sp" />
+
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginTop="-10dp"
-                        android:layout_weight="4"
-                        android:orientation="vertical">
-
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/btnSigin"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="end"
-                            android:layout_marginEnd="15dp"
-                            android:src="@drawable/icon_login"
-                            app:backgroundTint="@color/principal"
-                            app:maxImageSize="30dp"
-                            app:tint="@color/white" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
                         android:id="@+id/relativeButtons"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/content"
                         android:layout_marginStart="20dp"
-                        android:layout_marginTop="30dp"
+                        android:layout_marginTop="5dp"
                         android:layout_marginEnd="20dp"
                         android:layout_marginBottom="10dp"
                         android:orientation="horizontal"
                         android:weightSum="2">
 
                         <Button
-                            android:id="@+id/forget"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:layout_marginEnd="10dp"
-                            android:backgroundTint="@color/verde"
-                            android:fontFamily="sans-serif-black"
-                            android:text="@string/forget"
-                            android:textColor="@color/white"
-                            android:textSize="12sp"
-                            tools:ignore="ButtonStyle" />
-
-                        <Button
                             android:id="@+id/register"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_marginEnd="10dp"
                             android:layout_weight="1"
-                            android:backgroundTint="@color/principal"
-                            android:fontFamily="sans-serif-black"
+                            android:drawableLeft="@drawable/icon_add_user"
+                            android:drawableTint="@color/white"
+                            android:backgroundTint="@color/verde"
+                            android:fontFamily="@font/baloo"
                             android:text="@string/registrarse"
                             android:textColor="@color/white"
                             android:textSize="12sp"
                             tools:ignore="ButtonStyle" />
 
+                        <Button
+                            android:id="@+id/btnSigin"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:drawableLeft="@drawable/icon_login"
+                            android:drawableTint="@color/white"
+                            android:fontFamily="@font/baloo"
+                            android:text="@string/iniciar_sesion"
+                            android:textColor="@color/white"
+                            android:textSize="12sp"
+                            app:backgroundTint="@color/principal"
+                            tools:ignore="ButtonStyle" />
+
                     </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="bottom"
+                    android:layout_weight="2">
+
+                    <View
+                        android:id="@+id/Viewfondo1"
+                        android:layout_width="match_parent"
+                        android:layout_height="85dp"
+                        android:background="@drawable/ic_up"/>
+
+                    <View
+                        android:id="@+id/Viewfondo2"
+                        android:layout_width="match_parent"
+                        android:layout_height="95dp"
+                        android:background="@color/principal"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
         </ScrollView>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="bottom">
-
-            <View
-                android:id="@+id/Viewfondo1"
-                android:layout_width="match_parent"
-                android:layout_height="85dp"
-                android:background="@drawable/ic_up"/>
-
-            <View
-                android:id="@+id/Viewfondo2"
-                android:layout_width="match_parent"
-                android:layout_height="95dp"
-                android:background="@color/principal"/>
-
-        </LinearLayout>
 
     </LinearLayout>
 

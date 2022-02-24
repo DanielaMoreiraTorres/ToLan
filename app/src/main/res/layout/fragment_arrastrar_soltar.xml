@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,163 +11,123 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-
-        <RelativeLayout
-            android:id="@+id/rl_superior"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:ignore="MissingConstraints">
-
-            <View
-                android:id="@+id/topView"
+        <TextView
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:background="#44cccc" />
-
-            <View
-                android:id="@+id/downView"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_below="@id/topView"
-                android:background="@drawable/ic_down" />
-
-            <TextView
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/rl_superior"
-                android:layout_centerHorizontal="true"
-                android:fontFamily="sans-serif-black"
-                android:gravity="center_vertical"
                 android:padding="30dp"
-                android:text="Arastrar/Soltar respuesta"
-                android:textColor="@color/white"
-                android:textSize="24sp"
+                android:textAlignment="center"
+                android:fontFamily="@font/baloo"
                 android:textStyle="bold"
-                tools:ignore="NotSibling" />
+                android:shadowColor="@color/secundario"
+                android:shadowRadius="4"
+                android:text="Arastrar/Soltar respuesta"
+                android:textColor="@color/secundario"
+                android:textSize="24sp" />
 
-
-        </RelativeLayout>
-
-
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="vertical"
-            android:padding="20dp"
-            tools:ignore="MissingConstraints">
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            android:fillViewport="true"
+            tools:ignore="UselessParent">
 
-
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-black"
-                android:text="La capital de la República del Ecuador es la ciudad de... "
-                android:textSize="20dp" />
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/dotted_line"
-                android:layerType="software" />
-        </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="top"
+                    android:layout_weight="1">
 
+                    <ListView
+                        android:id="@+id/lstEnunciado"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:divider="@color/white"
+                        android:padding="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="30dp"/>
 
-        <GridLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal"
-            android:columnCount="3"
-            android:layout_gravity="center"
-            android:textAlignment="center"
+                    <LinearLayout
+                        android:id="@+id/destino"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:padding="10dp"
+                        android:layout_marginBottom="30dp"
+                        android:orientation="horizontal"
+                        android:background="@drawable/dotted_line"
+                        android:tag="respuesta">
 
-            android:padding="20dp">
+                    </LinearLayout>
 
-            <TextView
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rcvOption"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginBottom="10dp" />
 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:fontFamily="sans-serif-condensed-light"
-                android:padding="10dp"
-                android:text="Guayaquil"
-                android:textSize="25dp" />
+                </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/Lcomprobar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:paddingTop="10dp"
+                    android:gravity="bottom"
+                    android:layout_weight="4">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:fontFamily="sans-serif-condensed-light"
-                android:padding="10dp"
-                android:text="Quito"
-                android:textSize="25dp" />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:fontFamily="sans-serif-condensed-light"
-                android:padding="10dp"
-                android:text="Cuenca"
-                android:textSize="25dp" />
+                        <View
+                            android:id="@+id/state"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:background="@color/verdeclaro" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:fontFamily="sans-serif-condensed-light"
-                android:padding="10dp"
-                android:text="Ambato"
-                android:textSize="25dp" />
+                        <TextView
+                            android:id="@+id/txtResponse"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:drawablePadding="20dp"
+                            android:drawableEnd="@drawable/icon_valor"
+                            android:drawableTint="@color/white"
+                            android:fontFamily="@font/baloo"
+                            android:shadowColor="@color/secundario"
+                            android:shadowRadius="2"
+                            android:text="@string/correcto"
+                            android:textColor="@color/white"
+                            android:textSize="20sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:fontFamily="sans-serif-condensed-light"
-                android:padding="10dp"
-                android:text="Montalvo"
-                android:textSize="25dp" />
+                    </RelativeLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:fontFamily="sans-serif-condensed-light"
-                android:padding="10dp"
-                android:text="Quevedo"
-                android:textSize="25dp" />
+                    <Button
+                        android:id="@+id/btn_comprobar_actividades"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:backgroundTint="@color/principal"
+                        android:fontFamily="@font/baloo"
+                        android:text="@string/comprobar"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:fontFamily="sans-serif-condensed-light"
-                android:padding="10dp"
-                android:text="Buena Fe"
-                android:textSize="25dp" />
+                </LinearLayout>
 
+            </LinearLayout>
 
-        </GridLayout>
-
-        <Button
-            android:id="@+id/btn_comprobar_actividades"
-            android:layout_width="350dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="0dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/custom_button_edit"
-            android:minHeight="48dp"
-
-            android:text="Comprobar"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            tools:ignore="TouchTargetSizeCheck" />
+        </ScrollView>
 
     </LinearLayout>
 
-</ScrollView>
+</FrameLayout>

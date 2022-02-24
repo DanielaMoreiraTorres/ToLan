@@ -84,7 +84,7 @@ public class ClssNavegacionActividades {
                         break;
                     case "Arrastrar y soltar texto":
                         //Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
-                        //navController.navigate(R.id.fragmentArrastrarSoltar, bundle);
+                        navController.navigate(R.id.fragmentArrastrarSoltar, bundle);
                         break;
 
                     default :

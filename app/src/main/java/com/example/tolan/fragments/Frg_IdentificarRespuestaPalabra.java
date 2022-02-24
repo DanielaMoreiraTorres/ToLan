@@ -101,7 +101,7 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment implements View.On
             modelContentsOp = new ArrayList<>();
             respuestas = new ArrayList<>();
             MapContenido();
-            if(modelContentsEnun.size() > 0 & modelContentsOp.size() >0) {
+            if(modelContentsEnun.size() > 0 & modelContentsOp.size() > 0) {
                 if (respuestas.size() > 1)
                     view.findViewById(R.id.btn_comprobar_actividades).setVisibility(View.VISIBLE);
                 else
@@ -149,7 +149,7 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment implements View.On
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        view.findViewById(R.id.btn_comprobar_actividades).setOnClickListener(this);
+        //view.findViewById(R.id.btn_comprobar_actividades).setOnClickListener(this);
     }
 
     private void MapContenido(){

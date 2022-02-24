@@ -73,7 +73,7 @@ public class FrgMenuAdmin extends Fragment {
             /*Intent intent = new Intent(getContext(), ActivityLevel.class);
             startActivity(intent);*/
             fragment = new FrgLevel();
-            getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
+            getFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
         }
         else if(tag == 2){
             Intent intent = new Intent(getContext(), ActivitySublevel.class);

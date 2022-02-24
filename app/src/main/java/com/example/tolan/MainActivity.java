@@ -9,13 +9,10 @@ import androidx.fragment.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import com.example.tolan.fragments.FrgLevel;
 import com.example.tolan.fragments.FrgLogin;
-import com.example.tolan.fragments.FrgMenuAdmin;
+import com.example.tolan.fragments.FrgRegisterUser;
 import com.example.tolan.fragments.FrgWelcome;
 
 public class MainActivity extends AppCompatActivity {
@@ -48,12 +45,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if(id == R.id.btnNotifi) {
-
+        if(id == R.id.btnMyInfo) {
+            fragment = new FrgRegisterUser();
+            getSupportFragmentManager().popBackStack();
+            getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
         }
         if(id == R.id.btnLogIn) {
             fragment = new FrgLogin();
-            getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).disallowAddToBackStack().commit();
+            getSupportFragmentManager().popBackStack();
+            getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
         }
         if(id == R.id.btnContacts) {
             Intent intent = new Intent(MainActivity.this, ActivityContact.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);

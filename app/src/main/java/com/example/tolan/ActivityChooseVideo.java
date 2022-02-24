@@ -59,7 +59,7 @@ public class ActivityChooseVideo extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if(id == R.id.btnNotifi) {
+        if(id == R.id.btnMyInfo) {
 
         }
         if(id == R.id.btnLogIn) {

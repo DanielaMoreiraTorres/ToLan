@@ -3,6 +3,7 @@ package com.example.tolan.fragments;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
@@ -13,8 +14,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -29,6 +32,7 @@ import com.example.tolan.R;
 import com.example.tolan.adapters.AdpAutocompleteDocente;
 import com.example.tolan.clases.ClssValidations;
 import com.example.tolan.models.ModelUser;
+import com.google.android.material.radiobutton.MaterialRadioButton;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -45,14 +49,15 @@ public class FrgRegisterUser extends Fragment {
 
     private RequestQueue requestQueue;
     private JsonArrayRequest jsonArrayRequest;
-    private String url = "https://db-bartolucci.herokuapp.com/usuario";
+    private String url;
     private TextInputLayout Lnombres, Lapellidos, Ltelefono, Lemail, LFechaNac, Ldocente, Lusuario, Lclave, Lconfclave;
     private TextInputEditText nombre, apellido, telefono, email, fechaNac, usuario, clave, confirclave;
     private LinearLayout datosDocente;
-    private SwitchMaterial switch_docent;
+    private RadioGroup rgTipoUser;
+    private MaterialRadioButton rbDocente;
     private AutoCompleteTextView docente;
     private Button btnRegistrarse;
-    private ClssValidations validate = new ClssValidations();
+    private ClssValidations validate;
     private Fragment fragment;
     private String Merror= "Campo obligatorio";
     private int anio, mes, dia;
@@ -82,41 +87,48 @@ public class FrgRegisterUser extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_register_user, container, false);
-        docentes = new ArrayList<>();
-        Lnombres = view.findViewById(R.id.Lnombres);
-        nombre = view.findViewById(R.id.nombres);
-        validate.TextChanged(nombre,null,Lnombres,Merror);
-        Lapellidos = view.findViewById(R.id.Lapellidos);
-        apellido = view.findViewById(R.id.apellidos);
-        validate.TextChanged(apellido,null,Lapellidos,Merror);
-        Ltelefono = view.findViewById(R.id.Ltelefono);
-        telefono = view.findViewById(R.id.telefono);
-        validate.TextChanged(telefono,null,Ltelefono,Merror);
-        Lemail = view.findViewById(R.id.Lemail);
-        email = view.findViewById(R.id.email);
-        validate.TextChanged(email,null,Lemail,Merror);
-        LFechaNac = view.findViewById(R.id.LFechaNac);
-        fechaNac = view.findViewById(R.id.txtFechaNac);
-        validate.TextChanged(fechaNac,null,LFechaNac,Merror);
-        fechaNac.setOnClickListener(v -> showDialog());
-        Lusuario = view.findViewById(R.id.Lusuario);
-        usuario = view.findViewById(R.id.txtusuario);
-        validate.TextChanged(usuario,null,Lusuario,Merror);
-        Lclave = view.findViewById(R.id.Lclave);
-        clave = view.findViewById(R.id.clave);
-        validate.TextChanged(clave,null,Lclave,Merror);
-        Lconfclave = view.findViewById(R.id.Lconfclave);
-        confirclave = view.findViewById(R.id.confclave);
-        validate.TextChanged(confirclave,null,Lconfclave,Merror);
-        switch_docent = view.findViewById(R.id.switch_docent);
-        switch_docent.setOnCheckedChangeListener((compoundButton, b) -> isChecked());
-        datosDocente = view.findViewById(R.id.datosDocente);
-        Ldocente = view.findViewById(R.id.Ldocente);
-        docente = view.findViewById(R.id.docente);
-        docente.setThreshold(1);
-        autocomplete();
-        btnRegistrarse = view.findViewById(R.id.btnRegister);
-        btnRegistrarse.setOnClickListener(v -> RegisterUser());
+        try {
+            ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+            url = getString(R.string.urlBase) + "usuario";
+            validate = new ClssValidations();
+            docentes = new ArrayList<>();
+            Lnombres = view.findViewById(R.id.Lnombres);
+            nombre = view.findViewById(R.id.nombres);
+            validate.TextChanged(nombre, null, Lnombres, Merror);
+            Lapellidos = view.findViewById(R.id.Lapellidos);
+            apellido = view.findViewById(R.id.apellidos);
+            validate.TextChanged(apellido, null, Lapellidos, Merror);
+            Ltelefono = view.findViewById(R.id.Ltelefono);
+            telefono = view.findViewById(R.id.telefono);
+            validate.TextChanged(telefono, null, Ltelefono, Merror);
+            Lemail = view.findViewById(R.id.Lemail);
+            email = view.findViewById(R.id.email);
+            validate.TextChanged(email, null, Lemail, Merror);
+            LFechaNac = view.findViewById(R.id.LFechaNac);
+            fechaNac = view.findViewById(R.id.txtFechaNac);
+            validate.TextChanged(fechaNac, null, LFechaNac, Merror);
+            fechaNac.setOnClickListener(v -> showDialog());
+            Lusuario = view.findViewById(R.id.Lusuario);
+            usuario = view.findViewById(R.id.txtusuario);
+            validate.TextChanged(usuario, null, Lusuario, Merror);
+            Lclave = view.findViewById(R.id.Lclave);
+            clave = view.findViewById(R.id.clave);
+            validate.TextChanged(clave, null, Lclave, Merror);
+            Lconfclave = view.findViewById(R.id.Lconfclave);
+            confirclave = view.findViewById(R.id.confclave);
+            validate.TextChanged(confirclave, null, Lconfclave, Merror);
+            rbDocente = view.findViewById(R.id.rbDocente);
+            rgTipoUser = view.findViewById(R.id.rgTipoUser);
+            rgTipoUser.setOnCheckedChangeListener((group, checkid) -> isChecked());
+            datosDocente = view.findViewById(R.id.datosDocente);
+            Ldocente = view.findViewById(R.id.Ldocente);
+            docente = view.findViewById(R.id.docente);
+            docente.setThreshold(1);
+            autocomplete();
+            btnRegistrarse = view.findViewById(R.id.btnRegister);
+            btnRegistrarse.setOnClickListener(v -> RegisterUser());
+        }
+        catch (Exception e){}
         return view;
     }
 
@@ -130,7 +142,7 @@ public class FrgRegisterUser extends Fragment {
     }
 
     private void isChecked(){
-        if (switch_docent.isChecked())
+        if (rbDocente.isChecked())
             datosDocente.setVisibility(View.GONE);
         else {
             datosDocente.setVisibility(View.VISIBLE);
@@ -176,22 +188,24 @@ public class FrgRegisterUser extends Fragment {
                                         }
                                     }
                                 }
-                                adp = new AdpAutocompleteDocente(getContext(), docentes);
-                                docente.setAdapter(adp);
-                                docente.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                    @Override
-                                    public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
-                                        selectedDoc = (ModelUser) adapterView.getItemAtPosition(pos);
-                                        selectedDocente = new JSONObject();
-                                        try {
-                                            selectedDocente.put("id", selectedDoc.getId());
-                                            selectedDocente.put("nombres", selectedDoc.getNombres().trim());
-                                            selectedDocente.put("apellidos", selectedDoc.getApellidos().trim());
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
+                                if(getContext() != null) {
+                                    adp = new AdpAutocompleteDocente(getContext(), docentes);
+                                    docente.setAdapter(adp);
+                                    docente.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
+                                            selectedDoc = (ModelUser) adapterView.getItemAtPosition(pos);
+                                            selectedDocente = new JSONObject();
+                                            try {
+                                                selectedDocente.put("id", selectedDoc.getId());
+                                                selectedDocente.put("nombres", selectedDoc.getNombres().trim());
+                                                selectedDocente.put("apellidos", selectedDoc.getApellidos().trim());
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
                                         }
-                                    }
-                                });
+                                    });
+                                }
                             } catch (JSONException e) {
                                 e.printStackTrace();
                                 Toast.makeText(getContext(), e.toString(), Toast.LENGTH_LONG).show();
@@ -210,7 +224,7 @@ public class FrgRegisterUser extends Fragment {
     }
 
     private void RegisterUser(){
-        if(!switch_docent.isChecked()){
+        if(!rbDocente.isChecked()){
             if(!validate.Validar(null,docente,Ldocente,Merror))
                 return;
         }
@@ -238,8 +252,8 @@ public class FrgRegisterUser extends Fragment {
         JSONObject param = new JSONObject();
         param.put("usuario", usuario.getText().toString().trim());
         param.put("clave", clave.getText().toString().trim());
-        param.put("isDocente", switch_docent.isChecked());
-        if(!switch_docent.isChecked()){
+        param.put("isDocente", rbDocente.isChecked());
+        if(!rbDocente.isChecked()){
             if(selectedDocente.equals(null)){
                 Ldocente.setError("Docente no válido");
                 return;

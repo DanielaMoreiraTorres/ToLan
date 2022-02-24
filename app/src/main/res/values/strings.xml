@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">ToLan</string>
+    <string name="urlBase">https://db-bartolucci.herokuapp.com/</string>
     <!-- Fragment Welcome -->
     <string name="bienvenida">Bienvenido a ToLan</string>
     <string name="bienvenido">Bienvenido</string>
@@ -9,13 +10,17 @@
     <string name="registrarse">Registrarse</string>
     <string name="iniciar_sesion">Ingresar</string>
     <!-- Fragment Login -->
+    <string name="usuario">Usuario</string>
+    <string name="contrasenia">Contraseña</string>
     <string name="login">Inicio de sesión</string>
     <string name="forget">¿Olvidó su clave?</string>
     <!-- Fragment Register User -->
     <string name="reg">Registro de usuario</string>
     <string name="dtperson">Datos personales</string>
     <string name="dtusuario">Datos de usuario</string>
-    <string name="esDoc">Es docente?  </string>
+    <string name="tipo">Tipo de usuario: </string>
+    <string name="docente">Docente</string>
+    <string name="estudiante">Estudiante</string>
     <!-- Fragment Recovery Password -->
     <string name="recovery">Recuperar clave</string>
     <string name="msrectel">Ingrese su número de celular para continuar</string>
@@ -34,7 +39,7 @@
     <string name="menud">Menú Docente</string>
     <string name="usuarios">Usuarios</string>
     <!-- Menú Toolbar -->
-    <string name="notifi">Notificaciones</string>
+    <string name="myinfo">Mi información</string>
     <string name="cerrar">Cerrar sesión</string>
     <string name="contactos">Contactos</string>
     <!-- Activity Levels -->

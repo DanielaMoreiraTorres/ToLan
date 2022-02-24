@@ -2,6 +2,7 @@ package com.example.tolan.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
@@ -14,8 +15,10 @@ import android.widget.Button;
 import com.example.tolan.R;
 import com.example.tolan.clases.ClssConvertirTextoAVoz;
 
+import org.imaginativeworld.whynotimagecarousel.CarouselAdapter;
 import org.imaginativeworld.whynotimagecarousel.CarouselItem;
 import org.imaginativeworld.whynotimagecarousel.ImageCarousel;
+import org.imaginativeworld.whynotimagecarousel.OnItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,19 +45,18 @@ public class FrgWelcome extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        textToSpeech = new TextToSpeech(getContext(), new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int i) {
-                if(i!= TextToSpeech.ERROR){
-                    textToSpeech.setLanguage(Locale.getDefault());
-                    textToSpeech.speak(getString(R.string.bienvenida),TextToSpeech.QUEUE_FLUSH,null);
-                }
-            }
-        });
-        tts = new ClssConvertirTextoAVoz();
-        tts.init(getContext());
+        textToSpeech = new TextToSpeech(getContext(),i -> reproducirAudio(i, getString(R.string.bienvenida)));
         if (getArguments() != null) {
         }
+    }
+
+    public void reproducirAudio(int i, String mensaje){
+        if(i!= TextToSpeech.ERROR){
+            textToSpeech.setLanguage(Locale.getDefault());
+            textToSpeech.speak(mensaje,TextToSpeech.QUEUE_FLUSH,null);
+        }
+        tts = new ClssConvertirTextoAVoz();
+        tts.init(getContext());
     }
 
     @Override
@@ -73,16 +75,27 @@ public class FrgWelcome extends Fragment {
         list.add(new CarouselItem(R.drawable.nino,getString(R.string.mensaje_bienvenida_2)));
         list.add(new CarouselItem(R.drawable.ninos,getString(R.string.mensaje_bienvenida_3)));
         carousel.addData(list);
+        carousel.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onClick(int i, @NonNull CarouselItem carouselItem) {
+                tts.reproduce(carouselItem.getCaption());
+            }
+
+            @Override
+            public void onLongClick(int i, @NonNull CarouselItem carouselItem) { }
+        });
         return view;
     }
 
     private void Register() {
+        tts.reproduce(getString(R.string.registrarse));
         fragment = new FrgRegisterUser();
         getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
     }
 
     private void Iniciar() {
+        tts.reproduce(getString(R.string.iniciar_sesion));
         fragment = new FrgLogin();
-        getFragmentManager().beginTransaction().replace(R.id.content, fragment).disallowAddToBackStack().commit();
+        getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
     }
 }
