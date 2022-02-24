@@ -182,14 +182,13 @@ public class FrgLogin extends Fragment {
     }
 
     private void Iniciar(ModelUser muser) throws JSONException {
-        Intent intent = null;
         Bundle b = new Bundle();
         if(muser.getTipousuario().trim().equals("AD"))
             fragment = new FrgMenuAdmin();
         else if(muser.getTipousuario().trim().equals("DC"))
             fragment = new FrgMenuDocente();
         else{
-            intent = new Intent(getContext(), ActivityHomeUser.class);
+            fragment = new ActivityHomeUser();
             sendDataGroup(grupo);
             //b.putString("grupo", grupo.toString());
         }
@@ -197,15 +196,9 @@ public class FrgLogin extends Fragment {
         b.putString("user", muser.getUsuario().trim());
         b.putString("tipousuario", muser.getTipousuario().trim());
         //Añadimos la información e iniciamos el nuevo fragment o activity
-        if(intent != null){
-            intent.putExtras(b);
-            startActivity(intent);
-        }
-        else{
-            fragment.setArguments(b);
-            getFragmentManager().popBackStack();
-            getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
-        }
+        fragment.setArguments(b);
+        getFragmentManager().popBackStack();
+        getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
     }
 
     private void RegisterUs() {
