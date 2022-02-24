@@ -11,7 +11,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,16 +41,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
-public class AdpRecycler_SeleccionarPares extends RecyclerView.Adapter<txtHolder> {
+public class AdpRecycler_SeleccionarParesTextoImagen extends RecyclerView.Adapter<txtHolder> {
 
     private final Context mContext;
     private final ArrayList<String> listElements, listRutas;
     Map<String, String> map_DatosEmparejados;
     Fragment fragment;
 
-    public AdpRecycler_SeleccionarPares(Context mContext, ArrayList<String> listElements, ArrayList<String> listRutas, Map<String, String> map_DatosEmparejados, Fragment fragment) {
+    public AdpRecycler_SeleccionarParesTextoImagen(Context mContext, ArrayList<String> listElements, ArrayList<String> listRutas, Map<String, String> map_DatosEmparejados, Fragment fragment) {
         this.mContext = mContext;
         this.listElements = listElements;
         this.listRutas = listRutas;
@@ -311,10 +314,41 @@ public class AdpRecycler_SeleccionarPares extends RecyclerView.Adapter<txtHolder
             Toast.makeText(mContext, "Elementos incorrectos",
                     Toast.LENGTH_LONG).show();
 
+            //Obtengo el layout de mi Fragment principal
+            LinearLayout ry_state = fragment.getView().findViewById(R.id.ry_state);
+            //El usuario se acaba de equivocar
+            //Ocultar boton comprobar
+            ry_state.getChildAt(3).setVisibility(View.GONE);
+            //Setear color rojo de background
+            ry_state.setBackgroundColor(Color.parseColor("#F7B9B9"));
 
-            diag_frg_opcionIncorrecta = new Diag_Frg_OpcionIncorrecta(map_DatosEmparejados.get(id), id);
-            diag_frg_opcionIncorrecta.show(fragment.getParentFragmentManager(), "kol");
+            //Seteo el texto de error y el color de letra en rojo respectivo
+            TextView txt = (TextView) ry_state.getChildAt(0);
+            txt.setText("¡Oppps! No son pares");
+            txt.setTextColor(Color.parseColor("#C70039"));
 
+            ry_state.getChildAt(2).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    //estadoAplicacion = false;
+                    //animar(false);
+                    ScrollView mScrollView = fragment.getView().findViewById(R.id.mScrollView);
+                    mScrollView.post(new Runnable() {
+                        public void run() {
+                            mScrollView.scrollTo(0, mScrollView.getTop());
+                        }
+                    });
+                    ry_state.setVisibility(View.GONE);
+                }
+            });
+
+
+            //diag_frg_opcionIncorrecta = new Diag_Frg_OpcionIncorrecta(map_DatosEmparejados.get(id), id);
+            //diag_frg_opcionIncorrecta.show(fragment.getParentFragmentManager(), "kol");
+
+            //Ubicamos el layout visible
+            ry_state.setVisibility(View.VISIBLE);
 
             disabled_Opciones(false);
         }

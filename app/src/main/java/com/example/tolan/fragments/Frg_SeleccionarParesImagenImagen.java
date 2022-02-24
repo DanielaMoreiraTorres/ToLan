@@ -1,27 +1,48 @@
 package com.example.tolan.fragments;
 
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tolan.R;
+import com.example.tolan.adapters.AdpRecycler_SeleccionarParesImagenImagen;
+import com.example.tolan.adapters.AdpRecycler_SeleccionarParesTextoImagen;
 import com.example.tolan.clases.ClssNavegacionActividades;
+import com.google.android.flexbox.AlignItems;
+import com.google.android.flexbox.FlexDirection;
+import com.google.android.flexbox.FlexboxLayoutManager;
+import com.google.android.flexbox.JustifyContent;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Random;
+import java.util.RandomAccess;
+import java.util.Set;
+import java.util.stream.IntStream;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -80,19 +101,84 @@ public class Frg_SeleccionarParesImagenImagen extends Fragment implements View.O
 
     JSONArray jsonActivities;
 
+
+    ArrayList<String> listElements;
+    RecyclerView rcv_datosSeleccionarPares;
+    TextView txt_enunciado;
+    LinearLayout ry_state;
+
+    ScrollView mScrollView;
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
+        ry_state = view.findViewById(R.id.ry_state);
+        mScrollView = view.findViewById(R.id.mScrollView);
+        //ry_state.setVisibility(View.GONE);
+
+        rcv_datosSeleccionarPares = view.findViewById(R.id.rcv_datosSeleccionarParesImagen);
+
+        txt_enunciado = view.findViewById(R.id.txt_enunciadoImagen);
+
+
+        listElements = new ArrayList<>();
         try {
             String lst_Activities = getArguments().getString("activities");
             jsonActivities = new JSONArray(lst_Activities);
-            Toast.makeText(view.getContext(), lst_Activities, Toast.LENGTH_LONG).show();
+            //Seleccionamos el elemanto cero que corresponde a esta actividad
+            JSONObject item = jsonActivities.getJSONObject(0);
+            JSONArray contenido = item.getJSONArray("contenido");
+            for (int i = 0; i < contenido.length(); i++) {
+                JSONObject item_contenido = contenido.getJSONObject(i);
+                boolean isenunciado = item_contenido.getBoolean("enunciado");
+                if (isenunciado) {
+                    txt_enunciado.setText(item_contenido.getString("descripcion"));
+                    //Toast.makeText(getContext()," El item : ["+item_contenido.getString("descripcion")+"] es un enunciado",Toast.LENGTH_LONG).show();
+                } else {
+                    //listElements.add(item_contenido.getString("descripcion"));
+                    JSONArray multimedia_contenido = item_contenido.getJSONArray("multimedia");
+                    for (int j = 0; j < multimedia_contenido.length(); j++) {
+                        JSONObject item_multimedia_contenido = multimedia_contenido.getJSONObject(j);
+                        listElements.add(item_multimedia_contenido.getString("url"));
+                        System.out.println("ok");
+                    }
+                }
+
+            }
+
+
+            //Genero un vector con numeros aleatorios
+            getShuffleNumbers(listElements);
+            AdpRecycler_SeleccionarParesImagenImagen adpRecycler_seleccionarParesImagenImagen = new AdpRecycler_SeleccionarParesImagenImagen(getContext(), listElements, numerosAleatorios, ry_state, mScrollView);
+            rcv_datosSeleccionarPares.setAdapter(adpRecycler_seleccionarParesImagenImagen);
+
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        view.findViewById(R.id.btn_comprobar_actividades).setOnClickListener(this);
+
+        view.findViewById(R.id.btn_comprobar_actividadesImagen).setOnClickListener(this);
+    }
+
+    int[] numerosAleatorios;
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void getShuffleNumbers(ArrayList<String> list) {
+
+        //Algoritmo de Fisher Rates
+        numerosAleatorios = IntStream.rangeClosed(0, list.size() - 1).toArray();
+        //desordenando los elementos
+        Random r = new Random();
+        for (int i = numerosAleatorios.length; i > 0; i--) {
+            int posicion = r.nextInt(i);
+            int tmp = numerosAleatorios[i - 1];
+            numerosAleatorios[i - 1] = numerosAleatorios[posicion];
+            numerosAleatorios[posicion] = tmp;
+        }
     }
 
 

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardview_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_margin="5dp"
+            android:clickable="true"
+            android:contentDescription="img"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground">
+
+            <RelativeLayout
+                android:id="@+id/ryl_bordes_left"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:background="@drawable/fondo_bordes_imagen"
+                android:padding="7dp">
+
+                <ImageView
+                    android:id="@+id/img_Left"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:contentDescription="TODO"
+                    android:src="@drawable/game_activity" />
+
+
+            </RelativeLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardview_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="5dp"
+            android:clickable="true"
+            android:contentDescription="img"
+            android:foreground="?android:attr/selectableItemBackground">
+
+
+            <RelativeLayout
+                android:id="@+id/ryl_bordes_right"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:background="@drawable/fondo_bordes_imagen"
+                android:padding="7dp">
+
+                <ImageView
+                    android:id="@+id/img_Right"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:contentDescription="TODO"
+                    android:src="@drawable/game_activity" />
+
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+
+</FrameLayout>

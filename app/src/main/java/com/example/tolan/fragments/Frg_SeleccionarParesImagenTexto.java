@@ -16,12 +16,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tolan.R;
 
-import com.example.tolan.adapters.AdpRecycler_SeleccionarPares;
+
+import com.example.tolan.adapters.AdpRecycler_SeleccionarParesTextoImagen;
 import com.example.tolan.clases.ClssNavegacionActividades;
 import com.example.tolan.dialogs.Diag_Frg_OpcionIncorrecta;
 import com.google.android.flexbox.AlignItems;
@@ -104,6 +106,7 @@ public class Frg_SeleccionarParesImagenTexto extends Fragment implements View.On
 
     Map<String, String> map_DatosEmparejados = new HashMap<>();
     CardView cardview_imagen;
+    LinearLayout ry_state;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -113,6 +116,7 @@ public class Frg_SeleccionarParesImagenTexto extends Fragment implements View.On
         rcv_datosSeleccionarPares = view.findViewById(R.id.rcv_datosSeleccionarPares);
 
         txt_enunciado = view.findViewById(R.id.txt_enunciado);
+        ry_state = view.findViewById(R.id.ry_state);
 
         //Centrar los elementos
         FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(getContext());
@@ -157,7 +161,7 @@ public class Frg_SeleccionarParesImagenTexto extends Fragment implements View.On
             }
             Collections.shuffle(listRutasMultimedia);
             Collections.shuffle(listItemsMultimedia);
-            AdpRecycler_SeleccionarPares adpRecycler_seleccionarPares = new AdpRecycler_SeleccionarPares(getContext(), listItemsMultimedia, listRutasMultimedia, map_DatosEmparejados, this);
+            AdpRecycler_SeleccionarParesTextoImagen adpRecycler_seleccionarPares = new AdpRecycler_SeleccionarParesTextoImagen(getContext(), listItemsMultimedia, listRutasMultimedia, map_DatosEmparejados, this);
             rcv_datosSeleccionarPares.setAdapter(adpRecycler_seleccionarPares);
 
 
