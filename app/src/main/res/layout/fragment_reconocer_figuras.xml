@@ -44,6 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
+                android:layout_weight="1"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp">
 
@@ -53,15 +54,14 @@
                     android:layout_height="wrap_content"
                     android:divider="@color/white"
                     android:padding="10dp"
-                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp" />
 
                 <ImageView
                     android:id="@+id/imgOp"
                     android:layout_width="match_parent"
-                    android:layout_height="250dp"
+                    android:layout_height="200dp"
                     android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginBottom="10dp"
                     android:scaleType="fitXY"
                     android:src="@drawable/background_image" />
 
@@ -71,66 +71,19 @@
                     android:layout_height="wrap_content"
                     android:divider="@color/white"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="30dp" />
-
-                <!--<LinearLayout
-                    android:id="@+id/Lcomprobar"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:gravity="bottom">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <View
-                            android:id="@+id/state"
-                            android:layout_width="match_parent"
-                            android:layout_height="60dp"
-                            android:background="@color/verdeclaro" />
-
-                        <TextView
-                            android:id="@+id/txtResponse"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:drawableEnd="@drawable/icon_valor"
-                            android:drawableTint="@color/white"
-                            android:drawablePadding="20dp"
-                            android:layout_marginTop="30dp"
-                            android:fontFamily="@font/baloo"
-                            android:shadowColor="@color/secundario"
-                            android:shadowRadius="2"
-                            android:text="@string/correcto"
-                            android:textColor="@color/white"
-                            android:textSize="20sp" />
-
-                    </RelativeLayout>
-
-                    <Button
-                        android:id="@+id/btn_comprobar_actividades"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:backgroundTint="@color/principal"
-                        android:fontFamily="@font/baloo"
-                        android:text="@string/comprobar"
-                        android:textColor="@color/white"
-                        android:textSize="12sp" />
-
-                </LinearLayout>-->
+                    android:layout_marginBottom="10dp" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/state"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_height="match_parent"
                 android:background="#AAFAB1"
                 android:orientation="vertical"
-                android:padding="10dp" >
+                android:padding="10dp"
+                android:layout_weight="3"
+                android:gravity="bottom">
 
                 <TextView
                     android:id="@+id/txt_tit"

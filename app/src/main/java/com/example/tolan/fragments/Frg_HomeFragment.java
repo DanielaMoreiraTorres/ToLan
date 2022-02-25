@@ -5,6 +5,7 @@ import android.speech.tts.TextToSpeech;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -38,6 +39,7 @@ import com.example.tolan.clases.ClssVolleySingleton;
 import com.example.tolan.models.ModelRecyclerItemActividad;
 import com.example.tolan.models.ModelRecyclerItemNivel;
 import com.example.tolan.models.ModelRecyclerItemSubnivel;
+import com.example.tolan.models.ModelUser;
 
 
 import org.json.JSONArray;
@@ -55,9 +57,7 @@ import java.util.Locale;
  */
 public class Frg_HomeFragment extends Fragment implements Response.Listener<JSONArray>, Response.ErrorListener {
 
-    static TextToSpeech textToSpeech;
     private Toolbar toolbar;
-    ClssConvertirTextoAVoz tts;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -99,15 +99,6 @@ public class Frg_HomeFragment extends Fragment implements Response.Listener<JSON
         }
     }
 
-    public void reproducirAudio(int i, String mensaje){
-        if(i!= TextToSpeech.ERROR){
-            textToSpeech.setLanguage(Locale.getDefault());
-            textToSpeech.speak(mensaje,TextToSpeech.QUEUE_FLUSH,null);
-        }
-        tts = new ClssConvertirTextoAVoz();
-        tts.init(getContext());
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -119,6 +110,8 @@ public class Frg_HomeFragment extends Fragment implements Response.Listener<JSON
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.menu_toolbar,menu);
+        MenuItem mr = menu.findItem(R.id.btnRecompensa);
+        mr.setTitle(String.valueOf(ModelUser.stockcaritas));
     }
 
     ProgressBar progressBar;

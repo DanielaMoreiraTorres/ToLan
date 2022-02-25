@@ -19,6 +19,7 @@ import android.speech.tts.TextToSpeech;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -32,6 +33,7 @@ import com.example.tolan.adapters.AdpRecycler_SeleccionarParesTextoImagen;
 import com.example.tolan.clases.ClssConvertirTextoAVoz;
 import com.example.tolan.clases.ClssNavegacionActividades;
 import com.example.tolan.dialogs.Diag_Frg_OpcionIncorrecta;
+import com.example.tolan.models.ModelUser;
 import com.google.android.flexbox.AlignItems;
 import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexboxLayoutManager;
@@ -204,6 +206,8 @@ public class Frg_SeleccionarParesImagenTexto extends Fragment implements View.On
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.menu_toolbar,menu);
+        MenuItem mr = menu.findItem(R.id.btnRecompensa);
+        mr.setTitle(String.valueOf(ModelUser.stockcaritas));
     }
 
 

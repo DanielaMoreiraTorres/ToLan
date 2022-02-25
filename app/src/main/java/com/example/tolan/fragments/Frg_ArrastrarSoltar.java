@@ -7,11 +7,13 @@ import android.content.ClipDescription;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -49,6 +51,7 @@ import com.example.tolan.clases.ClssConvertirTextoAVoz;
 import com.example.tolan.clases.ClssNavegacionActividades;
 import com.example.tolan.clases.ClssStaticGrupo;
 import com.example.tolan.models.ModelContent;
+import com.example.tolan.models.ModelUser;
 import com.google.android.material.card.MaterialCardView;
 
 import org.json.JSONArray;
@@ -156,9 +159,22 @@ public class Frg_ArrastrarSoltar extends Fragment {
             }
             else {
                 //jsonActivities.remove(0);
+                tts = new ClssConvertirTextoAVoz();
+                tts.init(getContext());
                 Toast.makeText(getContext(), "La actividad no tiene contenido", Toast.LENGTH_SHORT).show();
-                tts.reproduce("La actividad no tiene contenido");
-                btnContinuar.setVisibility(View.VISIBLE);
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        tts.reproduce("La actividad no tiene contenido");
+                    }
+                }, 1000);
+                state.setVisibility(View.VISIBLE);
+                state.setBackgroundColor(Color.WHITE);
+                state.getChildAt(0).setVisibility(View.GONE);
+                state.getChildAt(1).setVisibility(View.GONE);
+                state.getChildAt(2).setVisibility(View.GONE);
+                state.getChildAt(3).setVisibility(View.VISIBLE);
                 btnContinuar.setOnClickListener(v -> Navegacion(v));
             }
         } catch (JSONException e) {
@@ -169,6 +185,8 @@ public class Frg_ArrastrarSoltar extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.menu_toolbar,menu);
+        MenuItem mr = menu.findItem(R.id.btnRecompensa);
+        mr.setTitle(String.valueOf(ModelUser.stockcaritas));
         //super.onCreateOptionsMenu(menu, inflater);
     }
 

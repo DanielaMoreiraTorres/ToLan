@@ -44,6 +44,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
+                    android:layout_weight="1"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp">
 
@@ -68,11 +69,13 @@
                 <LinearLayout
                     android:id="@+id/state"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="10dp"
                     android:background="#AAFAB1"
                     android:orientation="vertical"
-                    android:padding="10dp" >
+                    android:padding="10dp"
+                    android:layout_weight="3"
+                    android:gravity="bottom">
 
                     <TextView
                         android:id="@+id/txt_tit"

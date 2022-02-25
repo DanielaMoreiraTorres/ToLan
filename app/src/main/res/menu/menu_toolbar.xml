@@ -3,19 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <group>
+    <item
+        android:id="@+id/btnCaritas"
+        android:icon="@drawable/carita"
+        android:title="@string/recompensa"
+        app:showAsAction="always" />
 
-        <item
-            android:id="@+id/btnCaritas"
-            android:icon="@drawable/carita"
-            android:title="@string/recompensa"
-            app:showAsAction="always" />
-        <item
-            android:id="@+id/btnRecompensa"
-            android:title="@string/recompensa"
-            app:showAsAction="always" />
-
-    </group>
+    <item
+        android:id="@+id/btnRecompensa"
+        android:title="@string/recompensa"
+        app:showAsAction="always" />
 
     <!--<item
         android:id="@+id/btnMyInfo"

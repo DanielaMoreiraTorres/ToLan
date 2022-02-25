@@ -13,10 +13,12 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -44,6 +46,7 @@ import com.example.tolan.clases.ClssConvertirTextoAVoz;
 import com.example.tolan.clases.ClssNavegacionActividades;
 import com.example.tolan.clases.ClssStaticGrupo;
 import com.example.tolan.models.ModelContent;
+import com.example.tolan.models.ModelUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -144,9 +147,22 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment {
                 RespuestasOk();
             }
             else {
+                tts = new ClssConvertirTextoAVoz();
+                tts.init(getContext());
                 Toast.makeText(getContext(), "La actividad no tiene contenido", Toast.LENGTH_SHORT).show();
-                tts.reproduce("La actividad no tiene contenido");
-                btnContinuar.setVisibility(View.VISIBLE);
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        tts.reproduce("La actividad no tiene contenido");
+                    }
+                }, 1000);
+                state.setVisibility(View.VISIBLE);
+                state.setBackgroundColor(Color.WHITE);
+                state.getChildAt(0).setVisibility(View.GONE);
+                state.getChildAt(1).setVisibility(View.GONE);
+                state.getChildAt(2).setVisibility(View.GONE);
+                state.getChildAt(3).setVisibility(View.VISIBLE);
                 btnContinuar.setOnClickListener(v -> Navegacion(v));
             }
         } catch (JSONException e) {
@@ -157,6 +173,8 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.menu_toolbar,menu);
+        MenuItem mr = menu.findItem(R.id.btnRecompensa);
+        mr.setTitle(String.valueOf(ModelUser.stockcaritas));
     }
 
     private void RespuestasOk(){
@@ -191,7 +209,13 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment {
                         txt.setText("¡Excelente!");
                         txt.setTextColor(Color.parseColor("#048710"));
                         txt.setVisibility(View.VISIBLE);
-                        tts.reproduce(txt.getText().toString());
+                        final Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                tts.reproduce(txt.getText().toString());
+                            }
+                        }, 1000);
                         ImageView img = (ImageView) state.getChildAt(1);
                         img.setImageResource(R.drawable.icon_valor);
                         img.setColorFilter(Color.parseColor("#048710"));
@@ -217,7 +241,13 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment {
                         txt.setText("¡Ups! ¡Fallaste!");
                         txt.setTextColor(Color.parseColor("#C70039"));
                         txt.setVisibility(View.VISIBLE);
-                        tts.reproduce(txt.getText().toString());
+                        final Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                tts.reproduce(txt.getText().toString());
+                            }
+                        }, 1000);
                         ImageView img = (ImageView) state.getChildAt(1);
                         img.setImageResource(R.drawable.sad);
                         img.setColorFilter(Color.parseColor("#C70039"));

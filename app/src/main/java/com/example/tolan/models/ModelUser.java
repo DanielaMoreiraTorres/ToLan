@@ -16,7 +16,7 @@ public class ModelUser {
     String fechanacimiento;
     String correo;
     String telefono;
-    int stockcaritas;
+    public static int stockcaritas;
     JSONArray grupo;
     boolean activo;
 
@@ -108,13 +108,13 @@ public class ModelUser {
         this.telefono = telefono;
     }
 
-    public int getStockcaritas() {
+    /*public int getStockcaritas() {
         return stockcaritas;
     }
 
     public void setStockcaritas(int stockcaritas) {
         this.stockcaritas = stockcaritas;
-    }
+    }*/
 
     public JSONArray getGrupo() {
         return grupo;

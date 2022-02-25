@@ -28,6 +28,7 @@ import com.example.tolan.R;
 import com.example.tolan.clases.ClssConvertirTextoAVoz;
 import com.example.tolan.clases.ClssStaticGrupo;
 import com.example.tolan.clases.ClssValidations;
+import com.example.tolan.models.ModelContent;
 import com.example.tolan.models.ModelUser;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -131,6 +132,8 @@ public class FrgLogin extends Fragment {
                                 if(user.getTipousuario().equals("ES")){
                                     JSONObject ObjDatos = (JSONObject) response.get("estudiante");
                                     user.setEstudiante(ObjDatos);
+                                    //user.setStockcaritas(ObjDatos.getInt("stockcaritas"));
+                                    ModelUser.stockcaritas = ObjDatos.getInt("stockcaritas");
                                     user.setGrupo((JSONArray) ObjDatos.get("grupo"));
                                     int idGrupo = (int) user.getGrupo().getJSONObject(0).get("id");
                                     ObtIdDocente(idGrupo, user);
