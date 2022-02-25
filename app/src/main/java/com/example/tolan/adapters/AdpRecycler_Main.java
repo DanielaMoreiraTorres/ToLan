@@ -64,6 +64,16 @@ public class AdpRecycler_Main extends RecyclerView.Adapter<VHoldRecyclerMain_Sec
 
         holder.sectionNameTextView.setText(sectionName);
         holder.txt_numeroNivel.setText("Nivel " + (position + 1));
+        if (position == lstitem_Activities.size()) {
+            holder.ly_continueActivities.setVisibility(View.GONE);
+        }
+        holder.imgNivel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mContext, "Nivel [" + section.getSectionName() + "]", Toast.LENGTH_SHORT).show();
+                holder.clssConvertirTextoAVoz.reproduce("Nivel [" + section.getSectionName() + "]");
+            }
+        });
 
 /*
         try {
@@ -91,8 +101,6 @@ public class AdpRecycler_Main extends RecyclerView.Adapter<VHoldRecyclerMain_Sec
         layoutManager.setFlexDirection(FlexDirection.ROW);
 
         holder.childRecyclerView.setLayoutManager(layoutManager);
-
-
 
 
         //layoutManager.setMaxLine(2);

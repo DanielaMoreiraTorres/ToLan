@@ -138,7 +138,7 @@
                 android:layout_marginBottom="25dp">
 
                 <ImageView
-                    android:id="@+id/img"
+                    android:id="@+id/imgNivel"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:layout_centerHorizontal="true"
@@ -150,7 +150,7 @@
                     android:id="@+id/txt_numeroNivel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/img"
+                    android:layout_below="@id/imgNivel"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
                     android:fontFamily="@font/baloo"
@@ -160,36 +160,41 @@
                     android:textSize="25sp" />
 
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/civ1"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                <LinearLayout
+                    android:id="@+id/ly_continueActivities"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_below="@id/txt_numeroNivel"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="20dp"
-                    android:src="@color/plomo" />
+                    android:orientation="vertical">
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/civ2"
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/civ1"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="20dp"
+                        android:src="@color/plomo" />
 
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_below="@id/civ1"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="10dp"
-                    android:src="@color/plomo" />
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/civ2"
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/civ3"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_below="@id/civ2"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="10dp"
-                    android:src="@color/plomo" />
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="10dp"
+                        android:src="@color/plomo" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/civ3"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="10dp"
+                        android:src="@color/plomo" />
+
+                </LinearLayout>
+
 
             </RelativeLayout>
 

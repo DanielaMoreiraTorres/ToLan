@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.tolan.R;
+import com.example.tolan.clases.ClssConvertirTextoAVoz;
 import com.example.tolan.models.ModelRecyclerItemActividad;
 
 import org.json.JSONArray;
@@ -33,6 +34,7 @@ public class VHoldRecyclerChild_ItemSubnivel extends RecyclerView.ViewHolder imp
     ImageView imgv_corona;
     CardView cardView;
     JSONArray lstitem_Activities;
+    ClssConvertirTextoAVoz clssConvertirTextoAVoz;
 
     public VHoldRecyclerChild_ItemSubnivel(@NonNull View itemView) {
         super(itemView);
@@ -41,7 +43,10 @@ public class VHoldRecyclerChild_ItemSubnivel extends RecyclerView.ViewHolder imp
         imgv_corona = (ImageView) itemView.findViewById(R.id.imgv_corona);
         cardView = (CardView) itemView.findViewById(R.id.cardview_actividad);
         //this.lstitem_Activities=lstitem_Activities;
+        clssConvertirTextoAVoz = new ClssConvertirTextoAVoz();
+        clssConvertirTextoAVoz.init(itemView.getContext());
         cardView.setOnClickListener(this);
+
 
     }
 
@@ -75,6 +80,7 @@ public class VHoldRecyclerChild_ItemSubnivel extends RecyclerView.ViewHolder imp
                 switch (actividad) {
                     //El case nos permitira redireccionar hacia el Layout correspondiente para navegar hacia el
                     case "Reconocer figuras":
+
                         //Toast.makeText(v.getContext(), "La actividad [" +actividad+"] no esta configurada aun", Toast.LENGTH_SHORT).show();
                         //Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
 
@@ -126,17 +132,20 @@ public class VHoldRecyclerChild_ItemSubnivel extends RecyclerView.ViewHolder imp
                         navController.navigate(R.id.fragmentArrastrarSoltar, bundle);
                         break;
 
-                    default :
-                        Toast.makeText(v.getContext(),"Revise que la actividad :"+ actividad +" esté configurada por favor", Toast.LENGTH_SHORT).show();
+                    default:
+                        Toast.makeText(v.getContext(), "Revise que la actividad :" + actividad + " esté configurada por favor", Toast.LENGTH_SHORT).show();
                         break;
                 }
+                //clssConvertirTextoAVoz.reproduce((String) txt_actividad.getText());
 
             } else {
-                Toast.makeText(v.getContext(), "El subnivel no tiene actividades", Toast.LENGTH_SHORT).show();
-
+                Toast.makeText(v.getContext(), "El subnivel [" + txt_actividad.getText() + "] no tiene actividades", Toast.LENGTH_SHORT).show();
+                clssConvertirTextoAVoz.reproduce("El subnivel [" + txt_actividad.getText() + "] no tiene actividades configuradas");
             }
         } catch (JSONException ex) {
+
             Toast.makeText(v.getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+            clssConvertirTextoAVoz.reproduce("Error de lógica JSON");
         }
 
     }

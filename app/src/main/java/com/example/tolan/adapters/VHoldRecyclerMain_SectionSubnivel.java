@@ -1,6 +1,8 @@
 package com.example.tolan.adapters;
 
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -9,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.tolan.R;
+import com.example.tolan.clases.ClssConvertirTextoAVoz;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -17,6 +20,9 @@ public class VHoldRecyclerMain_SectionSubnivel extends RecyclerView.ViewHolder i
     TextView sectionNameTextView, txt_numeroNivel;
     CircleImageView imageView_section;
     RecyclerView childRecyclerView;
+    LinearLayout ly_continueActivities;
+    ImageView imgNivel;
+    ClssConvertirTextoAVoz clssConvertirTextoAVoz;
 
     public VHoldRecyclerMain_SectionSubnivel(@NonNull View itemView) {
         super(itemView);
@@ -26,11 +32,16 @@ public class VHoldRecyclerMain_SectionSubnivel extends RecyclerView.ViewHolder i
         imageView_section.setOnClickListener(this);
         childRecyclerView = itemView.findViewById(R.id.childRecyclerView);
         txt_numeroNivel = itemView.findViewById(R.id.txt_numeroNivel);
+        ly_continueActivities = itemView.findViewById(R.id.ly_continueActivities);
+        imgNivel = itemView.findViewById(R.id.imgNivel);
+        clssConvertirTextoAVoz = new ClssConvertirTextoAVoz();
+        clssConvertirTextoAVoz.init(itemView.getContext());
+
     }
 
     @Override
     public void onClick(View v) {
-        Toast.makeText(v.getContext(),"Sección "+sectionNameTextView.getText(),Toast.LENGTH_SHORT).show();
-
+        Toast.makeText(v.getContext(), "Sección " + sectionNameTextView.getText(), Toast.LENGTH_SHORT).show();
+        clssConvertirTextoAVoz.reproduce("Sección " + sectionNameTextView.getText());
     }
 }
