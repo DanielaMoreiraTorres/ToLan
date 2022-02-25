@@ -29,7 +29,7 @@
                 android:background="@drawable/ic_down" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/txtReg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -63,7 +63,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/textView3"
+                        android:id="@+id/txtDatPer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/baloo"
@@ -194,7 +194,7 @@
                     </LinearLayout>
 
                     <TextView
-                        android:id="@+id/textView"
+                        android:id="@+id/txtDatUser"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
@@ -244,6 +244,7 @@
                                 android:id="@+id/rbEstudiante"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:checked="true"
                                 android:layout_weight="1"
                                 android:text="@string/estudiante">
 
@@ -351,6 +352,8 @@
                             android:layout_height="match_parent"
                             android:layout_marginBottom="10dp"
                             android:backgroundTint="@color/verde"
+                            app:icon="@drawable/icon_reg_user"
+                            app:iconGravity="textStart"
                             android:fontFamily="sans-serif-black"
                             android:text="@string/registrarse"
                             android:textColor="@color/white"

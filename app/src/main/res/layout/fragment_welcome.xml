@@ -87,10 +87,10 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
                     android:layout_below="@+id/carousel"
                     android:weightSum="2">
 
@@ -100,6 +100,8 @@
                         android:layout_height="match_parent"
                         android:layout_marginEnd="10dp"
                         android:layout_weight="1"
+                        app:icon="@drawable/icon_add_user"
+                        app:iconGravity="textStart"
                         android:backgroundTint="@color/verde"
                         android:fontFamily="@font/baloo"
                         android:text="@string/registrarse"
@@ -112,6 +114,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        app:icon="@drawable/icon_login"
+                        app:iconGravity="textStart"
                         android:backgroundTint="@color/principal"
                         android:fontFamily="@font/baloo"
                         android:text="@string/iniciar_sesion"

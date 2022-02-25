@@ -18,6 +18,7 @@ import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -30,6 +31,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.tolan.R;
 import com.example.tolan.adapters.AdpAutocompleteDocente;
+import com.example.tolan.clases.ClssConvertirTextoAVoz;
 import com.example.tolan.clases.ClssValidations;
 import com.example.tolan.models.ModelUser;
 import com.google.android.material.radiobutton.MaterialRadioButton;
@@ -47,9 +49,11 @@ import java.util.List;
 
 public class FrgRegisterUser extends Fragment {
 
+    static ClssConvertirTextoAVoz tts;
     private RequestQueue requestQueue;
     private JsonArrayRequest jsonArrayRequest;
     private String url;
+    private TextView txtReg,txtDatPer, txtDatUser;
     private TextInputLayout Lnombres, Lapellidos, Ltelefono, Lemail, LFechaNac, Ldocente, Lusuario, Lclave, Lconfclave;
     private TextInputEditText nombre, apellido, telefono, email, fechaNac, usuario, clave, confirclave;
     private LinearLayout datosDocente;
@@ -78,6 +82,8 @@ public class FrgRegisterUser extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        tts = new ClssConvertirTextoAVoz();
+        tts.init(getContext());
         if (getArguments() != null) {
         }
     }
@@ -92,6 +98,12 @@ public class FrgRegisterUser extends Fragment {
             url = getString(R.string.urlBase) + "usuario";
             validate = new ClssValidations();
             docentes = new ArrayList<>();
+            txtReg = view.findViewById(R.id.txtIni);
+            txtReg.setOnClickListener(v -> tts.reproduce(txtReg.getText().toString()));
+            txtDatPer = view.findViewById(R.id.txtIni);
+            txtDatPer.setOnClickListener(v -> tts.reproduce(txtDatPer.getText().toString()));
+            txtDatUser = view.findViewById(R.id.txtIni);
+            txtDatUser.setOnClickListener(v -> tts.reproduce(txtDatUser.getText().toString()));
             Lnombres = view.findViewById(R.id.Lnombres);
             nombre = view.findViewById(R.id.nombres);
             validate.TextChanged(nombre, null, Lnombres, Merror);
@@ -225,8 +237,10 @@ public class FrgRegisterUser extends Fragment {
 
     private void RegisterUser(){
         if(!rbDocente.isChecked()){
-            if(!validate.Validar(null,docente,Ldocente,Merror))
+            if(!validate.Validar(null,docente,Ldocente,Merror)){
+                tts.reproduce("Docente no válido");
                 return;
+            }
         }
         if(validate.Validar(nombre,null,Lnombres,Merror) & validate.Validar(apellido,null,Lapellidos,Merror) &
                 validate.Validar(telefono,null,Ltelefono,Merror) & validate.Validar(email,null,Lemail,Merror) &
@@ -240,9 +254,13 @@ public class FrgRegisterUser extends Fragment {
                     e.printStackTrace();
                 }
             }
-            else
+            else{
+                tts.reproduce("Las contraseñas no coinciden");
                 Lconfclave.setError("Las contraseñas no coinciden");
+            }
         }
+        else
+            tts.reproduce("Datos no válidos");
     }
 
     private void createUsuario() throws JSONException {
@@ -273,11 +291,14 @@ public class FrgRegisterUser extends Fragment {
                         try {
                             if(response.length() > 1)
                             {
+                                tts.reproduce("Usuario Registrado");
                                 Toast.makeText(getContext(),"Usuario Registrado",Toast.LENGTH_LONG).show();
                                 redirectLogin();
                             }
-                            else
+                            else{
+                                tts.reproduce(response.get("message").toString());
                                 Toast.makeText(getContext(),response.get("message").toString(),Toast.LENGTH_LONG).show();
+                            }
                         } catch (Exception e) {
                             Toast.makeText(getContext(),"Error de conexión",Toast.LENGTH_LONG).show();
                         }
@@ -286,7 +307,7 @@ public class FrgRegisterUser extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.e("Error: ", error.getMessage());
-                Toast.makeText(getContext(),error.getMessage(),Toast.LENGTH_LONG).show();
+                tts.reproduce("Error de conexión con el servidor");
             }
         });
         // Añadir petición a la cola

@@ -24,6 +24,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.tolan.ActivityHomeUser;
 import com.example.tolan.R;
+import com.example.tolan.clases.ClssConvertirTextoAVoz;
 import com.example.tolan.clases.ClssStaticGrupo;
 import com.example.tolan.clases.ClssValidations;
 import com.example.tolan.models.ModelUser;
@@ -39,8 +40,9 @@ import java.util.Map;
 
 public class FrgLogin extends Fragment {
 
+    static ClssConvertirTextoAVoz tts;
     private Button btnLogin, register;
-    private TextView forgetPass;
+    private TextView forgetPass, txtIni;
     private TextInputEditText user, password;
     private TextInputLayout Lusuario, Lclave;
     private ClssValidations validate;
@@ -63,6 +65,8 @@ public class FrgLogin extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        tts = new ClssConvertirTextoAVoz();
+        tts.init(getContext());
         if (getArguments() != null) {
         }
     }
@@ -78,6 +82,8 @@ public class FrgLogin extends Fragment {
         Lusuario = view.findViewById(R.id.Lusuario);
         url = getString(R.string.urlBase) + "usuario/login";
         urlGrupo = getString(R.string.urlBase) + "grupo/";
+        txtIni = view.findViewById(R.id.txtIni);
+        txtIni.setOnClickListener(v -> tts.reproduce(txtIni.getText().toString()));
         user = view.findViewById(R.id.txtuser);
         validate.TextChanged(user,null,Lusuario,Merror);
         Lclave = view.findViewById(R.id.Lclave);
@@ -93,9 +99,11 @@ public class FrgLogin extends Fragment {
     }
 
     private void Login(){
-        if(validate.Validar(user,null,Lusuario,Merror) & validate.Validar(password,null,Lclave,Merror)){
+        tts.reproduce(btnLogin.getText().toString());
+        if(validate.Validar(user,null,Lusuario,Merror) & validate.Validar(password,null,Lclave,Merror))
             getUsuario();
-        }
+        else
+            tts.reproduce("Datos no válidos");
     }
 
     private void getUsuario(){
@@ -111,6 +119,8 @@ public class FrgLogin extends Fragment {
                     public void onResponse(JSONObject response) {
                         try {
                             if(response.length() > 1){
+                                user.setText("");
+                                password.setText("");
                                 ModelUser user = new ModelUser();
                                 user.setUsuario(response.getString("usuario").trim());
                                 user.setClave(response.getString("clave").trim());
@@ -131,18 +141,21 @@ public class FrgLogin extends Fragment {
                                 }
                                 else
                                     Iniciar(user);
+                                tts.reproduce("Inicio exitoso");
                             }
-                            else
+                            else{
+                                tts.reproduce(response.get("message").toString());
                                 Toast.makeText(getContext(),response.get("message").toString(),Toast.LENGTH_LONG).show();
+                            }
                         } catch (Exception e) {
-                            //Toast.makeText(getContext(),"Usuario y/o clave incorrectos",Toast.LENGTH_LONG).show();
-                            Toast.makeText(getContext(),e.toString(),Toast.LENGTH_LONG).show();
+                            //Toast.makeText(getContext(),e.toString(),Toast.LENGTH_LONG).show();
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.e("Error: ", error.getMessage());
+                tts.reproduce("Error de conexión con el servidor");
             }
         });
         // Añadir petición a la cola
@@ -192,23 +205,24 @@ public class FrgLogin extends Fragment {
             sendDataGroup(grupo);
             //b.putString("grupo", grupo.toString());
         }
-        //Creamos la información a pasar entre actividades
+        //Creamos la información a pasar entre fragments
         b.putString("user", muser.getUsuario().trim());
         b.putString("tipousuario", muser.getTipousuario().trim());
-        //Añadimos la información e iniciamos el nuevo fragment o activity
+        //Añadimos la información e iniciamos el nuevo fragment
         fragment.setArguments(b);
-        getFragmentManager().popBackStack();
         getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
     }
 
     private void RegisterUs() {
         fragment = new FrgRegisterUser();
+        tts.reproduce(register.getText().toString());
         getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
     }
 
     @SuppressLint("ResourceAsColor")
     private void Forget() {
         forgetPass.setTextColor(Color.parseColor("#44cccc"));
+        tts.reproduce(forgetPass.getText().toString());
         fragment = new FrgRecoveryPassword();
         getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
     }

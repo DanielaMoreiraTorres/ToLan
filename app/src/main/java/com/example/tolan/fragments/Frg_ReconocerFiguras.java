@@ -43,7 +43,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-public class Frg_ReconocerFiguras extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class Frg_ReconocerFiguras extends Fragment implements AdapterView.OnItemClickListener {
 
     JSONArray jsonActivities;
     NavController navController;
@@ -106,10 +106,10 @@ public class Frg_ReconocerFiguras extends Fragment implements View.OnClickListen
             modelContentsOp = new ArrayList<>();
             respuestas = new ArrayList<>();
             MapContenido();
-            /*if(respuestas.size() > 1)
+            if(respuestas.size() > 1)
                 view.findViewById(R.id.btn_comprobar_actividades).setVisibility(View.VISIBLE);
             else
-                view.findViewById(R.id.btn_comprobar_actividades).setVisibility(View.GONE);*/
+                view.findViewById(R.id.btn_comprobar_actividades).setVisibility(View.GONE);
             if(modelContentsEnun.size() > 0 & modelContentsOp.size() >0) {
                 adpEnunciado = new AdpEnunciado(getContext(), modelContentsEnun);
                 lstLista.setAdapter(adpEnunciado);
@@ -130,7 +130,7 @@ public class Frg_ReconocerFiguras extends Fragment implements View.OnClickListen
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        //view.findViewById(R.id.btn_comprobar_actividades).setOnClickListener(this);
+        view.findViewById(R.id.btn_comprobar_actividades).setOnClickListener(v -> Navegacion(v));
         return view;
     }
 
@@ -160,23 +160,6 @@ public class Frg_ReconocerFiguras extends Fragment implements View.OnClickListen
         } catch (JSONException e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public void onClick(View v) {
-        /*if(resp.equals(respuestas)){
-            respuesta = true;
-            state.setBackgroundColor(Color.parseColor("#7CB342"));
-            txtResponse.setText(R.string.correcto);
-            CompleteActivity(v);
-        }
-        else{
-            respuesta = false;
-            state.setBackgroundColor(Color.parseColor("#e74c3c"));
-            txtResponse.setText(R.string.incorrecto);
-            resp.clear();
-            //Toast.makeText(getContext(),"Respuesta incorrecta \n Vuelve a intentarlo",Toast.LENGTH_SHORT).show();
-        }*/
     }
 
     private void CompleteActivity(View v) {

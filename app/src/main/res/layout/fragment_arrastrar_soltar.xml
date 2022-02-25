@@ -11,20 +11,25 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar"></include>
+
         <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="30dp"
-                android:textAlignment="center"
-                android:fontFamily="@font/baloo"
-                android:textStyle="bold"
-                android:shadowColor="@color/secundario"
-                android:shadowRadius="4"
-                android:text="Arastrar/Soltar respuesta"
-                android:textColor="@color/secundario"
-                android:textSize="24sp" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="30dp"
+            android:textAlignment="center"
+            android:fontFamily="@font/baloo"
+            android:textStyle="bold"
+            android:shadowColor="@color/secundario"
+            android:shadowRadius="4"
+            android:text="Arastrar/Soltar respuesta"
+            android:textColor="@color/secundario"
+            android:textSize="24sp" />
 
         <ScrollView
+            android:id="@+id/scrollAS"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="vertical"
@@ -34,14 +39,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp">
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
                     android:gravity="top"
                     android:layout_weight="1">
 
@@ -76,51 +81,63 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/Lcomprobar"
+                    android:id="@+id/state"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="#AAFAB1"
                     android:orientation="vertical"
-                    android:paddingTop="10dp"
-                    android:gravity="bottom"
-                    android:layout_weight="4">
+                    android:padding="10dp" >
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/txt_tit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-black"
+                        android:text="¡Excelente!"
+                        android:textColor="#048710"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
 
-                        <View
-                            android:id="@+id/state"
-                            android:layout_width="match_parent"
-                            android:layout_height="60dp"
-                            android:background="@color/verdeclaro" />
-
-                        <TextView
-                            android:id="@+id/txtResponse"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:drawablePadding="20dp"
-                            android:drawableEnd="@drawable/icon_valor"
-                            android:drawableTint="@color/white"
-                            android:fontFamily="@font/baloo"
-                            android:shadowColor="@color/secundario"
-                            android:shadowRadius="2"
-                            android:text="@string/correcto"
-                            android:textColor="@color/white"
-                            android:textSize="20sp" />
-
-                    </RelativeLayout>
+                    <ImageView
+                        android:id="@+id/img_error"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="-30dp"
+                        android:tint="@color/verde"
+                        android:src="@drawable/icon_valor"
+                        tools:ignore="UseAppTint" />
 
                     <Button
-                        android:id="@+id/btn_comprobar_actividades"
-                        android:layout_width="match_parent"
+                        android:id="@+id/btn_Error"
+                        android:layout_width="350dp"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
-                        android:backgroundTint="@color/principal"
-                        android:fontFamily="@font/baloo"
-                        android:text="@string/comprobar"
+                        android:backgroundTint="#FE3434"
+                        android:minHeight="48dp"
+                        android:text="OK"
+                        android:textAlignment="center"
                         android:textColor="@color/white"
-                        android:textSize="12sp" />
+                        tools:ignore="TouchTargetSizeCheck" />
+
+                    <Button
+                        android:id="@+id/btn_comprobar_actividadesAS"
+                        android:layout_width="350dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:clickable="true"
+                        android:layout_marginBottom="10dp"
+                        android:backgroundTint="#12D724"
+                        android:minHeight="48dp"
+                        android:text="CONTINUAR"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"/>
+
 
                 </LinearLayout>
 

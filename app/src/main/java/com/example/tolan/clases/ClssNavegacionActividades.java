@@ -70,7 +70,7 @@ public class ClssNavegacionActividades {
                         break;
                     case "Seleccionar pares imagen con texto":
                         //Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
-                        navController.navigate(R.id.fragmentSeleccionarParesImagenTexto, bundle);
+                        //navController.navigate(R.id.fragmentSeleccionarParesImagenTexto, bundle);
                         //Toast.makeText(v.getContext(), "Layout Seleccionar pares. - Imagen-Texto no existe", Toast.LENGTH_SHORT).show();
                         break;
                     case "Seleccionar pares imagen con imagen":

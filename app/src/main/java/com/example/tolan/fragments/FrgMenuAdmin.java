@@ -27,6 +27,7 @@ import com.example.tolan.activity_group_admin;
 public class FrgMenuAdmin extends Fragment {
 
     private Fragment fragment;
+    Toolbar toolbar;
     private ImageView iconNiveles, iconSubNiveles, iconActividades, iconSkins, iconGrupos, iconHistorial;
 
     public FrgMenuAdmin() {
@@ -50,8 +51,9 @@ public class FrgMenuAdmin extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_frg_menu_admin, container, false);
-        setHasOptionsMenu(true);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
+        toolbar = view.findViewById(R.id.toolbar);
+        ((AppCompatActivity)this.getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity)this.getActivity()).getSupportActionBar().setTitle("");
         iconNiveles = view.findViewById(R.id.iconNiveles);
         iconNiveles.setOnClickListener(v->{OptionsMenuAdmin(v);});
         iconSubNiveles = view.findViewById(R.id.iconSubNiveles);
@@ -65,6 +67,12 @@ public class FrgMenuAdmin extends Fragment {
         iconHistorial = view.findViewById(R.id.iconHistorial);
         iconHistorial.setOnClickListener(v->{OptionsMenuAdmin(v);});
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_toolbar,menu);
+        //super.onCreateOptionsMenu(menu, inflater);
     }
 
     public void OptionsMenuAdmin(View view){

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.speech.tts.TextToSpeech;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -22,6 +23,8 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.tolan.R;
+import com.example.tolan.clases.ClssConvertirTextoAVoz;
+import com.example.tolan.clases.ClssValidations;
 import com.example.tolan.models.ModelUser;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -30,19 +33,22 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class FrgRecoveryPassword extends Fragment {
 
+    static TextToSpeech textToSpeech;
+    ClssConvertirTextoAVoz tts;
     private Button otro, recovery;
-    private TextView txtTittle;
+    private TextView txtRec, txtTittle;
     private TextInputEditText celular, correo;
     private TextInputLayout Lcelular, Lcorreo;
+    private ClssValidations validate;
     String Merror= "Campo obligatorio";
-    private Fragment fragment;
     private RequestQueue requestQueue;
-    private String urlP = "https://db-bartolucci.herokuapp.com/usuario/recoveryPhone?telefono=";
-    private String urlE = "https://db-bartolucci.herokuapp.com/usuario/recoveryEmail?correo=";
+    private String urlP;
+    private String urlE;
 
     public FrgRecoveryPassword() {
         // Required empty public constructor
@@ -57,8 +63,18 @@ public class FrgRecoveryPassword extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        textToSpeech = new TextToSpeech(getContext(),i -> reproducirAudio(i, getString(R.string.msrecemail)));
         if (getArguments() != null) {
         }
+    }
+
+    public void reproducirAudio(int i, String mensaje){
+        if(i!= TextToSpeech.ERROR){
+            textToSpeech.setLanguage(Locale.getDefault());
+            textToSpeech.speak(mensaje,TextToSpeech.QUEUE_FLUSH,null);
+        }
+        tts = new ClssConvertirTextoAVoz();
+        tts.init(getContext());
     }
 
     @Override
@@ -67,14 +83,20 @@ public class FrgRecoveryPassword extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_recovery_password, container, false);
         ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+        validate = new ClssValidations();
+        urlP = getString(R.string.urlBase) + "usuario/recoveryPhone?telefono=";
+        urlE = getString(R.string.urlBase) + "usuario/recoveryEmail?correo=";
+        txtRec = view.findViewById(R.id.txtRec);
+        txtRec.setOnClickListener(v -> tts.reproduce(txtRec.getText().toString()));
         txtTittle = view.findViewById(R.id.txtRecoveryMetodo);
+        txtTittle.setOnClickListener(v -> tts.reproduce(txtTittle.getText().toString()));
         Lcelular = view.findViewById(R.id.Ltelefono);
         celular = view.findViewById(R.id.telefono);
         Lcelular.setVisibility(View.GONE);
-        TextChanged(celular,Lcelular,Merror);
+        validate.TextChanged(celular,null,Lcelular,Merror);
         Lcorreo = view.findViewById(R.id.Lemail);
         correo = view.findViewById(R.id.email);
-        TextChanged(correo,Lcorreo,Merror);
+        validate.TextChanged(correo,null,Lcorreo,Merror);
         otro = view.findViewById(R.id.otro);
         otro.setOnClickListener(v -> OtroMetodo());
         otro.setVisibility(View.GONE);
@@ -83,59 +105,23 @@ public class FrgRecoveryPassword extends Fragment {
         return view;
     }
 
-    public Boolean Validar(TextInputEditText txt, TextInputLayout layout, String error){
-        Boolean err = false;
-        if(txt != null){
-            if(txt.getText().length() > 0){
-                layout.setError(null);
-                err = true;
-            }
-            else{
-                layout.setError(error);
-                err = false;
-            }
-        }
-        return err;
-    }
-
-    public void TextChanged(TextInputEditText txt, TextInputLayout layout, String error){
-        if(txt != null){
-            txt.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                }
-
-                @Override
-                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                }
-
-                @Override
-                public void afterTextChanged(Editable editable) {
-                    Validar(txt,layout,error);
-                }
-            });
-        }
-    }
-
     public void OtroMetodo(){
+        tts.reproduce(otro.getText().toString());
         if(Lcorreo.getVisibility() == View.GONE){
             txtTittle.setText(getString(R.string.msrecemail));
+            tts.reproduce(txtTittle.getText().toString());
             Lcorreo.setVisibility(View.VISIBLE);
             Lcelular.setVisibility(View.GONE);
         }
         else{
             txtTittle.setText(getString(R.string.msrectel));
+            tts.reproduce(txtTittle.getText().toString());
             Lcorreo.setVisibility(View.GONE);
             Lcelular.setVisibility(View.VISIBLE);
         }
     }
 
-    public void Recovery() {
-        String url = "";
-        if(Lcorreo.getVisibility() == View.GONE)
-            url = urlP + celular.getText().toString().trim();
-        else
-            url = urlE + correo.getText().toString().trim();
+    public void SendDatos(String url){
         // Crear nueva cola de peticiones
         requestQueue= Volley.newRequestQueue(getContext());
         JsonObjectRequest request_json = new JsonObjectRequest(Request.Method.POST, url, null,
@@ -143,18 +129,39 @@ public class FrgRecoveryPassword extends Fragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            Toast.makeText(getContext(),response.get("message").toString(),Toast.LENGTH_LONG).show();
+                            tts.reproduce(response.get("message").toString());
+                            Toast.makeText(getContext(),response.get("message").toString(),Toast.LENGTH_SHORT).show();
                         } catch (Exception e) {
-                            Toast.makeText(getContext(),"Error de conexión",Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(),"Error de conexión",Toast.LENGTH_SHORT).show();
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.e("Error: ", error.getMessage());
+                tts.reproduce(error.getMessage());
             }
         });
         // Añadir petición a la cola
         requestQueue.add(request_json);
+    }
+
+    public void Recovery() {
+        tts.reproduce(recovery.getText().toString());
+        String url = "";
+        if(Lcorreo.getVisibility() == View.GONE){
+            url = urlP + celular.getText().toString().trim();
+            if(validate.Validar(celular,null,Lcelular,Merror))
+                SendDatos(url);
+            else
+                tts.reproduce("Número de celular no válido");
+        }
+        else{
+            url = urlE + correo.getText().toString().trim();
+            if(validate.Validar(correo,null,Lcorreo,Merror))
+                SendDatos(url);
+            else
+                tts.reproduce("Correo no válido");
+        }
     }
 }

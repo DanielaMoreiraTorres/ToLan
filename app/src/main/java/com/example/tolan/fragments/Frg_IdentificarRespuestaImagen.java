@@ -214,7 +214,7 @@ public class Frg_IdentificarRespuestaImagen extends Fragment implements View.OnC
                         public void onResponse(JSONObject response) {
                             try {
                                 if (response.length() > 1) {
-                                    //Toast.makeText(getContext(), "Actividad exitosa", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getContext(), "Actividad exitosa", Toast.LENGTH_LONG).show();
                                     Navegacion(v);
                                 } else
                                     Toast.makeText(getContext(), response.get("message").toString(), Toast.LENGTH_LONG).show();

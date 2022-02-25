@@ -19,9 +19,6 @@
             android:name=".activity"
             android:exported="false" />
         <activity
-            android:name=".ActivityHomeUser"
-            android:exported="false" />
-        <activity
             android:name=".ActivityEstudents"
             android:exported="false" />
         <activity
