@@ -322,7 +322,13 @@ public class Frg_ReconocerFiguras extends Fragment implements AdapterView.OnItem
                 txt.setText("¡Excelente!");
                 txt.setTextColor(Color.parseColor("#048710"));
                 txt.setVisibility(View.VISIBLE);
-                tts.reproduce(txt.getText().toString());
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        tts.reproduce(txt.getText().toString());
+                    }
+                }, 1000);
                 ImageView img = (ImageView) state.getChildAt(1);
                 img.setImageResource(R.drawable.icon_valor);
                 img.setColorFilter(Color.parseColor("#048710"));
@@ -349,7 +355,13 @@ public class Frg_ReconocerFiguras extends Fragment implements AdapterView.OnItem
                 txt.setText("¡Ups! ¡Fallaste!");
                 txt.setTextColor(Color.parseColor("#C70039"));
                 txt.setVisibility(View.VISIBLE);
-                tts.reproduce(txt.getText().toString());
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        tts.reproduce(txt.getText().toString());
+                    }
+                }, 1000);
                 ImageView img = (ImageView) state.getChildAt(1);
                 img.setImageResource(R.drawable.sad);
                 img.setColorFilter(Color.parseColor("#C70039"));
