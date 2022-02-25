@@ -131,6 +131,8 @@ public class Frg_SeleccionarParesImagenTexto extends Fragment implements View.On
     CardView cardview_imagen;
     LinearLayout ry_state;
 
+    int idActividad;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -163,6 +165,7 @@ public class Frg_SeleccionarParesImagenTexto extends Fragment implements View.On
             jsonActivities = new JSONArray(lst_Activities);
             //Seleccionamos el elemanto cero que corresponde a esta actividad
             JSONObject item = jsonActivities.getJSONObject(0);
+            idActividad=item.getInt("id");
             JSONArray contenido = item.getJSONArray("contenido");
             for (int i = 0; i < contenido.length(); i++) {
                 JSONObject item_contenido = contenido.getJSONObject(i);
@@ -191,7 +194,7 @@ public class Frg_SeleccionarParesImagenTexto extends Fragment implements View.On
             }
             Collections.shuffle(listRutasMultimedia);
             Collections.shuffle(listItemsMultimedia);
-            AdpRecycler_SeleccionarParesTextoImagen adpRecycler_seleccionarPares = new AdpRecycler_SeleccionarParesTextoImagen(getContext(), listItemsMultimedia, listRutasMultimedia, map_DatosEmparejados, this);
+            AdpRecycler_SeleccionarParesTextoImagen adpRecycler_seleccionarPares = new AdpRecycler_SeleccionarParesTextoImagen(getContext(), listItemsMultimedia, listRutasMultimedia, map_DatosEmparejados, this, idActividad);
             rcv_datosSeleccionarPares.setAdapter(adpRecycler_seleccionarPares);
 
 

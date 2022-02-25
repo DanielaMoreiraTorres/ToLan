@@ -31,10 +31,16 @@ import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.ImageRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.tolan.R;
+import com.example.tolan.clases.ClssStaticGrupo;
 import com.example.tolan.clases.ClssVolleySingleton;
+import com.example.tolan.models.ModelUser;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
@@ -48,14 +54,16 @@ public class AdpRecycler_SeleccionarParesImagenImagen extends RecyclerView.Adapt
     int[] numerosAleatorios;
     LinearLayout ry_state;
     ScrollView mScrollView;
+    int idActividad;
 
 
-    public AdpRecycler_SeleccionarParesImagenImagen(Context mContext, ArrayList<String> listElements, int[] numerosAleatorios, LinearLayout ry_state, ScrollView mScrollView) {
+    public AdpRecycler_SeleccionarParesImagenImagen(Context mContext, ArrayList<String> listElements, int[] numerosAleatorios, LinearLayout ry_state, ScrollView mScrollView,int idActividad) {
         this.mContext = mContext;
         this.listElements = listElements;
         this.numerosAleatorios = numerosAleatorios;
         this.ry_state = ry_state;
         this.mScrollView = mScrollView;
+        this.idActividad=idActividad;
 
     }
 
@@ -298,6 +306,45 @@ public class AdpRecycler_SeleccionarParesImagenImagen extends RecyclerView.Adapt
                 //Ubicamos el layout visible
                 ry_state.setVisibility(View.VISIBLE);
             }
+        }
+    }
+
+    private void CompleteActivity() {
+        try {
+            // Crear nueva cola de peticiones
+            //RequestQueue requestQueue = Volley.newRequestQueue(mContext);
+            //Parámetros a enviar a la API
+            JSONObject param = new JSONObject();
+            param.put("idEstudiante", ClssStaticGrupo.idestudiante);
+            param.put("idActividad", idActividad);
+            param.put("statusRespuesta", true);
+            param.put("idsContenido", new JSONObject());
+            JsonObjectRequest request_json = new JsonObjectRequest( mContext.getString(R.string.urlBase) + "historial/completeActividad", param,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                if (response.length() > 1) {
+                                    ModelUser.stockcaritas += response.getInt("recompensaganada");
+                                    //Toast.makeText(getContext(), "Actividad exitosa", Toast.LENGTH_LONG).show();
+                                    //Navegacion(v);
+                                } else
+                                    Toast.makeText(mContext, response.get("message").toString(), Toast.LENGTH_LONG).show();
+                            } catch (Exception e) {
+                                Toast.makeText(mContext, "Error de conexión", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    VolleyLog.e("Error: ", error.getMessage());
+                    Toast.makeText(mContext, error.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            });
+            // Añadir petición a la cola
+            ClssVolleySingleton.getIntanciaVolley(mContext).addToRequestQueue(request_json);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 

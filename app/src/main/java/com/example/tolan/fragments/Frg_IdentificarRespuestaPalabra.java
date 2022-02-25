@@ -329,6 +329,7 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment {
                         public void onResponse(JSONObject response) {
                             try {
                                 if (response.length() > 1) {
+                                    ModelUser.stockcaritas+=response.getInt("recompensaganada");
                                     //Toast.makeText(getContext(), "Actividad exitosa", Toast.LENGTH_LONG).show();
                                     //Navegacion(v);
                                 } else
