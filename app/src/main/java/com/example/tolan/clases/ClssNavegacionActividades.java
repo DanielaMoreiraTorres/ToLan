@@ -48,8 +48,6 @@ public class ClssNavegacionActividades {
                         //Toast.makeText(v.getContext(), "La actividad [" +actividad+"] no esta configurada aun", Toast.LENGTH_SHORT).show();
                         //Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
                         navController.navigate(R.id.fragmentReconocerFiguras, bundle);
-
-
                         break;
                     case "Ordenar secuencias":
                         //Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
@@ -70,7 +68,7 @@ public class ClssNavegacionActividades {
                         break;
                     case "Seleccionar pares imagen con texto":
                         //Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
-                        //navController.navigate(R.id.fragmentSeleccionarParesImagenTexto, bundle);
+                        navController.navigate(R.id.fragmentSeleccionarParesImagenTexto, bundle);
                         //Toast.makeText(v.getContext(), "Layout Seleccionar pares. - Imagen-Texto no existe", Toast.LENGTH_SHORT).show();
                         break;
                     case "Seleccionar pares imagen con imagen":
@@ -87,12 +85,9 @@ public class ClssNavegacionActividades {
                         //Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
                         navController.navigate(R.id.fragmentArrastrarSoltar, bundle);
                         break;
-
                     default:
                         Toast.makeText(v.getContext(), "Revise que la actividad :" + actividad + " esté configurada por favor", Toast.LENGTH_SHORT).show();
                         break;
-
-
                 }
             } else {
                 Toast.makeText(v.getContext(), "Redirigiendo al menu principal..", Toast.LENGTH_SHORT).show();
@@ -105,6 +100,5 @@ public class ClssNavegacionActividades {
             Toast.makeText(v.getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
         }
         //Fin Navegación
-
     }
 }

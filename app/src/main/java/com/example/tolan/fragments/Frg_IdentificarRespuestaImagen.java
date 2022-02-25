@@ -58,7 +58,7 @@ public class Frg_IdentificarRespuestaImagen extends Fragment implements View.OnC
     private AdpOptionIdentifyImg adpOptiosIdentifyImg;
     ModelContent opSelected = new ModelContent();
     private RequestQueue requestQueue;
-    private String url = "https://db-bartolucci.herokuapp.com/historial/completeActividad";
+    private String url;
     Boolean respuesta = false;
 
     public Frg_IdentificarRespuestaImagen() {
@@ -91,6 +91,7 @@ public class Frg_IdentificarRespuestaImagen extends Fragment implements View.OnC
             String lst_Activities = getArguments().getString("activities");
             jsonActivities = new JSONArray(lst_Activities);
             //ArrayList<JSONObject> activities = new ArrayList<>();
+            url = getString(R.string.urlBase) + "historial/completeActividad";
             state = view.findViewById(R.id.state);
             state.setVisibility(View.GONE);
             txtResponse = view.findViewById(R.id.txtResponse);
@@ -152,7 +153,7 @@ public class Frg_IdentificarRespuestaImagen extends Fragment implements View.OnC
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        view.findViewById(R.id.btn_comprobar_actividades).setOnClickListener(this);
+        //view.findViewById(R.id.btn_comprobar_actividades).setOnClickListener(this);
     }
 
     private void MapContenido(){
@@ -181,7 +182,7 @@ public class Frg_IdentificarRespuestaImagen extends Fragment implements View.OnC
 
     @Override
     public void onClick(View v) {
-        if(resp.equals(respuestas)){
+        /*if(resp.equals(respuestas)){
             respuesta = true;
             state.setBackgroundColor(Color.parseColor("#7CB342"));
             txtResponse.setText(R.string.correcto);
@@ -195,7 +196,7 @@ public class Frg_IdentificarRespuestaImagen extends Fragment implements View.OnC
             txtResponse.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.sad,0);
             resp.clear();
             Toast.makeText(getContext(),"Respuesta incorrecta\n Vuelve a intentarlo",Toast.LENGTH_SHORT).show();
-        }
+        }*/
     }
 
     private void CompleteActivity(View v){
@@ -214,7 +215,7 @@ public class Frg_IdentificarRespuestaImagen extends Fragment implements View.OnC
                         public void onResponse(JSONObject response) {
                             try {
                                 if (response.length() > 1) {
-                                    Toast.makeText(getContext(), "Actividad exitosa", Toast.LENGTH_LONG).show();
+                                    //Toast.makeText(getContext(), "Actividad exitosa", Toast.LENGTH_LONG).show();
                                     Navegacion(v);
                                 } else
                                     Toast.makeText(getContext(), response.get("message").toString(), Toast.LENGTH_LONG).show();
