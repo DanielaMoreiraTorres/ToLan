@@ -265,6 +265,7 @@ public class AdpRecycler_SeleccionarParesImagenImagen extends RecyclerView.Adapt
                     ry_state.getChildAt(3).setVisibility(View.VISIBLE);
                     //Ubicamos el layout visible
                     ry_state.setVisibility(View.VISIBLE);
+                    CompleteActivity();
                 }
             } else {
                 //Toast.makeText(mContext, "No son similares", Toast.LENGTH_LONG).show();
