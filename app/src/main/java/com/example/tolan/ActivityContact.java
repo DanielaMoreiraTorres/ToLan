@@ -76,9 +76,9 @@ public class ActivityContact extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if(id == R.id.btnMyInfo) {
+        /*if(id == R.id.btnMyInfo) {
 
-        }
+        }*/
         if(id == R.id.btnLogIn) {
             /*
             Intent intent = new Intent(this, ActivityLogin.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);

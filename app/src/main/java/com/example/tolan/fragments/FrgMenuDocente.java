@@ -68,9 +68,9 @@ public class FrgMenuDocente extends Fragment {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if(id == R.id.btnMyInfo) {
+        /*if(id == R.id.btnMyInfo) {
 
-        }
+        }*/
         if(id == R.id.btnLogIn) {
             fragment = new FrgLogin();
             getFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
