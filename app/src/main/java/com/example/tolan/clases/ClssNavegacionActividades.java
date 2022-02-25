@@ -26,12 +26,11 @@ public class ClssNavegacionActividades {
         this.v = v;
     }
 
-    public  void navegar(){
+    public void navegar() {
         //Inicio Navegación
 
         Bundle bundle;
         String actividad;
-
 
 
         //Avanzar hacia la siguiente actividad
@@ -49,6 +48,8 @@ public class ClssNavegacionActividades {
                         //Toast.makeText(v.getContext(), "La actividad [" +actividad+"] no esta configurada aun", Toast.LENGTH_SHORT).show();
                         //Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
                         navController.navigate(R.id.fragmentReconocerFiguras, bundle);
+
+
                         break;
                     case "Ordenar secuencias":
                         //Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
@@ -87,8 +88,8 @@ public class ClssNavegacionActividades {
                         navController.navigate(R.id.fragmentArrastrarSoltar, bundle);
                         break;
 
-                    default :
-                        Toast.makeText(v.getContext(),"Revise que la actividad :"+ actividad +" esté configurada por favor", Toast.LENGTH_SHORT).show();
+                    default:
+                        Toast.makeText(v.getContext(), "Revise que la actividad :" + actividad + " esté configurada por favor", Toast.LENGTH_SHORT).show();
                         break;
 
 

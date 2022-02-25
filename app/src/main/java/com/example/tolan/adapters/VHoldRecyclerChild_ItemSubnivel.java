@@ -77,6 +77,8 @@ public class VHoldRecyclerChild_ItemSubnivel extends RecyclerView.ViewHolder imp
                     case "Reconocer figuras":
                         //Toast.makeText(v.getContext(), "La actividad [" +actividad+"] no esta configurada aun", Toast.LENGTH_SHORT).show();
                         //Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
+
+                        navController.popBackStack(R.id.fragmentReconocerFiguras, true);
                         navController.navigate(R.id.fragmentReconocerFiguras, bundle);
                         break;
 

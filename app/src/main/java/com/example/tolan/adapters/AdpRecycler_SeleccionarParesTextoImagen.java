@@ -10,6 +10,10 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.LayoutAnimationController;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -82,6 +86,7 @@ public class AdpRecycler_SeleccionarParesTextoImagen extends RecyclerView.Adapte
 
     private static int nOptionsSelected = 0;
 
+    private static boolean estadoAplicacion = false;
 
     @Override
     public void onBindViewHolder(@NonNull txtHolder holder, @SuppressLint("RecyclerView") int position) {
@@ -98,142 +103,127 @@ public class AdpRecycler_SeleccionarParesTextoImagen extends RecyclerView.Adapte
         holder.cardview_texto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //No ha seleccionado nada aun
-                if (nElementsSelectedRight == 0) {
-
-
-                    //Pintamos su borde respectivo
-                    pintarBorde(holder.ryl_fondo_bordes_texto, "seleccionado");
-                    //holder.ryl_fondo_bordes_texto.setBackgroundResource(R.drawable.fondo_bordes_imagen_complete);
-                    nElementsSelectedRight = 1;
-
-                    //Almancenamos en pila el elemento seleccionado por si cambiamos de opcion
-                    cardview_selectedRight = holder.cardview_texto;
-                    txt_selected_Right = holder.texto;
-                    ryl_fondo_bordes_texto_selectedRight = holder.ryl_fondo_bordes_texto;
-
-                    //Incrementamos en 1 debido a que hay un item seleccioando
-                    nOptionsSelected++;
-
-
+                if (!estadoAplicacion) {
+                    comprobar_cardview_texto(holder);
                 } else {
-                    //Ya deberia estar en pila un elemento de la derecha seleccionado
-
-                    if (cardview_selectedRight != null) {
-                        //Es verdad ya hay un elemento en pila seleccionado, entonces procedemos a deseleccionarlo
-                        if (cardview_selectedRight.equals(holder.cardview_texto)) {
-                            //Antes de deseleccionarlo verificamos si selecciono el mismo elemento
-                            Toast.makeText(mContext, "Haz seleccionado el mismo elemento varias veces", Toast.LENGTH_LONG).show();
-                            //Como se cumple procedemos a deseleccionarlo y vaciar la pila de valores
-                            pintarBorde(holder.ryl_fondo_bordes_texto, "deseleccionado");
-                            //holder.ryl_fondo_bordes_texto.setBackgroundResource(R.drawable.fondo_bordes_imagen);
-                            nElementsSelectedRight = 0;
-                            cardview_selectedRight = null;
-                            txt_selected_Right = null;
-                            ryl_fondo_bordes_texto_selectedRight = null;
-
-                            //Decrementamos en 1 debido a que hay un item deseleccioando
-                            nOptionsSelected--;
-
-                        } else {
-
-                            pintarBorde(ryl_fondo_bordes_texto_selectedRight, "deseleccionado");
-                            //ryl_fondo_bordes_texto_selectedRight.setBackgroundResource(R.drawable.fondo_bordes_imagen);
-                            //Y seleccionamos el nuevo elemento
-
-                            pintarBorde(holder.ryl_fondo_bordes_texto, "seleccionado");
-                            //holder.ryl_fondo_bordes_texto.setBackgroundResource(R.drawable.fondo_bordes_imagen_complete);
-                            nElementsSelectedRight = 1;
-                            cardview_selectedRight = holder.cardview_texto;
-                            txt_selected_Right = holder.texto;
-                            ryl_fondo_bordes_texto_selectedRight = holder.ryl_fondo_bordes_texto;
-
-                            //Seteamos en 1 debido a que hay un nuevo item seleccioando
-                            nOptionsSelected = 1;
-                        }
-                    }
+                    Toast.makeText(mContext, "Reproducir audio", Toast.LENGTH_LONG).show();
                 }
 
-                if (nOptionsSelected == 2) {
-
-
-                    comprobarSimilitud(listRutas.get(img_selectedLeft.getId()), listElements.get(txt_selected_Right.getId()));
-
-                }
             }
         });
 
         holder.cardview_imagen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                //No ha seleccionado nada aun
-                if (nElementsSelectedLeft == 0) {
-
-
-                    //Pintamos su borde respectivo
-                    pintarBorde(holder.ryl_fondo_bordes_imagen, "seleccionado");
-
-                    nElementsSelectedLeft = 1;
-
-                    //Almancenamos en pila el elemento seleccionado por si cambiamos de opcion
-                    cardview_selectedLeft = holder.cardview_imagen;
-                    img_selectedLeft = holder.imagen;
-                    ryl_fondo_bordes_imagen_selectedLeft = holder.ryl_fondo_bordes_imagen;
-
-                    //Incrementamos en 1 debido a que hay un item seleccioando
-                    nOptionsSelected++;
-
-
+                if (!estadoAplicacion) {
+                    comprobar_cardview_imagen(holder);
                 } else {
-                    //Ya deberia estar en pila un elemento de la derecha seleccionado
-
-                    if (cardview_selectedLeft != null) {
-                        //Es verdad ya hay un elemento en pila seleccionado, entonces procedemos a deseleccionarlo
-                        if (cardview_selectedLeft.equals(holder.cardview_imagen)) {
-                            //Antes de deseleccionarlo verificamos si selecciono el mismo elemento
-                            Toast.makeText(mContext, "Haz seleccionado el mismo elemento varias veces", Toast.LENGTH_LONG).show();
-                            //Como se cumple procedemos a deseleccionarlo y vaciar la pila de valores
-                            pintarBorde(holder.ryl_fondo_bordes_imagen, "deseleccionado");
-
-                            nElementsSelectedLeft = 0;
-                            cardview_selectedLeft = null;
-                            img_selectedLeft = null;
-                            ryl_fondo_bordes_imagen_selectedLeft = null;
-
-                            //Decrementamos en 1 debido a que hay un item deseleccioando
-                            nOptionsSelected--;
-
-                        } else {
-
-                            pintarBorde(ryl_fondo_bordes_imagen_selectedLeft, "deseleccionado");
-
-                            //Y seleccionamos el nuevo elemento
-
-                            pintarBorde(holder.ryl_fondo_bordes_imagen, "seleccionado");
-
-                            nElementsSelectedLeft = 1;
-                            cardview_selectedLeft = holder.cardview_imagen;
-                            img_selectedLeft = holder.imagen;
-                            ryl_fondo_bordes_imagen_selectedLeft = holder.ryl_fondo_bordes_imagen;
-
-                            //Seteamos en 1 debido a que hay un nuevo item seleccioando
-                            nOptionsSelected = 1;
-                        }
-                    }
-                }
-
-                if (nOptionsSelected == 2) {
-                    //Toast.makeText(mContext, "Haz seleccionado opciones de la derecha e izquierda respectivamente",
-                    //      Toast.LENGTH_LONG).show();
-                    //comprobarSimilitud(listRutas.get(position), listElements.get(position));
-                    comprobarSimilitud(listRutas.get(img_selectedLeft.getId()), listElements.get(txt_selected_Right.getId()));
-
+                    Toast.makeText(mContext, "Reproducir audio", Toast.LENGTH_LONG).show();
                 }
             }
         });
 
 
+    }
+
+    public void comprobar_cardview_texto(txtHolder holder) {
+        //No ha seleccionado nada aun
+        if (nElementsSelectedRight == 0) {
+            //Pintamos su borde respectivo
+            pintarBorde(holder.ryl_fondo_bordes_texto, "seleccionado");
+            //holder.ryl_fondo_bordes_texto.setBackgroundResource(R.drawable.fondo_bordes_imagen_complete);
+            nElementsSelectedRight = 1;
+            //Almancenamos en pila el elemento seleccionado por si cambiamos de opcion
+            cardview_selectedRight = holder.cardview_texto;
+            txt_selected_Right = holder.texto;
+            ryl_fondo_bordes_texto_selectedRight = holder.ryl_fondo_bordes_texto;
+            //Incrementamos en 1 debido a que hay un item seleccioando
+            nOptionsSelected++;
+        } else {
+            //Ya deberia estar en pila un elemento de la derecha seleccionado
+            if (cardview_selectedRight != null) {
+                //Es verdad ya hay un elemento en pila seleccionado, entonces procedemos a deseleccionarlo
+                if (cardview_selectedRight.equals(holder.cardview_texto)) {
+                    //Antes de deseleccionarlo verificamos si selecciono el mismo elemento
+                    Toast.makeText(mContext, "Haz seleccionado el mismo elemento varias veces", Toast.LENGTH_LONG).show();
+                    //Como se cumple procedemos a deseleccionarlo y vaciar la pila de valores
+                    pintarBorde(holder.ryl_fondo_bordes_texto, "deseleccionado");
+                    //holder.ryl_fondo_bordes_texto.setBackgroundResource(R.drawable.fondo_bordes_imagen);
+                    nElementsSelectedRight = 0;
+                    cardview_selectedRight = null;
+                    txt_selected_Right = null;
+                    ryl_fondo_bordes_texto_selectedRight = null;
+                    //Decrementamos en 1 debido a que hay un item deseleccioando
+                    nOptionsSelected--;
+
+                } else {
+                    pintarBorde(ryl_fondo_bordes_texto_selectedRight, "deseleccionado");
+                    //ryl_fondo_bordes_texto_selectedRight.setBackgroundResource(R.drawable.fondo_bordes_imagen);
+                    //Y seleccionamos el nuevo elemento
+                    pintarBorde(holder.ryl_fondo_bordes_texto, "seleccionado");
+                    //holder.ryl_fondo_bordes_texto.setBackgroundResource(R.drawable.fondo_bordes_imagen_complete);
+                    nElementsSelectedRight = 1;
+                    cardview_selectedRight = holder.cardview_texto;
+                    txt_selected_Right = holder.texto;
+                    ryl_fondo_bordes_texto_selectedRight = holder.ryl_fondo_bordes_texto;
+                    //Seteamos en 1 debido a que hay un nuevo item seleccioando
+                    nOptionsSelected = 1;
+                }
+            }
+        }
+
+        if (nOptionsSelected == 2) {
+            comprobarSimilitud(listRutas.get(img_selectedLeft.getId()), listElements.get(txt_selected_Right.getId()));
+        }
+    }
+
+
+    public void comprobar_cardview_imagen(txtHolder holder) {
+        //No ha seleccionado nada aun
+        if (nElementsSelectedLeft == 0) {
+            //Pintamos su borde respectivo
+            pintarBorde(holder.ryl_fondo_bordes_imagen, "seleccionado");
+            nElementsSelectedLeft = 1;
+            //Almancenamos en pila el elemento seleccionado por si cambiamos de opcion
+            cardview_selectedLeft = holder.cardview_imagen;
+            img_selectedLeft = holder.imagen;
+            ryl_fondo_bordes_imagen_selectedLeft = holder.ryl_fondo_bordes_imagen;
+            //Incrementamos en 1 debido a que hay un item seleccioando
+            nOptionsSelected++;
+        } else {
+            //Ya deberia estar en pila un elemento de la derecha seleccionado
+            if (cardview_selectedLeft != null) {
+                //Es verdad ya hay un elemento en pila seleccionado, entonces procedemos a deseleccionarlo
+                if (cardview_selectedLeft.equals(holder.cardview_imagen)) {
+                    //Antes de deseleccionarlo verificamos si selecciono el mismo elemento
+                    Toast.makeText(mContext, "Haz seleccionado el mismo elemento varias veces", Toast.LENGTH_LONG).show();
+                    //Como se cumple procedemos a deseleccionarlo y vaciar la pila de valores
+                    pintarBorde(holder.ryl_fondo_bordes_imagen, "deseleccionado");
+                    nElementsSelectedLeft = 0;
+                    cardview_selectedLeft = null;
+                    img_selectedLeft = null;
+                    ryl_fondo_bordes_imagen_selectedLeft = null;
+                    //Decrementamos en 1 debido a que hay un item deseleccioando
+                    nOptionsSelected--;
+                } else {
+                    pintarBorde(ryl_fondo_bordes_imagen_selectedLeft, "deseleccionado");
+                    //Y seleccionamos el nuevo elemento
+                    pintarBorde(holder.ryl_fondo_bordes_imagen, "seleccionado");
+                    nElementsSelectedLeft = 1;
+                    cardview_selectedLeft = holder.cardview_imagen;
+                    img_selectedLeft = holder.imagen;
+                    ryl_fondo_bordes_imagen_selectedLeft = holder.ryl_fondo_bordes_imagen;
+                    //Seteamos en 1 debido a que hay un nuevo item seleccioando
+                    nOptionsSelected = 1;
+                }
+            }
+        }
+        if (nOptionsSelected == 2) {
+            //Toast.makeText(mContext, "Haz seleccionado opciones de la derecha e izquierda respectivamente",
+            //      Toast.LENGTH_LONG).show();
+            //comprobarSimilitud(listRutas.get(position), listElements.get(position));
+            comprobarSimilitud(listRutas.get(img_selectedLeft.getId()), listElements.get(txt_selected_Right.getId()));
+        }
     }
 
     public void pintarBorde(RelativeLayout ryl, String estado) {
@@ -303,37 +293,84 @@ public class AdpRecycler_SeleccionarParesTextoImagen extends RecyclerView.Adapte
 
     }
 
-    Diag_Frg_OpcionIncorrecta diag_frg_opcionIncorrecta = null;
+    //Cuadro de dialogo
+    //Diag_Frg_OpcionIncorrecta diag_frg_opcionIncorrecta = null;
+
+    private static int elementosCorrectos;
 
     public void comprobarSimilitud(String id, String elemento) {
+
+        //Obtengo mi scrollview
+        final ScrollView mScrollView = fragment.getView().findViewById(R.id.mScrollView);
+
+        //Obtengo el layout de mi Fragment principal
+        LinearLayout ry_state = fragment.getView().findViewById(R.id.ry_state);
+
         if (elemento.equals(map_DatosEmparejados.get(id))) {
             //Toast.makeText(mContext, "Imagen No. : " + id + " Elemento :" + elemento,
             //      Toast.LENGTH_LONG).show();
+            elementosCorrectos++;
+            if (elementosCorrectos == listElements.size()) {
+                Toast.makeText(mContext, "No hay mas parejas", Toast.LENGTH_LONG).show();
+                elementosCorrectos = 0;
+                mScrollView.post(new Runnable() {
+                    public void run() {
+                        mScrollView.scrollTo(0, mScrollView.getBottom());
+                    }
+                });
+
+                //Inicamos la animación de los componentes
+                animar(true, ry_state);
+
+                //Seteamos el background verde
+                ry_state.setBackgroundColor(Color.parseColor("#AAFAB1"));
+                //Seteamos el texto de continuar y lo mostramos
+                TextView txt = (TextView) ry_state.getChildAt(0);
+                txt.setText("¡Excelente!");
+                txt.setTextColor(Color.parseColor("#048710"));
+
+                ry_state.getChildAt(2).setVisibility(View.GONE);
+                ry_state.getChildAt(3).setVisibility(View.VISIBLE);
+
+                //Ubicamos el layout visible
+                ry_state.setVisibility(View.VISIBLE);
+
+            }
+
             disabled_Opciones(true);
         } else {
             Toast.makeText(mContext, "Elementos incorrectos",
                     Toast.LENGTH_LONG).show();
 
-            //Obtengo el layout de mi Fragment principal
-            LinearLayout ry_state = fragment.getView().findViewById(R.id.ry_state);
-            //El usuario se acaba de equivocar
-            //Ocultar boton comprobar
-            ry_state.getChildAt(3).setVisibility(View.GONE);
-            //Setear color rojo de background
-            ry_state.setBackgroundColor(Color.parseColor("#F7B9B9"));
+
+            //Ehecutar animacion de despliegue arriba/abajo
+            animar(true, ry_state);
+
+            //Setear el scrollView abajo
+            mScrollView.post(new Runnable() {
+                public void run() {
+                    mScrollView.scrollTo(0, mScrollView.getBottom());
+                }
+            });
+
 
             //Seteo el texto de error y el color de letra en rojo respectivo
             TextView txt = (TextView) ry_state.getChildAt(0);
             txt.setText("¡Oppps! No son pares");
             txt.setTextColor(Color.parseColor("#C70039"));
-
+            //Setear color rojo de background
+            ry_state.setBackgroundColor(Color.parseColor("#F7B9B9"));
+            //El usuario se acaba de equivocar
+            //Ocultar boton comprobar
+            ry_state.getChildAt(3).setVisibility(View.GONE);
+            //Evento click a boton OK
             ry_state.getChildAt(2).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
-                    //estadoAplicacion = false;
+                    estadoAplicacion = false;
                     //animar(false);
-                    ScrollView mScrollView = fragment.getView().findViewById(R.id.mScrollView);
+                    //mScrollView = fragment.getView().findViewById(R.id.mScrollView);
                     mScrollView.post(new Runnable() {
                         public void run() {
                             mScrollView.scrollTo(0, mScrollView.getTop());
@@ -344,9 +381,11 @@ public class AdpRecycler_SeleccionarParesTextoImagen extends RecyclerView.Adapte
             });
 
 
+            //Cuadro de dialogo
             //diag_frg_opcionIncorrecta = new Diag_Frg_OpcionIncorrecta(map_DatosEmparejados.get(id), id);
             //diag_frg_opcionIncorrecta.show(fragment.getParentFragmentManager(), "kol");
 
+            estadoAplicacion = true;
             //Ubicamos el layout visible
             ry_state.setVisibility(View.VISIBLE);
 
@@ -405,6 +444,32 @@ public class AdpRecycler_SeleccionarParesTextoImagen extends RecyclerView.Adapte
         });
         //request.add(imageRequest);
         ClssVolleySingleton.getIntanciaVolley(mContext).addToRequestQueue(imageRequest);
+    }
+
+    private void animar(boolean mostrar, LinearLayout ry_state) {
+        AnimationSet set = new AnimationSet(true);
+        Animation animation = null;
+        if (mostrar) {
+
+            animation = new TranslateAnimation(
+                    Animation.RELATIVE_TO_SELF, 0.0f,
+                    Animation.RELATIVE_TO_SELF, 0.0f,
+                    Animation.RELATIVE_TO_SELF, 1.0f,
+                    Animation.RELATIVE_TO_SELF, 0.0f);
+        } else {
+            animation = new TranslateAnimation(
+                    Animation.RELATIVE_TO_SELF, 0.0f,
+                    Animation.RELATIVE_TO_SELF, 0.0f,
+                    Animation.RELATIVE_TO_SELF, 0.0f,
+                    Animation.RELATIVE_TO_SELF, 1.0f);
+        }
+        //duración en milisegundos
+        animation.setDuration(500);
+        set.addAnimation(animation);
+        LayoutAnimationController controller = new LayoutAnimationController(set, 0.25f);
+
+        ry_state.setLayoutAnimation(controller);
+        ry_state.startAnimation(animation);
     }
 
 
