@@ -2,18 +2,29 @@ package com.example.tolan.fragments;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.LayoutAnimationController;
+import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.NavOptions;
@@ -30,6 +41,7 @@ import com.bumptech.glide.Glide;
 import com.example.tolan.R;
 import com.example.tolan.adapters.AdpEnunciado;
 import com.example.tolan.adapters.AdpOptionReconocerImg;
+import com.example.tolan.clases.ClssConvertirTextoAVoz;
 import com.example.tolan.clases.ClssNavegacionActividades;
 import com.example.tolan.clases.ClssStaticGrupo;
 import com.example.tolan.models.ModelContent;
@@ -41,30 +53,36 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 public class Frg_ReconocerFiguras extends Fragment implements AdapterView.OnItemClickListener {
 
     JSONArray jsonActivities;
     NavController navController;
-    private ListView lstLista;
-    private ListView lstOptions;
-    private Button btn;
+    static TextToSpeech textToSpeech;
+    ClssConvertirTextoAVoz tts;
+    private TextView titulo;
+    private Toolbar toolbar;
+    private ScrollView scrollView;
+    private Button btnContinuar;
+    private ListView lstLista, lstOptions;
     private ImageView img;
-    private View state;
-    private TextView txtResponse;
+    private LinearLayout state;
+    ModelContent modelContent;
     private JSONArray contenido;
     List<ModelContent> modelContentsEnun;
     ModelContent imgEnunciado;
     ArrayList<ModelContent> modelContentsOp;
     List<Integer> lstIds;
     ArrayList<ModelContent> respuestas;
+    ArrayList<ModelContent> resp;
     //ArrayList<ModelContent> resp;
     private AdpEnunciado adpEnunciado;
     private AdpOptionReconocerImg adpOptionReconocerImg;
     ModelContent opSelected = new ModelContent();
     private RequestQueue requestQueue;
-    private String url = "https://db-bartolucci.herokuapp.com/historial/completeActividad";
+    private String url;
     Boolean respuesta = false;
 
     public Frg_ReconocerFiguras() {
@@ -80,8 +98,18 @@ public class Frg_ReconocerFiguras extends Fragment implements AdapterView.OnItem
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        textToSpeech = new TextToSpeech(getContext(),i -> reproducirAudio(i, titulo.getText().toString()));
         if (getArguments() != null) {
         }
+    }
+
+    public void reproducirAudio(int i, String mensaje){
+        if(i!= TextToSpeech.ERROR){
+            textToSpeech.setLanguage(Locale.getDefault());
+            textToSpeech.speak(mensaje,TextToSpeech.QUEUE_FLUSH,null);
+        }
+        tts = new ClssConvertirTextoAVoz();
+        tts.init(getContext());
     }
 
     @Override
@@ -90,14 +118,19 @@ public class Frg_ReconocerFiguras extends Fragment implements AdapterView.OnItem
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_reconocer_figuras, container, false);
         try {
+            titulo = view.findViewById(R.id.titulo);
+            titulo.setOnClickListener(v -> tts.reproduce(titulo.getText().toString()));
+            toolbar = view.findViewById(R.id.toolbar);
+            setHasOptionsMenu(true);
+            ((AppCompatActivity)this.getActivity()).setSupportActionBar(toolbar);
+            ((AppCompatActivity)this.getActivity()).getSupportActionBar().setTitle("");
             String lst_Activities = getArguments().getString("activities");
             jsonActivities = new JSONArray(lst_Activities);
+            url = getString(R.string.urlBase) + "historial/completeActividad";
+            scrollView = view.findViewById(R.id.scrollRF);
+            btnContinuar = view.findViewById(R.id.btn_comprobar_actividadesRF);
             state = view.findViewById(R.id.state);
             state.setVisibility(View.GONE);
-            txtResponse = view.findViewById(R.id.txtResponse);
-            txtResponse.setVisibility(View.GONE);
-            btn = view.findViewById(R.id.btn_comprobar_actividades);
-            btn.setVisibility(View.GONE);
             img = view.findViewById(R.id.imgOp);
             lstLista = view.findViewById(R.id.lstEnunciado);
             lstOptions = view.findViewById(R.id.lstOpciones);
@@ -105,11 +138,9 @@ public class Frg_ReconocerFiguras extends Fragment implements AdapterView.OnItem
             modelContentsEnun = new ArrayList<>();
             modelContentsOp = new ArrayList<>();
             respuestas = new ArrayList<>();
+            resp = new ArrayList<>();
+            modelContent = new ModelContent();
             MapContenido();
-            if(respuestas.size() > 1)
-                view.findViewById(R.id.btn_comprobar_actividades).setVisibility(View.VISIBLE);
-            else
-                view.findViewById(R.id.btn_comprobar_actividades).setVisibility(View.GONE);
             if(modelContentsEnun.size() > 0 & modelContentsOp.size() >0) {
                 adpEnunciado = new AdpEnunciado(getContext(), modelContentsEnun);
                 lstLista.setAdapter(adpEnunciado);
@@ -120,17 +151,16 @@ public class Frg_ReconocerFiguras extends Fragment implements AdapterView.OnItem
                 lstOptions.setAdapter(adpOptionReconocerImg);
                 lstOptions.setOnItemClickListener(this);
             }
-            else{
+            else {
                 Toast.makeText(getContext(), "La actividad no tiene contenido", Toast.LENGTH_SHORT).show();
-                btn.setVisibility(View.VISIBLE);
+                tts.reproduce("La actividad no tiene contenido");
                 img.setVisibility(View.GONE);
-                btn.setText("Continuar");
-                btn.setOnClickListener(v -> Navegacion(v));
+                btnContinuar.setVisibility(View.VISIBLE);
+                btnContinuar.setOnClickListener(v -> Navegacion(v));
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        view.findViewById(R.id.btn_comprobar_actividades).setOnClickListener(v -> Navegacion(v));
         return view;
     }
 
@@ -162,6 +192,11 @@ public class Frg_ReconocerFiguras extends Fragment implements AdapterView.OnItem
         }
     }
 
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_toolbar,menu);
+    }
+
     private void CompleteActivity(View v) {
         try {
             // Crear nueva cola de peticiones
@@ -179,7 +214,7 @@ public class Frg_ReconocerFiguras extends Fragment implements AdapterView.OnItem
                             try {
                                 if (response.length() > 1) {
                                     //Toast.makeText(getContext(), "Actividad exitosa", Toast.LENGTH_LONG).show();
-                                    Navegacion(v);
+                                    //Navegacion(v);
                                 } else
                                     Toast.makeText(getContext(), response.get("message").toString(), Toast.LENGTH_LONG).show();
                             } catch (Exception e) {
@@ -206,31 +241,106 @@ public class Frg_ReconocerFiguras extends Fragment implements AdapterView.OnItem
         jsonActivities.remove(0);
         ClssNavegacionActividades clssNavegacionActividades = new ClssNavegacionActividades(navController, jsonActivities, v);
         clssNavegacionActividades.navegar();
+    }
 
+    private void AccionOk(){
+        animar(false);
+        scrollView.post(new Runnable() {
+            public void run() {
+                scrollView.scrollTo(0, scrollView.getTop());
+            }
+        });
+        state.setVisibility(View.GONE);
+        TextView txt = (TextView) state.getChildAt(2);
+        tts.reproduce(txt.getText().toString());
+    }
+
+    private void animar(boolean mostrar) {
+        AnimationSet set = new AnimationSet(true);
+        Animation animation = null;
+        if (mostrar) {
+            animation = new TranslateAnimation(
+                    Animation.RELATIVE_TO_SELF, 0.0f,
+                    Animation.RELATIVE_TO_SELF, 0.0f,
+                    Animation.RELATIVE_TO_SELF, 1.0f,
+                    Animation.RELATIVE_TO_SELF, 0.0f);
+        } else {
+            animation = new TranslateAnimation(
+                    Animation.RELATIVE_TO_SELF, 0.0f,
+                    Animation.RELATIVE_TO_SELF, 0.0f,
+                    Animation.RELATIVE_TO_SELF, 0.0f,
+                    Animation.RELATIVE_TO_SELF, 1.0f);
+        }
+        //duración en milisegundos
+        animation.setDuration(500);
+        set.addAnimation(animation);
+        LayoutAnimationController controller = new LayoutAnimationController(set, 0.25f);
+        state.setLayoutAnimation(controller);
+        state.startAnimation(animation);
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         opSelected = ((ModelContent) adapterView.getItemAtPosition(i));
+        tts.reproduce(opSelected.getDescripcion());
         if(respuestas.size() == 0){
             Toast.makeText(getContext(),"La actividad no tiene respuesta",Toast.LENGTH_SHORT).show();
         }
         else if(respuestas.size() == 1){
-            state.setVisibility(View.VISIBLE);
-            txtResponse.setVisibility(View.VISIBLE);
             if(opSelected.getRespuesta().equals(true)){
                 //Toast.makeText(getContext(),"Respuesta correcta",Toast.LENGTH_SHORT).show();
                 respuesta = true;
-                state.setBackgroundColor(Color.parseColor("#7CB342"));
-                txtResponse.setText(R.string.correcto);
-                txtResponse.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.icon_valor,0);
+                animar(true);
+                //Toast.makeText(getContext(),"Correcto",Toast.LENGTH_SHORT).show();
+                scrollView.post(new Runnable() {
+                    public void run() {
+                        scrollView.scrollTo(0, scrollView.getBottom());
+                    }
+                });
+                //Seteamos el background verde
+                state.setBackgroundColor(Color.parseColor("#AAFAB1"));
+                //Seteamos el texto de continuar y lo mostramos
+                TextView txt = (TextView) state.getChildAt(0);
+                txt.setText("¡Excelente!");
+                txt.setTextColor(Color.parseColor("#048710"));
+                txt.setVisibility(View.VISIBLE);
+                tts.reproduce(txt.getText().toString());
+                ImageView img = (ImageView) state.getChildAt(1);
+                img.setImageResource(R.drawable.icon_valor);
+                img.setColorFilter(Color.parseColor("#048710"));
+                state.getChildAt(2).setVisibility(View.GONE);
+                state.getChildAt(3).setVisibility(View.VISIBLE);
+                state.getChildAt(3).setOnClickListener(vcont -> Navegacion(vcont));
+                //Ubicamos el layout visible
+                state.setVisibility(View.VISIBLE);
                 CompleteActivity(view);
             }
             else{
-                state.setBackgroundColor(Color.parseColor("#e74c3c"));
-                txtResponse.setText(R.string.incorrecto);
-                txtResponse.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.sad,0);
                 //Toast.makeText(getContext(),"Respuesta incorrecta",Toast.LENGTH_SHORT).show();
+                respuesta = false;
+                animar(true);
+                scrollView.post(new Runnable() {
+                    public void run() {
+                        scrollView.scrollTo(0, scrollView.getBottom());
+                    }
+                });
+                //Seteamos el backgroun rojo
+                state.setBackgroundColor(Color.parseColor("#F7B9B9"));
+                //Seteamos el texto de error y lo mostramos
+                TextView txt = (TextView) state.getChildAt(0);
+                txt.setText("¡Ups! ¡Fallaste!");
+                txt.setTextColor(Color.parseColor("#C70039"));
+                txt.setVisibility(View.VISIBLE);
+                tts.reproduce(txt.getText().toString());
+                ImageView img = (ImageView) state.getChildAt(1);
+                img.setImageResource(R.drawable.sad);
+                img.setColorFilter(Color.parseColor("#C70039"));
+                //Ocultamos el boton comprobar
+                state.getChildAt(3).setVisibility(View.GONE);
+                //Seteamos evento click a boton OK
+                state.getChildAt(2).setVisibility(View.VISIBLE);
+                state.getChildAt(2).setOnClickListener(vok -> AccionOk());
+                state.setVisibility(View.VISIBLE);
             }
         }
     }

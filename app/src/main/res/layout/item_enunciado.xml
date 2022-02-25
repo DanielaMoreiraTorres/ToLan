@@ -4,9 +4,9 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <com.codesgood.views.JustifiedTextView
+    <TextView
         android:id="@+id/lblTitulo"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/baloo"
         android:textStyle="bold"

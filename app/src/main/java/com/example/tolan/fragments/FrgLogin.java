@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.speech.tts.TextToSpeech;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -119,8 +120,9 @@ public class FrgLogin extends Fragment {
                     public void onResponse(JSONObject response) {
                         try {
                             if(response.length() > 1){
-                                user.setText("");
-                                password.setText("");
+                                tts.reproduce("Inicio exitoso");
+                                /*user.setText("");
+                                password.setText("");*/
                                 ModelUser user = new ModelUser();
                                 user.setUsuario(response.getString("usuario").trim());
                                 user.setClave(response.getString("clave").trim());
@@ -141,7 +143,6 @@ public class FrgLogin extends Fragment {
                                 }
                                 else
                                     Iniciar(user);
-                                tts.reproduce("Inicio exitoso");
                             }
                             else{
                                 tts.reproduce(response.get("message").toString());
@@ -198,11 +199,14 @@ public class FrgLogin extends Fragment {
         Bundle b = new Bundle();
         if(muser.getTipousuario().trim().equals("AD"))
             fragment = new FrgMenuAdmin();
-        else if(muser.getTipousuario().trim().equals("DC"))
+        else if(muser.getTipousuario().trim().equals("DC")){
             fragment = new FrgMenuDocente();
+            tts.reproduce("Bienvenido "+ ClssStaticGrupo.docente);
+        }
         else{
             fragment = new ActivityHomeUser();
             sendDataGroup(grupo);
+            tts.reproduce("Bienvenido "+ ClssStaticGrupo.estudiante);
             //b.putString("grupo", grupo.toString());
         }
         //Creamos la información a pasar entre fragments

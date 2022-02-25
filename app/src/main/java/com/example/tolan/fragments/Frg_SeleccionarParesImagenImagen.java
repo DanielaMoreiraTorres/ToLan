@@ -6,13 +6,18 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.speech.tts.TextToSpeech;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -24,6 +29,7 @@ import android.widget.Toast;
 import com.example.tolan.R;
 import com.example.tolan.adapters.AdpRecycler_SeleccionarParesImagenImagen;
 import com.example.tolan.adapters.AdpRecycler_SeleccionarParesTextoImagen;
+import com.example.tolan.clases.ClssConvertirTextoAVoz;
 import com.example.tolan.clases.ClssNavegacionActividades;
 import com.google.android.flexbox.AlignItems;
 import com.google.android.flexbox.FlexDirection;
@@ -39,6 +45,7 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Locale;
 import java.util.Random;
 import java.util.RandomAccess;
 import java.util.Set;
@@ -50,6 +57,11 @@ import java.util.stream.IntStream;
  * create an instance of this fragment.
  */
 public class Frg_SeleccionarParesImagenImagen extends Fragment implements View.OnClickListener {
+
+    private Toolbar toolbar;
+    static TextToSpeech textToSpeech;
+    ClssConvertirTextoAVoz tts;
+    private TextView titulo;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -85,10 +97,20 @@ public class Frg_SeleccionarParesImagenImagen extends Fragment implements View.O
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        textToSpeech = new TextToSpeech(getContext(),i -> reproducirAudio(i, titulo.getText().toString()));
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+    }
+
+    public void reproducirAudio(int i, String mensaje){
+        if(i!= TextToSpeech.ERROR){
+            textToSpeech.setLanguage(Locale.getDefault());
+            textToSpeech.speak(mensaje,TextToSpeech.QUEUE_FLUSH,null);
+        }
+        tts = new ClssConvertirTextoAVoz();
+        tts.init(getContext());
     }
 
     @Override
@@ -114,6 +136,13 @@ public class Frg_SeleccionarParesImagenImagen extends Fragment implements View.O
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        titulo = view.findViewById(R.id.txtMenu);
+        titulo.setOnClickListener(v -> tts.reproduce(titulo.getText().toString()));
+
+        toolbar = view.findViewById(R.id.toolbar);
+        setHasOptionsMenu(true);
+        ((AppCompatActivity)this.getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity)this.getActivity()).getSupportActionBar().setTitle("");
 
         ry_state = view.findViewById(R.id.ry_state);
         mScrollView = view.findViewById(R.id.mScrollView);
@@ -162,6 +191,11 @@ public class Frg_SeleccionarParesImagenImagen extends Fragment implements View.O
 
 
         view.findViewById(R.id.btn_comprobar_actividadesImagen).setOnClickListener(this);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_toolbar,menu);
     }
 
     int[] numerosAleatorios;

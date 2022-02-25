@@ -52,6 +52,7 @@ public class FrgMenuAdmin extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_frg_menu_admin, container, false);
         toolbar = view.findViewById(R.id.toolbar);
+        setHasOptionsMenu(true);
         ((AppCompatActivity)this.getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity)this.getActivity()).getSupportActionBar().setTitle("");
         iconNiveles = view.findViewById(R.id.iconNiveles);
@@ -72,7 +73,9 @@ public class FrgMenuAdmin extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.menu_toolbar,menu);
-        //super.onCreateOptionsMenu(menu, inflater);
+        MenuItem mc = menu.findItem(R.id.btnCaritas);
+        mc.setVisible(false);
+        MenuItem mr = menu.findItem(R.id.btnRecompensa);
     }
 
     public void OptionsMenuAdmin(View view){

@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="5dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="15dp"
     android:orientation="horizontal">
 
     <TextView
@@ -10,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="5dp"
+        android:layout_marginBottom="10dp"
         android:layout_weight="2"
         android:textAlignment="textStart"
         android:fontFamily="@font/baloo"
@@ -18,9 +20,9 @@
         android:textColor="@color/secundario"
         android:textSize="20sp" />
 
-    <com.codesgood.views.JustifiedTextView
+    <TextView
         android:id="@+id/txtOp"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="5dp"
         android:layout_weight="1"

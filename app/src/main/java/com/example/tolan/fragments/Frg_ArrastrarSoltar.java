@@ -2,18 +2,16 @@ package com.example.tolan.fragments;
 
 import static android.content.ClipData.newPlainText;
 
-import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ClipDescription;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -32,7 +30,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -45,8 +42,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.tolan.ActivityContact;
-import com.example.tolan.MainActivity;
 import com.example.tolan.R;
 import com.example.tolan.adapters.AdpEnunciado;
 import com.example.tolan.adapters.AdpOptionArrastrarSoltarTxt;
@@ -62,16 +57,18 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class Frg_ArrastrarSoltar extends Fragment {
 
     JSONArray jsonActivities;
     NavController navController;
     private Toolbar toolbar;
-    static ClssConvertirTextoAVoz tts;
+    static TextToSpeech textToSpeech;
+    ClssConvertirTextoAVoz tts;
+    private TextView titulo;
     private ScrollView scrollView;
     private Button btnContinuar;
-    private Fragment fragment;
     private ListView lstLista;
     private RecyclerView rcvOptions;
     private LinearLayout state;
@@ -105,11 +102,18 @@ public class Frg_ArrastrarSoltar extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        tts = new ClssConvertirTextoAVoz();
-        tts.init(getContext());
-        //setHasOptionsMenu(true);
+        textToSpeech = new TextToSpeech(getContext(),i -> reproducirAudio(i, titulo.getText().toString()));
         if (getArguments() != null) {
         }
+    }
+
+    public void reproducirAudio(int i, String mensaje){
+        if(i!= TextToSpeech.ERROR){
+            textToSpeech.setLanguage(Locale.getDefault());
+            textToSpeech.speak(mensaje,TextToSpeech.QUEUE_FLUSH,null);
+        }
+        tts = new ClssConvertirTextoAVoz();
+        tts.init(getContext());
     }
 
     @Override
@@ -123,7 +127,10 @@ public class Frg_ArrastrarSoltar extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         try {
+            titulo = view.findViewById(R.id.titulo);
+            titulo.setOnClickListener(v -> tts.reproduce(titulo.getText().toString()));
             toolbar = view.findViewById(R.id.toolbar);
+            setHasOptionsMenu(true);
             ((AppCompatActivity)this.getActivity()).setSupportActionBar(toolbar);
             ((AppCompatActivity)this.getActivity()).getSupportActionBar().setTitle("");
             String lst_Activities = getArguments().getString("activities");
@@ -150,6 +157,7 @@ public class Frg_ArrastrarSoltar extends Fragment {
             else {
                 //jsonActivities.remove(0);
                 Toast.makeText(getContext(), "La actividad no tiene contenido", Toast.LENGTH_SHORT).show();
+                tts.reproduce("La actividad no tiene contenido");
                 btnContinuar.setVisibility(View.VISIBLE);
                 btnContinuar.setOnClickListener(v -> Navegacion(v));
             }
@@ -228,13 +236,13 @@ public class Frg_ArrastrarSoltar extends Fragment {
                 if(uno != null & dos != null){
                     if(v.getTag().toString().equals(event.getClipDescription().getLabel())){
                         respuesta = true;
+                        animar(true);
                         //Toast.makeText(getContext(),"Correcto",Toast.LENGTH_SHORT).show();
                         scrollView.post(new Runnable() {
                             public void run() {
                                 scrollView.scrollTo(0, scrollView.getBottom());
                             }
                         });
-                        animar(true);
                         cardView.removeView(textView);
                         dest = (LinearLayout) v;
                         dest.addView(textView);
@@ -271,7 +279,7 @@ public class Frg_ArrastrarSoltar extends Fragment {
                         state.setBackgroundColor(Color.parseColor("#F7B9B9"));
                         //Seteamos el texto de error y lo mostramos
                         TextView txt = (TextView) state.getChildAt(0);
-                        txt.setText("¡Ups! ¡Fallaste!\n¡Inténtalo nuevamente!");
+                        txt.setText("¡Ups! ¡Fallaste!");
                         txt.setTextColor(Color.parseColor("#C70039"));
                         txt.setVisibility(View.VISIBLE);
                         tts.reproduce(txt.getText().toString());
@@ -357,7 +365,7 @@ public class Frg_ArrastrarSoltar extends Fragment {
                             try {
                                 if (response.length() > 1) {
                                     //Toast.makeText(getContext(), "Actividad exitosa", Toast.LENGTH_LONG).show();
-                                    Navegacion(v);
+                                    //Navegacion(v);
                                 } else
                                     Toast.makeText(getContext(), response.get("message").toString(), Toast.LENGTH_LONG).show();
                             } catch (Exception e) {

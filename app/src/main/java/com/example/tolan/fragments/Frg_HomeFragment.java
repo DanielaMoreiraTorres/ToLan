@@ -1,7 +1,10 @@
 package com.example.tolan.fragments;
 
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -9,6 +12,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.NavOptions;
@@ -27,6 +32,8 @@ import com.android.volley.toolbox.JsonArrayRequest;
 
 import com.example.tolan.R;
 import com.example.tolan.adapters.AdpRecycler_Main;
+import com.example.tolan.clases.ClssConvertirTextoAVoz;
+import com.example.tolan.clases.ClssStaticGrupo;
 import com.example.tolan.clases.ClssVolleySingleton;
 import com.example.tolan.models.ModelRecyclerItemActividad;
 import com.example.tolan.models.ModelRecyclerItemNivel;
@@ -39,6 +46,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,6 +54,10 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class Frg_HomeFragment extends Fragment implements Response.Listener<JSONArray>, Response.ErrorListener {
+
+    static TextToSpeech textToSpeech;
+    private Toolbar toolbar;
+    ClssConvertirTextoAVoz tts;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -87,13 +99,27 @@ public class Frg_HomeFragment extends Fragment implements Response.Listener<JSON
         }
     }
 
+    public void reproducirAudio(int i, String mensaje){
+        if(i!= TextToSpeech.ERROR){
+            textToSpeech.setLanguage(Locale.getDefault());
+            textToSpeech.speak(mensaje,TextToSpeech.QUEUE_FLUSH,null);
+        }
+        tts = new ClssConvertirTextoAVoz();
+        tts.init(getContext());
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        //textToSpeech = new TextToSpeech(getContext(),i -> reproducirAudio(i, "Bienvenido "+ ClssStaticGrupo.estudiante));
         return inflater.inflate(R.layout.fragment_inicio, container, false);
     }
 
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_toolbar,menu);
+    }
 
     ProgressBar progressBar;
 
@@ -117,6 +143,10 @@ public class Frg_HomeFragment extends Fragment implements Response.Listener<JSON
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        toolbar = view.findViewById(R.id.toolbar);
+        setHasOptionsMenu(true);
+        ((AppCompatActivity)this.getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity)this.getActivity()).getSupportActionBar().setTitle("");
 
 
 

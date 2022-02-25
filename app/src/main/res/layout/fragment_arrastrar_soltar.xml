@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.Frg_ArrastrarSoltar"
-    android:id="@+id/fragemntFinal">
+    tools:context=".fragments.Frg_ArrastrarSoltar">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,12 +15,12 @@
             layout="@layout/toolbar"></include>
 
         <TextView
+            android:id="@+id/titulo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="30dp"
             android:textAlignment="center"
             android:fontFamily="@font/baloo"
-            android:textStyle="bold"
             android:shadowColor="@color/secundario"
             android:shadowRadius="4"
             android:text="Arastrar/Soltar respuesta"
@@ -46,9 +45,7 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:gravity="top"
-                    android:layout_weight="1">
+                    android:layout_marginEnd="20dp">
 
                     <ListView
                         android:id="@+id/lstEnunciado"
@@ -85,7 +82,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
                     android:background="#AAFAB1"
                     android:orientation="vertical"
                     android:padding="10dp" >
@@ -137,7 +133,6 @@
                         android:text="CONTINUAR"
                         android:textAlignment="center"
                         android:textColor="@color/white"/>
-
 
                 </LinearLayout>
 

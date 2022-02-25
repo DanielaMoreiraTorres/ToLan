@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
     }
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_toolbar,menu);
         MenuItem mc = menu.findItem(R.id.btnCaritas);
@@ -52,17 +52,20 @@ public class MainActivity extends AppCompatActivity {
         MenuItem mr = menu.findItem(R.id.btnRecompensa);
         mr.setVisible(false);
         return true;
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if(id == R.id.btnMyInfo) {
+        if(id == R.id.btnCaritas) {
+            //tts.reproduce("Tienes ");
+        }
+        /*if(id == R.id.btnMyInfo) {
             tts.reproduce("Mi información");
             fragment = new FrgRegisterUser();
             getSupportFragmentManager().popBackStack();
             getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
-        }
+        }*/
         if(id == R.id.btnLogIn) {
             tts.reproduce("Cerrar sesión");
             fragment = new FrgLogin();

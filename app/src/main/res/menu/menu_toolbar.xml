@@ -17,12 +17,12 @@
 
     </group>
 
-    <item
+    <!--<item
         android:id="@+id/btnMyInfo"
         android:icon="@drawable/icon_user"
         android:iconTint="@color/secundario"
         android:title="@string/myinfo"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom" />-->
     <item
         android:id="@+id/btnLogIn"
         android:icon="@drawable/icon_logout"
