@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -204,7 +205,13 @@ public class FrgLogin extends Fragment {
             fragment = new FrgMenuAdmin();
         else if(muser.getTipousuario().trim().equals("DC")){
             fragment = new FrgMenuDocente();
-            tts.reproduce("Bienvenido "+ ClssStaticGrupo.docente);
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    tts.reproduce("Bienvenido "+ ClssStaticGrupo.docente);
+                }
+            }, 1000);
         }
         else{
             fragment = new ActivityHomeUser();
