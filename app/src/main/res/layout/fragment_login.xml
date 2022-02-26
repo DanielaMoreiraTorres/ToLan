@@ -74,17 +74,17 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:layout_weight="1">
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:id="@+id/cont"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
                         android:layout_marginStart="5dp"
                         android:layout_marginEnd="5dp"
+                        android:orientation="vertical"
                         android:padding="20dp">
 
                         <com.google.android.material.textfield.TextInputLayout
@@ -137,9 +137,9 @@
                             android:clickable="true"
                             android:focusable="true"
                             android:fontFamily="@font/baloo"
-                            android:shadowRadius="2"
-                            android:shadowColor="@color/secundario"
                             android:padding="5dp"
+                            android:shadowColor="@color/secundario"
+                            android:shadowRadius="2"
                             android:text="@string/forget"
                             android:textAllCaps="false"
                             android:textColor="@color/secundario"
@@ -164,13 +164,13 @@
                             android:layout_height="match_parent"
                             android:layout_marginEnd="10dp"
                             android:layout_weight="1"
-                            app:icon="@drawable/icon_add_user"
-                            app:iconGravity="textStart"
                             android:backgroundTint="@color/verde"
                             android:fontFamily="@font/baloo"
                             android:text="@string/registrarse"
                             android:textColor="@color/white"
                             android:textSize="12sp"
+                            app:icon="@drawable/icon_add_user"
+                            app:iconGravity="textStart"
                             tools:ignore="ButtonStyle" />
 
                         <Button
@@ -178,13 +178,13 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            app:icon="@drawable/icon_login"
-                            app:iconGravity="textStart"
                             android:fontFamily="@font/baloo"
                             android:text="@string/iniciar_sesion"
                             android:textColor="@color/white"
                             android:textSize="12sp"
                             app:backgroundTint="@color/principal"
+                            app:icon="@drawable/icon_login"
+                            app:iconGravity="textStart"
                             tools:ignore="ButtonStyle" />
 
                     </LinearLayout>
@@ -194,21 +194,21 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
+                    android:layout_weight="2"
                     android:gravity="bottom"
-                    android:layout_weight="2">
+                    android:orientation="vertical">
 
                     <View
                         android:id="@+id/Viewfondo1"
                         android:layout_width="match_parent"
                         android:layout_height="85dp"
-                        android:background="@drawable/ic_up"/>
+                        android:background="@drawable/ic_up" />
 
                     <View
                         android:id="@+id/Viewfondo2"
                         android:layout_width="match_parent"
                         android:layout_height="95dp"
-                        android:background="@color/principal"/>
+                        android:background="@color/principal" />
 
                 </LinearLayout>
 
@@ -217,5 +217,17 @@
         </ScrollView>
 
     </LinearLayout>
+
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:max="100"
+
+        android:visibility="gone" />
+
 
 </FrameLayout>

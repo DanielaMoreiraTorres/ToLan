@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,7 +50,7 @@ public class FrgLogin extends Fragment {
     private TextInputEditText user, password;
     private TextInputLayout Lusuario, Lclave;
     private ClssValidations validate;
-    private String Merror= "Campo obligatorio";
+    private String Merror = "Campo obligatorio";
     private Fragment fragment;
     private RequestQueue requestQueue;
     private String url, urlGrupo;
@@ -74,13 +75,16 @@ public class FrgLogin extends Fragment {
         }
     }
 
+    ProgressBar progressBar;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login, container, false);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         validate = new ClssValidations();
+        progressBar = view.findViewById(R.id.progressBar);
         grupo = new JSONObject();
         Lusuario = view.findViewById(R.id.Lusuario);
         url = getString(R.string.urlBase) + "usuario/login";
@@ -88,10 +92,10 @@ public class FrgLogin extends Fragment {
         txtIni = view.findViewById(R.id.txtIni);
         txtIni.setOnClickListener(v -> tts.reproduce(txtIni.getText().toString()));
         user = view.findViewById(R.id.txtuser);
-        validate.TextChanged(user,null,Lusuario,Merror);
+        validate.TextChanged(user, null, Lusuario, Merror);
         Lclave = view.findViewById(R.id.Lclave);
         password = view.findViewById(R.id.txtPass);
-        validate.TextChanged(password,null,Lclave,Merror);
+        validate.TextChanged(password, null, Lclave, Merror);
         btnLogin = view.findViewById(R.id.btnSigin);
         btnLogin.setOnClickListener(v -> Login());
         forgetPass = view.findViewById(R.id.forget);
@@ -101,17 +105,18 @@ public class FrgLogin extends Fragment {
         return view;
     }
 
-    private void Login(){
+    private void Login() {
+        progressBar.setVisibility(View.VISIBLE);
         tts.reproduce(btnLogin.getText().toString());
-        if(validate.Validar(user,null,Lusuario,Merror) & validate.Validar(password,null,Lclave,Merror))
+        if (validate.Validar(user, null, Lusuario, Merror) & validate.Validar(password, null, Lclave, Merror))
             getUsuario();
         else
             tts.reproduce("Datos no válidos");
     }
 
-    private void getUsuario(){
+    private void getUsuario() {
         // Crear nueva cola de peticiones
-        requestQueue= Volley.newRequestQueue(getContext());
+        requestQueue = Volley.newRequestQueue(getContext());
         //Parámetros a enviar a la API
         Map<String, String> parameters = new HashMap<>();
         parameters.put("username", user.getText().toString().trim());
@@ -121,7 +126,7 @@ public class FrgLogin extends Fragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            if(response.length() > 1){
+                            if (response.length() > 1) {
                                 tts.reproduce("Inicio exitoso");
                                 /*user.setText("");
                                 password.setText("");*/
@@ -130,7 +135,7 @@ public class FrgLogin extends Fragment {
                                 user.setClave(response.getString("clave").trim());
                                 user.setTipousuario(response.getString("tipousuario").trim());
                                 user.setActivo(response.getBoolean("activo"));
-                                if(user.getTipousuario().equals("ES")){
+                                if (user.getTipousuario().equals("ES")) {
                                     JSONObject ObjDatos = (JSONObject) response.get("estudiante");
                                     user.setEstudiante(ObjDatos);
                                     //user.setStockcaritas(ObjDatos.getInt("stockcaritas"));
@@ -138,20 +143,19 @@ public class FrgLogin extends Fragment {
                                     user.setGrupo((JSONArray) ObjDatos.get("grupo"));
                                     int idGrupo = (int) user.getGrupo().getJSONObject(0).get("id");
                                     ObtIdDocente(idGrupo, user);
-                                }
-                                else if(user.getTipousuario().equals("DC")){
+                                } else if (user.getTipousuario().equals("DC")) {
                                     JSONObject ObjDatos = (JSONObject) response.get("docente");
                                     user.setDocente(ObjDatos);
                                     idDocente = ObjDatos.getInt("id");
                                     Iniciar(user);
-                                }
-                                else
+                                } else
                                     Iniciar(user);
-                            }
-                            else{
+                                progressBar.setVisibility(View.GONE);
+                            } else {
                                 tts.reproduce(response.get("message").toString());
-                                Toast.makeText(getContext(),response.get("message").toString(),Toast.LENGTH_LONG).show();
+                                Toast.makeText(getContext(), response.get("message").toString(), Toast.LENGTH_LONG).show();
                             }
+
                         } catch (Exception e) {
                             //Toast.makeText(getContext(),e.toString(),Toast.LENGTH_LONG).show();
                         }
@@ -161,16 +165,17 @@ public class FrgLogin extends Fragment {
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.e("Error: ", error.getMessage());
                 tts.reproduce("Error de conexión con el servidor");
+                progressBar.setVisibility(View.GONE);
             }
         });
         // Añadir petición a la cola
         requestQueue.add(request_json);
     }
 
-    private void ObtIdDocente(int idGrupo, ModelUser muser){
+    private void ObtIdDocente(int idGrupo, ModelUser muser) {
         urlGrupo = urlGrupo + idGrupo;
         // Crear nueva cola de peticiones
-        requestQueue= Volley.newRequestQueue(getContext());
+        requestQueue = Volley.newRequestQueue(getContext());
         JsonObjectRequest request_json = new JsonObjectRequest(Request.Method.GET, urlGrupo, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -180,11 +185,10 @@ public class FrgLogin extends Fragment {
                             if (response.length() > 1) {
                                 grupo = response;
                                 Iniciar(muser);
-                            }
-                            else
-                                Toast.makeText(getContext(),response.get("message").toString(),Toast.LENGTH_LONG).show();
-                        }catch (Exception e) {
-                            Toast.makeText(getContext(),"El usuario no tiene docente a cargo asignado",Toast.LENGTH_LONG).show();
+                            } else
+                                Toast.makeText(getContext(), response.get("message").toString(), Toast.LENGTH_LONG).show();
+                        } catch (Exception e) {
+                            Toast.makeText(getContext(), "El usuario no tiene docente a cargo asignado", Toast.LENGTH_LONG).show();
                         }
                     }
                 },
@@ -201,22 +205,21 @@ public class FrgLogin extends Fragment {
 
     private void Iniciar(ModelUser muser) throws JSONException {
         Bundle b = new Bundle();
-        if(muser.getTipousuario().trim().equals("AD"))
+        if (muser.getTipousuario().trim().equals("AD"))
             fragment = new FrgMenuAdmin();
-        else if(muser.getTipousuario().trim().equals("DC")){
+        else if (muser.getTipousuario().trim().equals("DC")) {
             fragment = new FrgMenuDocente();
             final Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    tts.reproduce("Bienvenido "+ ClssStaticGrupo.docente);
+                    tts.reproduce("Bienvenido " + ClssStaticGrupo.docente);
                 }
             }, 1000);
-        }
-        else{
+        } else {
             fragment = new ActivityHomeUser();
             sendDataGroup(grupo);
-            tts.reproduce("Bienvenido "+ ClssStaticGrupo.estudiante);
+            tts.reproduce("Bienvenido " + ClssStaticGrupo.estudiante);
             //b.putString("grupo", grupo.toString());
         }
         //Creamos la información a pasar entre fragments
