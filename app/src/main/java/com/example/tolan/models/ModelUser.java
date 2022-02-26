@@ -16,7 +16,7 @@ public class ModelUser {
     String fechanacimiento;
     String correo;
     String telefono;
-    public static int stockcaritas;
+    public static int stockcaritas=0;
     JSONArray grupo;
     boolean activo;
 

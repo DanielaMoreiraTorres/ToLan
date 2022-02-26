@@ -107,10 +107,12 @@ public class Frg_HomeFragment extends Fragment implements Response.Listener<JSON
         return inflater.inflate(R.layout.fragment_inicio, container, false);
     }
 
+    MenuItem mr;
+
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_toolbar,menu);
-        MenuItem mr = menu.findItem(R.id.btnRecompensa);
+        inflater.inflate(R.menu.menu_toolbar, menu);
+        mr = menu.findItem(R.id.btnRecompensa);
         mr.setTitle(String.valueOf(ModelUser.stockcaritas));
     }
 
@@ -125,24 +127,24 @@ public class Frg_HomeFragment extends Fragment implements Response.Listener<JSON
 
     //RecyclerView padre.- Contenedor de los items
     RecyclerView mainRecyclerView;
-    List<ModelRecyclerItemNivel> sectionList;
+    List<ModelRecyclerItemNivel> all_niveles;
+
+    List<ModelRecyclerItemSubnivel> all_subniveles = new ArrayList<>();
 
 
     // RequestQueue request;
     JsonArrayRequest jsonArrayRequest;
 
     NavController navController;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         toolbar = view.findViewById(R.id.toolbar);
         setHasOptionsMenu(true);
-        ((AppCompatActivity)this.getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity)this.getActivity()).getSupportActionBar().setTitle("");
-
-
-
+        ((AppCompatActivity) this.getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) this.getActivity()).getSupportActionBar().setTitle("");
 
 
         //final NavController navController = Navigation.findNavController(view);
@@ -160,7 +162,7 @@ public class Frg_HomeFragment extends Fragment implements Response.Listener<JSON
         });
         */
         progressBar = view.findViewById(R.id.progressBar);
-        sectionList = new ArrayList<>();
+        all_niveles = new ArrayList<>();
         mainRecyclerView = view.findViewById(R.id.mainRecyclerView);
         //mainRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         //mainRecyclerView.setHasFixedSize(true);
@@ -172,7 +174,6 @@ public class Frg_HomeFragment extends Fragment implements Response.Listener<JSON
         String url = "https://db-bartolucci.herokuapp.com/nivel";
         jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, this, this);
         // request.add(jsonObjectRequest);
-
         /*
         jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(
                 10000,
@@ -182,6 +183,7 @@ public class Frg_HomeFragment extends Fragment implements Response.Listener<JSON
         jsonArrayRequest.setRetryPolicy(new RetryPolicy() { @Override public int getCurrentTimeout() { return 50000; } @Override public int getCurrentRetryCount() { return 50000; } @Override public void retry(VolleyError error) throws VolleyError { } });
 */
         ClssVolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonArrayRequest);
+
 
     }
 
@@ -232,19 +234,19 @@ public class Frg_HomeFragment extends Fragment implements Response.Listener<JSON
         try {
             for (int i = 0; i < response.length(); i++) {
 
+                //Obtengo mi item de nivel del response
                 JSONObject nivel_item = response.getJSONObject(i);
-                //nivelList.add(new Nivel(nivel_item.get("id")));
-                List<ModelRecyclerItemSubnivel> section = new ArrayList<>();
-                ///Construir arrayList de Subniveles
+
+                //Necesito  inicializar el objeto para parsear la información
+                all_subniveles = new ArrayList<>();
+
+                ///Cargar JSONArray de Subniveles de cada nivel
                 JSONArray subniveles = nivel_item.getJSONArray("subnivel");
-                //List<JSONArray> lst_subniveles = new ArrayList<>();
-                List<ModelRecyclerItemActividad> modelRecyclerItemActividades = new ArrayList<>();
+
                 for (int j = 0; j < subniveles.length(); j++) {
                     JSONObject subnivel_item = subniveles.getJSONObject(j);
-                    //System.out.println("-------------------------------------");
+                    /* Parsear las actividades
                     JSONArray item_subnivel = (JSONArray) subnivel_item.get("actividad");
-
-                    /*
                     if (item_subnivel.length() > 0) {
                         //lst_subniveles.add(item_subnivel);
                         for (int k = 0; k < item_subnivel.length(); k++) {
@@ -252,37 +254,46 @@ public class Frg_HomeFragment extends Fragment implements Response.Listener<JSON
                             modelRecyclerItemActividades.add(new ModelRecyclerItemActividad(element.getInt("id"), element.getString("nombre")));
                         }
                     }*/
-
-                    //System.out.println("-------------------------------------");
-
-                    section.add(new ModelRecyclerItemSubnivel(subnivel_item.get("nombre").toString(),
-                            subnivel_item.get("url").toString(), subnivel_item.getInt("id")));
-                    //modelRecyclerItemActividades = new ArrayList<>();
+                    all_subniveles.add(crearSubnivel(
+                            subnivel_item.get("nombre").toString(),
+                            subnivel_item.get("url").toString(),
+                            subnivel_item.getInt("id")));
                 }
 
-                // System.out.println(lst_subniveles);
-
-                sectionList.add(new ModelRecyclerItemNivel(nivel_item.get("nombre").toString(),
+                all_niveles.add(crearNivel(
+                        nivel_item.get("nombre").toString(),
                         nivel_item.get("url").toString(),
-                        section));
+                        all_subniveles));
                 // System.out.println("-------------------------------------");
 
             }
 
             //mainRecyclerView = findViewById(R.id.mainRecyclerView);
-            AdpRecycler_Main mainRecyclerAdapter = new AdpRecycler_Main(getContext(), sectionList);
+            AdpRecycler_Main mainRecyclerAdapter = new AdpRecycler_Main(getContext(), all_niveles);
             mainRecyclerView.setAdapter(mainRecyclerAdapter);
 
-            //Añade una linea divisora
+            //Añade una linea divisora al recyclerView
             //mainRecyclerView.addItemDecoration(new DividerItemDecoration(MainActivity.this, DividerItemDecoration.VERTICAL));
 
 
             progressBar.setVisibility(View.GONE);
+            //Actualice el stock visualmente
+            //mr.setTitle(String.valueOf(ModelUser.stockcaritas));
+
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
 
+    }
+
+    public ModelRecyclerItemSubnivel crearSubnivel(String titulo, String image, int id) {
+        return new ModelRecyclerItemSubnivel(titulo, image, id);
+    }
+
+    public ModelRecyclerItemNivel crearNivel(String sectionName, String image, List<ModelRecyclerItemSubnivel> all_subniveles) {
+        return new ModelRecyclerItemNivel(sectionName, image, all_subniveles);
     }
 
 

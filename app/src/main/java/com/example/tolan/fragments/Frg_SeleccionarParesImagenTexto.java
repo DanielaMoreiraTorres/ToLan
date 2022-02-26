@@ -206,10 +206,11 @@ public class Frg_SeleccionarParesImagenTexto extends Fragment implements View.On
         view.findViewById(R.id.btn_comprobar_actividades).setOnClickListener(this);
     }
 
+    MenuItem mr;
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.menu_toolbar,menu);
-        MenuItem mr = menu.findItem(R.id.btnRecompensa);
+        mr = menu.findItem(R.id.btnRecompensa);
         mr.setTitle(String.valueOf(ModelUser.stockcaritas));
     }
 

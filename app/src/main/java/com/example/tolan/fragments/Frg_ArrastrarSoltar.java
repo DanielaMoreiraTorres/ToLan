@@ -50,6 +50,7 @@ import com.example.tolan.adapters.AdpOptionArrastrarSoltarTxt;
 import com.example.tolan.clases.ClssConvertirTextoAVoz;
 import com.example.tolan.clases.ClssNavegacionActividades;
 import com.example.tolan.clases.ClssStaticGrupo;
+import com.example.tolan.clases.ClssVolleySingleton;
 import com.example.tolan.models.ModelContent;
 import com.example.tolan.models.ModelUser;
 import com.google.android.material.card.MaterialCardView;
@@ -85,7 +86,7 @@ public class Frg_ArrastrarSoltar extends Fragment {
     private AdpEnunciado adpEnunciado;
     private AdpOptionArrastrarSoltarTxt adpOptionArrastrarSoltarTxt;
     ModelContent opSelected = new ModelContent();
-    private RequestQueue requestQueue;
+    //private RequestQueue requestQueue;
     private String url;
     Boolean respuesta = false;
     String uno, dos;
@@ -182,11 +183,12 @@ public class Frg_ArrastrarSoltar extends Fragment {
         }
     }
 
+    MenuItem mr;
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.menu_toolbar,menu);
-        MenuItem mr = menu.findItem(R.id.btnRecompensa);
-        mr.setTitle(String.valueOf(ModelUser.stockcaritas));
+        mr = menu.findItem(R.id.btnRecompensa);
+        //mr.setTitle(String.valueOf(ModelUser.stockcaritas));
         //super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -369,7 +371,7 @@ public class Frg_ArrastrarSoltar extends Fragment {
     private void CompleteActivity(View v){
         try {
             // Crear nueva cola de peticiones
-            requestQueue = Volley.newRequestQueue(getContext());
+            //requestQueue = Volley.newRequestQueue(getContext());
             //Parámetros a enviar a la API
             JSONObject param = new JSONObject();
             param.put("idEstudiante", ClssStaticGrupo.idestudiante);
@@ -382,7 +384,11 @@ public class Frg_ArrastrarSoltar extends Fragment {
                         public void onResponse(JSONObject response) {
                             try {
                                 if (response.length() > 1) {
-                                    ModelUser.stockcaritas+=response.getInt("recompensaganada");
+                                    int recompensa=response.getInt("recompensaganada");
+                                    ModelUser.stockcaritas+=recompensa;
+
+                                    //Actualice el itemMenú creado
+                                    mr.setTitle(String.valueOf(ModelUser.stockcaritas));
                                     //Toast.makeText(getContext(), "Actividad exitosa", Toast.LENGTH_LONG).show();
                                     //Navegacion(v);
                                 } else
@@ -400,7 +406,9 @@ public class Frg_ArrastrarSoltar extends Fragment {
                 }
             });
             // Añadir petición a la cola
-            requestQueue.add(request_json);
+            //requestQueue.add(request_json);
+            ClssVolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(request_json);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

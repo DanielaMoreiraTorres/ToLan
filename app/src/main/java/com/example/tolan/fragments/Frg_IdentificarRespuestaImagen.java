@@ -47,6 +47,7 @@ import com.example.tolan.adapters.AdpOptionIdentifyImg;
 import com.example.tolan.clases.ClssConvertirTextoAVoz;
 import com.example.tolan.clases.ClssNavegacionActividades;
 import com.example.tolan.clases.ClssStaticGrupo;
+import com.example.tolan.clases.ClssVolleySingleton;
 import com.example.tolan.models.ModelContent;
 import com.example.tolan.models.ModelUser;
 
@@ -80,7 +81,7 @@ public class Frg_IdentificarRespuestaImagen extends Fragment {
     private AdpEnunciado adpEnunciado;
     private AdpOptionIdentifyImg adpOptiosIdentifyImg;
     ModelContent opSelected = new ModelContent();
-    private RequestQueue requestQueue;
+    //private RequestQueue requestQueue;
     private String url;
     Boolean respuesta = false;
 
@@ -96,15 +97,15 @@ public class Frg_IdentificarRespuestaImagen extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        textToSpeech = new TextToSpeech(getContext(),i -> reproducirAudio(i, titulo.getText().toString()));
+        textToSpeech = new TextToSpeech(getContext(), i -> reproducirAudio(i, titulo.getText().toString()));
         if (getArguments() != null) {
         }
     }
 
-    public void reproducirAudio(int i, String mensaje){
-        if(i!= TextToSpeech.ERROR){
+    public void reproducirAudio(int i, String mensaje) {
+        if (i != TextToSpeech.ERROR) {
             textToSpeech.setLanguage(Locale.getDefault());
-            textToSpeech.speak(mensaje,TextToSpeech.QUEUE_FLUSH,null);
+            textToSpeech.speak(mensaje, TextToSpeech.QUEUE_FLUSH, null);
         }
         tts = new ClssConvertirTextoAVoz();
         tts.init(getContext());
@@ -125,8 +126,8 @@ public class Frg_IdentificarRespuestaImagen extends Fragment {
             titulo.setOnClickListener(v -> tts.reproduce(titulo.getText().toString()));
             toolbar = view.findViewById(R.id.toolbar);
             setHasOptionsMenu(true);
-            ((AppCompatActivity)this.getActivity()).setSupportActionBar(toolbar);
-            ((AppCompatActivity)this.getActivity()).getSupportActionBar().setTitle("");
+            ((AppCompatActivity) this.getActivity()).setSupportActionBar(toolbar);
+            ((AppCompatActivity) this.getActivity()).getSupportActionBar().setTitle("");
             String lst_Activities = getArguments().getString("activities");
             jsonActivities = new JSONArray(lst_Activities);
             //ArrayList<JSONObject> activities = new ArrayList<>();
@@ -137,18 +138,17 @@ public class Frg_IdentificarRespuestaImagen extends Fragment {
             state.setVisibility(View.GONE);
             lstLista = view.findViewById(R.id.lstEnunciado);
             rcvOptions = (RecyclerView) view.findViewById(R.id.rcvImg);
-            rcvOptions.setLayoutManager(new GridLayoutManager(getContext(),2));
+            rcvOptions.setLayoutManager(new GridLayoutManager(getContext(), 2));
             contenido = jsonActivities.getJSONObject(0).getJSONArray("contenido");
             modelContentsEnun = new ArrayList<>();
             modelContentsOp = new ArrayList<>();
             respuestas = new ArrayList<>();
             resp = new ArrayList<>();
             modelContent = new ModelContent();
-            modelContent.MapContenido(contenido,modelContentsEnun,modelContentsOp,respuestas);
-            if(modelContentsEnun.size() > 0 & modelContentsOp.size() >0) {
+            modelContent.MapContenido(contenido, modelContentsEnun, modelContentsOp, respuestas);
+            if (modelContentsEnun.size() > 0 & modelContentsOp.size() > 0) {
                 RespuestasOk();
-            }
-            else {
+            } else {
                 tts = new ClssConvertirTextoAVoz();
                 tts.init(getContext());
                 Toast.makeText(getContext(), "La actividad no tiene contenido", Toast.LENGTH_SHORT).show();
@@ -172,14 +172,16 @@ public class Frg_IdentificarRespuestaImagen extends Fragment {
         }
     }
 
+    MenuItem mr;
+
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_toolbar,menu);
-        MenuItem mr = menu.findItem(R.id.btnRecompensa);
-        mr.setTitle(String.valueOf(ModelUser.stockcaritas));
+        inflater.inflate(R.menu.menu_toolbar, menu);
+        mr = menu.findItem(R.id.btnRecompensa);
+        //mr.setTitle(String.valueOf(ModelUser.stockcaritas));
     }
 
-    private void RespuestasOk(){
+    private void RespuestasOk() {
         adpEnunciado = new AdpEnunciado(getContext(), modelContentsEnun);
         lstLista.setAdapter(adpEnunciado);
         adpOptiosIdentifyImg = new AdpOptionIdentifyImg(getContext(), modelContentsOp);
@@ -267,15 +269,15 @@ public class Frg_IdentificarRespuestaImagen extends Fragment {
         });
     }
 
-    private void Navegacion(View v){
+    private void Navegacion(View v) {
         navController = Navigation.findNavController(v);
         //Eliminamos el item por el cual nos redirecccionamos aca
         jsonActivities.remove(0);
-        ClssNavegacionActividades clssNavegacionActividades= new ClssNavegacionActividades(navController,jsonActivities,v);
+        ClssNavegacionActividades clssNavegacionActividades = new ClssNavegacionActividades(navController, jsonActivities, v);
         clssNavegacionActividades.navegar();
     }
 
-    private void AccionOk(int op){
+    private void AccionOk(int op) {
         animar(false);
         rcvOptions.getChildAt(op).setBackgroundColor(Color.parseColor("#ffffff"));
         scrollView.post(new Runnable() {
@@ -312,10 +314,10 @@ public class Frg_IdentificarRespuestaImagen extends Fragment {
         state.startAnimation(animation);
     }
 
-    private void CompleteActivity(View v){
+    private void CompleteActivity(View v) {
         try {
             // Crear nueva cola de peticiones
-            requestQueue = Volley.newRequestQueue(getContext());
+            //requestQueue = Volley.newRequestQueue(getContext());
             //Parámetros a enviar a la API
             JSONObject param = new JSONObject();
             param.put("idEstudiante", ClssStaticGrupo.idestudiante);
@@ -328,7 +330,10 @@ public class Frg_IdentificarRespuestaImagen extends Fragment {
                         public void onResponse(JSONObject response) {
                             try {
                                 if (response.length() > 1) {
-                                    ModelUser.stockcaritas+=response.getInt("recompensaganada");
+                                    int recompensa = response.getInt("recompensaganada");
+                                    ModelUser.stockcaritas += recompensa;
+                                    //Actualice el itemMenú creado
+                                    mr.setTitle(String.valueOf(ModelUser.stockcaritas));
                                     //ModelUser.stockcaritas+=
                                     //Toast.makeText(getContext(), "Actividad exitosa", Toast.LENGTH_LONG).show();
                                     //Navegacion(v);
@@ -346,7 +351,8 @@ public class Frg_IdentificarRespuestaImagen extends Fragment {
                 }
             });
             // Añadir petición a la cola
-            requestQueue.add(request_json);
+            //requestQueue.add(request_json);
+            ClssVolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(request_json);
         } catch (JSONException e) {
             e.printStackTrace();
         }

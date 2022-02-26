@@ -15,9 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ToLan.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity
-            android:name=".activity"
-            android:exported="false" />
+
+
         <activity
             android:name=".ActivityEstudents"
             android:exported="false" />
@@ -65,6 +64,7 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
