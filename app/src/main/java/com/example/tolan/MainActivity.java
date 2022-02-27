@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private Fragment fragment;
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
-    static ClssConvertirTextoAVoz tts;
+    //static ClssConvertirTextoAVoz tts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +37,8 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        tts = new ClssConvertirTextoAVoz();
-        tts.init(this);
+        //tts = new ClssConvertirTextoAVoz();
+        //tts.init(this);
 
         fragment = new FrgWelcome();
         getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
@@ -67,13 +67,15 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
         }*/
         if(id == R.id.btnLogIn) {
-            tts.reproduce("Cerrar sesión");
+            //tts.reproduce("Cerrar sesión");
+            ClssConvertirTextoAVoz.getIntancia(this).reproduce("Cerrar sesión");
             fragment = new FrgLogin();
             getSupportFragmentManager().popBackStack();
             getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
         }
         if(id == R.id.btnContacts) {
-            tts.reproduce("Información de contacto");
+            //tts.reproduce("Información de contacto");
+            ClssConvertirTextoAVoz.getIntancia(this).reproduce("Información de contacto");
             Intent intent = new Intent(MainActivity.this, ActivityContact.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
         }

@@ -42,6 +42,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.tolan.R;
+import com.example.tolan.clases.ClssConvertirTextoAVoz;
 import com.example.tolan.clases.ClssStaticGrupo;
 import com.example.tolan.clases.ClssVolleySingleton;
 import com.example.tolan.dialogs.Diag_Frg_OpcionIncorrecta;
@@ -63,13 +64,18 @@ public class AdpRecycler_SeleccionarParesTextoImagen extends RecyclerView.Adapte
     Fragment fragment;
     int idActividad;
 
+    //private static ClssConvertirTextoAVoz clssConvertirTextoAVoz;
+
     public AdpRecycler_SeleccionarParesTextoImagen(Context mContext, ArrayList<String> listElements, ArrayList<String> listRutas, Map<String, String> map_DatosEmparejados, Fragment fragment, int idActividad) {
         this.mContext = mContext;
         this.listElements = listElements;
         this.listRutas = listRutas;
         this.map_DatosEmparejados = map_DatosEmparejados;
         this.fragment = fragment;
-        this.idActividad=idActividad;
+        this.idActividad = idActividad;
+
+        //clssConvertirTextoAVoz = new ClssConvertirTextoAVoz();
+        //clssConvertirTextoAVoz.init(mContext);
     }
 
 
@@ -108,6 +114,15 @@ public class AdpRecycler_SeleccionarParesTextoImagen extends RecyclerView.Adapte
         holder.texto.setText(listElements.get(position));
         holder.texto.setId(position);
 
+        holder.imagen_ayuda_especial.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mContext, "Ayuda especial", Toast.LENGTH_LONG).show();
+                Diag_Frg_OpcionIncorrecta diag_frg_opcionIncorrecta = new Diag_Frg_OpcionIncorrecta();
+                diag_frg_opcionIncorrecta.show(fragment.getParentFragmentManager(), "kol");
+            }
+        });
+
 
         holder.cardview_texto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,8 +130,10 @@ public class AdpRecycler_SeleccionarParesTextoImagen extends RecyclerView.Adapte
                 if (!estadoAplicacion) {
                     comprobar_cardview_texto(holder);
                 } else {
-                    Toast.makeText(mContext, "Reproducir audio", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, "Ok para continuar...", Toast.LENGTH_LONG).show();
                 }
+                ClssConvertirTextoAVoz.getIntancia(mContext).reproduce(listElements.get(position));
+                //ClssVolleySingleton.getIntanciaVolley(mContext).addToRequestQueue(request_json);
 
             }
         });
@@ -127,8 +144,9 @@ public class AdpRecycler_SeleccionarParesTextoImagen extends RecyclerView.Adapte
                 if (!estadoAplicacion) {
                     comprobar_cardview_imagen(holder);
                 } else {
-                    Toast.makeText(mContext, "Reproducir audio", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, "Ok para continuar...", Toast.LENGTH_LONG).show();
                 }
+                //clssConvertirTextoAVoz.reproduce("Imagen de " + listElements.get(position));
             }
         });
 
@@ -416,7 +434,7 @@ public class AdpRecycler_SeleccionarParesTextoImagen extends RecyclerView.Adapte
             param.put("idActividad", idActividad);
             param.put("statusRespuesta", true);
             param.put("idsContenido", new JSONObject());
-            JsonObjectRequest request_json = new JsonObjectRequest( mContext.getString(R.string.urlBase) + "historial/completeActividad", param,
+            JsonObjectRequest request_json = new JsonObjectRequest(mContext.getString(R.string.urlBase) + "historial/completeActividad", param,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
@@ -531,7 +549,7 @@ class txtHolder extends RecyclerView.ViewHolder implements View.OnClickListener 
     TextView texto;
     CardView cardview_texto;
 
-    ImageView imagen;
+    ImageView imagen, imagen_ayuda_especial;
     CardView cardview_imagen;
     RelativeLayout ryl_fondo_bordes_imagen, ryl_fondo_bordes_texto;
 
@@ -544,6 +562,7 @@ class txtHolder extends RecyclerView.ViewHolder implements View.OnClickListener 
         cardview_texto = (CardView) itemView.findViewById(R.id.cardview_texto);
 
         imagen = (ImageView) itemView.findViewById(R.id.imagen);
+        imagen_ayuda_especial = (ImageView) itemView.findViewById(R.id.imagen_ayuda_especial);
         cardview_imagen = (CardView) itemView.findViewById(R.id.cardview_imagen);
         //cardview_imagen.setOnClickListener(this);
         ryl_fondo_bordes_imagen = (RelativeLayout) itemView.findViewById(R.id.ryl_fondo_bordes_imagen);

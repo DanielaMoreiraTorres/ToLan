@@ -36,6 +36,9 @@ public class Diag_Frg_OpcionIncorrecta extends DialogFragment {
         this.respuesta=respuesta;
         this.url=url;
     }
+    public Diag_Frg_OpcionIncorrecta(){
+
+    }
 
 
     @NonNull
@@ -50,11 +53,11 @@ public class Diag_Frg_OpcionIncorrecta extends DialogFragment {
         View v = layoutInflater.inflate(R.layout.fragment_diag__frg__opcion_incorrecta, null);
         builder.setView(v);
         btn_comprobar = v.findViewById(R.id.btn_comprobar);
-        txt_respuesta= v.findViewById(R.id.txt_respuesta);
+        //txt_respuesta= v.findViewById(R.id.txt_respuesta);
         img_respuesta= v.findViewById(R.id.img_respuesta);
         Glide.with(getContext()).load(url).into(img_respuesta);
 
-        txt_respuesta.setText(respuesta);
+        //txt_respuesta.setText(respuesta);
 
         btn_comprobar.setOnClickListener(new View.OnClickListener() {
             @Override

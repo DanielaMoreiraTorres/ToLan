@@ -68,7 +68,7 @@ public class Frg_ArrastrarSoltar extends Fragment {
     NavController navController;
     private Toolbar toolbar;
     static TextToSpeech textToSpeech;
-    ClssConvertirTextoAVoz tts;
+    //ClssConvertirTextoAVoz tts;
     MenuItem mr;
     private TextView titulo;
     private ScrollView scrollView;
@@ -107,18 +107,18 @@ public class Frg_ArrastrarSoltar extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        textToSpeech = new TextToSpeech(getContext(),i -> reproducirAudio(i, titulo.getText().toString()));
+        textToSpeech = new TextToSpeech(getContext(), i -> reproducirAudio(i, titulo.getText().toString()));
         if (getArguments() != null) {
         }
     }
 
-    public void reproducirAudio(int i, String mensaje){
-        if(i!= TextToSpeech.ERROR){
+    public void reproducirAudio(int i, String mensaje) {
+        if (i != TextToSpeech.ERROR) {
             textToSpeech.setLanguage(Locale.getDefault());
-            textToSpeech.speak(mensaje,TextToSpeech.QUEUE_FLUSH,null);
+            textToSpeech.speak(mensaje, TextToSpeech.QUEUE_FLUSH, null);
         }
-        tts = new ClssConvertirTextoAVoz();
-        tts.init(getContext());
+        //tts = new ClssConvertirTextoAVoz();
+        //tts.init(getContext());
     }
 
     @Override
@@ -133,11 +133,12 @@ public class Frg_ArrastrarSoltar extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         try {
             titulo = view.findViewById(R.id.titulo);
-            titulo.setOnClickListener(v -> tts.reproduce(titulo.getText().toString()));
+            titulo.setOnClickListener(v -> ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce(titulo.getText().toString()));
+            //tts.reproduce(titulo.getText().toString()));
             toolbar = view.findViewById(R.id.toolbar);
             setHasOptionsMenu(true);
-            ((AppCompatActivity)this.getActivity()).setSupportActionBar(toolbar);
-            ((AppCompatActivity)this.getActivity()).getSupportActionBar().setTitle("");
+            ((AppCompatActivity) this.getActivity()).setSupportActionBar(toolbar);
+            ((AppCompatActivity) this.getActivity()).getSupportActionBar().setTitle("");
             String lst_Activities = getArguments().getString("activities");
             jsonActivities = new JSONArray(lst_Activities);
             url = getString(R.string.urlBase) + "historial/completeActividad";
@@ -148,7 +149,7 @@ public class Frg_ArrastrarSoltar extends Fragment {
             destino = view.findViewById(R.id.destino);
             lstLista = view.findViewById(R.id.lstEnunciado);
             rcvOptions = (RecyclerView) view.findViewById(R.id.rcvOption);
-            rcvOptions.setLayoutManager(new GridLayoutManager(getContext(),2));
+            rcvOptions.setLayoutManager(new GridLayoutManager(getContext(), 2));
             contenido = jsonActivities.getJSONObject(0).getJSONArray("contenido");
             modelContentsEnun = new ArrayList<>();
             modelContentsOp = new ArrayList<>();
@@ -156,20 +157,20 @@ public class Frg_ArrastrarSoltar extends Fragment {
             resp = new ArrayList<>();
             msg_true = getResources().getStringArray(R.array.msg_true);
             modelContent = new ModelContent();
-            modelContent.MapContenido(contenido,modelContentsEnun,modelContentsOp,respuestas);
-            if(modelContentsEnun.size() > 0 & modelContentsOp.size() > 0 & respuestas.size() > 0) {
+            modelContent.MapContenido(contenido, modelContentsEnun, modelContentsOp, respuestas);
+            if (modelContentsEnun.size() > 0 & modelContentsOp.size() > 0 & respuestas.size() > 0) {
                 RespuestasOk();
-            }
-            else {
+            } else {
                 //jsonActivities.remove(0);
-                tts = new ClssConvertirTextoAVoz();
-                tts.init(getContext());
+                //tts = new ClssConvertirTextoAVoz();
+                //tts.init(getContext());
                 Toast.makeText(getContext(), "La actividad no tiene contenido", Toast.LENGTH_SHORT).show();
                 final Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        tts.reproduce("La actividad no tiene contenido");
+                        ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("La actividad no tiene contenido");
+                        //tts.reproduce("La actividad no tiene contenido");
                     }
                 }, 1000);
                 state.setVisibility(View.VISIBLE);
@@ -187,13 +188,13 @@ public class Frg_ArrastrarSoltar extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_toolbar,menu);
+        inflater.inflate(R.menu.menu_toolbar, menu);
         mr = menu.findItem(R.id.btnRecompensa);
         //mr.setTitle(String.valueOf(ModelUser.stockcaritas));
         //super.onCreateOptionsMenu(menu, inflater);
     }
 
-    private void RespuestasOk(){
+    private void RespuestasOk() {
         if (respuestas.size() == 1)
             destino.setTag(respuestas.get(0).getDescripcion().trim());
         else
@@ -208,29 +209,30 @@ public class Frg_ArrastrarSoltar extends Fragment {
                 int opcselec = rcvOptions.getChildAdapterPosition(view);
                 opSelected = modelContentsOp.get(opcselec);
                 Toast.makeText(getContext(), opSelected.getDescripcion(), Toast.LENGTH_SHORT).show();
-                tts.reproduce(opSelected.getDescripcion());
+                //tts.reproduce(opSelected.getDescripcion());
+                ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(opSelected.getDescripcion());
             }
         });
         adpOptionArrastrarSoltarTxt.setOnLongClickListener(v -> LongClickListener(v));
         destino.setOnDragListener((v, event) -> DragListener(v, event));
     }
 
-    private boolean LongClickListener(View v){
+    private boolean LongClickListener(View v) {
         LinearLayout linearLayout = (LinearLayout) v;
         MaterialCardView cardView = (MaterialCardView) linearLayout.getChildAt(0);
         View textView = cardView.getChildAt(0);
         ClipData data = newPlainText((CharSequence) textView.getTag(), "");
         View.DragShadowBuilder myShadow = new View.DragShadowBuilder(v);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            v.startDragAndDrop(data,myShadow,textView,0);
+            v.startDragAndDrop(data, myShadow, textView, 0);
         else
-            v.startDrag(data,myShadow,textView,0);
+            v.startDrag(data, myShadow, textView, 0);
         v.setVisibility(View.INVISIBLE);
         return true;
     }
 
-    private boolean DragListener(View v, DragEvent event){
-        switch (event.getAction()){
+    private boolean DragListener(View v, DragEvent event) {
+        switch (event.getAction()) {
             case DragEvent.ACTION_DRAG_STARTED:
                 event.getClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN);
                 break;
@@ -256,8 +258,8 @@ public class Frg_ArrastrarSoltar extends Fragment {
                 textView = (View) event.getLocalState();
                 cardView = (ViewGroup) textView.getParent();
                 linearLayout = (ViewGroup) cardView.getParent();
-                if(uno != null & dos != null){
-                    if(v.getTag().toString().equals(event.getClipDescription().getLabel())){
+                if (uno != null & dos != null) {
+                    if (v.getTag().toString().equals(event.getClipDescription().getLabel())) {
                         respuesta = true;
                         animar(true);
                         //Toast.makeText(getContext(),"Correcto",Toast.LENGTH_SHORT).show();
@@ -277,7 +279,8 @@ public class Frg_ArrastrarSoltar extends Fragment {
                         txt.setText(generarAleatorio());
                         txt.setTextColor(Color.parseColor("#048710"));
                         txt.setVisibility(View.VISIBLE);
-                        tts.reproduce(txt.getText().toString());
+                        //tts.reproduce(txt.getText().toString());
+                        ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce(txt.getText().toString());
                         ImageView img = (ImageView) state.getChildAt(1);
                         img.setImageResource(R.drawable.icon_valor);
                         img.setColorFilter(Color.parseColor("#048710"));
@@ -287,8 +290,7 @@ public class Frg_ArrastrarSoltar extends Fragment {
                         //Ubicamos el layout visible
                         state.setVisibility(View.VISIBLE);
                         CompleteActivity(v);
-                    }
-                    else {
+                    } else {
                         //Toast.makeText(getContext(),"Incorrecto",Toast.LENGTH_SHORT).show();
                         respuesta = false;
                         animar(true);
@@ -305,7 +307,8 @@ public class Frg_ArrastrarSoltar extends Fragment {
                         txt.setText("¡Incorrecto!\n¡Vuelve a intentarlo!");
                         txt.setTextColor(Color.parseColor("#C70039"));
                         txt.setVisibility(View.VISIBLE);
-                        tts.reproduce(txt.getText().toString());
+                        //tts.reproduce(txt.getText().toString());
+                        ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce(txt.getText().toString());
                         ImageView img = (ImageView) state.getChildAt(1);
                         img.setImageResource(R.drawable.sad);
                         img.setColorFilter(Color.parseColor("#C70039"));
@@ -316,16 +319,16 @@ public class Frg_ArrastrarSoltar extends Fragment {
                         state.getChildAt(2).setOnClickListener(vok -> AccionOk());
                         state.setVisibility(View.VISIBLE);
                     }
-                }
-                else
+                } else
                     linearLayout.setVisibility(View.VISIBLE);
                 break;
-            default: break;
+            default:
+                break;
         }
         return true;
     }
 
-    private String generarAleatorio(){
+    private String generarAleatorio() {
         Random random = new Random();
         String r = msg_true[random.nextInt(msg_true.length)];
         return r;
@@ -333,7 +336,8 @@ public class Frg_ArrastrarSoltar extends Fragment {
 
     private void Navegacion(View v) {
         TextView txt = (TextView) state.getChildAt(3);
-        tts.reproduce(txt.getText().toString());
+        //tts.reproduce(txt.getText().toString());
+        ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce(txt.getText().toString());
         navController = Navigation.findNavController(v);
         //Eliminamos el item por el cual nos redirecccionamos aca
         jsonActivities.remove(0);
@@ -341,7 +345,7 @@ public class Frg_ArrastrarSoltar extends Fragment {
         clssNavegacionActividades.navegar();
     }
 
-    private void AccionOk(){
+    private void AccionOk() {
         animar(false);
         scrollView.post(new Runnable() {
             public void run() {
@@ -350,7 +354,8 @@ public class Frg_ArrastrarSoltar extends Fragment {
         });
         state.setVisibility(View.GONE);
         TextView txt = (TextView) state.getChildAt(2);
-        tts.reproduce(txt.getText().toString());
+        //tts.reproduce(txt.getText().toString());
+        ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(txt.getText().toString());
     }
 
     private void animar(boolean mostrar) {
@@ -377,7 +382,7 @@ public class Frg_ArrastrarSoltar extends Fragment {
         state.startAnimation(animation);
     }
 
-    private void CompleteActivity(View v){
+    private void CompleteActivity(View v) {
         try {
             // Crear nueva cola de peticiones
             //requestQueue = Volley.newRequestQueue(getContext());
@@ -393,8 +398,8 @@ public class Frg_ArrastrarSoltar extends Fragment {
                         public void onResponse(JSONObject response) {
                             try {
                                 if (response.length() > 1) {
-                                    int recompensa=response.getInt("recompensaganada");
-                                    ModelUser.stockcaritas+=recompensa;
+                                    int recompensa = response.getInt("recompensaganada");
+                                    ModelUser.stockcaritas += recompensa;
 
                                     //Actualice el itemMenú creado
                                     mr.setTitle(String.valueOf(ModelUser.stockcaritas));
@@ -403,7 +408,8 @@ public class Frg_ArrastrarSoltar extends Fragment {
                                 } else
                                     Toast.makeText(getContext(), response.get("message").toString(), Toast.LENGTH_LONG).show();
                             } catch (Exception e) {
-                                Toast.makeText(getContext(), "Error de conexión", Toast.LENGTH_LONG).show();
+                                //Toast.makeText(getContext(), "Error de conexión", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getContext(), "Error de conexión [" + e.getMessage() + "]", Toast.LENGTH_LONG).show();
                             }
                         }
                     }, new Response.ErrorListener() {
@@ -411,7 +417,8 @@ public class Frg_ArrastrarSoltar extends Fragment {
                 public void onErrorResponse(VolleyError error) {
                     VolleyLog.e("Error: ", error.getMessage());
                     //Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
-                    tts.reproduce("Error de conexión con el servidor");
+                    //tts.reproduce("Error de conexión con el servidor");
+                    ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce("Error de conexión con el servidor");
                 }
             });
             // Añadir petición a la cola

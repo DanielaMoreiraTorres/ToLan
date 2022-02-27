@@ -48,6 +48,16 @@
                             android:layout_centerInParent="true"
                             android:src="@drawable/game_activity" />
 
+                        <ImageView
+                            android:id="@+id/imagen_ayuda_especial"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_alignParentRight="true"
+                            android:clickable="true"
+                            android:src="@drawable/icon_ayuda_especial"
+                            android:tooltipText="Ayuda para discapacidad"
+                            tools:ignore="SpeakableTextPresentCheck" />
+
 
                     </RelativeLayout>
                 </LinearLayout>

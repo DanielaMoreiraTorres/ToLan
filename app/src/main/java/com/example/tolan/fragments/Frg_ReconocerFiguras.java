@@ -65,7 +65,7 @@ public class Frg_ReconocerFiguras extends Fragment implements AdapterView.OnItem
     JSONArray jsonActivities;
     NavController navController;
     static TextToSpeech textToSpeech;
-    ClssConvertirTextoAVoz tts;
+    //ClssConvertirTextoAVoz tts;
     private TextView titulo;
     private Toolbar toolbar;
     private ScrollView scrollView;
@@ -102,18 +102,18 @@ public class Frg_ReconocerFiguras extends Fragment implements AdapterView.OnItem
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        textToSpeech = new TextToSpeech(getContext(),i -> reproducirAudio(i, titulo.getText().toString()));
+        textToSpeech = new TextToSpeech(getContext(), i -> reproducirAudio(i, titulo.getText().toString()));
         if (getArguments() != null) {
         }
     }
 
-    public void reproducirAudio(int i, String mensaje){
-        if(i!= TextToSpeech.ERROR){
+    public void reproducirAudio(int i, String mensaje) {
+        if (i != TextToSpeech.ERROR) {
             textToSpeech.setLanguage(Locale.getDefault());
-            textToSpeech.speak(mensaje,TextToSpeech.QUEUE_FLUSH,null);
+            textToSpeech.speak(mensaje, TextToSpeech.QUEUE_FLUSH, null);
         }
-        tts = new ClssConvertirTextoAVoz();
-        tts.init(getContext());
+        //tts = new ClssConvertirTextoAVoz();
+        //tts.init(getContext());
     }
 
     @Override
@@ -123,11 +123,12 @@ public class Frg_ReconocerFiguras extends Fragment implements AdapterView.OnItem
         View view = inflater.inflate(R.layout.fragment_reconocer_figuras, container, false);
         try {
             titulo = view.findViewById(R.id.titulo);
-            titulo.setOnClickListener(v -> tts.reproduce(titulo.getText().toString()));
+            titulo.setOnClickListener(v -> ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce(titulo.getText().toString()));
+            //tts.reproduce(titulo.getText().toString()));
             toolbar = view.findViewById(R.id.toolbar);
             setHasOptionsMenu(true);
-            ((AppCompatActivity)this.getActivity()).setSupportActionBar(toolbar);
-            ((AppCompatActivity)this.getActivity()).getSupportActionBar().setTitle("");
+            ((AppCompatActivity) this.getActivity()).setSupportActionBar(toolbar);
+            ((AppCompatActivity) this.getActivity()).getSupportActionBar().setTitle("");
             String lst_Activities = getArguments().getString("activities");
             jsonActivities = new JSONArray(lst_Activities);
             url = getString(R.string.urlBase) + "historial/completeActividad";
@@ -146,7 +147,7 @@ public class Frg_ReconocerFiguras extends Fragment implements AdapterView.OnItem
             msg_true = getResources().getStringArray(R.array.msg_true);
             modelContent = new ModelContent();
             MapContenido();
-            if(modelContentsEnun.size() > 0 & modelContentsOp.size() > 0 & respuestas.size() > 0) {
+            if (modelContentsEnun.size() > 0 & modelContentsOp.size() > 0 & respuestas.size() > 0) {
                 adpEnunciado = new AdpEnunciado(getContext(), modelContentsEnun);
                 lstLista.setAdapter(adpEnunciado);
                 Glide.with(getContext())
@@ -155,16 +156,16 @@ public class Frg_ReconocerFiguras extends Fragment implements AdapterView.OnItem
                 adpOptionReconocerImg = new AdpOptionReconocerImg(getContext(), modelContentsOp);
                 lstOptions.setAdapter(adpOptionReconocerImg);
                 lstOptions.setOnItemClickListener(this);
-            }
-            else {
-                tts = new ClssConvertirTextoAVoz();
-                tts.init(getContext());
+            } else {
+                //tts = new ClssConvertirTextoAVoz();
+                //tts.init(getContext());
                 Toast.makeText(getContext(), "La actividad no tiene contenido", Toast.LENGTH_SHORT).show();
                 final Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        tts.reproduce("La actividad no tiene contenido");
+                        ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("La actividad no tiene contenido");
+                        //tts.reproduce("La actividad no tiene contenido");
                     }
                 }, 1000);
                 img.setVisibility(View.GONE);
@@ -193,15 +194,14 @@ public class Frg_ReconocerFiguras extends Fragment implements AdapterView.OnItem
                 modelContent.setRespuesta(contenido.getJSONObject(i).getBoolean("respuesta"));
                 modelContent.setActivo(contenido.getJSONObject(i).getBoolean("activo"));
                 modelContent.setMultimedia((JSONArray) contenido.getJSONObject(i).get("multimedia"));
-                if (contenido.getJSONObject(i).get("enunciado").equals(true)){
-                    if(((JSONArray) contenido.getJSONObject(i).get("multimedia")).length() > 0)
+                if (contenido.getJSONObject(i).get("enunciado").equals(true)) {
+                    if (((JSONArray) contenido.getJSONObject(i).get("multimedia")).length() > 0)
                         imgEnunciado = modelContent;
                     else
                         modelContentsEnun.add(modelContent);
-                }
-                else {
+                } else {
                     modelContentsOp.add(modelContent);
-                    if(contenido.getJSONObject(i).get("respuesta").equals(true))
+                    if (contenido.getJSONObject(i).get("respuesta").equals(true))
                         respuestas.add(modelContent);
                 }
             }
@@ -211,9 +211,10 @@ public class Frg_ReconocerFiguras extends Fragment implements AdapterView.OnItem
     }
 
     MenuItem mr;
+
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_toolbar,menu);
+        inflater.inflate(R.menu.menu_toolbar, menu);
         mr = menu.findItem(R.id.btnRecompensa);
         //mr.setTitle(String.valueOf(ModelUser.stockcaritas));
     }
@@ -235,7 +236,7 @@ public class Frg_ReconocerFiguras extends Fragment implements AdapterView.OnItem
                             try {
                                 if (response.length() > 1) {
                                     int recompensa = response.getInt("recompensaganada");
-                                    ModelUser.stockcaritas+=recompensa;
+                                    ModelUser.stockcaritas += recompensa;
                                     //Actualice el itemMenú creado
                                     mr.setTitle(String.valueOf(ModelUser.stockcaritas));
                                     //Toast.makeText(getContext(), "Actividad exitosa", Toast.LENGTH_LONG).show();
@@ -243,7 +244,8 @@ public class Frg_ReconocerFiguras extends Fragment implements AdapterView.OnItem
                                 } else
                                     Toast.makeText(getContext(), response.get("message").toString(), Toast.LENGTH_LONG).show();
                             } catch (Exception e) {
-                                Toast.makeText(getContext(), "Error de conexión", Toast.LENGTH_LONG).show();
+                                //Toast.makeText(getContext(), "Error de conexión", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getContext(), "Error de conexión [" + e.getMessage() + "]", Toast.LENGTH_LONG).show();
                             }
                         }
                     }, new Response.ErrorListener() {
@@ -269,7 +271,7 @@ public class Frg_ReconocerFiguras extends Fragment implements AdapterView.OnItem
         clssNavegacionActividades.navegar();
     }
 
-    private void AccionOk(){
+    private void AccionOk() {
         animar(false);
         scrollView.post(new Runnable() {
             public void run() {
@@ -278,7 +280,8 @@ public class Frg_ReconocerFiguras extends Fragment implements AdapterView.OnItem
         });
         state.setVisibility(View.GONE);
         TextView txt = (TextView) state.getChildAt(2);
-        tts.reproduce(txt.getText().toString());
+        //tts.reproduce(txt.getText().toString());
+        ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(txt.getText().toString());
     }
 
     private void animar(boolean mostrar) {
@@ -308,9 +311,10 @@ public class Frg_ReconocerFiguras extends Fragment implements AdapterView.OnItem
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         opSelected = ((ModelContent) adapterView.getItemAtPosition(i));
-        tts.reproduce(opSelected.getDescripcion());
-        if(respuestas.size() == 1){
-            if(opSelected.getRespuesta().equals(true)){
+        //tts.reproduce(opSelected.getDescripcion());
+        ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(opSelected.getDescripcion());
+        if (respuestas.size() == 1) {
+            if (opSelected.getRespuesta().equals(true)) {
                 //Toast.makeText(getContext(),"Respuesta correcta",Toast.LENGTH_SHORT).show();
                 respuesta = true;
                 animar(true);
@@ -331,7 +335,8 @@ public class Frg_ReconocerFiguras extends Fragment implements AdapterView.OnItem
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        tts.reproduce(txt.getText().toString());
+                        ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(txt.getText().toString());
+                        //tts.reproduce(txt.getText().toString());
                     }
                 }, 1000);
                 ImageView img = (ImageView) state.getChildAt(1);
@@ -342,8 +347,7 @@ public class Frg_ReconocerFiguras extends Fragment implements AdapterView.OnItem
                 state.getChildAt(3).setOnClickListener(vcont -> CompleteActivity(vcont));
                 //Ubicamos el layout visible
                 state.setVisibility(View.VISIBLE);
-            }
-            else{
+            } else {
                 //Toast.makeText(getContext(),"Respuesta incorrecta",Toast.LENGTH_SHORT).show();
                 respuesta = false;
                 animar(true);
@@ -363,7 +367,8 @@ public class Frg_ReconocerFiguras extends Fragment implements AdapterView.OnItem
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        tts.reproduce(txt.getText().toString());
+                        ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(txt.getText().toString());
+                        //tts.reproduce(txt.getText().toString());
                     }
                 }, 1000);
                 ImageView img = (ImageView) state.getChildAt(1);
@@ -376,11 +381,11 @@ public class Frg_ReconocerFiguras extends Fragment implements AdapterView.OnItem
                 state.getChildAt(2).setOnClickListener(vok -> AccionOk());
                 state.setVisibility(View.VISIBLE);
             }
+        } else {
         }
-        else {}
     }
 
-    private String generarAleatorio(){
+    private String generarAleatorio() {
         Random random = new Random();
         String r = msg_true[random.nextInt(msg_true.length)];
         return r;

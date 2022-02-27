@@ -62,7 +62,7 @@ public class Frg_SeleccionarParesImagenImagen extends Fragment implements View.O
 
     private Toolbar toolbar;
     static TextToSpeech textToSpeech;
-    ClssConvertirTextoAVoz tts;
+    //ClssConvertirTextoAVoz tts;
     private TextView titulo;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -111,8 +111,8 @@ public class Frg_SeleccionarParesImagenImagen extends Fragment implements View.O
             textToSpeech.setLanguage(Locale.getDefault());
             textToSpeech.speak(mensaje, TextToSpeech.QUEUE_FLUSH, null);
         }
-        tts = new ClssConvertirTextoAVoz();
-        tts.init(getContext());
+        //tts = new ClssConvertirTextoAVoz();
+        //tts.init(getContext());
     }
 
     @Override
@@ -140,7 +140,8 @@ public class Frg_SeleccionarParesImagenImagen extends Fragment implements View.O
         super.onViewCreated(view, savedInstanceState);
 
         titulo = view.findViewById(R.id.txtMenu);
-        titulo.setOnClickListener(v -> tts.reproduce(titulo.getText().toString()));
+        titulo.setOnClickListener(v -> ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce(titulo.getText().toString()));
+        //tts.reproduce(titulo.getText().toString()));
 
         toolbar = view.findViewById(R.id.toolbar);
         setHasOptionsMenu(true);

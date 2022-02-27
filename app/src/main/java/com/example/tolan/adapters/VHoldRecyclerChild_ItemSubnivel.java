@@ -34,7 +34,7 @@ public class VHoldRecyclerChild_ItemSubnivel extends RecyclerView.ViewHolder imp
     ImageView imgv_corona;
     CardView cardView;
     JSONArray lstitem_Activities;
-    ClssConvertirTextoAVoz clssConvertirTextoAVoz;
+    //ClssConvertirTextoAVoz clssConvertirTextoAVoz;
 
     public VHoldRecyclerChild_ItemSubnivel(@NonNull View itemView) {
         super(itemView);
@@ -43,8 +43,8 @@ public class VHoldRecyclerChild_ItemSubnivel extends RecyclerView.ViewHolder imp
         imgv_corona = (ImageView) itemView.findViewById(R.id.imgv_corona);
         cardView = (CardView) itemView.findViewById(R.id.cardview_actividad);
         //this.lstitem_Activities=lstitem_Activities;
-        clssConvertirTextoAVoz = new ClssConvertirTextoAVoz();
-        clssConvertirTextoAVoz.init(itemView.getContext());
+        //clssConvertirTextoAVoz = new ClssConvertirTextoAVoz();
+        //clssConvertirTextoAVoz.init(itemView.getContext());
         cardView.setOnClickListener(this);
 
 
@@ -140,12 +140,15 @@ public class VHoldRecyclerChild_ItemSubnivel extends RecyclerView.ViewHolder imp
 
             } else {
                 Toast.makeText(v.getContext(), "El subnivel [" + txt_actividad.getText() + "] no tiene actividades", Toast.LENGTH_SHORT).show();
-                clssConvertirTextoAVoz.reproduce("El subnivel [" + txt_actividad.getText() + "] no tiene actividades configuradas");
+                //clssConvertirTextoAVoz.reproduce();
+                ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce("El subnivel [" + txt_actividad.getText() + "] no tiene actividades configuradas");
+                ;
             }
         } catch (JSONException ex) {
 
             Toast.makeText(v.getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
-            clssConvertirTextoAVoz.reproduce("Error de lógica JSON");
+            //clssConvertirTextoAVoz.reproduce("Error de lógica JSON");
+            ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce("Error de lógica JSON");
         }
 
     }

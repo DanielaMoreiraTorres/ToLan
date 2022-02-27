@@ -21,6 +21,7 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 
+import com.example.tolan.clases.ClssConvertirTextoAVoz;
 import com.example.tolan.clases.ClssVolleySingleton;
 import com.example.tolan.models.ModelRecyclerItemNivel;
 import com.example.tolan.models.ModelRecyclerItemSubnivel;
@@ -71,7 +72,8 @@ public class AdpRecycler_Main extends RecyclerView.Adapter<VHoldRecyclerMain_Sec
             @Override
             public void onClick(View v) {
                 Toast.makeText(mContext, "Nivel [" + section.getSectionName() + "]", Toast.LENGTH_SHORT).show();
-                holder.clssConvertirTextoAVoz.reproduce("Nivel [" + section.getSectionName() + "]");
+                //holder.clssConvertirTextoAVoz.reproduce("Nivel [" + section.getSectionName() + "]");
+                ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce("Nivel [" + section.getSectionName() + "]");
             }
         });
 

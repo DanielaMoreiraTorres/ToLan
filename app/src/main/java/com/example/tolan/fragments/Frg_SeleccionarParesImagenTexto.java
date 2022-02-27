@@ -59,7 +59,7 @@ public class Frg_SeleccionarParesImagenTexto extends Fragment implements View.On
 
     private Toolbar toolbar;
     static TextToSpeech textToSpeech;
-    ClssConvertirTextoAVoz tts;
+    //ClssConvertirTextoAVoz tts;
     private TextView titulo;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -96,20 +96,20 @@ public class Frg_SeleccionarParesImagenTexto extends Fragment implements View.On
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        textToSpeech = new TextToSpeech(getContext(),i -> reproducirAudio(i, titulo.getText().toString()));
+        textToSpeech = new TextToSpeech(getContext(), i -> reproducirAudio(i, titulo.getText().toString()));
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
-    public void reproducirAudio(int i, String mensaje){
-        if(i!= TextToSpeech.ERROR){
+    public void reproducirAudio(int i, String mensaje) {
+        if (i != TextToSpeech.ERROR) {
             textToSpeech.setLanguage(Locale.getDefault());
-            textToSpeech.speak(mensaje,TextToSpeech.QUEUE_FLUSH,null);
+            textToSpeech.speak(mensaje, TextToSpeech.QUEUE_FLUSH, null);
         }
-        tts = new ClssConvertirTextoAVoz();
-        tts.init(getContext());
+        //tts = new ClssConvertirTextoAVoz();
+        //tts.init(getContext());
     }
 
     @Override
@@ -138,12 +138,13 @@ public class Frg_SeleccionarParesImagenTexto extends Fragment implements View.On
         super.onViewCreated(view, savedInstanceState);
 
         titulo = view.findViewById(R.id.txtMenu);
-        titulo.setOnClickListener(v -> tts.reproduce(titulo.getText().toString()));
+        titulo.setOnClickListener(v -> ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce(titulo.getText().toString()));
+        //tts.reproduce(titulo.getText().toString()));
 
         toolbar = view.findViewById(R.id.toolbar);
         setHasOptionsMenu(true);
-        ((AppCompatActivity)this.getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity)this.getActivity()).getSupportActionBar().setTitle("");
+        ((AppCompatActivity) this.getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) this.getActivity()).getSupportActionBar().setTitle("");
 
         rcv_datosSeleccionarPares = view.findViewById(R.id.rcv_datosSeleccionarPares);
 
@@ -165,14 +166,15 @@ public class Frg_SeleccionarParesImagenTexto extends Fragment implements View.On
             jsonActivities = new JSONArray(lst_Activities);
             //Seleccionamos el elemanto cero que corresponde a esta actividad
             JSONObject item = jsonActivities.getJSONObject(0);
-            idActividad=item.getInt("id");
+            idActividad = item.getInt("id");
             JSONArray contenido = item.getJSONArray("contenido");
             for (int i = 0; i < contenido.length(); i++) {
                 JSONObject item_contenido = contenido.getJSONObject(i);
                 boolean isenunciado = item_contenido.getBoolean("enunciado");
                 if (isenunciado) {
                     txt_enunciado.setText(item_contenido.getString("descripcion"));
-                    //Toast.makeText(getContext()," El item : ["+item_contenido.getString("descripcion")+"] es un enunciado",Toast.LENGTH_LONG).show();
+                    txt_enunciado.setOnClickListener(v -> ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce(txt_enunciado.getText().toString()));
+                    //tts.reproduce(txt_enunciado.getText().toString()));
                 } else {
                     listItemsMultimedia.add(item_contenido.getString("descripcion"));
                     JSONArray multimedia_contenido = item_contenido.getJSONArray("multimedia");
@@ -180,13 +182,8 @@ public class Frg_SeleccionarParesImagenTexto extends Fragment implements View.On
                         JSONObject item_multimedia_contenido = multimedia_contenido.getJSONObject(j);
                         listRutasMultimedia.add(item_multimedia_contenido.getString("url"));
                         System.out.println("ok");
-
                     }
-
-                    //Toast.makeText(getContext(),"["+item_contenido.getString("descripcion")+"]",Toast.LENGTH_LONG).show();
-
                 }
-
             }
 
             for (int i = 0; i < listRutasMultimedia.size(); i++) {
@@ -207,9 +204,10 @@ public class Frg_SeleccionarParesImagenTexto extends Fragment implements View.On
     }
 
     MenuItem mr;
+
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_toolbar,menu);
+        inflater.inflate(R.menu.menu_toolbar, menu);
         mr = menu.findItem(R.id.btnRecompensa);
         mr.setTitle(String.valueOf(ModelUser.stockcaritas));
     }

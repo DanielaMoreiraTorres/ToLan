@@ -22,7 +22,7 @@ public class VHoldRecyclerMain_SectionSubnivel extends RecyclerView.ViewHolder i
     RecyclerView childRecyclerView;
     LinearLayout ly_continueActivities;
     ImageView imgNivel;
-    ClssConvertirTextoAVoz clssConvertirTextoAVoz;
+    //ClssConvertirTextoAVoz clssConvertirTextoAVoz;
 
     public VHoldRecyclerMain_SectionSubnivel(@NonNull View itemView) {
         super(itemView);
@@ -34,14 +34,15 @@ public class VHoldRecyclerMain_SectionSubnivel extends RecyclerView.ViewHolder i
         txt_numeroNivel = itemView.findViewById(R.id.txt_numeroNivel);
         ly_continueActivities = itemView.findViewById(R.id.ly_continueActivities);
         imgNivel = itemView.findViewById(R.id.imgNivel);
-        clssConvertirTextoAVoz = new ClssConvertirTextoAVoz();
-        clssConvertirTextoAVoz.init(itemView.getContext());
+        //clssConvertirTextoAVoz = new ClssConvertirTextoAVoz();
+        //clssConvertirTextoAVoz.init(itemView.getContext());
 
     }
 
     @Override
     public void onClick(View v) {
         Toast.makeText(v.getContext(), "Sección " + sectionNameTextView.getText(), Toast.LENGTH_SHORT).show();
-        clssConvertirTextoAVoz.reproduce("Sección " + sectionNameTextView.getText());
+        //clssConvertirTextoAVoz.reproduce("Sección " + sectionNameTextView.getText());
+        ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce("Sección " + sectionNameTextView.getText());
     }
 }

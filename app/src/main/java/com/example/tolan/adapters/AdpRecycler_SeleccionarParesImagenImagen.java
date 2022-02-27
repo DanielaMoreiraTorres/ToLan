@@ -35,6 +35,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.tolan.R;
+import com.example.tolan.clases.ClssConvertirTextoAVoz;
 import com.example.tolan.clases.ClssStaticGrupo;
 import com.example.tolan.clases.ClssVolleySingleton;
 import com.example.tolan.models.ModelUser;
@@ -56,14 +57,16 @@ public class AdpRecycler_SeleccionarParesImagenImagen extends RecyclerView.Adapt
     ScrollView mScrollView;
     int idActividad;
 
+    //private static ClssConvertirTextoAVoz clssConvertirTextoAVoz;
 
-    public AdpRecycler_SeleccionarParesImagenImagen(Context mContext, ArrayList<String> listElements, int[] numerosAleatorios, LinearLayout ry_state, ScrollView mScrollView,int idActividad) {
+
+    public AdpRecycler_SeleccionarParesImagenImagen(Context mContext, ArrayList<String> listElements, int[] numerosAleatorios, LinearLayout ry_state, ScrollView mScrollView, int idActividad) {
         this.mContext = mContext;
         this.listElements = listElements;
         this.numerosAleatorios = numerosAleatorios;
         this.ry_state = ry_state;
         this.mScrollView = mScrollView;
-        this.idActividad=idActividad;
+        this.idActividad = idActividad;
 
     }
 
@@ -320,7 +323,7 @@ public class AdpRecycler_SeleccionarParesImagenImagen extends RecyclerView.Adapt
             param.put("idActividad", idActividad);
             param.put("statusRespuesta", true);
             param.put("idsContenido", new JSONObject());
-            JsonObjectRequest request_json = new JsonObjectRequest( mContext.getString(R.string.urlBase) + "historial/completeActividad", param,
+            JsonObjectRequest request_json = new JsonObjectRequest(mContext.getString(R.string.urlBase) + "historial/completeActividad", param,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {

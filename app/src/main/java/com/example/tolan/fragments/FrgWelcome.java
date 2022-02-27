@@ -28,7 +28,7 @@ public class FrgWelcome extends Fragment {
     private List list;
     private ImageCarousel carousel;
     static TextToSpeech textToSpeech;
-    ClssConvertirTextoAVoz tts;
+    //ClssConvertirTextoAVoz tts;
     private Button btnIniciar, btnRegistrarse;
     private Fragment fragment;
 
@@ -44,18 +44,18 @@ public class FrgWelcome extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        textToSpeech = new TextToSpeech(getContext(),i -> reproducirAudio(i, getString(R.string.bienvenida)));
+        textToSpeech = new TextToSpeech(getContext(), i -> reproducirAudio(i, getString(R.string.bienvenida)));
         if (getArguments() != null) {
         }
     }
 
-    public void reproducirAudio(int i, String mensaje){
-        if(i!= TextToSpeech.ERROR){
+    public void reproducirAudio(int i, String mensaje) {
+        if (i != TextToSpeech.ERROR) {
             textToSpeech.setLanguage(Locale.getDefault());
-            textToSpeech.speak(mensaje,TextToSpeech.QUEUE_FLUSH,null);
+            textToSpeech.speak(mensaje, TextToSpeech.QUEUE_FLUSH, null);
         }
-        tts = new ClssConvertirTextoAVoz();
-        tts.init(getContext());
+        //tts = new ClssConvertirTextoAVoz();
+        //tts.init(getContext());
     }
 
     @Override
@@ -78,26 +78,29 @@ public class FrgWelcome extends Fragment {
             carousel.setOnItemClickListener(new OnItemClickListener() {
                 @Override
                 public void onClick(int i, @NonNull CarouselItem carouselItem) {
-                    tts.reproduce(carouselItem.getCaption());
+                    //tts.reproduce(carouselItem.getCaption());
+                    ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(carouselItem.getCaption());
                 }
 
                 @Override
                 public void onLongClick(int i, @NonNull CarouselItem carouselItem) {
                 }
             });
+        } catch (Exception e) {
         }
-        catch (Exception e){}
         return view;
     }
 
     private void Register() {
-        tts.reproduce(getString(R.string.registrarse));
+        //tts.reproduce(getString(R.string.registrarse));
+        ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(getString(R.string.registrarse));
         fragment = new FrgRegisterUser();
         getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
     }
 
     private void Iniciar() {
-        tts.reproduce(getString(R.string.iniciar_sesion));
+        //tts.reproduce(getString(R.string.iniciar_sesion));
+        ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(getString(R.string.iniciar_sesion));
         fragment = new FrgLogin();
         getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
     }

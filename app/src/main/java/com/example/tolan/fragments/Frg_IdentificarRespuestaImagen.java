@@ -61,7 +61,7 @@ public class Frg_IdentificarRespuestaImagen extends Fragment {
     NavController navController;
     private Toolbar toolbar;
     static TextToSpeech textToSpeech;
-    ClssConvertirTextoAVoz tts;
+    //ClssConvertirTextoAVoz tts;
     MenuItem mr;
     private TextView titulo;
     private ScrollView scrollView;
@@ -106,8 +106,8 @@ public class Frg_IdentificarRespuestaImagen extends Fragment {
             textToSpeech.setLanguage(Locale.getDefault());
             textToSpeech.speak(mensaje, TextToSpeech.QUEUE_FLUSH, null);
         }
-        tts = new ClssConvertirTextoAVoz();
-        tts.init(getContext());
+        //tts = new ClssConvertirTextoAVoz();
+        //tts.init(getContext());
     }
 
     @Override
@@ -122,7 +122,8 @@ public class Frg_IdentificarRespuestaImagen extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         try {
             titulo = view.findViewById(R.id.titulo);
-            titulo.setOnClickListener(v -> tts.reproduce(titulo.getText().toString()));
+            titulo.setOnClickListener(v -> ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce(titulo.getText().toString()));
+            //tts.reproduce(titulo.getText().toString()));
             toolbar = view.findViewById(R.id.toolbar);
             setHasOptionsMenu(true);
             ((AppCompatActivity) this.getActivity()).setSupportActionBar(toolbar);
@@ -149,14 +150,15 @@ public class Frg_IdentificarRespuestaImagen extends Fragment {
             if (modelContentsEnun.size() > 0 & modelContentsOp.size() > 0 & respuestas.size() > 0) {
                 RespuestasOk();
             } else {
-                tts = new ClssConvertirTextoAVoz();
-                tts.init(getContext());
+                //tts = new ClssConvertirTextoAVoz();
+                //tts.init(getContext());
                 Toast.makeText(getContext(), "La actividad no tiene contenido", Toast.LENGTH_SHORT).show();
                 final Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        tts.reproduce("La actividad no tiene contenido");
+                        ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("La actividad no tiene contenido");
+                        //tts.reproduce("La actividad no tiene contenido");
                     }
                 }, 1000);
                 state.setVisibility(View.VISIBLE);
@@ -190,7 +192,8 @@ public class Frg_IdentificarRespuestaImagen extends Fragment {
                 try {
                     int opcselec = rcvOptions.getChildAdapterPosition(view);
                     opSelected = modelContentsOp.get(opcselec);
-                    tts.reproduce(opSelected.getDescripcion());
+                    //tts.reproduce(opSelected.getDescripcion());
+                    ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(opSelected.getDescripcion());
                     if (respuestas.size() == 1) {
                         if (opSelected.getRespuesta().equals(true)) {
                             rcvOptions.getChildAt(opcselec).setBackgroundColor(Color.parseColor("#44CCCC"));
@@ -214,7 +217,8 @@ public class Frg_IdentificarRespuestaImagen extends Fragment {
                             handler.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    tts.reproduce(txt.getText().toString());
+                                    ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(txt.getText().toString());
+                                    //tts.reproduce(txt.getText().toString());
                                 }
                             }, 1000);
                             ImageView img = (ImageView) state.getChildAt(1);
@@ -247,7 +251,8 @@ public class Frg_IdentificarRespuestaImagen extends Fragment {
                             handler.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    tts.reproduce(txt.getText().toString());
+                                    ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(txt.getText().toString());
+                                    //tts.reproduce(txt.getText().toString());
                                 }
                             }, 1000);
                             ImageView img = (ImageView) state.getChildAt(1);
@@ -264,13 +269,13 @@ public class Frg_IdentificarRespuestaImagen extends Fragment {
                         resp.add(opSelected);
                     }
                     //Toast.makeText(getContext(),opSelected.getDescripcion(),Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
                 }
-                catch (Exception e){}
             }
         });
     }
 
-    private String generarAleatorio(){
+    private String generarAleatorio() {
         Random random = new Random();
         String r = msg_true[random.nextInt(msg_true.length)];
         return r;
@@ -297,9 +302,10 @@ public class Frg_IdentificarRespuestaImagen extends Fragment {
             });
             state.setVisibility(View.GONE);
             TextView txt = (TextView) state.getChildAt(2);
-            tts.reproduce(txt.getText().toString());
+            //tts.reproduce(txt.getText().toString());
+            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(txt.getText().toString());
+        } catch (Exception e) {
         }
-        catch (Exception e){}
     }
 
     private void animar(boolean mostrar) {
@@ -352,7 +358,7 @@ public class Frg_IdentificarRespuestaImagen extends Fragment {
                                 } else
                                     Toast.makeText(getContext(), response.get("message").toString(), Toast.LENGTH_LONG).show();
                             } catch (Exception e) {
-                                Toast.makeText(getContext(), "Error de conexión", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getContext(), "Error de conexión [" + e.getMessage() + "]", Toast.LENGTH_LONG).show();
                             }
                         }
                     }, new Response.ErrorListener() {

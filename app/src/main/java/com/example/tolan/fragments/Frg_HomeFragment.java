@@ -241,7 +241,7 @@ public class Frg_HomeFragment extends Fragment implements Response.Listener<JSON
                 all_subniveles = new ArrayList<>();
 
                 ///Cargar JSONArray de Subniveles de cada nivel
-                JSONArray subniveles = nivel_item.getJSONArray("subnivel");
+                JSONArray subniveles = nivel_item.getJSONArray("subniveles");
 
                 for (int j = 0; j < subniveles.length(); j++) {
                     JSONObject subnivel_item = subniveles.getJSONObject(j);

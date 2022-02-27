@@ -44,7 +44,7 @@ import java.util.List;
 
 public class FrgRegisterUser extends Fragment {
 
-    static ClssConvertirTextoAVoz tts;
+    //static ClssConvertirTextoAVoz tts;
     //private RequestQueue requestQueue;
     private JsonArrayRequest jsonArrayRequest;
     private String url;
@@ -77,8 +77,8 @@ public class FrgRegisterUser extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        tts = new ClssConvertirTextoAVoz();
-        tts.init(getContext());
+        //tts = new ClssConvertirTextoAVoz();
+        //tts.init(getContext());
         if (getArguments() != null) {
         }
     }
@@ -94,11 +94,14 @@ public class FrgRegisterUser extends Fragment {
             validate = new ClssValidations();
             docentes = new ArrayList<>();
             txtReg = view.findViewById(R.id.txtReg);
-            txtReg.setOnClickListener(v -> tts.reproduce(txtReg.getText().toString()));
+            txtReg.setOnClickListener(v ->  ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce(txtReg.getText().toString()));
+            //tts.reproduce(txtReg.getText().toString()));
             txtDatPer = view.findViewById(R.id.txtDatPer);
-            txtDatPer.setOnClickListener(v -> tts.reproduce(txtDatPer.getText().toString()));
+            txtDatPer.setOnClickListener(v ->  ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce(txtDatPer.getText().toString()));
+            //tts.reproduce(txtDatPer.getText().toString()));
             txtDatUser = view.findViewById(R.id.txtDatUser);
-            txtDatUser.setOnClickListener(v -> tts.reproduce(txtDatUser.getText().toString()));
+            txtDatUser.setOnClickListener(v ->  ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce(txtDatUser.getText().toString()));
+            //tts.reproduce(txtDatUser.getText().toString()));
             Lnombres = view.findViewById(R.id.Lnombres);
             nombre = view.findViewById(R.id.nombres);
             validate.TextChanged(nombre, null, Lnombres, Merror);
@@ -236,7 +239,8 @@ public class FrgRegisterUser extends Fragment {
         if(!rbDocente.isChecked()){
             if(!validate.Validar(null,docente,Ldocente,Merror)){
                 Ldocente.setError("Docente no válido");
-                tts.reproduce("Docente no válido");
+                //tts.reproduce("Docente no válido");
+                ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Docente no válido");
                 return;
             }
         }
@@ -253,12 +257,14 @@ public class FrgRegisterUser extends Fragment {
                 }
             }
             else{
-                tts.reproduce("Las contraseñas no coinciden");
+                //tts.reproduce("Las contraseñas no coinciden");
+                ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Las contraseñas no coinciden");
                 Lconfclave.setError("Las contraseñas no coinciden");
             }
         }
         else{
-            tts.reproduce("Datos no válidos");
+            //tts.reproduce("Datos no válidos");
+            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Datos no válidos");
             Toast.makeText(getContext(),"Datos no válidos",Toast.LENGTH_SHORT).show();
         }
     }
@@ -273,7 +279,8 @@ public class FrgRegisterUser extends Fragment {
         param.put("isDocente", rbDocente.isChecked());
         if(!rbDocente.isChecked()){
             if(selectedDocente.equals(null)){
-                tts.reproduce("Docente no válido");
+                //tts.reproduce("Docente no válido");
+                ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Docente no válido");
                 Ldocente.setError("Docente no válido");
                 return;
             }
@@ -281,7 +288,8 @@ public class FrgRegisterUser extends Fragment {
                 if(docente.getText().equals(selectedDocente.getString("nombres") + " " + selectedDocente.getString("apellidos")))
                     param.put("selectedDocente", selectedDocente);
                 else{
-                    tts.reproduce("Docente no válido");
+                    //tts.reproduce("Docente no válido");
+                    ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Docente no válido");
                     Ldocente.setError("Docente no válido");
                     return;
                 }
@@ -299,12 +307,14 @@ public class FrgRegisterUser extends Fragment {
                         try {
                             if(response.length() > 1)
                             {
-                                tts.reproduce("Usuario Registrado");
+                                //tts.reproduce("Usuario Registrado");
+                                ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Usuario Registrado");
                                 Toast.makeText(getContext(),"Usuario Registrado",Toast.LENGTH_SHORT).show();
                                 redirectLogin();
                             }
                             else{
-                                tts.reproduce(response.get("message").toString());
+                                //tts.reproduce(response.get("message").toString());
+                                ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(response.get("message").toString());
                                 Toast.makeText(getContext(),response.get("message").toString(),Toast.LENGTH_SHORT).show();
                             }
                         } catch (Exception e) {
@@ -316,7 +326,8 @@ public class FrgRegisterUser extends Fragment {
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.e("Error: ", error.getMessage());
                 Toast.makeText(getContext(),"Error de conexión con el servidor. Intente nuevamente",Toast.LENGTH_SHORT).show();
-                tts.reproduce("Error de conexión con el servidor. Intente nuevamente");
+                //tts.reproduce("Error de conexión con el servidor. Intente nuevamente");
+                ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Error de conexión con el servidor. Intente nuevamente");
             }
         });
         // Añadir petición a la cola

@@ -41,7 +41,7 @@ import java.util.Map;
 public class FrgLogin extends Fragment {
 
     ProgressBar progressBar;
-    static ClssConvertirTextoAVoz tts;
+    //static ClssConvertirTextoAVoz tts;
     private Button btnLogin, register;
     private TextView forgetPass, txtIni;
     private TextInputEditText user, password;
@@ -66,8 +66,8 @@ public class FrgLogin extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        tts = new ClssConvertirTextoAVoz();
-        tts.init(getContext());
+        //tts = new ClssConvertirTextoAVoz();
+        //tts.init(getContext());
         if (getArguments() != null) {
         }
     }
@@ -86,7 +86,8 @@ public class FrgLogin extends Fragment {
             url = getString(R.string.urlBase) + "usuario/login";
             urlGrupo = getString(R.string.urlBase) + "grupo/";
             txtIni = view.findViewById(R.id.txtIni);
-            txtIni.setOnClickListener(v -> tts.reproduce(txtIni.getText().toString()));
+            txtIni.setOnClickListener(v -> ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce(txtIni.getText().toString()));
+            //tts.reproduce(txtIni.getText().toString()));
             user = view.findViewById(R.id.txtuser);
             validate.TextChanged(user, null, Lusuario, Merror);
             Lclave = view.findViewById(R.id.Lclave);
@@ -98,19 +99,20 @@ public class FrgLogin extends Fragment {
             forgetPass.setOnClickListener(v -> Forget());
             register = view.findViewById(R.id.register);
             register.setOnClickListener(v -> RegisterUs());
+        } catch (Exception e) {
         }
-        catch (Exception e){}
         return view;
     }
 
     private void Login() {
-        tts.reproduce(btnLogin.getText().toString());
-        if (validate.Validar(user, null, Lusuario, Merror) & validate.Validar(password, null, Lclave, Merror)){
+        //tts.reproduce(btnLogin.getText().toString());
+        ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(btnLogin.getText().toString());
+        if (validate.Validar(user, null, Lusuario, Merror) & validate.Validar(password, null, Lclave, Merror)) {
             progressBar.setVisibility(View.VISIBLE);
             getUsuario();
-        }
-        else
-            tts.reproduce("Datos no válidos");
+        } else
+            //tts.reproduce("Datos no válidos");
+            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Datos no válidos");
     }
 
     private void getUsuario() {
@@ -148,10 +150,12 @@ public class FrgLogin extends Fragment {
                                     Iniciar(user);
                                 } else
                                     Iniciar(user);
-                                tts.reproduce("Inicio exitoso");
+                                //tts.reproduce("Inicio exitoso");
+                                ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Inicio exitoso");
                                 progressBar.setVisibility(View.GONE);
                             } else {
-                                tts.reproduce(response.get("message").toString());
+                                //tts.reproduce(response.get("message").toString());
+                                ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(response.get("message").toString());
                                 Toast.makeText(getContext(), response.get("message").toString(), Toast.LENGTH_SHORT).show();
                             }
 
@@ -163,8 +167,9 @@ public class FrgLogin extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.e("Error: ", error.getMessage());
-                Toast.makeText(getContext(),"Error de conexión con el servidor\nIntente nuevamente",Toast.LENGTH_SHORT).show();
-                tts.reproduce("Error de conexión con el servidor. Intente nuevamente");
+                Toast.makeText(getContext(), "Error de conexión con el servidor\nIntente nuevamente", Toast.LENGTH_SHORT).show();
+                //tts.reproduce("Error de conexión con el servidor. Intente nuevamente");
+                ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Error de conexión con el servidor. Intente nuevamente");
                 progressBar.setVisibility(View.GONE);
             }
         });
@@ -208,31 +213,33 @@ public class FrgLogin extends Fragment {
 
     private void Iniciar(ModelUser muser) throws JSONException {
         Bundle b = new Bundle();
-        if (muser.getTipousuario().trim().equals("AD")){
+        if (muser.getTipousuario().trim().equals("AD")) {
             fragment = new FrgMenuAdmin();
             final Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    tts.reproduce("Bienvenido Admin");
+                    //tts.reproduce("Bienvenido Admin");
+                    ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Bienvenido Admin");
                     Toast.makeText(getContext(), "Bienvenido Admin", Toast.LENGTH_SHORT).show();
                 }
             }, 1000);
-        }
-        else if (muser.getTipousuario().trim().equals("DC")) {
+        } else if (muser.getTipousuario().trim().equals("DC")) {
             fragment = new FrgMenuDocente();
             final Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    tts.reproduce("Bienvenido " + ClssStaticGrupo.docente);
+                    //tts.reproduce("Bienvenido " + ClssStaticGrupo.docente);
+                    ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Bienvenido " + ClssStaticGrupo.docente);
                     Toast.makeText(getContext(), "Bienvenido " + ClssStaticGrupo.docente, Toast.LENGTH_SHORT).show();
                 }
             }, 1000);
         } else {
             fragment = new ActivityHomeUser();
             sendDataGroup(grupo);
-            tts.reproduce("Bienvenido " + ClssStaticGrupo.estudiante);
+            //tts.reproduce("Bienvenido " + ClssStaticGrupo.estudiante);
+            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Bienvenido " + ClssStaticGrupo.estudiante);
             Toast.makeText(getContext(), "Bienvenido " + ClssStaticGrupo.estudiante, Toast.LENGTH_SHORT).show();
             //b.putString("grupo", grupo.toString());
         }
@@ -245,7 +252,8 @@ public class FrgLogin extends Fragment {
     }
 
     private void RegisterUs() {
-        tts.reproduce(register.getText().toString());
+        //tts.reproduce(register.getText().toString());
+        ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(register.getText().toString());
         fragment = new FrgRegisterUser();
         getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
     }
@@ -253,7 +261,8 @@ public class FrgLogin extends Fragment {
     @SuppressLint("ResourceAsColor")
     private void Forget() {
         forgetPass.setTextColor(Color.parseColor("#44cccc"));
-        tts.reproduce(forgetPass.getText().toString());
+        //tts.reproduce(forgetPass.getText().toString());
+        ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(forgetPass.getText().toString());
         fragment = new FrgRecoveryPassword();
         getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
     }
