@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="msg_true" >
+        <item>¡Excelente!</item>
+        <item>¡Correcto!</item>
+        <item>¡Bien!</item>
+        <item>¡Bien hecho!</item>
+        <item>¡Buen trabajo!</item>
+        <item>¡Impresionante!</item>
+        <item>¡Fantástico!</item>
+        <item>¡Así se hace!</item>
+        <item>¡Muy bien!</item>
+        <item>¡Increíble!</item>
+        <item>¡Perfecto!</item>
+        <item>¡Acertaste!</item>
+        <item>¡Así es!</item>
+        <item>¡Eso es!</item>
+    </string-array>
+</resources>

@@ -81,7 +81,7 @@ public class Frg_ReconocerFiguras extends Fragment implements AdapterView.OnItem
     List<Integer> lstIds;
     ArrayList<ModelContent> respuestas;
     ArrayList<ModelContent> resp;
-    //ArrayList<ModelContent> resp;
+    private String[] msg_true = null;
     private AdpEnunciado adpEnunciado;
     private AdpOptionReconocerImg adpOptionReconocerImg;
     ModelContent opSelected = new ModelContent();
@@ -143,9 +143,10 @@ public class Frg_ReconocerFiguras extends Fragment implements AdapterView.OnItem
             modelContentsOp = new ArrayList<>();
             respuestas = new ArrayList<>();
             resp = new ArrayList<>();
+            msg_true = getResources().getStringArray(R.array.msg_true);
             modelContent = new ModelContent();
             MapContenido();
-            if(modelContentsEnun.size() > 0 & modelContentsOp.size() >0) {
+            if(modelContentsEnun.size() > 0 & modelContentsOp.size() > 0 & respuestas.size() > 0) {
                 adpEnunciado = new AdpEnunciado(getContext(), modelContentsEnun);
                 lstLista.setAdapter(adpEnunciado);
                 Glide.with(getContext())
@@ -233,13 +234,12 @@ public class Frg_ReconocerFiguras extends Fragment implements AdapterView.OnItem
                         public void onResponse(JSONObject response) {
                             try {
                                 if (response.length() > 1) {
-                                    int recompensa=response.getInt("recompensaganada");
+                                    int recompensa = response.getInt("recompensaganada");
                                     ModelUser.stockcaritas+=recompensa;
-
                                     //Actualice el itemMenú creado
                                     mr.setTitle(String.valueOf(ModelUser.stockcaritas));
                                     //Toast.makeText(getContext(), "Actividad exitosa", Toast.LENGTH_LONG).show();
-                                    //Navegacion(v);
+                                    Navegacion(v);
                                 } else
                                     Toast.makeText(getContext(), response.get("message").toString(), Toast.LENGTH_LONG).show();
                             } catch (Exception e) {
@@ -309,10 +309,7 @@ public class Frg_ReconocerFiguras extends Fragment implements AdapterView.OnItem
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         opSelected = ((ModelContent) adapterView.getItemAtPosition(i));
         tts.reproduce(opSelected.getDescripcion());
-        if(respuestas.size() == 0){
-            Toast.makeText(getContext(),"La actividad no tiene respuesta",Toast.LENGTH_SHORT).show();
-        }
-        else if(respuestas.size() == 1){
+        if(respuestas.size() == 1){
             if(opSelected.getRespuesta().equals(true)){
                 //Toast.makeText(getContext(),"Respuesta correcta",Toast.LENGTH_SHORT).show();
                 respuesta = true;
@@ -327,7 +324,7 @@ public class Frg_ReconocerFiguras extends Fragment implements AdapterView.OnItem
                 state.setBackgroundColor(Color.parseColor("#AAFAB1"));
                 //Seteamos el texto de continuar y lo mostramos
                 TextView txt = (TextView) state.getChildAt(0);
-                txt.setText("¡Excelente!");
+                txt.setText(generarAleatorio());
                 txt.setTextColor(Color.parseColor("#048710"));
                 txt.setVisibility(View.VISIBLE);
                 final Handler handler = new Handler();
@@ -342,10 +339,9 @@ public class Frg_ReconocerFiguras extends Fragment implements AdapterView.OnItem
                 img.setColorFilter(Color.parseColor("#048710"));
                 state.getChildAt(2).setVisibility(View.GONE);
                 state.getChildAt(3).setVisibility(View.VISIBLE);
-                state.getChildAt(3).setOnClickListener(vcont -> Navegacion(vcont));
+                state.getChildAt(3).setOnClickListener(vcont -> CompleteActivity(vcont));
                 //Ubicamos el layout visible
                 state.setVisibility(View.VISIBLE);
-                CompleteActivity(view);
             }
             else{
                 //Toast.makeText(getContext(),"Respuesta incorrecta",Toast.LENGTH_SHORT).show();
@@ -360,7 +356,7 @@ public class Frg_ReconocerFiguras extends Fragment implements AdapterView.OnItem
                 state.setBackgroundColor(Color.parseColor("#F7B9B9"));
                 //Seteamos el texto de error y lo mostramos
                 TextView txt = (TextView) state.getChildAt(0);
-                txt.setText("¡Ups! ¡Fallaste!");
+                txt.setText("¡Incorrecto!\n¡Vuelve a intentarlo!");
                 txt.setTextColor(Color.parseColor("#C70039"));
                 txt.setVisibility(View.VISIBLE);
                 final Handler handler = new Handler();
@@ -381,5 +377,12 @@ public class Frg_ReconocerFiguras extends Fragment implements AdapterView.OnItem
                 state.setVisibility(View.VISIBLE);
             }
         }
+        else {}
+    }
+
+    private String generarAleatorio(){
+        Random random = new Random();
+        String r = msg_true[random.nextInt(msg_true.length)];
+        return r;
     }
 }

@@ -1,6 +1,5 @@
 package com.example.tolan.fragments;
 
-import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -10,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
-import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,12 +33,10 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.tolan.R;
 import com.example.tolan.adapters.AdpEnunciado;
 import com.example.tolan.adapters.AdpOptionIdentifyImg;
@@ -58,6 +54,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 public class Frg_IdentificarRespuestaImagen extends Fragment {
 
@@ -65,6 +62,7 @@ public class Frg_IdentificarRespuestaImagen extends Fragment {
     private Toolbar toolbar;
     static TextToSpeech textToSpeech;
     ClssConvertirTextoAVoz tts;
+    MenuItem mr;
     private TextView titulo;
     private ScrollView scrollView;
     private Button btnContinuar;
@@ -78,6 +76,7 @@ public class Frg_IdentificarRespuestaImagen extends Fragment {
     ArrayList<ModelContent> modelContentsOp;
     ArrayList<ModelContent> respuestas;
     ArrayList<ModelContent> resp;
+    private String[] msg_true = null;
     private AdpEnunciado adpEnunciado;
     private AdpOptionIdentifyImg adpOptiosIdentifyImg;
     ModelContent opSelected = new ModelContent();
@@ -144,9 +143,10 @@ public class Frg_IdentificarRespuestaImagen extends Fragment {
             modelContentsOp = new ArrayList<>();
             respuestas = new ArrayList<>();
             resp = new ArrayList<>();
+            msg_true = getResources().getStringArray(R.array.msg_true);
             modelContent = new ModelContent();
             modelContent.MapContenido(contenido, modelContentsEnun, modelContentsOp, respuestas);
-            if (modelContentsEnun.size() > 0 & modelContentsOp.size() > 0) {
+            if (modelContentsEnun.size() > 0 & modelContentsOp.size() > 0 & respuestas.size() > 0) {
                 RespuestasOk();
             } else {
                 tts = new ClssConvertirTextoAVoz();
@@ -172,8 +172,6 @@ public class Frg_IdentificarRespuestaImagen extends Fragment {
         }
     }
 
-    MenuItem mr;
-
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.menu_toolbar, menu);
@@ -187,86 +185,95 @@ public class Frg_IdentificarRespuestaImagen extends Fragment {
         adpOptiosIdentifyImg = new AdpOptionIdentifyImg(getContext(), modelContentsOp);
         rcvOptions.setAdapter(adpOptiosIdentifyImg);
         adpOptiosIdentifyImg.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("ResourceAsColor")
             @Override
             public void onClick(View view) {
-                int opcselec = rcvOptions.getChildAdapterPosition(view);
-                opSelected = modelContentsOp.get(opcselec);
-                tts.reproduce(opSelected.getDescripcion());
-                if (respuestas.size() == 0) {
-                    Toast.makeText(getContext(), "La actividad no tiene respuesta", Toast.LENGTH_SHORT).show();
-                } else if (respuestas.size() == 1) {
-                    if (opSelected.getRespuesta().equals(true)) {
-                        rcvOptions.getChildAt(opcselec).setBackgroundColor(Color.parseColor("#44cccc"));
-                        respuesta = true;
-                        scrollView.post(new Runnable() {
-                            public void run() {
-                                scrollView.scrollTo(0, scrollView.getBottom());
-                            }
-                        });
-                        animar(true);
-                        //Seteamos el background verde
-                        state.setBackgroundColor(Color.parseColor("#AAFAB1"));
-                        //Seteamos el texto de continuar y lo mostramos
-                        TextView txt = (TextView) state.getChildAt(0);
-                        txt.setText("¡Excelente!");
-                        txt.setTextColor(Color.parseColor("#048710"));
-                        txt.setVisibility(View.VISIBLE);
-                        final Handler handler = new Handler();
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                tts.reproduce(txt.getText().toString());
-                            }
-                        }, 1000);
-                        ImageView img = (ImageView) state.getChildAt(1);
-                        img.setImageResource(R.drawable.icon_valor);
-                        img.setColorFilter(Color.parseColor("#048710"));
-                        state.getChildAt(2).setVisibility(View.GONE);
-                        state.getChildAt(3).setVisibility(View.VISIBLE);
-                        state.getChildAt(3).setOnClickListener(vcont -> Navegacion(vcont));
-                        //Ubicamos el layout visible
-                        state.setVisibility(View.VISIBLE);
-                        CompleteActivity(view);
-                    } else {
-                        rcvOptions.getChildAt(opcselec).setBackgroundColor(Color.parseColor("#C70039"));
-                        respuesta = false;
-                        animar(true);
-                        scrollView.post(new Runnable() {
-                            public void run() {
-                                scrollView.scrollTo(0, scrollView.getBottom());
-                            }
-                        });
-                        //Seteamos el backgroun rojo
-                        state.setBackgroundColor(Color.parseColor("#F7B9B9"));
-                        //Seteamos el texto de error y lo mostramos
-                        TextView txt = (TextView) state.getChildAt(0);
-                        txt.setText("¡Ups! ¡Fallaste!");
-                        txt.setTextColor(Color.parseColor("#C70039"));
-                        txt.setVisibility(View.VISIBLE);
-                        final Handler handler = new Handler();
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                tts.reproduce(txt.getText().toString());
-                            }
-                        }, 1000);
-                        ImageView img = (ImageView) state.getChildAt(1);
-                        img.setImageResource(R.drawable.sad);
-                        img.setColorFilter(Color.parseColor("#C70039"));
-                        //Ocultamos el boton comprobar
-                        state.getChildAt(3).setVisibility(View.GONE);
-                        //Seteamos evento click a boton OK
-                        state.getChildAt(2).setVisibility(View.VISIBLE);
-                        state.getChildAt(2).setOnClickListener(vok -> AccionOk(opcselec));
-                        state.setVisibility(View.VISIBLE);
+                try {
+                    int opcselec = rcvOptions.getChildAdapterPosition(view);
+                    opSelected = modelContentsOp.get(opcselec);
+                    tts.reproduce(opSelected.getDescripcion());
+                    if (respuestas.size() == 1) {
+                        if (opSelected.getRespuesta().equals(true)) {
+                            rcvOptions.getChildAt(opcselec).setBackgroundColor(Color.parseColor("#44CCCC"));
+                            rcvOptions.setClickable(false);
+                            //rcvOptions.setEnabled(false);
+                            respuesta = true;
+                            scrollView.post(new Runnable() {
+                                public void run() {
+                                    scrollView.scrollTo(0, scrollView.getBottom());
+                                }
+                            });
+                            animar(true);
+                            //Seteamos el background verde
+                            state.setBackgroundColor(Color.parseColor("#AAFAB1"));
+                            //Seteamos el texto de continuar y lo mostramos
+                            TextView txt = (TextView) state.getChildAt(0);
+                            txt.setText(generarAleatorio());
+                            txt.setTextColor(Color.parseColor("#048710"));
+                            txt.setVisibility(View.VISIBLE);
+                            final Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    tts.reproduce(txt.getText().toString());
+                                }
+                            }, 1000);
+                            ImageView img = (ImageView) state.getChildAt(1);
+                            img.setImageResource(R.drawable.icon_valor);
+                            img.setColorFilter(Color.parseColor("#048710"));
+                            state.getChildAt(2).setVisibility(View.GONE);
+                            state.getChildAt(3).setVisibility(View.VISIBLE);
+                            state.getChildAt(3).setOnClickListener(vcont -> CompleteActivity(vcont));
+                            //Ubicamos el layout visible
+                            state.setVisibility(View.VISIBLE);
+                        } else {
+                            rcvOptions.getChildAt(opcselec).setBackgroundColor(Color.parseColor("#C70039"));
+                            rcvOptions.setClickable(false);
+                            //rcvOptions.setEnabled(false);
+                            respuesta = false;
+                            animar(true);
+                            scrollView.post(new Runnable() {
+                                public void run() {
+                                    scrollView.scrollTo(0, scrollView.getBottom());
+                                }
+                            });
+                            //Seteamos el backgroun rojo
+                            state.setBackgroundColor(Color.parseColor("#F7B9B9"));
+                            //Seteamos el texto de error y lo mostramos
+                            TextView txt = (TextView) state.getChildAt(0);
+                            txt.setText("¡Incorrecto!\n¡Vuelve a intentarlo!");
+                            txt.setTextColor(Color.parseColor("#C70039"));
+                            txt.setVisibility(View.VISIBLE);
+                            final Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    tts.reproduce(txt.getText().toString());
+                                }
+                            }, 1000);
+                            ImageView img = (ImageView) state.getChildAt(1);
+                            img.setImageResource(R.drawable.sad);
+                            img.setColorFilter(Color.parseColor("#C70039"));
+                            //Ocultamos el boton comprobar
+                            state.getChildAt(3).setVisibility(View.GONE);
+                            //Seteamos evento click a boton OK
+                            state.getChildAt(2).setVisibility(View.VISIBLE);
+                            state.getChildAt(2).setOnClickListener(vok -> AccionOk(opcselec));
+                            state.setVisibility(View.VISIBLE);
+                        }
+                    } else if (respuestas.size() > 1) {
+                        resp.add(opSelected);
                     }
-                } else if (respuestas.size() > 1) {
-                    resp.add(opSelected);
+                    //Toast.makeText(getContext(),opSelected.getDescripcion(),Toast.LENGTH_SHORT).show();
                 }
-                //Toast.makeText(getContext(),opSelected.getDescripcion(),Toast.LENGTH_SHORT).show();
+                catch (Exception e){}
             }
         });
+    }
+
+    private String generarAleatorio(){
+        Random random = new Random();
+        String r = msg_true[random.nextInt(msg_true.length)];
+        return r;
     }
 
     private void Navegacion(View v) {
@@ -279,15 +286,20 @@ public class Frg_IdentificarRespuestaImagen extends Fragment {
 
     private void AccionOk(int op) {
         animar(false);
-        rcvOptions.getChildAt(op).setBackgroundColor(Color.parseColor("#ffffff"));
-        scrollView.post(new Runnable() {
-            public void run() {
-                scrollView.scrollTo(0, scrollView.getTop());
-            }
-        });
-        state.setVisibility(View.GONE);
-        TextView txt = (TextView) state.getChildAt(2);
-        tts.reproduce(txt.getText().toString());
+        rcvOptions.setClickable(true);
+        //rcvOptions.setEnabled(true);
+        try {
+            rcvOptions.getChildAt(op).setBackgroundColor(Color.parseColor("#FFFFFF"));
+            scrollView.post(new Runnable() {
+                public void run() {
+                    scrollView.scrollTo(0, scrollView.getTop());
+                }
+            });
+            state.setVisibility(View.GONE);
+            TextView txt = (TextView) state.getChildAt(2);
+            tts.reproduce(txt.getText().toString());
+        }
+        catch (Exception e){}
     }
 
     private void animar(boolean mostrar) {
@@ -336,7 +348,7 @@ public class Frg_IdentificarRespuestaImagen extends Fragment {
                                     mr.setTitle(String.valueOf(ModelUser.stockcaritas));
                                     //ModelUser.stockcaritas+=
                                     //Toast.makeText(getContext(), "Actividad exitosa", Toast.LENGTH_LONG).show();
-                                    //Navegacion(v);
+                                    Navegacion(v);
                                 } else
                                     Toast.makeText(getContext(), response.get("message").toString(), Toast.LENGTH_LONG).show();
                             } catch (Exception e) {

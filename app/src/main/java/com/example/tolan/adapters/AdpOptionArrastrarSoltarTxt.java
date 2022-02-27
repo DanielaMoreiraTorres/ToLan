@@ -22,10 +22,12 @@ public class AdpOptionArrastrarSoltarTxt extends RecyclerView.Adapter<AdpOptionA
     private View.OnClickListener listener;
     private View.OnLongClickListener longClick;
     private ArrayList<ModelContent> lista;
+    private ArrayList<ModelContent> respuestas;
 
-    public AdpOptionArrastrarSoltarTxt(Context context, ArrayList<ModelContent> lista) {
+    public AdpOptionArrastrarSoltarTxt(Context context, ArrayList<ModelContent> lista, ArrayList<ModelContent> respuestas) {
         ccontext = context;
         this.lista = lista;
+        this.respuestas = respuestas;
     }
 
     @Override
@@ -52,8 +54,15 @@ public class AdpOptionArrastrarSoltarTxt extends RecyclerView.Adapter<AdpOptionA
     public void onBindViewHolder(@NonNull AdpOptionArrastrarSoltarTxt.ViewHolder holder, int position) {
         try {
             ModelContent content = lista.get(position);
+            if(respuestas.size() == 1)
+                holder.txtOp.setTag(content.getDescripcion().trim());
+            else{
+                if(content.getRespuesta())
+                    holder.txtOp.setTag("respuesta");
+                else
+                    holder.txtOp.setTag(content.getDescripcion().trim());
+            }
             holder.txtOp.setText(content.getDescripcion().trim());
-            holder.txtOp.setTag(content.getDescripcion().trim());
         }catch (Exception e){
             String res = e.toString();
         }

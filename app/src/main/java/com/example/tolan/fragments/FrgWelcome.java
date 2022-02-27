@@ -15,7 +15,6 @@ import android.widget.Button;
 import com.example.tolan.R;
 import com.example.tolan.clases.ClssConvertirTextoAVoz;
 
-import org.imaginativeworld.whynotimagecarousel.CarouselAdapter;
 import org.imaginativeworld.whynotimagecarousel.CarouselItem;
 import org.imaginativeworld.whynotimagecarousel.ImageCarousel;
 import org.imaginativeworld.whynotimagecarousel.OnItemClickListener;
@@ -64,26 +63,30 @@ public class FrgWelcome extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_welcome, container, false);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
-        carousel = view.findViewById(R.id.carousel);
-        btnRegistrarse = view.findViewById(R.id.register);
-        btnRegistrarse.setOnClickListener(v -> Register());
-        btnIniciar = view.findViewById(R.id.login);
-        btnIniciar.setOnClickListener(v -> Iniciar());
-        list = new ArrayList();
-        list.add(new CarouselItem(R.drawable.aprendizaje,getString(R.string.mensaje_bienvenida_1)));
-        list.add(new CarouselItem(R.drawable.nino,getString(R.string.mensaje_bienvenida_2)));
-        list.add(new CarouselItem(R.drawable.ninos,getString(R.string.mensaje_bienvenida_3)));
-        carousel.addData(list);
-        carousel.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onClick(int i, @NonNull CarouselItem carouselItem) {
-                tts.reproduce(carouselItem.getCaption());
-            }
+        try {
+            ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+            carousel = view.findViewById(R.id.carousel);
+            btnRegistrarse = view.findViewById(R.id.register);
+            btnRegistrarse.setOnClickListener(v -> Register());
+            btnIniciar = view.findViewById(R.id.login);
+            btnIniciar.setOnClickListener(v -> Iniciar());
+            list = new ArrayList();
+            list.add(new CarouselItem(R.drawable.aprendizaje, getString(R.string.mensaje_bienvenida_1)));
+            list.add(new CarouselItem(R.drawable.nino, getString(R.string.mensaje_bienvenida_2)));
+            list.add(new CarouselItem(R.drawable.ninos, getString(R.string.mensaje_bienvenida_3)));
+            carousel.addData(list);
+            carousel.setOnItemClickListener(new OnItemClickListener() {
+                @Override
+                public void onClick(int i, @NonNull CarouselItem carouselItem) {
+                    tts.reproduce(carouselItem.getCaption());
+                }
 
-            @Override
-            public void onLongClick(int i, @NonNull CarouselItem carouselItem) { }
-        });
+                @Override
+                public void onLongClick(int i, @NonNull CarouselItem carouselItem) {
+                }
+            });
+        }
+        catch (Exception e){}
         return view;
     }
 

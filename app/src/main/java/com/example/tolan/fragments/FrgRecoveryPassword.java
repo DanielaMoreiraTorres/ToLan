@@ -25,11 +25,13 @@ import com.android.volley.toolbox.Volley;
 import com.example.tolan.R;
 import com.example.tolan.clases.ClssConvertirTextoAVoz;
 import com.example.tolan.clases.ClssValidations;
+import com.example.tolan.clases.ClssVolleySingleton;
 import com.example.tolan.models.ModelUser;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -46,7 +48,7 @@ public class FrgRecoveryPassword extends Fragment {
     private TextInputLayout Lcelular, Lcorreo;
     private ClssValidations validate;
     String Merror= "Campo obligatorio";
-    private RequestQueue requestQueue;
+    //private RequestQueue requestQueue;
     private String urlP;
     private String urlE;
 
@@ -82,26 +84,29 @@ public class FrgRecoveryPassword extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_recovery_password, container, false);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
-        validate = new ClssValidations();
-        urlP = getString(R.string.urlBase) + "usuario/recoveryPhone?telefono=";
-        urlE = getString(R.string.urlBase) + "usuario/recoveryEmail?correo=";
-        txtRec = view.findViewById(R.id.txtRec);
-        txtRec.setOnClickListener(v -> tts.reproduce(txtRec.getText().toString()));
-        txtTittle = view.findViewById(R.id.txtRecoveryMetodo);
-        txtTittle.setOnClickListener(v -> tts.reproduce(txtTittle.getText().toString()));
-        Lcelular = view.findViewById(R.id.Ltelefono);
-        celular = view.findViewById(R.id.telefono);
-        Lcelular.setVisibility(View.GONE);
-        validate.TextChanged(celular,null,Lcelular,Merror);
-        Lcorreo = view.findViewById(R.id.Lemail);
-        correo = view.findViewById(R.id.email);
-        validate.TextChanged(correo,null,Lcorreo,Merror);
-        otro = view.findViewById(R.id.otro);
-        otro.setOnClickListener(v -> OtroMetodo());
-        otro.setVisibility(View.GONE);
-        recovery = view.findViewById(R.id.recovery);
-        recovery.setOnClickListener(v -> Recovery());
+        try {
+            ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+            validate = new ClssValidations();
+            urlP = getString(R.string.urlBase) + "usuario/recoveryPhone?telefono=";
+            urlE = getString(R.string.urlBase) + "usuario/recoveryEmail?correo=";
+            txtRec = view.findViewById(R.id.txtRec);
+            txtRec.setOnClickListener(v -> tts.reproduce(txtRec.getText().toString()));
+            txtTittle = view.findViewById(R.id.txtRecoveryMetodo);
+            txtTittle.setOnClickListener(v -> tts.reproduce(txtTittle.getText().toString()));
+            Lcelular = view.findViewById(R.id.Ltelefono);
+            celular = view.findViewById(R.id.telefono);
+            Lcelular.setVisibility(View.GONE);
+            validate.TextChanged(celular, null, Lcelular, Merror);
+            Lcorreo = view.findViewById(R.id.Lemail);
+            correo = view.findViewById(R.id.email);
+            validate.TextChanged(correo, null, Lcorreo, Merror);
+            otro = view.findViewById(R.id.otro);
+            otro.setOnClickListener(v -> OtroMetodo());
+            otro.setVisibility(View.GONE);
+            recovery = view.findViewById(R.id.recovery);
+            recovery.setOnClickListener(v -> Recovery());
+        } catch (Exception e) {
+        }
         return view;
     }
 
@@ -123,7 +128,7 @@ public class FrgRecoveryPassword extends Fragment {
 
     public void SendDatos(String url){
         // Crear nueva cola de peticiones
-        requestQueue= Volley.newRequestQueue(getContext());
+        //requestQueue= Volley.newRequestQueue(getContext());
         JsonObjectRequest request_json = new JsonObjectRequest(Request.Method.POST, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -132,18 +137,20 @@ public class FrgRecoveryPassword extends Fragment {
                             tts.reproduce(response.get("message").toString());
                             Toast.makeText(getContext(),response.get("message").toString(),Toast.LENGTH_SHORT).show();
                         } catch (Exception e) {
-                            Toast.makeText(getContext(),"Error de conexión",Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getContext(),"Error de conexión",Toast.LENGTH_SHORT).show();
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.e("Error: ", error.getMessage());
-                tts.reproduce(error.getMessage());
+                Toast.makeText(getContext(),"Error de conexión con el servidor.\nIntente nuevamente",Toast.LENGTH_SHORT).show();
+                tts.reproduce("Error de conexión con el servidor. Intente nuevamente");
             }
         });
         // Añadir petición a la cola
-        requestQueue.add(request_json);
+        //requestQueue.add(request_json);
+        ClssVolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(request_json);
     }
 
     public void Recovery() {
@@ -153,15 +160,20 @@ public class FrgRecoveryPassword extends Fragment {
             url = urlP + celular.getText().toString().trim();
             if(validate.Validar(celular,null,Lcelular,Merror))
                 SendDatos(url);
-            else
+            else{
                 tts.reproduce("Número de celular no válido");
+                Toast.makeText(getContext(),"Número de celular no válido",Toast.LENGTH_SHORT).show();
+            }
         }
         else{
             url = urlE + correo.getText().toString().trim();
             if(validate.Validar(correo,null,Lcorreo,Merror))
                 SendDatos(url);
-            else
+            else{
                 tts.reproduce("Correo no válido");
+                Toast.makeText(getContext(),"Correo no válido",Toast.LENGTH_SHORT).show();
+
+            }
         }
     }
 }

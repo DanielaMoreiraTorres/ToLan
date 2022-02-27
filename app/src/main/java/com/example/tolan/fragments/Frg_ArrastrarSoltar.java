@@ -38,12 +38,10 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.tolan.R;
 import com.example.tolan.adapters.AdpEnunciado;
 import com.example.tolan.adapters.AdpOptionArrastrarSoltarTxt;
@@ -62,6 +60,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 public class Frg_ArrastrarSoltar extends Fragment {
 
@@ -70,6 +69,7 @@ public class Frg_ArrastrarSoltar extends Fragment {
     private Toolbar toolbar;
     static TextToSpeech textToSpeech;
     ClssConvertirTextoAVoz tts;
+    MenuItem mr;
     private TextView titulo;
     private ScrollView scrollView;
     private Button btnContinuar;
@@ -82,6 +82,7 @@ public class Frg_ArrastrarSoltar extends Fragment {
     ArrayList<ModelContent> modelContentsOp;
     ArrayList<ModelContent> respuestas;
     ArrayList<ModelContent> resp;
+    private String[] msg_true = null;
     LinearLayout destino, dest;
     private AdpEnunciado adpEnunciado;
     private AdpOptionArrastrarSoltarTxt adpOptionArrastrarSoltarTxt;
@@ -153,9 +154,10 @@ public class Frg_ArrastrarSoltar extends Fragment {
             modelContentsOp = new ArrayList<>();
             respuestas = new ArrayList<>();
             resp = new ArrayList<>();
+            msg_true = getResources().getStringArray(R.array.msg_true);
             modelContent = new ModelContent();
             modelContent.MapContenido(contenido,modelContentsEnun,modelContentsOp,respuestas);
-            if(modelContentsEnun.size() > 0 & modelContentsOp.size() >0) {
+            if(modelContentsEnun.size() > 0 & modelContentsOp.size() > 0 & respuestas.size() > 0) {
                 RespuestasOk();
             }
             else {
@@ -183,7 +185,6 @@ public class Frg_ArrastrarSoltar extends Fragment {
         }
     }
 
-    MenuItem mr;
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.menu_toolbar,menu);
@@ -195,16 +196,18 @@ public class Frg_ArrastrarSoltar extends Fragment {
     private void RespuestasOk(){
         if (respuestas.size() == 1)
             destino.setTag(respuestas.get(0).getDescripcion().trim());
+        else
+            destino.setTag("respuesta");
         adpEnunciado = new AdpEnunciado(getContext(), modelContentsEnun);
         lstLista.setAdapter(adpEnunciado);
-        adpOptionArrastrarSoltarTxt = new AdpOptionArrastrarSoltarTxt(getContext(), modelContentsOp);
+        adpOptionArrastrarSoltarTxt = new AdpOptionArrastrarSoltarTxt(getContext(), modelContentsOp, respuestas);
         rcvOptions.setAdapter(adpOptionArrastrarSoltarTxt);
         adpOptionArrastrarSoltarTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int opcselec = rcvOptions.getChildAdapterPosition(view);
                 opSelected = modelContentsOp.get(opcselec);
-                //Toast.makeText(getContext(), opSelected.getDescripcion(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), opSelected.getDescripcion(), Toast.LENGTH_SHORT).show();
                 tts.reproduce(opSelected.getDescripcion());
             }
         });
@@ -271,7 +274,7 @@ public class Frg_ArrastrarSoltar extends Fragment {
                         state.setBackgroundColor(Color.parseColor("#AAFAB1"));
                         //Seteamos el texto de continuar y lo mostramos
                         TextView txt = (TextView) state.getChildAt(0);
-                        txt.setText("¡Excelente!");
+                        txt.setText(generarAleatorio());
                         txt.setTextColor(Color.parseColor("#048710"));
                         txt.setVisibility(View.VISIBLE);
                         tts.reproduce(txt.getText().toString());
@@ -299,7 +302,7 @@ public class Frg_ArrastrarSoltar extends Fragment {
                         state.setBackgroundColor(Color.parseColor("#F7B9B9"));
                         //Seteamos el texto de error y lo mostramos
                         TextView txt = (TextView) state.getChildAt(0);
-                        txt.setText("¡Ups! ¡Fallaste!");
+                        txt.setText("¡Incorrecto!\n¡Vuelve a intentarlo!");
                         txt.setTextColor(Color.parseColor("#C70039"));
                         txt.setVisibility(View.VISIBLE);
                         tts.reproduce(txt.getText().toString());
@@ -320,6 +323,12 @@ public class Frg_ArrastrarSoltar extends Fragment {
             default: break;
         }
         return true;
+    }
+
+    private String generarAleatorio(){
+        Random random = new Random();
+        String r = msg_true[random.nextInt(msg_true.length)];
+        return r;
     }
 
     private void Navegacion(View v) {

@@ -23,9 +23,9 @@
             android:fontFamily="@font/baloo"
             android:shadowColor="@color/secundario"
             android:shadowRadius="4"
-            android:text="Arastrar/Soltar respuesta"
+            android:text="Arastrar y soltar"
             android:textColor="@color/secundario"
-            android:textSize="24sp" />
+            android:textSize="22sp" />
 
         <ScrollView
             android:id="@+id/scrollAS"
@@ -93,7 +93,7 @@
                         android:id="@+id/txt_tit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-black"
+                        android:fontFamily="@font/baloo"
                         android:text="¡Excelente!"
                         android:textColor="#048710"
                         android:textSize="20dp"
@@ -119,6 +119,7 @@
                         android:backgroundTint="#FE3434"
                         android:minHeight="48dp"
                         android:text="OK"
+                        android:fontFamily="@font/baloo"
                         android:textAlignment="center"
                         android:textColor="@color/white"
                         tools:ignore="TouchTargetSizeCheck" />
@@ -134,6 +135,7 @@
                         android:backgroundTint="#12D724"
                         android:minHeight="48dp"
                         android:text="CONTINUAR"
+                        android:fontFamily="@font/baloo"
                         android:textAlignment="center"
                         android:textColor="@color/white"/>
 

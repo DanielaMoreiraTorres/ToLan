@@ -1,7 +1,6 @@
 package com.example.tolan.fragments;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -9,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
-import android.speech.tts.TextToSpeech;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,18 +17,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.tolan.ActivityHomeUser;
 import com.example.tolan.R;
 import com.example.tolan.clases.ClssConvertirTextoAVoz;
 import com.example.tolan.clases.ClssStaticGrupo;
 import com.example.tolan.clases.ClssValidations;
-import com.example.tolan.models.ModelContent;
+import com.example.tolan.clases.ClssVolleySingleton;
 import com.example.tolan.models.ModelUser;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -44,6 +40,7 @@ import java.util.Map;
 
 public class FrgLogin extends Fragment {
 
+    ProgressBar progressBar;
     static ClssConvertirTextoAVoz tts;
     private Button btnLogin, register;
     private TextView forgetPass, txtIni;
@@ -52,7 +49,7 @@ public class FrgLogin extends Fragment {
     private ClssValidations validate;
     private String Merror = "Campo obligatorio";
     private Fragment fragment;
-    private RequestQueue requestQueue;
+    //private RequestQueue requestQueue;
     private String url, urlGrupo;
     JSONObject grupo;
     int idDocente = 0;
@@ -75,61 +72,62 @@ public class FrgLogin extends Fragment {
         }
     }
 
-    ProgressBar progressBar;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login, container, false);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
-        validate = new ClssValidations();
-        progressBar = view.findViewById(R.id.progressBar);
-        grupo = new JSONObject();
-        Lusuario = view.findViewById(R.id.Lusuario);
-        url = getString(R.string.urlBase) + "usuario/login";
-        urlGrupo = getString(R.string.urlBase) + "grupo/";
-        txtIni = view.findViewById(R.id.txtIni);
-        txtIni.setOnClickListener(v -> tts.reproduce(txtIni.getText().toString()));
-        user = view.findViewById(R.id.txtuser);
-        validate.TextChanged(user, null, Lusuario, Merror);
-        Lclave = view.findViewById(R.id.Lclave);
-        password = view.findViewById(R.id.txtPass);
-        validate.TextChanged(password, null, Lclave, Merror);
-        btnLogin = view.findViewById(R.id.btnSigin);
-        btnLogin.setOnClickListener(v -> Login());
-        forgetPass = view.findViewById(R.id.forget);
-        forgetPass.setOnClickListener(v -> Forget());
-        register = view.findViewById(R.id.register);
-        register.setOnClickListener(v -> RegisterUs());
+        try {
+            ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+            validate = new ClssValidations();
+            progressBar = view.findViewById(R.id.progressBar);
+            grupo = new JSONObject();
+            Lusuario = view.findViewById(R.id.Lusuario);
+            url = getString(R.string.urlBase) + "usuario/login";
+            urlGrupo = getString(R.string.urlBase) + "grupo/";
+            txtIni = view.findViewById(R.id.txtIni);
+            txtIni.setOnClickListener(v -> tts.reproduce(txtIni.getText().toString()));
+            user = view.findViewById(R.id.txtuser);
+            validate.TextChanged(user, null, Lusuario, Merror);
+            Lclave = view.findViewById(R.id.Lclave);
+            password = view.findViewById(R.id.txtPass);
+            validate.TextChanged(password, null, Lclave, Merror);
+            btnLogin = view.findViewById(R.id.btnSigin);
+            btnLogin.setOnClickListener(v -> Login());
+            forgetPass = view.findViewById(R.id.forget);
+            forgetPass.setOnClickListener(v -> Forget());
+            register = view.findViewById(R.id.register);
+            register.setOnClickListener(v -> RegisterUs());
+        }
+        catch (Exception e){}
         return view;
     }
 
     private void Login() {
-        progressBar.setVisibility(View.VISIBLE);
         tts.reproduce(btnLogin.getText().toString());
-        if (validate.Validar(user, null, Lusuario, Merror) & validate.Validar(password, null, Lclave, Merror))
+        if (validate.Validar(user, null, Lusuario, Merror) & validate.Validar(password, null, Lclave, Merror)){
+            progressBar.setVisibility(View.VISIBLE);
             getUsuario();
+        }
         else
             tts.reproduce("Datos no válidos");
     }
 
     private void getUsuario() {
         // Crear nueva cola de peticiones
-        requestQueue = Volley.newRequestQueue(getContext());
+        //requestQueue = Volley.newRequestQueue(getContext());
         //Parámetros a enviar a la API
         Map<String, String> parameters = new HashMap<>();
         parameters.put("username", user.getText().toString().trim());
         parameters.put("password", password.getText().toString().trim());
+        /*user.setText("");
+        password.setText("");*/
         JsonObjectRequest request_json = new JsonObjectRequest(url, new JSONObject(parameters),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
                             if (response.length() > 1) {
-                                tts.reproduce("Inicio exitoso");
-                                /*user.setText("");
-                                password.setText("");*/
                                 ModelUser user = new ModelUser();
                                 user.setUsuario(response.getString("usuario").trim());
                                 user.setClave(response.getString("clave").trim());
@@ -150,10 +148,11 @@ public class FrgLogin extends Fragment {
                                     Iniciar(user);
                                 } else
                                     Iniciar(user);
+                                tts.reproduce("Inicio exitoso");
                                 progressBar.setVisibility(View.GONE);
                             } else {
                                 tts.reproduce(response.get("message").toString());
-                                Toast.makeText(getContext(), response.get("message").toString(), Toast.LENGTH_LONG).show();
+                                Toast.makeText(getContext(), response.get("message").toString(), Toast.LENGTH_SHORT).show();
                             }
 
                         } catch (Exception e) {
@@ -164,18 +163,20 @@ public class FrgLogin extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.e("Error: ", error.getMessage());
-                tts.reproduce("Error de conexión con el servidor");
+                Toast.makeText(getContext(),"Error de conexión con el servidor\nIntente nuevamente",Toast.LENGTH_SHORT).show();
+                tts.reproduce("Error de conexión con el servidor. Intente nuevamente");
                 progressBar.setVisibility(View.GONE);
             }
         });
         // Añadir petición a la cola
-        requestQueue.add(request_json);
+        //requestQueue.add(request_json);
+        ClssVolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(request_json);
     }
 
     private void ObtIdDocente(int idGrupo, ModelUser muser) {
         urlGrupo = urlGrupo + idGrupo;
         // Crear nueva cola de peticiones
-        requestQueue = Volley.newRequestQueue(getContext());
+        //requestQueue = Volley.newRequestQueue(getContext());
         JsonObjectRequest request_json = new JsonObjectRequest(Request.Method.GET, urlGrupo, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -185,10 +186,11 @@ public class FrgLogin extends Fragment {
                             if (response.length() > 1) {
                                 grupo = response;
                                 Iniciar(muser);
-                            } else
-                                Toast.makeText(getContext(), response.get("message").toString(), Toast.LENGTH_LONG).show();
+                            }
+                            /*else
+                                Toast.makeText(getContext(), response.get("message").toString(), Toast.LENGTH_LONG).show();*/
                         } catch (Exception e) {
-                            Toast.makeText(getContext(), "El usuario no tiene docente a cargo asignado", Toast.LENGTH_LONG).show();
+                            //Toast.makeText(getContext(), "El usuario no tiene docente a cargo asignado", Toast.LENGTH_LONG).show();
                         }
                     }
                 },
@@ -200,13 +202,23 @@ public class FrgLogin extends Fragment {
                 }
         );
         // Añadir petición a la cola
-        requestQueue.add(request_json);
+        //requestQueue.add(request_json);
+        ClssVolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(request_json);
     }
 
     private void Iniciar(ModelUser muser) throws JSONException {
         Bundle b = new Bundle();
-        if (muser.getTipousuario().trim().equals("AD"))
+        if (muser.getTipousuario().trim().equals("AD")){
             fragment = new FrgMenuAdmin();
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    tts.reproduce("Bienvenido Admin");
+                    Toast.makeText(getContext(), "Bienvenido Admin", Toast.LENGTH_SHORT).show();
+                }
+            }, 1000);
+        }
         else if (muser.getTipousuario().trim().equals("DC")) {
             fragment = new FrgMenuDocente();
             final Handler handler = new Handler();
@@ -214,12 +226,14 @@ public class FrgLogin extends Fragment {
                 @Override
                 public void run() {
                     tts.reproduce("Bienvenido " + ClssStaticGrupo.docente);
+                    Toast.makeText(getContext(), "Bienvenido " + ClssStaticGrupo.docente, Toast.LENGTH_SHORT).show();
                 }
             }, 1000);
         } else {
             fragment = new ActivityHomeUser();
             sendDataGroup(grupo);
             tts.reproduce("Bienvenido " + ClssStaticGrupo.estudiante);
+            Toast.makeText(getContext(), "Bienvenido " + ClssStaticGrupo.estudiante, Toast.LENGTH_SHORT).show();
             //b.putString("grupo", grupo.toString());
         }
         //Creamos la información a pasar entre fragments
@@ -231,8 +245,8 @@ public class FrgLogin extends Fragment {
     }
 
     private void RegisterUs() {
-        fragment = new FrgRegisterUser();
         tts.reproduce(register.getText().toString());
+        fragment = new FrgRegisterUser();
         getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
     }
 

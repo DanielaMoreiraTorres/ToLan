@@ -56,6 +56,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 public class Frg_IdentificarRespuestaPalabra extends Fragment {
 
@@ -64,6 +65,7 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment {
     private Toolbar toolbar;
     static TextToSpeech textToSpeech;
     ClssConvertirTextoAVoz tts;
+    MenuItem mr;
     private TextView titulo;
     private ScrollView scrollView;
     private Button btnContinuar;
@@ -76,6 +78,7 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment {
     ArrayList<ModelContent> modelContentsOp;
     ArrayList<ModelContent> respuestas;
     ArrayList<ModelContent> resp;
+    private String[] msg_true = null;
     private AdpEnunciado adpEnunciado;
     private AdpOptionIdentifyTxt adpOptiosIdentifyTxt;
     ModelContent opSelected = new ModelContent();
@@ -142,9 +145,10 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment {
             modelContentsOp = new ArrayList<>();
             respuestas = new ArrayList<>();
             resp = new ArrayList<>();
+            msg_true = getResources().getStringArray(R.array.msg_true);
             modelContent = new ModelContent();
             modelContent.MapContenido(contenido,modelContentsEnun,modelContentsOp,respuestas);
-            if(modelContentsEnun.size() > 0 & modelContentsOp.size() >0) {
+            if(modelContentsEnun.size() > 0 & modelContentsOp.size() > 0 & respuestas.size() > 0) {
                 RespuestasOk();
             }
             else {
@@ -171,7 +175,6 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment {
         }
     }
 
-    MenuItem mr;
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.menu_toolbar,menu);
@@ -187,85 +190,91 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment {
         adpOptiosIdentifyTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int opcselec = rcvOptions.getChildAdapterPosition(view);
-                opSelected = modelContentsOp.get(opcselec);
-                tts.reproduce(opSelected.getDescripcion());
-                if (respuestas.size() == 0) {
-                    Toast.makeText(getContext(), "La actividad no tiene respuesta", Toast.LENGTH_SHORT).show();
-                } else if (respuestas.size() == 1) {
-                    if (opSelected.getRespuesta().equals(true)) {
-                        //Toast.makeText(getContext(),"Respuesta correcta",Toast.LENGTH_SHORT).show();
-                        rcvOptions.getChildAt(opcselec).setBackgroundColor(Color.parseColor("#44cccc"));
-                        respuesta = true;
-                        state.setVisibility(View.VISIBLE);
-                        scrollView.post(new Runnable() {
-                            public void run() {
-                                scrollView.scrollTo(0, scrollView.getBottom());
-                            }
-                        });
-                        animar(true);
-                        //Seteamos el background verde
-                        state.setBackgroundColor(Color.parseColor("#AAFAB1"));
-                        //Seteamos el texto de continuar y lo mostramos
-                        TextView txt = (TextView) state.getChildAt(0);
-                        txt.setText("¡Excelente!");
-                        txt.setTextColor(Color.parseColor("#048710"));
-                        txt.setVisibility(View.VISIBLE);
-                        final Handler handler = new Handler();
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                tts.reproduce(txt.getText().toString());
-                            }
-                        }, 1000);
-                        ImageView img = (ImageView) state.getChildAt(1);
-                        img.setImageResource(R.drawable.icon_valor);
-                        img.setColorFilter(Color.parseColor("#048710"));
-                        state.getChildAt(2).setVisibility(View.GONE);
-                        state.getChildAt(3).setVisibility(View.VISIBLE);
-                        state.getChildAt(3).setOnClickListener(vcont -> Navegacion(vcont));
-                        //Ubicamos el layout visible
-                        state.setVisibility(View.VISIBLE);
-                        CompleteActivity(view);
-                    } else {
-                        rcvOptions.getChildAt(opcselec).setBackgroundColor(Color.parseColor("#C70039"));
-                        respuesta = false;
-                        animar(true);
-                        scrollView.post(new Runnable() {
-                            public void run() {
-                                scrollView.scrollTo(0, scrollView.getBottom());
-                            }
-                        });
-                        //Seteamos el backgroun rojo
-                        state.setBackgroundColor(Color.parseColor("#F7B9B9"));
-                        //Seteamos el texto de error y lo mostramos
-                        TextView txt = (TextView) state.getChildAt(0);
-                        txt.setText("¡Ups! ¡Fallaste!");
-                        txt.setTextColor(Color.parseColor("#C70039"));
-                        txt.setVisibility(View.VISIBLE);
-                        final Handler handler = new Handler();
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                tts.reproduce(txt.getText().toString());
-                            }
-                        }, 1000);
-                        ImageView img = (ImageView) state.getChildAt(1);
-                        img.setImageResource(R.drawable.sad);
-                        img.setColorFilter(Color.parseColor("#C70039"));
-                        //Ocultamos el boton comprobar
-                        state.getChildAt(3).setVisibility(View.GONE);
-                        //Seteamos evento click a boton OK
-                        state.getChildAt(2).setVisibility(View.VISIBLE);
-                        state.getChildAt(2).setOnClickListener(vok -> AccionOk(opcselec));
-                        state.setVisibility(View.VISIBLE);
+                try {
+                    int opcselec = rcvOptions.getChildAdapterPosition(view);
+                    opSelected = modelContentsOp.get(opcselec);
+                    tts.reproduce(opSelected.getDescripcion());
+                    if (respuestas.size() == 1) {
+                        if (opSelected.getRespuesta().equals(true)) {
+                            //Toast.makeText(getContext(),"Respuesta correcta",Toast.LENGTH_SHORT).show();
+                            rcvOptions.getChildAt(opcselec).setBackgroundColor(Color.parseColor("#44CCCC"));
+                            respuesta = true;
+                            state.setVisibility(View.VISIBLE);
+                            scrollView.post(new Runnable() {
+                                public void run() {
+                                    scrollView.scrollTo(0, scrollView.getBottom());
+                                }
+                            });
+                            animar(true);
+                            //Seteamos el background verde
+                            state.setBackgroundColor(Color.parseColor("#AAFAB1"));
+                            //Seteamos el texto de continuar y lo mostramos
+                            TextView txt = (TextView) state.getChildAt(0);
+                            txt.setText(generarAleatorio());
+                            txt.setTextColor(Color.parseColor("#048710"));
+                            txt.setVisibility(View.VISIBLE);
+                            final Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    tts.reproduce(txt.getText().toString());
+                                }
+                            }, 1000);
+                            ImageView img = (ImageView) state.getChildAt(1);
+                            img.setImageResource(R.drawable.icon_valor);
+                            img.setColorFilter(Color.parseColor("#048710"));
+                            state.getChildAt(2).setVisibility(View.GONE);
+                            state.getChildAt(3).setVisibility(View.VISIBLE);
+                            state.getChildAt(3).setOnClickListener(vcont -> CompleteActivity(vcont));
+                            //Ubicamos el layout visible
+                            state.setVisibility(View.VISIBLE);
+                        } else {
+                            rcvOptions.getChildAt(opcselec).setBackgroundColor(Color.parseColor("#C70039"));
+                            respuesta = false;
+                            animar(true);
+                            scrollView.post(new Runnable() {
+                                public void run() {
+                                    scrollView.scrollTo(0, scrollView.getBottom());
+                                }
+                            });
+                            //Seteamos el backgroun rojo
+                            state.setBackgroundColor(Color.parseColor("#F7B9B9"));
+                            //Seteamos el texto de error y lo mostramos
+                            TextView txt = (TextView) state.getChildAt(0);
+                            txt.setText("¡Incorrecto!\n¡Vuelve a intentarlo!");
+                            txt.setTextColor(Color.parseColor("#C70039"));
+                            txt.setVisibility(View.VISIBLE);
+                            final Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    tts.reproduce(txt.getText().toString());
+                                }
+                            }, 1000);
+                            ImageView img = (ImageView) state.getChildAt(1);
+                            img.setImageResource(R.drawable.sad);
+                            img.setColorFilter(Color.parseColor("#C70039"));
+                            //Ocultamos el boton comprobar
+                            state.getChildAt(3).setVisibility(View.GONE);
+                            //Seteamos evento click a boton OK
+                            state.getChildAt(2).setVisibility(View.VISIBLE);
+                            state.getChildAt(2).setOnClickListener(vok -> AccionOk(opcselec));
+                            state.setVisibility(View.VISIBLE);
+                        }
+                    } else if (respuestas.size() > 1) {
+                        resp.add(opSelected);
                     }
-                } else if (respuestas.size() > 1) {
-                    resp.add(opSelected);
+                    //Toast.makeText(getContext(), opSelected.getDescripcion(), Toast.LENGTH_SHORT).show();
                 }
-                //Toast.makeText(getContext(), opSelected.getDescripcion(), Toast.LENGTH_SHORT).show();
+                catch (Exception e){}
             }
         });
+    }
+
+    private String generarAleatorio(){
+        Random random = new Random();
+        String r = msg_true[random.nextInt(msg_true.length)];
+        return r;
     }
 
     private void Navegacion(View v){
@@ -278,7 +287,7 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment {
 
     private void AccionOk(int op){
         animar(false);
-        rcvOptions.getChildAt(op).setBackgroundColor(Color.parseColor("#ffffff"));
+        rcvOptions.getChildAt(op).setBackgroundColor(Color.parseColor("#FFFFFF"));
         scrollView.post(new Runnable() {
             public void run() {
                 scrollView.scrollTo(0, scrollView.getTop());
@@ -293,7 +302,6 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment {
         AnimationSet set = new AnimationSet(true);
         Animation animation = null;
         if (mostrar) {
-
             animation = new TranslateAnimation(
                     Animation.RELATIVE_TO_SELF, 0.0f,
                     Animation.RELATIVE_TO_SELF, 0.0f,
@@ -310,7 +318,6 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment {
         animation.setDuration(500);
         set.addAnimation(animation);
         LayoutAnimationController controller = new LayoutAnimationController(set, 0.25f);
-
         state.setLayoutAnimation(controller);
         state.startAnimation(animation);
     }
@@ -331,13 +338,12 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment {
                         public void onResponse(JSONObject response) {
                             try {
                                 if (response.length() > 1) {
-                                    int recompensa=response.getInt("recompensaganada");
+                                    int recompensa = response.getInt("recompensaganada");
                                     ModelUser.stockcaritas+=recompensa;
-
                                     //Actualice el itemMenú creado
                                     mr.setTitle(String.valueOf(ModelUser.stockcaritas));
                                     //Toast.makeText(getContext(), "Actividad exitosa", Toast.LENGTH_LONG).show();
-                                    //Navegacion(v);
+                                    Navegacion(v);
                                 } else
                                     Toast.makeText(getContext(), response.get("message").toString(), Toast.LENGTH_LONG).show();
                             } catch (Exception e) {
