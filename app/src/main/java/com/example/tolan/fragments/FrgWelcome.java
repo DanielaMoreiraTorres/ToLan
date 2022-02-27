@@ -64,7 +64,7 @@ public class FrgWelcome extends Fragment {
         try {
             ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
             ClssConvertirTextoAVoz.getIntancia(getContext());
-            ClssConvertirTextoAVoz.clssConvertirTextoAVoz.init();
+            ClssConvertirTextoAVoz.clssConvertirTextoAVoz.onInit(1);
             carousel = view.findViewById(R.id.carousel);
             btnRegistrarse = view.findViewById(R.id.register);
             btnRegistrarse.setOnClickListener(v -> Register());

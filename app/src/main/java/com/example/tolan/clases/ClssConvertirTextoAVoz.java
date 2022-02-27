@@ -6,7 +6,7 @@ import android.util.Log;
 
 import java.util.Locale;
 
-public class ClssConvertirTextoAVoz {
+public class ClssConvertirTextoAVoz implements TextToSpeech.OnInitListener {
 
 
     public static ClssConvertirTextoAVoz clssConvertirTextoAVoz;
@@ -17,7 +17,8 @@ public class ClssConvertirTextoAVoz {
 
     private ClssConvertirTextoAVoz(Context context) {
         this.contexto = context;
-        tts = init();
+        onInitListener = this;
+        tts = getTts();
     }
 
     public static synchronized ClssConvertirTextoAVoz getIntancia(Context context) {
@@ -27,24 +28,10 @@ public class ClssConvertirTextoAVoz {
         return clssConvertirTextoAVoz;
     }
 
-    public TextToSpeech init() {
+    public TextToSpeech getTts() {
         if (tts == null) {
             try {
-                tts = new TextToSpeech(contexto, onInitListener = new TextToSpeech.OnInitListener() {
-                    @Override
-                    public void onInit(int i) {
-                        Locale español = new Locale("es", "ES");
-                        if (i == TextToSpeech.SUCCESS) {
-                            int result = tts.setLanguage(español);
-                            if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                                Log.e("error", "Este lenguaje no está permitido");
-                            }
-                        } else {
-                            tts.setLanguage(Locale.getDefault());
-                            Log.e("error", "Fallo al inicializar");
-                        }
-                    }
-                });
+                tts = new TextToSpeech(contexto, onInitListener);
             } catch (Exception e) {
                 Log.e("TTS", "Initilization Failed!");
             }
@@ -54,13 +41,31 @@ public class ClssConvertirTextoAVoz {
 
 
     public void reproduce(String texto) {
-        tts.speak(texto, TextToSpeech.QUEUE_FLUSH, null);
+        try {
+            tts.speak(texto, TextToSpeech.QUEUE_FLUSH, null);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
     public void onDestroy() {
         if (tts != null) {
             tts.stop();
             tts.shutdown();
+        }
+    }
+
+    @Override
+    public void onInit(int status) {
+        Locale español = new Locale("es", "ES");
+        if (status == TextToSpeech.SUCCESS) {
+            int result = tts.setLanguage(español);
+            if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                Log.e("error", "Este lenguaje no está permitido");
+            }
+        } else {
+            tts.setLanguage(Locale.getDefault());
+            Log.e("error", "Fallo al inicializar");
         }
     }
 }
