@@ -3,7 +3,6 @@ package com.example.tolan.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -11,9 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -26,8 +22,6 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.tolan.ActivityAddLevel;
-import com.example.tolan.ActivityContact;
-import com.example.tolan.ActivityLevel;
 import com.example.tolan.ActivitySublevel;
 import com.example.tolan.R;
 import com.example.tolan.adapters.AdpLevel;
@@ -51,7 +45,7 @@ public class FrgLevel extends Fragment {
     private RecyclerView rcvLevels;
     private RequestQueue requestQueue;
     private JsonArrayRequest jsonArrayRequest;
-    private String url = "https://db-bartolucci.herokuapp.com/nivel";
+    private String url;
     ArrayList<ModelLevel> levels;
     AdpLevel adpLevel;
     ModelLevel levelSelected = new ModelLevel();
@@ -78,80 +72,81 @@ public class FrgLevel extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_frg_level, container, false);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
-        setHasOptionsMenu(true);
-        levels = new ArrayList<>();
-        //Vincular instancia del recyclerview
-        rcvLevels = (RecyclerView) view.findViewById(R.id.rcvNiveles);
-        //Definir la forma de la lista vertical
-        rcvLevels.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        fab = view.findViewById(R.id.addNivel);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), ActivityAddLevel.class);
-                startActivity(intent);
-            }
-        });
-
-        getLevels();
+        try {
+            ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+            setHasOptionsMenu(true);
+            url = getString(R.string.urlBase) + "nivel";
+            levels = new ArrayList<>();
+            rcvLevels = (RecyclerView) view.findViewById(R.id.rcvNiveles);
+            //Definir la forma de la lista vertical
+            rcvLevels.setLayoutManager(new LinearLayoutManager(getContext()));
+            fab = view.findViewById(R.id.addNivel);
+            fab.setOnClickListener(v -> addLevel());
+            getLevels();
+        } catch (Exception e) {}
         return view;
     }
 
     public void getLevels(){
-        // Crear nueva cola de peticiones
-        requestQueue = Volley.newRequestQueue(getContext());
-        jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        ModelLevel level = null;
-                        try {
-                            for (int i=0;i<response.length();i++){
-                                level = new ModelLevel();
-                                JSONObject objLevel = response.getJSONObject(i);
-                                level.setId(objLevel.getInt("id"));
-                                level.setNombre(objLevel.getString("nombre"));
-                                level.setDescripcion(objLevel.getString("descripcion"));
-                                level.setPrioridad(objLevel.getInt("prioridad"));
-                                level.setPublicid(objLevel.getString("publicid"));
-                                level.setUrl(objLevel.getString("url"));
-                                level.setActivo(objLevel.getBoolean("activo"));
-                                levels.add(level);
+        try {
+            // Crear nueva cola de peticiones
+            requestQueue = Volley.newRequestQueue(getContext());
+            jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
+                    new Response.Listener<JSONArray>() {
+                        @Override
+                        public void onResponse(JSONArray response) {
+                            ModelLevel level = null;
+                            try {
+                                for (int i = 0; i < response.length(); i++) {
+                                    level = new ModelLevel();
+                                    JSONObject objLevel = response.getJSONObject(i);
+                                    level.setId(objLevel.getInt("id"));
+                                    level.setNombre(objLevel.getString("nombre"));
+                                    level.setDescripcion(objLevel.getString("descripcion"));
+                                    level.setPrioridad(objLevel.getInt("prioridad"));
+                                    level.setPublicid(objLevel.getString("publicid"));
+                                    level.setUrl(objLevel.getString("url"));
+                                    level.setActivo(objLevel.getBoolean("activo"));
+                                    levels.add(level);
+                                }
+                                Collections.sort(levels, new Comparator<ModelLevel>() {
+                                    @Override
+                                    public int compare(ModelLevel l1, ModelLevel l2) {
+                                        return new Integer(l1.getPrioridad()).compareTo(new Integer(l2.getPrioridad()));
+                                    }
+                                });
+                                adpLevel = new AdpLevel(getContext(), levels);
+                                rcvLevels.setAdapter(adpLevel);
+                                adpLevel.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        int opcselec = rcvLevels.getChildAdapterPosition(view);
+                                        levelSelected = levels.get(opcselec);
+                                        bundle = new Bundle();
+                                        bundle.putString("levelSelected", new Gson().toJson(levelSelected));
+                                        Intent intent = new Intent(getContext(), ActivitySublevel.class);
+                                        intent.putExtras(bundle);
+                                        startActivity(intent);
+                                    }
+                                });
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                Toast.makeText(getContext(), e.toString(), Toast.LENGTH_LONG).show();
                             }
-                            Collections.sort(levels, new Comparator<ModelLevel>() {
-                                @Override
-                                public int compare(ModelLevel l1, ModelLevel l2) {
-                                    return new Integer(l1.getPrioridad()).compareTo(new Integer(l2.getPrioridad()));
-                                }
-                            });
-                            adpLevel = new AdpLevel(getContext(), levels);
-                            rcvLevels.setAdapter(adpLevel);
-                            adpLevel.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    int opcselec = rcvLevels.getChildAdapterPosition(view);
-                                    levelSelected = levels.get(opcselec);
-                                    bundle = new Bundle();
-                                    bundle.putString("levelSelected", new Gson().toJson(levelSelected));
-                                    Intent intent = new Intent(getContext(), ActivitySublevel.class);
-                                    intent.putExtras(bundle);
-                                    startActivity(intent);
-                                }
-                            });
-                        }catch (JSONException e){
-                            e.printStackTrace();
-                            Toast.makeText(getContext(),e.toString(),Toast.LENGTH_LONG).show();
                         }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        VolleyLog.e("Error: ", error.getMessage());
-                    }
-                });
-        requestQueue.add(jsonArrayRequest);
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            VolleyLog.e("Error: ", error.getMessage());
+                        }
+                    });
+            requestQueue.add(jsonArrayRequest);
+        } catch (Exception e) {}
+    }
+
+    private void addLevel(){
+        Intent intent = new Intent(getContext(), ActivityAddLevel.class);
+        startActivity(intent);
     }
 }

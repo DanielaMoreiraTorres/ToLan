@@ -68,7 +68,6 @@ public class Frg_ArrastrarSoltar extends Fragment {
     NavController navController;
     private Toolbar toolbar;
     static TextToSpeech textToSpeech;
-    //ClssConvertirTextoAVoz tts;
     MenuItem mr;
     private TextView titulo;
     private ScrollView scrollView;
@@ -87,7 +86,6 @@ public class Frg_ArrastrarSoltar extends Fragment {
     private AdpEnunciado adpEnunciado;
     private AdpOptionArrastrarSoltarTxt adpOptionArrastrarSoltarTxt;
     ModelContent opSelected = new ModelContent();
-    //private RequestQueue requestQueue;
     private String url;
     Boolean respuesta = false;
     String uno, dos;
@@ -113,12 +111,12 @@ public class Frg_ArrastrarSoltar extends Fragment {
     }
 
     public void reproducirAudio(int i, String mensaje) {
-        if (i != TextToSpeech.ERROR) {
-            textToSpeech.setLanguage(Locale.getDefault());
-            textToSpeech.speak(mensaje, TextToSpeech.QUEUE_FLUSH, null);
-        }
-        //tts = new ClssConvertirTextoAVoz();
-        //tts.init(getContext());
+        try {
+            if (i != TextToSpeech.ERROR) {
+                textToSpeech.setLanguage(Locale.getDefault());
+                textToSpeech.speak(mensaje, TextToSpeech.QUEUE_FLUSH, null);
+            }
+        } catch (Exception e) {}
     }
 
     @Override
@@ -134,7 +132,6 @@ public class Frg_ArrastrarSoltar extends Fragment {
         try {
             titulo = view.findViewById(R.id.titulo);
             titulo.setOnClickListener(v -> ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce(titulo.getText().toString()));
-            //tts.reproduce(titulo.getText().toString()));
             toolbar = view.findViewById(R.id.toolbar);
             setHasOptionsMenu(true);
             ((AppCompatActivity) this.getActivity()).setSupportActionBar(toolbar);
@@ -162,15 +159,12 @@ public class Frg_ArrastrarSoltar extends Fragment {
                 RespuestasOk();
             } else {
                 //jsonActivities.remove(0);
-                //tts = new ClssConvertirTextoAVoz();
-                //tts.init(getContext());
                 Toast.makeText(getContext(), "La actividad no tiene contenido", Toast.LENGTH_SHORT).show();
                 final Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("La actividad no tiene contenido");
-                        //tts.reproduce("La actividad no tiene contenido");
                     }
                 }, 1000);
                 state.setVisibility(View.VISIBLE);
@@ -188,143 +182,150 @@ public class Frg_ArrastrarSoltar extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_toolbar, menu);
-        mr = menu.findItem(R.id.btnRecompensa);
-        //mr.setTitle(String.valueOf(ModelUser.stockcaritas));
-        //super.onCreateOptionsMenu(menu, inflater);
+        try {
+            inflater.inflate(R.menu.menu_toolbar, menu);
+            mr = menu.findItem(R.id.btnRecompensa);
+            //super.onCreateOptionsMenu(menu, inflater);
+        } catch (Exception e) {}
     }
 
     private void RespuestasOk() {
-        if (respuestas.size() == 1)
-            destino.setTag(respuestas.get(0).getDescripcion().trim());
-        else
-            destino.setTag("respuesta");
-        adpEnunciado = new AdpEnunciado(getContext(), modelContentsEnun);
-        lstLista.setAdapter(adpEnunciado);
-        adpOptionArrastrarSoltarTxt = new AdpOptionArrastrarSoltarTxt(getContext(), modelContentsOp, respuestas);
-        rcvOptions.setAdapter(adpOptionArrastrarSoltarTxt);
-        adpOptionArrastrarSoltarTxt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int opcselec = rcvOptions.getChildAdapterPosition(view);
-                opSelected = modelContentsOp.get(opcselec);
-                Toast.makeText(getContext(), opSelected.getDescripcion(), Toast.LENGTH_SHORT).show();
-                //tts.reproduce(opSelected.getDescripcion());
-                ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(opSelected.getDescripcion());
-            }
-        });
-        adpOptionArrastrarSoltarTxt.setOnLongClickListener(v -> LongClickListener(v));
-        destino.setOnDragListener((v, event) -> DragListener(v, event));
+        try {
+            if (respuestas.size() == 1)
+                destino.setTag(respuestas.get(0).getDescripcion().trim());
+            else
+                destino.setTag("respuesta");
+            adpEnunciado = new AdpEnunciado(getContext(), modelContentsEnun);
+            lstLista.setAdapter(adpEnunciado);
+            adpOptionArrastrarSoltarTxt = new AdpOptionArrastrarSoltarTxt(getContext(), modelContentsOp, respuestas);
+            rcvOptions.setAdapter(adpOptionArrastrarSoltarTxt);
+            adpOptionArrastrarSoltarTxt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int opcselec = rcvOptions.getChildAdapterPosition(view);
+                    opSelected = modelContentsOp.get(opcselec);
+                    Toast.makeText(getContext(), opSelected.getDescripcion(), Toast.LENGTH_SHORT).show();
+                    //tts.reproduce(opSelected.getDescripcion());
+                    ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(opSelected.getDescripcion());
+                }
+            });
+            adpOptionArrastrarSoltarTxt.setOnLongClickListener(v -> LongClickListener(v));
+            destino.setOnDragListener((v, event) -> DragListener(v, event));
+        } catch (Exception e) {}
     }
 
     private boolean LongClickListener(View v) {
-        LinearLayout linearLayout = (LinearLayout) v;
-        MaterialCardView cardView = (MaterialCardView) linearLayout.getChildAt(0);
-        View textView = cardView.getChildAt(0);
-        ClipData data = newPlainText((CharSequence) textView.getTag(), "");
-        View.DragShadowBuilder myShadow = new View.DragShadowBuilder(v);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            v.startDragAndDrop(data, myShadow, textView, 0);
-        else
-            v.startDrag(data, myShadow, textView, 0);
-        v.setVisibility(View.INVISIBLE);
+        try {
+            LinearLayout linearLayout = (LinearLayout) v;
+            MaterialCardView cardView = (MaterialCardView) linearLayout.getChildAt(0);
+            View textView = cardView.getChildAt(0);
+            ClipData data = newPlainText((CharSequence) textView.getTag(), "");
+            View.DragShadowBuilder myShadow = new View.DragShadowBuilder(v);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                v.startDragAndDrop(data, myShadow, textView, 0);
+            else
+                v.startDrag(data, myShadow, textView, 0);
+            v.setVisibility(View.INVISIBLE);
+        } catch (Exception e) {}
         return true;
     }
 
     private boolean DragListener(View v, DragEvent event) {
-        switch (event.getAction()) {
-            case DragEvent.ACTION_DRAG_STARTED:
-                event.getClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN);
-                break;
-            case DragEvent.ACTION_DRAG_ENTERED:
-                v.invalidate();
-                break;
-            case DragEvent.ACTION_DRAG_EXITED:
-                v.invalidate();
-                break;
-            case DragEvent.ACTION_DRAG_LOCATION:
-                break;
-            case DragEvent.ACTION_DRAG_ENDED:
-                v.invalidate();
-                textView = (View) event.getLocalState();
-                cardView = (ViewGroup) textView.getParent();
-                linearLayout = (ViewGroup) cardView.getParent();
-                linearLayout.setVisibility(View.VISIBLE);
-                break;
-            case DragEvent.ACTION_DROP:
-                v.invalidate();
-                uno = v.getTag().toString();
-                dos = (String) event.getClipDescription().getLabel();
-                textView = (View) event.getLocalState();
-                cardView = (ViewGroup) textView.getParent();
-                linearLayout = (ViewGroup) cardView.getParent();
-                if (uno != null & dos != null) {
-                    if (v.getTag().toString().equals(event.getClipDescription().getLabel())) {
-                        respuesta = true;
-                        animar(true);
-                        //Toast.makeText(getContext(),"Correcto",Toast.LENGTH_SHORT).show();
-                        scrollView.post(new Runnable() {
-                            public void run() {
-                                scrollView.scrollTo(0, scrollView.getBottom());
-                            }
-                        });
-                        cardView.removeView(textView);
-                        dest = (LinearLayout) v;
-                        dest.addView(textView);
-                        textView.setVisibility(View.VISIBLE);
-                        //Seteamos el background verde
-                        state.setBackgroundColor(Color.parseColor("#AAFAB1"));
-                        //Seteamos el texto de continuar y lo mostramos
-                        TextView txt = (TextView) state.getChildAt(0);
-                        txt.setText(generarAleatorio());
-                        txt.setTextColor(Color.parseColor("#048710"));
-                        txt.setVisibility(View.VISIBLE);
-                        //tts.reproduce(txt.getText().toString());
-                        ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce(txt.getText().toString());
-                        ImageView img = (ImageView) state.getChildAt(1);
-                        img.setImageResource(R.drawable.icon_valor);
-                        img.setColorFilter(Color.parseColor("#048710"));
-                        state.getChildAt(2).setVisibility(View.GONE);
-                        state.getChildAt(3).setVisibility(View.VISIBLE);
-                        state.getChildAt(3).setOnClickListener(vcont -> Navegacion(vcont));
-                        //Ubicamos el layout visible
-                        state.setVisibility(View.VISIBLE);
-                        CompleteActivity(v);
-                    } else {
-                        //Toast.makeText(getContext(),"Incorrecto",Toast.LENGTH_SHORT).show();
-                        respuesta = false;
-                        animar(true);
-                        scrollView.post(new Runnable() {
-                            public void run() {
-                                scrollView.scrollTo(0, scrollView.getBottom());
-                            }
-                        });
-                        linearLayout.setVisibility(View.VISIBLE);
-                        //Seteamos el backgroun rojo
-                        state.setBackgroundColor(Color.parseColor("#F7B9B9"));
-                        //Seteamos el texto de error y lo mostramos
-                        TextView txt = (TextView) state.getChildAt(0);
-                        txt.setText("¡Incorrecto!\n¡Vuelve a intentarlo!");
-                        txt.setTextColor(Color.parseColor("#C70039"));
-                        txt.setVisibility(View.VISIBLE);
-                        //tts.reproduce(txt.getText().toString());
-                        ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce(txt.getText().toString());
-                        ImageView img = (ImageView) state.getChildAt(1);
-                        img.setImageResource(R.drawable.sad);
-                        img.setColorFilter(Color.parseColor("#C70039"));
-                        //Ocultamos el boton comprobar
-                        state.getChildAt(3).setVisibility(View.GONE);
-                        //Seteamos evento click a boton OK
-                        state.getChildAt(2).setVisibility(View.VISIBLE);
-                        state.getChildAt(2).setOnClickListener(vok -> AccionOk());
-                        state.setVisibility(View.VISIBLE);
-                    }
-                } else
+        try {
+            switch (event.getAction()) {
+                case DragEvent.ACTION_DRAG_STARTED:
+                    event.getClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN);
+                    break;
+                case DragEvent.ACTION_DRAG_ENTERED:
+                    v.invalidate();
+                    break;
+                case DragEvent.ACTION_DRAG_EXITED:
+                    v.invalidate();
+                    break;
+                case DragEvent.ACTION_DRAG_LOCATION:
+                    break;
+                case DragEvent.ACTION_DRAG_ENDED:
+                    v.invalidate();
+                    textView = (View) event.getLocalState();
+                    cardView = (ViewGroup) textView.getParent();
+                    linearLayout = (ViewGroup) cardView.getParent();
                     linearLayout.setVisibility(View.VISIBLE);
-                break;
-            default:
-                break;
-        }
+                    break;
+                case DragEvent.ACTION_DROP:
+                    v.invalidate();
+                    uno = v.getTag().toString();
+                    dos = (String) event.getClipDescription().getLabel();
+                    textView = (View) event.getLocalState();
+                    cardView = (ViewGroup) textView.getParent();
+                    linearLayout = (ViewGroup) cardView.getParent();
+                    if (uno != null & dos != null) {
+                        if (v.getTag().toString().equals(event.getClipDescription().getLabel())) {
+                            respuesta = true;
+                            animar(true);
+                            //Toast.makeText(getContext(),"Correcto",Toast.LENGTH_SHORT).show();
+                            scrollView.post(new Runnable() {
+                                public void run() {
+                                    scrollView.scrollTo(0, scrollView.getBottom());
+                                }
+                            });
+                            cardView.removeView(textView);
+                            dest = (LinearLayout) v;
+                            dest.addView(textView);
+                            textView.setVisibility(View.VISIBLE);
+                            //Seteamos el background verde
+                            state.setBackgroundColor(Color.parseColor("#AAFAB1"));
+                            //Seteamos el texto de continuar y lo mostramos
+                            TextView txt = (TextView) state.getChildAt(0);
+                            txt.setText(generarAleatorio());
+                            txt.setTextColor(Color.parseColor("#048710"));
+                            txt.setVisibility(View.VISIBLE);
+                            //tts.reproduce(txt.getText().toString());
+                            ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce(txt.getText().toString());
+                            ImageView img = (ImageView) state.getChildAt(1);
+                            img.setImageResource(R.drawable.icon_valor);
+                            img.setColorFilter(Color.parseColor("#048710"));
+                            state.getChildAt(2).setVisibility(View.GONE);
+                            state.getChildAt(3).setVisibility(View.VISIBLE);
+                            state.getChildAt(3).setOnClickListener(vcont -> Navegacion(vcont));
+                            //Ubicamos el layout visible
+                            state.setVisibility(View.VISIBLE);
+                            CompleteActivity(v);
+                        } else {
+                            //Toast.makeText(getContext(),"Incorrecto",Toast.LENGTH_SHORT).show();
+                            respuesta = false;
+                            animar(true);
+                            scrollView.post(new Runnable() {
+                                public void run() {
+                                    scrollView.scrollTo(0, scrollView.getBottom());
+                                }
+                            });
+                            linearLayout.setVisibility(View.VISIBLE);
+                            //Seteamos el backgroun rojo
+                            state.setBackgroundColor(Color.parseColor("#F7B9B9"));
+                            //Seteamos el texto de error y lo mostramos
+                            TextView txt = (TextView) state.getChildAt(0);
+                            txt.setText("¡Incorrecto!\n¡Vuelve a intentarlo!");
+                            txt.setTextColor(Color.parseColor("#C70039"));
+                            txt.setVisibility(View.VISIBLE);
+                            //tts.reproduce(txt.getText().toString());
+                            ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce(txt.getText().toString());
+                            ImageView img = (ImageView) state.getChildAt(1);
+                            img.setImageResource(R.drawable.sad);
+                            img.setColorFilter(Color.parseColor("#C70039"));
+                            //Ocultamos el boton comprobar
+                            state.getChildAt(3).setVisibility(View.GONE);
+                            //Seteamos evento click a boton OK
+                            state.getChildAt(2).setVisibility(View.VISIBLE);
+                            state.getChildAt(2).setOnClickListener(vok -> AccionOk());
+                            state.setVisibility(View.VISIBLE);
+                        }
+                    } else
+                        linearLayout.setVisibility(View.VISIBLE);
+                    break;
+                default:
+                    break;
+            }
+        } catch (Exception e) {}
         return true;
     }
 
@@ -335,57 +336,60 @@ public class Frg_ArrastrarSoltar extends Fragment {
     }
 
     private void Navegacion(View v) {
-        TextView txt = (TextView) state.getChildAt(3);
-        //tts.reproduce(txt.getText().toString());
-        ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce(txt.getText().toString());
-        navController = Navigation.findNavController(v);
-        //Eliminamos el item por el cual nos redirecccionamos aca
-        jsonActivities.remove(0);
-        ClssNavegacionActividades clssNavegacionActividades = new ClssNavegacionActividades(navController, jsonActivities, v);
-        clssNavegacionActividades.navegar();
+        try {
+            TextView txt = (TextView) state.getChildAt(3);
+            ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce(txt.getText().toString());
+            navController = Navigation.findNavController(v);
+            //Eliminamos el item por el cual nos redirecccionamos aca
+            jsonActivities.remove(0);
+            ClssNavegacionActividades clssNavegacionActividades = new ClssNavegacionActividades(navController, jsonActivities, v);
+            clssNavegacionActividades.navegar();
+        } catch (Exception e) {}
     }
 
     private void AccionOk() {
-        animar(false);
-        scrollView.post(new Runnable() {
-            public void run() {
-                scrollView.scrollTo(0, scrollView.getTop());
-            }
-        });
-        state.setVisibility(View.GONE);
-        TextView txt = (TextView) state.getChildAt(2);
-        //tts.reproduce(txt.getText().toString());
-        ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(txt.getText().toString());
+        try {
+            animar(false);
+            scrollView.post(new Runnable() {
+                public void run() {
+                    scrollView.scrollTo(0, scrollView.getTop());
+                }
+            });
+            state.setVisibility(View.GONE);
+            TextView txt = (TextView) state.getChildAt(2);
+            //tts.reproduce(txt.getText().toString());
+            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(txt.getText().toString());
+        } catch (Exception e) {}
     }
 
     private void animar(boolean mostrar) {
-        AnimationSet set = new AnimationSet(true);
-        Animation animation = null;
-        if (mostrar) {
-            animation = new TranslateAnimation(
-                    Animation.RELATIVE_TO_SELF, 0.0f,
-                    Animation.RELATIVE_TO_SELF, 0.0f,
-                    Animation.RELATIVE_TO_SELF, 1.0f,
-                    Animation.RELATIVE_TO_SELF, 0.0f);
-        } else {
-            animation = new TranslateAnimation(
-                    Animation.RELATIVE_TO_SELF, 0.0f,
-                    Animation.RELATIVE_TO_SELF, 0.0f,
-                    Animation.RELATIVE_TO_SELF, 0.0f,
-                    Animation.RELATIVE_TO_SELF, 1.0f);
-        }
-        //duración en milisegundos
-        animation.setDuration(500);
-        set.addAnimation(animation);
-        LayoutAnimationController controller = new LayoutAnimationController(set, 0.25f);
-        state.setLayoutAnimation(controller);
-        state.startAnimation(animation);
+        try {
+            AnimationSet set = new AnimationSet(true);
+            Animation animation = null;
+            if (mostrar) {
+                animation = new TranslateAnimation(
+                        Animation.RELATIVE_TO_SELF, 0.0f,
+                        Animation.RELATIVE_TO_SELF, 0.0f,
+                        Animation.RELATIVE_TO_SELF, 1.0f,
+                        Animation.RELATIVE_TO_SELF, 0.0f);
+            } else {
+                animation = new TranslateAnimation(
+                        Animation.RELATIVE_TO_SELF, 0.0f,
+                        Animation.RELATIVE_TO_SELF, 0.0f,
+                        Animation.RELATIVE_TO_SELF, 0.0f,
+                        Animation.RELATIVE_TO_SELF, 1.0f);
+            }
+            //duración en milisegundos
+            animation.setDuration(500);
+            set.addAnimation(animation);
+            LayoutAnimationController controller = new LayoutAnimationController(set, 0.25f);
+            state.setLayoutAnimation(controller);
+            state.startAnimation(animation);
+        } catch (Exception e) {}
     }
 
     private void CompleteActivity(View v) {
         try {
-            // Crear nueva cola de peticiones
-            //requestQueue = Volley.newRequestQueue(getContext());
             //Parámetros a enviar a la API
             JSONObject param = new JSONObject();
             param.put("idEstudiante", ClssStaticGrupo.idestudiante);
@@ -400,16 +404,12 @@ public class Frg_ArrastrarSoltar extends Fragment {
                                 if (response.length() > 1) {
                                     int recompensa = response.getInt("recompensaganada");
                                     ModelUser.stockcaritas += recompensa;
-
-                                    //Actualice el itemMenú creado
                                     mr.setTitle(String.valueOf(ModelUser.stockcaritas));
                                     //Toast.makeText(getContext(), "Actividad exitosa", Toast.LENGTH_LONG).show();
-                                    //Navegacion(v);
                                 } else
                                     Toast.makeText(getContext(), response.get("message").toString(), Toast.LENGTH_LONG).show();
                             } catch (Exception e) {
                                 //Toast.makeText(getContext(), "Error de conexión", Toast.LENGTH_LONG).show();
-                                Toast.makeText(getContext(), "Error de conexión [" + e.getMessage() + "]", Toast.LENGTH_LONG).show();
                             }
                         }
                     }, new Response.ErrorListener() {
@@ -417,17 +417,14 @@ public class Frg_ArrastrarSoltar extends Fragment {
                 public void onErrorResponse(VolleyError error) {
                     VolleyLog.e("Error: ", error.getMessage());
                     //Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
-                    //tts.reproduce("Error de conexión con el servidor");
                     ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce("Error de conexión con el servidor");
                 }
             });
             // Añadir petición a la cola
-            //requestQueue.add(request_json);
             ClssVolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(request_json);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
-
 }

@@ -1,6 +1,5 @@
 package com.example.tolan.fragments;
 
-import android.app.ActivityGroup;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -17,8 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.example.tolan.ActivityContact;
-import com.example.tolan.ActivityLevel;
 import com.example.tolan.ActivitySkin;
 import com.example.tolan.ActivitySublevel;
 import com.example.tolan.R;
@@ -51,40 +48,56 @@ public class FrgMenuAdmin extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_frg_menu_admin, container, false);
-        toolbar = view.findViewById(R.id.toolbar);
-        setHasOptionsMenu(true);
-        ((AppCompatActivity)this.getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity)this.getActivity()).getSupportActionBar().setTitle("");
-        iconNiveles = view.findViewById(R.id.iconNiveles);
-        iconNiveles.setOnClickListener(v->{OptionsMenuAdmin(v);});
-        iconSubNiveles = view.findViewById(R.id.iconSubNiveles);
-        iconSubNiveles.setOnClickListener(v->{OptionsMenuAdmin(v);});
-        iconActividades = view.findViewById(R.id.iconActividades);
-        iconActividades.setOnClickListener(v->{OptionsMenuAdmin(v);});
-        iconSkins = view.findViewById(R.id.iconSkins);
-        iconSkins.setOnClickListener(v->{OptionsMenuAdmin(v);});
-        iconGrupos = view.findViewById(R.id.iconGrupos);
-        iconGrupos.setOnClickListener(v->{OptionsMenuAdmin(v);});
-        iconHistorial = view.findViewById(R.id.iconHistorial);
-        iconHistorial.setOnClickListener(v->{OptionsMenuAdmin(v);});
+        try {
+
+            toolbar = view.findViewById(R.id.toolbar);
+            setHasOptionsMenu(true);
+            ((AppCompatActivity) this.getActivity()).setSupportActionBar(toolbar);
+            ((AppCompatActivity) this.getActivity()).getSupportActionBar().setTitle("");
+            iconNiveles = view.findViewById(R.id.iconNiveles);
+            iconNiveles.setOnClickListener(v -> {
+                OptionsMenuAdmin(v);
+            });
+            iconSubNiveles = view.findViewById(R.id.iconSubNiveles);
+            iconSubNiveles.setOnClickListener(v -> {
+                OptionsMenuAdmin(v);
+            });
+            iconActividades = view.findViewById(R.id.iconActividades);
+            iconActividades.setOnClickListener(v -> {
+                OptionsMenuAdmin(v);
+            });
+            iconSkins = view.findViewById(R.id.iconSkins);
+            iconSkins.setOnClickListener(v -> {
+                OptionsMenuAdmin(v);
+            });
+            iconGrupos = view.findViewById(R.id.iconGrupos);
+            iconGrupos.setOnClickListener(v -> {
+                OptionsMenuAdmin(v);
+            });
+            iconHistorial = view.findViewById(R.id.iconHistorial);
+            iconHistorial.setOnClickListener(v -> {
+                OptionsMenuAdmin(v);
+            });
+        } catch (Exception e) {}
         return view;
     }
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_toolbar,menu);
-        MenuItem mc = menu.findItem(R.id.btnCaritas);
-        mc.setVisible(false);
-        MenuItem mr = menu.findItem(R.id.btnRecompensa);
+        try {
+            inflater.inflate(R.menu.menu_toolbar, menu);
+            MenuItem mc = menu.findItem(R.id.btnCaritas);
+            mc.setVisible(false);
+            MenuItem mr = menu.findItem(R.id.btnRecompensa);
+            mr.setVisible(false);
+        } catch (Exception e) {}
     }
 
     public void OptionsMenuAdmin(View view){
         int tag = Integer.parseInt(view.getTag().toString());
         if(tag == 1) {
-            /*Intent intent = new Intent(getContext(), ActivityLevel.class);
-            startActivity(intent);*/
             fragment = new FrgLevel();
-            getFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
+            getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
         }
         else if(tag == 2){
             Intent intent = new Intent(getContext(), ActivitySublevel.class);

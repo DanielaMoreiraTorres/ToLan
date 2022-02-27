@@ -1,5 +1,6 @@
 package com.example.tolan.fragments;
 
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -56,7 +57,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
-public class Frg_IdentificarRespuestaImagen extends Fragment {
+public class Frg_IdentificarRespuestaImagen extends Fragment implements View.OnClickListener{
 
     NavController navController;
     private Toolbar toolbar;
@@ -148,7 +149,11 @@ public class Frg_IdentificarRespuestaImagen extends Fragment {
             modelContent = new ModelContent();
             modelContent.MapContenido(contenido, modelContentsEnun, modelContentsOp, respuestas);
             if (modelContentsEnun.size() > 0 & modelContentsOp.size() > 0 & respuestas.size() > 0) {
-                RespuestasOk();
+                adpEnunciado = new AdpEnunciado(getContext(), modelContentsEnun);
+                lstLista.setAdapter(adpEnunciado);
+                adpOptiosIdentifyImg = new AdpOptionIdentifyImg(getContext(), modelContentsOp);
+                rcvOptions.setAdapter(adpOptiosIdentifyImg);
+                adpOptiosIdentifyImg.setOnClickListener(this);
             } else {
                 //tts = new ClssConvertirTextoAVoz();
                 //tts.init(getContext());
@@ -176,104 +181,11 @@ public class Frg_IdentificarRespuestaImagen extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_toolbar, menu);
-        mr = menu.findItem(R.id.btnRecompensa);
-        //mr.setTitle(String.valueOf(ModelUser.stockcaritas));
-    }
-
-    private void RespuestasOk() {
-        adpEnunciado = new AdpEnunciado(getContext(), modelContentsEnun);
-        lstLista.setAdapter(adpEnunciado);
-        adpOptiosIdentifyImg = new AdpOptionIdentifyImg(getContext(), modelContentsOp);
-        rcvOptions.setAdapter(adpOptiosIdentifyImg);
-        adpOptiosIdentifyImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    int opcselec = rcvOptions.getChildAdapterPosition(view);
-                    opSelected = modelContentsOp.get(opcselec);
-                    //tts.reproduce(opSelected.getDescripcion());
-                    ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(opSelected.getDescripcion());
-                    if (respuestas.size() == 1) {
-                        if (opSelected.getRespuesta().equals(true)) {
-                            rcvOptions.getChildAt(opcselec).setBackgroundColor(Color.parseColor("#44CCCC"));
-                            rcvOptions.setClickable(false);
-                            //rcvOptions.setEnabled(false);
-                            respuesta = true;
-                            scrollView.post(new Runnable() {
-                                public void run() {
-                                    scrollView.scrollTo(0, scrollView.getBottom());
-                                }
-                            });
-                            animar(true);
-                            //Seteamos el background verde
-                            state.setBackgroundColor(Color.parseColor("#AAFAB1"));
-                            //Seteamos el texto de continuar y lo mostramos
-                            TextView txt = (TextView) state.getChildAt(0);
-                            txt.setText(generarAleatorio());
-                            txt.setTextColor(Color.parseColor("#048710"));
-                            txt.setVisibility(View.VISIBLE);
-                            final Handler handler = new Handler();
-                            handler.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(txt.getText().toString());
-                                    //tts.reproduce(txt.getText().toString());
-                                }
-                            }, 1000);
-                            ImageView img = (ImageView) state.getChildAt(1);
-                            img.setImageResource(R.drawable.icon_valor);
-                            img.setColorFilter(Color.parseColor("#048710"));
-                            state.getChildAt(2).setVisibility(View.GONE);
-                            state.getChildAt(3).setVisibility(View.VISIBLE);
-                            state.getChildAt(3).setOnClickListener(vcont -> Navegacion(vcont));
-                            //Ubicamos el layout visible
-                            state.setVisibility(View.VISIBLE);
-                            CompleteActivity(view);
-                        } else {
-                            rcvOptions.getChildAt(opcselec).setBackgroundColor(Color.parseColor("#C70039"));
-                            rcvOptions.setClickable(false);
-                            //rcvOptions.setEnabled(false);
-                            respuesta = false;
-                            animar(true);
-                            scrollView.post(new Runnable() {
-                                public void run() {
-                                    scrollView.scrollTo(0, scrollView.getBottom());
-                                }
-                            });
-                            //Seteamos el backgroun rojo
-                            state.setBackgroundColor(Color.parseColor("#F7B9B9"));
-                            //Seteamos el texto de error y lo mostramos
-                            TextView txt = (TextView) state.getChildAt(0);
-                            txt.setText("¡Incorrecto!\n¡Vuelve a intentarlo!");
-                            txt.setTextColor(Color.parseColor("#C70039"));
-                            txt.setVisibility(View.VISIBLE);
-                            final Handler handler = new Handler();
-                            handler.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(txt.getText().toString());
-                                    //tts.reproduce(txt.getText().toString());
-                                }
-                            }, 1000);
-                            ImageView img = (ImageView) state.getChildAt(1);
-                            img.setImageResource(R.drawable.sad);
-                            img.setColorFilter(Color.parseColor("#C70039"));
-                            //Ocultamos el boton comprobar
-                            state.getChildAt(3).setVisibility(View.GONE);
-                            //Seteamos evento click a boton OK
-                            state.getChildAt(2).setVisibility(View.VISIBLE);
-                            state.getChildAt(2).setOnClickListener(vok -> AccionOk(opcselec));
-                            state.setVisibility(View.VISIBLE);
-                        }
-                    } else if (respuestas.size() > 1) {
-                        resp.add(opSelected);
-                    }
-                    //Toast.makeText(getContext(),opSelected.getDescripcion(),Toast.LENGTH_SHORT).show();
-                } catch (Exception e) {
-                }
-            }
-        });
+        try {
+            inflater.inflate(R.menu.menu_toolbar, menu);
+            mr = menu.findItem(R.id.btnRecompensa);
+            //mr.setTitle(String.valueOf(ModelUser.stockcaritas));
+        } catch (Exception e) {}
     }
 
     private String generarAleatorio() {
@@ -283,19 +195,22 @@ public class Frg_IdentificarRespuestaImagen extends Fragment {
     }
 
     private void Navegacion(View v) {
-        navController = Navigation.findNavController(v);
-        //Eliminamos el item por el cual nos redirecccionamos aca
-        jsonActivities.remove(0);
-        ClssNavegacionActividades clssNavegacionActividades = new ClssNavegacionActividades(navController, jsonActivities, v);
-        clssNavegacionActividades.navegar();
+        try {
+            navController = Navigation.findNavController(v);
+            //Eliminamos el item por el cual nos redirecccionamos aca
+            jsonActivities.remove(0);
+            ClssNavegacionActividades clssNavegacionActividades = new ClssNavegacionActividades(navController, jsonActivities, v);
+            clssNavegacionActividades.navegar();
+        } catch (Exception e) {}
     }
 
     private void AccionOk(int op) {
-        animar(false);
-        rcvOptions.setClickable(true);
-        //rcvOptions.setEnabled(true);
         try {
-            rcvOptions.getChildAt(op).setBackgroundColor(Color.parseColor("#FFFFFF"));
+            animar(false);
+            adpOptiosIdentifyImg.setOnClickListener(this);
+            rcvOptions.getChildAt(op).setBackgroundResource(R.drawable.borde);
+            rcvOptions.getChildAt(op).setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
+            //rcvOptions.getChildAt(op).setBackgroundColor(Color.parseColor("#FFFFFF"));
             scrollView.post(new Runnable() {
                 public void run() {
                     scrollView.scrollTo(0, scrollView.getTop());
@@ -310,27 +225,29 @@ public class Frg_IdentificarRespuestaImagen extends Fragment {
     }
 
     private void animar(boolean mostrar) {
-        AnimationSet set = new AnimationSet(true);
-        Animation animation = null;
-        if (mostrar) {
-            animation = new TranslateAnimation(
-                    Animation.RELATIVE_TO_SELF, 0.0f,
-                    Animation.RELATIVE_TO_SELF, 0.0f,
-                    Animation.RELATIVE_TO_SELF, 1.0f,
-                    Animation.RELATIVE_TO_SELF, 0.0f);
-        } else {
-            animation = new TranslateAnimation(
-                    Animation.RELATIVE_TO_SELF, 0.0f,
-                    Animation.RELATIVE_TO_SELF, 0.0f,
-                    Animation.RELATIVE_TO_SELF, 0.0f,
-                    Animation.RELATIVE_TO_SELF, 1.0f);
-        }
-        //duración en milisegundos
-        animation.setDuration(500);
-        set.addAnimation(animation);
-        LayoutAnimationController controller = new LayoutAnimationController(set, 0.25f);
-        state.setLayoutAnimation(controller);
-        state.startAnimation(animation);
+        try {
+            AnimationSet set = new AnimationSet(true);
+            Animation animation = null;
+            if (mostrar) {
+                animation = new TranslateAnimation(
+                        Animation.RELATIVE_TO_SELF, 0.0f,
+                        Animation.RELATIVE_TO_SELF, 0.0f,
+                        Animation.RELATIVE_TO_SELF, 1.0f,
+                        Animation.RELATIVE_TO_SELF, 0.0f);
+            } else {
+                animation = new TranslateAnimation(
+                        Animation.RELATIVE_TO_SELF, 0.0f,
+                        Animation.RELATIVE_TO_SELF, 0.0f,
+                        Animation.RELATIVE_TO_SELF, 0.0f,
+                        Animation.RELATIVE_TO_SELF, 1.0f);
+            }
+            //duración en milisegundos
+            animation.setDuration(500);
+            set.addAnimation(animation);
+            LayoutAnimationController controller = new LayoutAnimationController(set, 0.25f);
+            state.setLayoutAnimation(controller);
+            state.startAnimation(animation);
+        } catch (Exception e) {}
     }
 
     private void CompleteActivity(View v) {
@@ -353,7 +270,6 @@ public class Frg_IdentificarRespuestaImagen extends Fragment {
                                     ModelUser.stockcaritas += recompensa;
                                     //Actualice el itemMenú creado
                                     mr.setTitle(String.valueOf(ModelUser.stockcaritas));
-                                    //ModelUser.stockcaritas+=
                                     //Toast.makeText(getContext(), "Actividad exitosa", Toast.LENGTH_LONG).show();
                                     //Navegacion(v);
                                 } else
@@ -374,6 +290,94 @@ public class Frg_IdentificarRespuestaImagen extends Fragment {
             ClssVolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(request_json);
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        try {
+            int opcselec = rcvOptions.getChildAdapterPosition(view);
+            opSelected = modelContentsOp.get(opcselec);
+            adpOptiosIdentifyImg.setOnClickListener(null);
+            Toast.makeText(getContext(),opSelected.getDescripcion().trim(),Toast.LENGTH_SHORT);
+            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(opSelected.getDescripcion());
+            if (respuestas.size() == 1) {
+                if (opSelected.getRespuesta().equals(true)) {
+                    rcvOptions.getChildAt(opcselec).setBackgroundResource(R.drawable.borde);
+                    rcvOptions.getChildAt(opcselec).setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#44CCCC")));
+                    //rcvOptions.getChildAt(opcselec).setBackgroundColor(Color.parseColor("#44CCCC"));
+                    respuesta = true;
+                    scrollView.post(new Runnable() {
+                        public void run() {
+                            scrollView.scrollTo(0, scrollView.getBottom());
+                        }
+                    });
+                    animar(true);
+                    //Seteamos el background verde
+                    state.setBackgroundColor(Color.parseColor("#AAFAB1"));
+                    //Seteamos el texto de continuar y lo mostramos
+                    TextView txt = (TextView) state.getChildAt(0);
+                    txt.setText(generarAleatorio());
+                    txt.setTextColor(Color.parseColor("#048710"));
+                    txt.setVisibility(View.VISIBLE);
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(txt.getText().toString());
+                            //tts.reproduce(txt.getText().toString());
+                        }
+                    }, 1000);
+                    ImageView img = (ImageView) state.getChildAt(1);
+                    img.setImageResource(R.drawable.icon_valor);
+                    img.setColorFilter(Color.parseColor("#048710"));
+                    state.getChildAt(2).setVisibility(View.GONE);
+                    state.getChildAt(3).setVisibility(View.VISIBLE);
+                    state.getChildAt(3).setOnClickListener(vcont -> Navegacion(vcont));
+                    //Ubicamos el layout visible
+                    state.setVisibility(View.VISIBLE);
+                    CompleteActivity(view);
+                } else {
+                    rcvOptions.getChildAt(opcselec).setBackgroundResource(R.drawable.borde);
+                    rcvOptions.getChildAt(opcselec).setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#C70039")));
+                    //rcvOptions.getChildAt(opcselec).setBackgroundColor(Color.parseColor("#C70039"));
+                    respuesta = false;
+                    animar(true);
+                    scrollView.post(new Runnable() {
+                        public void run() {
+                            scrollView.scrollTo(0, scrollView.getBottom());
+                        }
+                    });
+                    //Seteamos el backgroun rojo
+                    state.setBackgroundColor(Color.parseColor("#F7B9B9"));
+                    //Seteamos el texto de error y lo mostramos
+                    TextView txt = (TextView) state.getChildAt(0);
+                    txt.setText("¡Incorrecto!\n¡Vuelve a intentarlo!");
+                    txt.setTextColor(Color.parseColor("#C70039"));
+                    txt.setVisibility(View.VISIBLE);
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(txt.getText().toString());
+                            //tts.reproduce(txt.getText().toString());
+                        }
+                    }, 1000);
+                    ImageView img = (ImageView) state.getChildAt(1);
+                    img.setImageResource(R.drawable.sad);
+                    img.setColorFilter(Color.parseColor("#C70039"));
+                    //Ocultamos el boton comprobar
+                    state.getChildAt(3).setVisibility(View.GONE);
+                    //Seteamos evento click a boton OK
+                    state.getChildAt(2).setVisibility(View.VISIBLE);
+                    state.getChildAt(2).setOnClickListener(vok -> AccionOk(opcselec));
+                    state.setVisibility(View.VISIBLE);
+                }
+            } else if (respuestas.size() > 1) {
+                resp.add(opSelected);
+            }
+            //Toast.makeText(getContext(),opSelected.getDescripcion(),Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
         }
     }
 }

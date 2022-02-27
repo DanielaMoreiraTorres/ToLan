@@ -1,5 +1,6 @@
 package com.example.tolan.fragments;
 
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -33,12 +34,10 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.tolan.R;
 import com.example.tolan.adapters.AdpEnunciado;
 import com.example.tolan.adapters.AdpOptionIdentifyTxt;
@@ -58,13 +57,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
-public class Frg_IdentificarRespuestaPalabra extends Fragment {
+public class Frg_IdentificarRespuestaPalabra extends Fragment implements View.OnClickListener{
 
     JSONArray jsonActivities;
     NavController navController;
     private Toolbar toolbar;
     static TextToSpeech textToSpeech;
-    //ClssConvertirTextoAVoz tts;
     MenuItem mr;
     private TextView titulo;
     private ScrollView scrollView;
@@ -82,7 +80,6 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment {
     private AdpEnunciado adpEnunciado;
     private AdpOptionIdentifyTxt adpOptiosIdentifyTxt;
     ModelContent opSelected = new ModelContent();
-    //private RequestQueue requestQueue;
     private String url;
     Boolean respuesta = false;
 
@@ -105,12 +102,12 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment {
     }
 
     public void reproducirAudio(int i, String mensaje) {
-        if (i != TextToSpeech.ERROR) {
-            textToSpeech.setLanguage(Locale.getDefault());
-            textToSpeech.speak(mensaje, TextToSpeech.QUEUE_FLUSH, null);
-        }
-        //tts = new ClssConvertirTextoAVoz();
-        //tts.init(getContext());
+        try {
+            if (i != TextToSpeech.ERROR) {
+                textToSpeech.setLanguage(Locale.getDefault());
+                textToSpeech.speak(mensaje, TextToSpeech.QUEUE_FLUSH, null);
+            }
+        } catch (Exception e) {}
     }
 
     @Override
@@ -126,7 +123,6 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment {
         try {
             titulo = view.findViewById(R.id.titulo);
             titulo.setOnClickListener(v -> ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce(titulo.getText().toString()));
-            //tts.reproduce(titulo.getText().toString()));
             toolbar = view.findViewById(R.id.toolbar);
             setHasOptionsMenu(true);
             ((AppCompatActivity) this.getActivity()).setSupportActionBar(toolbar);
@@ -150,16 +146,17 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment {
             modelContent = new ModelContent();
             modelContent.MapContenido(contenido, modelContentsEnun, modelContentsOp, respuestas);
             if (modelContentsEnun.size() > 0 & modelContentsOp.size() > 0 & respuestas.size() > 0) {
-                RespuestasOk();
+                adpEnunciado = new AdpEnunciado(getContext(), modelContentsEnun);
+                lstLista.setAdapter(adpEnunciado);
+                adpOptiosIdentifyTxt = new AdpOptionIdentifyTxt(getContext(), modelContentsOp);
+                rcvOptions.setAdapter(adpOptiosIdentifyTxt);
+                adpOptiosIdentifyTxt.setOnClickListener(this);
             } else {
-                //tts = new ClssConvertirTextoAVoz();
-                //tts.init(getContext());
                 Toast.makeText(getContext(), "La actividad no tiene contenido", Toast.LENGTH_SHORT).show();
                 final Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        //tts.reproduce("La actividad no tiene contenido");
                         ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("La actividad no tiene contenido");
                     }
                 }, 1000);
@@ -178,103 +175,10 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_toolbar, menu);
-        mr = menu.findItem(R.id.btnRecompensa);
-        //mr.setTitle(String.valueOf(ModelUser.stockcaritas));
-    }
-
-    private void RespuestasOk() {
-        adpEnunciado = new AdpEnunciado(getContext(), modelContentsEnun);
-        lstLista.setAdapter(adpEnunciado);
-        adpOptiosIdentifyTxt = new AdpOptionIdentifyTxt(getContext(), modelContentsOp);
-        rcvOptions.setAdapter(adpOptiosIdentifyTxt);
-        adpOptiosIdentifyTxt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    int opcselec = rcvOptions.getChildAdapterPosition(view);
-                    opSelected = modelContentsOp.get(opcselec);
-                    //tts.reproduce(opSelected.getDescripcion());
-                    ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(opSelected.getDescripcion());
-                    if (respuestas.size() == 1) {
-                        if (opSelected.getRespuesta().equals(true)) {
-                            //Toast.makeText(getContext(),"Respuesta correcta",Toast.LENGTH_SHORT).show();
-                            rcvOptions.getChildAt(opcselec).setBackgroundColor(Color.parseColor("#44CCCC"));
-                            respuesta = true;
-                            state.setVisibility(View.VISIBLE);
-                            scrollView.post(new Runnable() {
-                                public void run() {
-                                    scrollView.scrollTo(0, scrollView.getBottom());
-                                }
-                            });
-                            animar(true);
-                            //Seteamos el background verde
-                            state.setBackgroundColor(Color.parseColor("#AAFAB1"));
-                            //Seteamos el texto de continuar y lo mostramos
-                            TextView txt = (TextView) state.getChildAt(0);
-                            txt.setText(generarAleatorio());
-                            txt.setTextColor(Color.parseColor("#048710"));
-                            txt.setVisibility(View.VISIBLE);
-                            final Handler handler = new Handler();
-                            handler.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    //tts.reproduce(txt.getText().toString());
-                                    ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(txt.getText().toString());
-                                }
-                            }, 1000);
-                            ImageView img = (ImageView) state.getChildAt(1);
-                            img.setImageResource(R.drawable.icon_valor);
-                            img.setColorFilter(Color.parseColor("#048710"));
-                            state.getChildAt(2).setVisibility(View.GONE);
-                            state.getChildAt(3).setVisibility(View.VISIBLE);
-                            state.getChildAt(3).setOnClickListener(vcont -> Navegacion(vcont));
-                            //Ubicamos el layout visible
-                            state.setVisibility(View.VISIBLE);
-                            CompleteActivity(view);
-                        } else {
-                            rcvOptions.getChildAt(opcselec).setBackgroundColor(Color.parseColor("#C70039"));
-                            respuesta = false;
-                            animar(true);
-                            scrollView.post(new Runnable() {
-                                public void run() {
-                                    scrollView.scrollTo(0, scrollView.getBottom());
-                                }
-                            });
-                            //Seteamos el backgroun rojo
-                            state.setBackgroundColor(Color.parseColor("#F7B9B9"));
-                            //Seteamos el texto de error y lo mostramos
-                            TextView txt = (TextView) state.getChildAt(0);
-                            txt.setText("¡Incorrecto!\n¡Vuelve a intentarlo!");
-                            txt.setTextColor(Color.parseColor("#C70039"));
-                            txt.setVisibility(View.VISIBLE);
-                            final Handler handler = new Handler();
-                            handler.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-
-                                    //tts.reproduce(txt.getText().toString());
-                                    ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(txt.getText().toString());
-                                }
-                            }, 1000);
-                            ImageView img = (ImageView) state.getChildAt(1);
-                            img.setImageResource(R.drawable.sad);
-                            img.setColorFilter(Color.parseColor("#C70039"));
-                            //Ocultamos el boton comprobar
-                            state.getChildAt(3).setVisibility(View.GONE);
-                            //Seteamos evento click a boton OK
-                            state.getChildAt(2).setVisibility(View.VISIBLE);
-                            state.getChildAt(2).setOnClickListener(vok -> AccionOk(opcselec));
-                            state.setVisibility(View.VISIBLE);
-                        }
-                    } else if (respuestas.size() > 1) {
-                        resp.add(opSelected);
-                    }
-                    //Toast.makeText(getContext(), opSelected.getDescripcion(), Toast.LENGTH_SHORT).show();
-                } catch (Exception e) {
-                }
-            }
-        });
+        try {
+            inflater.inflate(R.menu.menu_toolbar, menu);
+            mr = menu.findItem(R.id.btnRecompensa);
+        } catch (Exception e) {}
     }
 
     private String generarAleatorio() {
@@ -284,55 +188,61 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment {
     }
 
     private void Navegacion(View v) {
-        navController = Navigation.findNavController(v);
-        //Eliminamos el item por el cual nos redirecccionamos aca
-        jsonActivities.remove(0);
-        ClssNavegacionActividades clssNavegacionActividades = new ClssNavegacionActividades(navController, jsonActivities, v);
-        clssNavegacionActividades.navegar();
+        try {
+            navController = Navigation.findNavController(v);
+            //Eliminamos el item por el cual nos redirecccionamos aca
+            jsonActivities.remove(0);
+            ClssNavegacionActividades clssNavegacionActividades = new ClssNavegacionActividades(navController, jsonActivities, v);
+            clssNavegacionActividades.navegar();
+        } catch (Exception e) {}
     }
 
     private void AccionOk(int op) {
-        animar(false);
-        rcvOptions.getChildAt(op).setBackgroundColor(Color.parseColor("#FFFFFF"));
-        scrollView.post(new Runnable() {
-            public void run() {
-                scrollView.scrollTo(0, scrollView.getTop());
-            }
-        });
-        state.setVisibility(View.GONE);
-        TextView txt = (TextView) state.getChildAt(2);
-        //tts.reproduce(txt.getText().toString());
-        ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(txt.getText().toString());
+        try {
+            animar(false);
+            adpOptiosIdentifyTxt.setOnClickListener(this);
+            rcvOptions.getChildAt(op).setBackgroundResource(R.drawable.borde);
+            rcvOptions.getChildAt(op).setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
+            scrollView.post(new Runnable() {
+                public void run() {
+                    scrollView.scrollTo(0, scrollView.getTop());
+                }
+            });
+            state.setVisibility(View.GONE);
+            TextView txt = (TextView) state.getChildAt(2);
+            //tts.reproduce(txt.getText().toString());
+            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(txt.getText().toString());
+        } catch (Exception e) {}
     }
 
     private void animar(boolean mostrar) {
-        AnimationSet set = new AnimationSet(true);
-        Animation animation = null;
-        if (mostrar) {
-            animation = new TranslateAnimation(
-                    Animation.RELATIVE_TO_SELF, 0.0f,
-                    Animation.RELATIVE_TO_SELF, 0.0f,
-                    Animation.RELATIVE_TO_SELF, 1.0f,
-                    Animation.RELATIVE_TO_SELF, 0.0f);
-        } else {
-            animation = new TranslateAnimation(
-                    Animation.RELATIVE_TO_SELF, 0.0f,
-                    Animation.RELATIVE_TO_SELF, 0.0f,
-                    Animation.RELATIVE_TO_SELF, 0.0f,
-                    Animation.RELATIVE_TO_SELF, 1.0f);
-        }
-        //duración en milisegundos
-        animation.setDuration(500);
-        set.addAnimation(animation);
-        LayoutAnimationController controller = new LayoutAnimationController(set, 0.25f);
-        state.setLayoutAnimation(controller);
-        state.startAnimation(animation);
+        try {
+            AnimationSet set = new AnimationSet(true);
+            Animation animation = null;
+            if (mostrar) {
+                animation = new TranslateAnimation(
+                        Animation.RELATIVE_TO_SELF, 0.0f,
+                        Animation.RELATIVE_TO_SELF, 0.0f,
+                        Animation.RELATIVE_TO_SELF, 1.0f,
+                        Animation.RELATIVE_TO_SELF, 0.0f);
+            } else {
+                animation = new TranslateAnimation(
+                        Animation.RELATIVE_TO_SELF, 0.0f,
+                        Animation.RELATIVE_TO_SELF, 0.0f,
+                        Animation.RELATIVE_TO_SELF, 0.0f,
+                        Animation.RELATIVE_TO_SELF, 1.0f);
+            }
+            //duración en milisegundos
+            animation.setDuration(500);
+            set.addAnimation(animation);
+            LayoutAnimationController controller = new LayoutAnimationController(set, 0.25f);
+            state.setLayoutAnimation(controller);
+            state.startAnimation(animation);
+        } catch (Exception e) {}
     }
 
     private void CompleteActivity(View v) {
         try {
-            // Crear nueva cola de peticiones
-            //requestQueue = Volley.newRequestQueue(getContext());
             //Parámetros a enviar a la API
             JSONObject param = new JSONObject();
             param.put("idEstudiante", ClssStaticGrupo.idestudiante);
@@ -347,15 +257,12 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment {
                                 if (response.length() > 1) {
                                     int recompensa = response.getInt("recompensaganada");
                                     ModelUser.stockcaritas += recompensa;
-                                    //Actualice el itemMenú creado
                                     mr.setTitle(String.valueOf(ModelUser.stockcaritas));
                                     //Toast.makeText(getContext(), "Actividad exitosa", Toast.LENGTH_LONG).show();
-                                    //Navegacion(v);
                                 } else
                                     Toast.makeText(getContext(), response.get("message").toString(), Toast.LENGTH_LONG).show();
                             } catch (Exception e) {
                                 //Toast.makeText(getContext(), "Error de conexión", Toast.LENGTH_LONG).show();
-                                Toast.makeText(getContext(), "Error de conexión [" + e.getMessage() + "]", Toast.LENGTH_LONG).show();
                             }
                         }
                     }, new Response.ErrorListener() {
@@ -365,11 +272,93 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment {
                     Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
                 }
             });
-            // Añadir petición a la cola
-            //requestQueue.add(request_json);
             ClssVolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(request_json);
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        try {
+            int opcselec = rcvOptions.getChildAdapterPosition(view);
+            opSelected = modelContentsOp.get(opcselec);
+            adpOptiosIdentifyTxt.setOnClickListener(null);
+            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(opSelected.getDescripcion());
+            Toast.makeText(getContext(),opSelected.getDescripcion().trim(),Toast.LENGTH_SHORT);
+            if (respuestas.size() == 1) {
+                if (opSelected.getRespuesta().equals(true)) {
+                    rcvOptions.getChildAt(opcselec).setBackgroundResource(R.drawable.borde);
+                    rcvOptions.getChildAt(opcselec).setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#44CCCC")));
+                    respuesta = true;
+                    state.setVisibility(View.VISIBLE);
+                    scrollView.post(new Runnable() {
+                        public void run() {
+                            scrollView.scrollTo(0, scrollView.getBottom());
+                        }
+                    });
+                    animar(true);
+                    //Seteamos el background verde
+                    state.setBackgroundColor(Color.parseColor("#AAFAB1"));
+                    //Seteamos el texto de continuar y lo mostramos
+                    TextView txt = (TextView) state.getChildAt(0);
+                    txt.setText(generarAleatorio());
+                    txt.setTextColor(Color.parseColor("#048710"));
+                    txt.setVisibility(View.VISIBLE);
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(txt.getText().toString());
+                        }
+                    }, 1000);
+                    ImageView img = (ImageView) state.getChildAt(1);
+                    img.setImageResource(R.drawable.icon_valor);
+                    img.setColorFilter(Color.parseColor("#048710"));
+                    state.getChildAt(2).setVisibility(View.GONE);
+                    state.getChildAt(3).setVisibility(View.VISIBLE);
+                    state.getChildAt(3).setOnClickListener(vcont -> Navegacion(vcont));
+                    //Ubicamos el layout visible
+                    state.setVisibility(View.VISIBLE);
+                    CompleteActivity(view);
+                } else {
+                    rcvOptions.getChildAt(opcselec).setBackgroundResource(R.drawable.borde);
+                    rcvOptions.getChildAt(opcselec).setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#C70039")));
+                    respuesta = false;
+                    animar(true);
+                    scrollView.post(new Runnable() {
+                        public void run() {
+                            scrollView.scrollTo(0, scrollView.getBottom());
+                        }
+                    });
+                    //Seteamos el backgroun rojo
+                    state.setBackgroundColor(Color.parseColor("#F7B9B9"));
+                    //Seteamos el texto de error y lo mostramos
+                    TextView txt = (TextView) state.getChildAt(0);
+                    txt.setText("¡Incorrecto!\n¡Vuelve a intentarlo!");
+                    txt.setTextColor(Color.parseColor("#C70039"));
+                    txt.setVisibility(View.VISIBLE);
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(txt.getText().toString());
+                        }
+                    }, 1000);
+                    ImageView img = (ImageView) state.getChildAt(1);
+                    img.setImageResource(R.drawable.sad);
+                    img.setColorFilter(Color.parseColor("#C70039"));
+                    //Ocultamos el boton comprobar
+                    state.getChildAt(3).setVisibility(View.GONE);
+                    //Seteamos evento click a boton OK
+                    state.getChildAt(2).setVisibility(View.VISIBLE);
+                    state.getChildAt(2).setOnClickListener(vok -> AccionOk(opcselec));
+                    state.setVisibility(View.VISIBLE);
+                }
+            } else if (respuestas.size() > 1) {
+                resp.add(opSelected);
+            }
+        } catch (Exception e) {
         }
     }
 }

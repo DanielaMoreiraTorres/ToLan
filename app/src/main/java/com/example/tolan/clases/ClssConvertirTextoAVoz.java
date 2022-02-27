@@ -12,7 +12,7 @@ public class ClssConvertirTextoAVoz implements TextToSpeech.OnInitListener {
     public static ClssConvertirTextoAVoz clssConvertirTextoAVoz;
     private TextToSpeech tts;
     private static Context contexto;
-    TextToSpeech.OnInitListener onInitListener;
+    public TextToSpeech.OnInitListener onInitListener;
 
 
     private ClssConvertirTextoAVoz(Context context) {

@@ -108,7 +108,7 @@
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/item_niveles.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/item_opciones_identify_img.xml" value="0.1796875" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/item_option_arrastrar_soltar_txt.xml" value="0.22" />
-        <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/item_option_identify_img.xml" value="0.1" />
+        <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/item_option_identify_img.xml" value="0.5023696682464455" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/item_option_identify_txt.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/item_option_reconocer_figura.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/layout/item_skins.xml" value="0.3333333333333333" />
@@ -141,14 +141,13 @@
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/drawable-xhdpi/dotted_line.xml" value="0.165" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/drawable-xhdpi/fondo_interno_actividad.xml" value="0.165" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/drawable-xhdpi/fondo_superior_actividad.xml" value="0.165" />
-        <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/drawable/fondo_bordes_imagen.xml" value="0.116" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/activity_graphomotricity.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/activity_identify_img.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/activity_navigation_graph_padre.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/activity_order_sequences.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/activity_select_pairs_img_img.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_arrastrar_soltar.xml" value="0.25" />
-        <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_diag__frg__opcion_incorrecta.xml" value="0.22" />
+        <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_diag__frg__opcion_incorrecta.xml" value="0.16296296296296298" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_grafomotricidad.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_identificar_respuesta_imagen.xml" value="0.19010416666666666" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_identificar_respuesta_palabra.xml" value="0.20416666666666666" />
@@ -164,7 +163,7 @@
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/item_image_seleccionar_pares_imagen_imagen.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/item_option_reconocer_figura.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/item_sublevel.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/item_text_seleccionar_pares_imagen_texto.xml" value="0.33" />
+        <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/item_text_seleccionar_pares_imagen_texto.xml" value="0.19814814814814816" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/toolbar.xml" value="0.17314814814814813" />
       </map>
     </option>
