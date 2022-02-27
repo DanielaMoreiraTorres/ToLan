@@ -226,9 +226,10 @@ public class Frg_IdentificarRespuestaImagen extends Fragment {
                             img.setColorFilter(Color.parseColor("#048710"));
                             state.getChildAt(2).setVisibility(View.GONE);
                             state.getChildAt(3).setVisibility(View.VISIBLE);
-                            state.getChildAt(3).setOnClickListener(vcont -> CompleteActivity(vcont));
+                            state.getChildAt(3).setOnClickListener(vcont -> Navegacion(vcont));
                             //Ubicamos el layout visible
                             state.setVisibility(View.VISIBLE);
+                            CompleteActivity(view);
                         } else {
                             rcvOptions.getChildAt(opcselec).setBackgroundColor(Color.parseColor("#C70039"));
                             rcvOptions.setClickable(false);
@@ -354,11 +355,11 @@ public class Frg_IdentificarRespuestaImagen extends Fragment {
                                     mr.setTitle(String.valueOf(ModelUser.stockcaritas));
                                     //ModelUser.stockcaritas+=
                                     //Toast.makeText(getContext(), "Actividad exitosa", Toast.LENGTH_LONG).show();
-                                    Navegacion(v);
+                                    //Navegacion(v);
                                 } else
                                     Toast.makeText(getContext(), response.get("message").toString(), Toast.LENGTH_LONG).show();
                             } catch (Exception e) {
-                                Toast.makeText(getContext(), "Error de conexión [" + e.getMessage() + "]", Toast.LENGTH_LONG).show();
+                                //Toast.makeText(getContext(), "Error de conexión [" + e.getMessage() + "]", Toast.LENGTH_LONG).show();
                             }
                         }
                     }, new Response.ErrorListener() {

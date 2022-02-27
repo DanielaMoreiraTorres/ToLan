@@ -40,11 +40,9 @@ public class ClssConvertirTextoAVoz {
                                 Log.e("error", "Este lenguaje no está permitido");
                             }
                         } else {
+                            tts.setLanguage(Locale.getDefault());
                             Log.e("error", "Fallo al inicializar");
                         }
-                    /*if(i != TextToSpeech.ERROR){
-                        tts.setLanguage(Locale.getDefault());
-                    }*/
                     }
                 });
             } catch (Exception e) {

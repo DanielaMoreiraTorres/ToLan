@@ -54,8 +54,6 @@ public class FrgWelcome extends Fragment {
             textToSpeech.setLanguage(Locale.getDefault());
             textToSpeech.speak(mensaje, TextToSpeech.QUEUE_FLUSH, null);
         }
-        //tts = new ClssConvertirTextoAVoz();
-        //tts.init(getContext());
     }
 
     @Override
@@ -65,6 +63,8 @@ public class FrgWelcome extends Fragment {
         View view = inflater.inflate(R.layout.fragment_welcome, container, false);
         try {
             ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+            ClssConvertirTextoAVoz.getIntancia(getContext());
+            ClssConvertirTextoAVoz.clssConvertirTextoAVoz.init();
             carousel = view.findViewById(R.id.carousel);
             btnRegistrarse = view.findViewById(R.id.register);
             btnRegistrarse.setOnClickListener(v -> Register());
