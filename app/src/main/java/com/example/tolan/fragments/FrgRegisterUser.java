@@ -285,8 +285,10 @@ public class FrgRegisterUser extends Fragment {
                 return;
             }
             else{
-                if(docente.getText().equals(selectedDocente.getString("nombres") + " " + selectedDocente.getString("apellidos")))
+                if(docente.getText().toString().trim().equals(selectedDocente.getString("nombres").trim() + " " + selectedDocente.getString("apellidos").trim())){
+                    Ldocente.setError(null);
                     param.put("selectedDocente", selectedDocente);
+                }
                 else{
                     //tts.reproduce("Docente no válido");
                     ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Docente no válido");
