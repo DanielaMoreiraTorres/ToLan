@@ -182,11 +182,10 @@ public class Frg_ArrastrarSoltar extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        try {
-            inflater.inflate(R.menu.menu_toolbar, menu);
-            mr = menu.findItem(R.id.btnRecompensa);
-            //super.onCreateOptionsMenu(menu, inflater);
-        } catch (Exception e) {}
+        inflater.inflate(R.menu.menu_toolbar, menu);
+        mr = menu.findItem(R.id.btnRecompensa);
+        mr.setTitle(String.valueOf(ModelUser.stockcaritas));
+        //super.onCreateOptionsMenu(menu, inflater);
     }
 
     private void RespuestasOk() {

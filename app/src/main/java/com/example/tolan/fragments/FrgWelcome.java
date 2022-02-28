@@ -102,6 +102,7 @@ public class FrgWelcome extends Fragment {
         //tts.reproduce(getString(R.string.iniciar_sesion));
         ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(getString(R.string.iniciar_sesion));
         fragment = new FrgLogin();
+        getFragmentManager().popBackStack();
         getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
     }
 }

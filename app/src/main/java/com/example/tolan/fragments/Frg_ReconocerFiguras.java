@@ -206,10 +206,9 @@ public class Frg_ReconocerFiguras extends Fragment implements AdapterView.OnItem
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        try {
-            inflater.inflate(R.menu.menu_toolbar, menu);
-            mr = menu.findItem(R.id.btnRecompensa);
-        } catch (Exception e) {}
+        inflater.inflate(R.menu.menu_toolbar, menu);
+        mr = menu.findItem(R.id.btnRecompensa);
+        mr.setTitle(String.valueOf(ModelUser.stockcaritas));
     }
 
     private void CompleteActivity(View v) {

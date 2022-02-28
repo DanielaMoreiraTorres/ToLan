@@ -181,11 +181,9 @@ public class Frg_IdentificarRespuestaImagen extends Fragment implements View.OnC
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        try {
-            inflater.inflate(R.menu.menu_toolbar, menu);
-            mr = menu.findItem(R.id.btnRecompensa);
-            //mr.setTitle(String.valueOf(ModelUser.stockcaritas));
-        } catch (Exception e) {}
+        inflater.inflate(R.menu.menu_toolbar, menu);
+        mr = menu.findItem(R.id.btnRecompensa);
+        mr.setTitle(String.valueOf(ModelUser.stockcaritas));
     }
 
     private String generarAleatorio() {

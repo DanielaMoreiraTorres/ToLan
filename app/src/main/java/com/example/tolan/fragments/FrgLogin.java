@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -105,6 +106,9 @@ public class FrgLogin extends Fragment {
     }
 
     private void Login() {
+        //Ocultar teclado
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(getContext().INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(password.getWindowToken(), 0);
         //tts.reproduce(btnLogin.getText().toString());
         ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(btnLogin.getText().toString());
         if (validate.Validar(user, null, Lusuario, Merror) & validate.Validar(password, null, Lclave, Merror)) {
@@ -155,8 +159,9 @@ public class FrgLogin extends Fragment {
                                 progressBar.setVisibility(View.GONE);
                             } else {
                                 //tts.reproduce(response.get("message").toString());
-                                ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(response.get("message").toString());
                                 Toast.makeText(getContext(), response.get("message").toString(), Toast.LENGTH_SHORT).show();
+                                ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(response.get("message").toString());
+                                progressBar.setVisibility(View.GONE);
                             }
 
                         } catch (Exception e) {
@@ -215,32 +220,38 @@ public class FrgLogin extends Fragment {
         Bundle b = new Bundle();
         if (muser.getTipousuario().trim().equals("AD")) {
             fragment = new FrgMenuAdmin();
+            Toast.makeText(getContext(), "Bienvenido Admin", Toast.LENGTH_SHORT).show();
             final Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     //tts.reproduce("Bienvenido Admin");
                     ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Bienvenido Admin");
-                    Toast.makeText(getContext(), "Bienvenido Admin", Toast.LENGTH_SHORT).show();
                 }
-            }, 1000);
+            }, 1500);
         } else if (muser.getTipousuario().trim().equals("DC")) {
             fragment = new FrgMenuDocente();
+            Toast.makeText(getContext(), "Bienvenido " + ClssStaticGrupo.docente, Toast.LENGTH_SHORT).show();
             final Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     //tts.reproduce("Bienvenido " + ClssStaticGrupo.docente);
                     ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Bienvenido " + ClssStaticGrupo.docente);
-                    Toast.makeText(getContext(), "Bienvenido " + ClssStaticGrupo.docente, Toast.LENGTH_SHORT).show();
                 }
-            }, 1000);
+            }, 1500);
         } else {
             fragment = new ActivityHomeUser();
             sendDataGroup(grupo);
-            //tts.reproduce("Bienvenido " + ClssStaticGrupo.estudiante);
-            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Bienvenido " + ClssStaticGrupo.estudiante);
             Toast.makeText(getContext(), "Bienvenido " + ClssStaticGrupo.estudiante, Toast.LENGTH_SHORT).show();
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    //tts.reproduce("Bienvenido " + ClssStaticGrupo.estudiante);
+                    ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Bienvenido " + ClssStaticGrupo.estudiante);
+                }
+            }, 1500);
             //b.putString("grupo", grupo.toString());
         }
         //Creamos la información a pasar entre fragments

@@ -29,6 +29,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class VHoldRecyclerChild_ItemSubnivel extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+    public static NavController navController;
     TextView txt_actividad;
     CircleImageView img_actividad;
     ImageView imgv_corona;
@@ -74,7 +75,7 @@ public class VHoldRecyclerChild_ItemSubnivel extends RecyclerView.ViewHolder imp
 
 
                 //Inicializamos la variable de navegación hacia otros formularios
-                NavController navController = Navigation.findNavController(v);
+                navController = Navigation.findNavController(v);
 
                 //Construimos un switch para evaluar la X actividad que vaya a ser nuestro primero destino
                 switch (actividad) {

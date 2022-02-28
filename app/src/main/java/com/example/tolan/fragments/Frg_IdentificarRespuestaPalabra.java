@@ -175,10 +175,9 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment implements View.On
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        try {
-            inflater.inflate(R.menu.menu_toolbar, menu);
-            mr = menu.findItem(R.id.btnRecompensa);
-        } catch (Exception e) {}
+        inflater.inflate(R.menu.menu_toolbar, menu);
+        mr = menu.findItem(R.id.btnRecompensa);
+        mr.setTitle(String.valueOf(ModelUser.stockcaritas));
     }
 
     private String generarAleatorio() {

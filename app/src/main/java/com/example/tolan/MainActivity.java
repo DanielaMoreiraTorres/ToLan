@@ -5,17 +5,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
+import com.example.tolan.adapters.VHoldRecyclerChild_ItemSubnivel;
 import com.example.tolan.clases.ClssConvertirTextoAVoz;
+import com.example.tolan.clases.ClssNavegacionActividades;
 import com.example.tolan.fragments.FrgLogin;
 import com.example.tolan.fragments.FrgRegisterUser;
 import com.example.tolan.fragments.FrgWelcome;
+
+import org.json.JSONArray;
 
 import java.util.Locale;
 
@@ -71,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
             ClssConvertirTextoAVoz.getIntancia(this).reproduce("Cerrar sesión");
             fragment = new FrgLogin();
             getSupportFragmentManager().popBackStack();
-            getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
         }
         if(id == R.id.btnContacts) {
             //tts.reproduce("Información de contacto");
@@ -80,5 +88,50 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        try {
+            NavController c = VHoldRecyclerChild_ItemSubnivel.navController;
+            int i = getSupportFragmentManager().getBackStackEntryCount();
+            if (c == null) {
+                if (i == 2) {
+                    fragment = new FrgLogin();
+                    getSupportFragmentManager().popBackStack();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
+                } else if (i == 1) {
+                    fragment = new FrgWelcome();
+                    getSupportFragmentManager().popBackStack();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
+                } else if (i == 0) {
+                    super.onBackPressed();
+                }
+            } else {
+                @SuppressLint("RestrictedApi")
+                int nav = c.getBackStack().size();
+                if(nav > 2){
+                    c.popBackStack(R.id.inicioFragment,false);
+                }
+                else if (nav == 2){
+                    c.popBackStack();
+                    fragment = new FrgLogin();
+                    getSupportFragmentManager().popBackStack();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
+                }
+                else if(nav == 0){
+                    if(i == 0)
+                        super.onBackPressed();
+                    else {
+                        c = null;
+                        fragment = new FrgWelcome();
+                        getSupportFragmentManager().popBackStack();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
