@@ -5,9 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.SystemClock;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -31,7 +29,6 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
 import com.android.volley.NoConnectionError;
 import com.android.volley.ParseError;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
@@ -39,21 +36,17 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-import com.bumptech.glide.Glide;
 import com.example.tolan.R;
 import com.example.tolan.clases.ClssConvertirTextoAVoz;
 import com.example.tolan.clases.ClssStaticGrupo;
 import com.example.tolan.clases.ClssVolleySingleton;
-import com.example.tolan.dialogs.Diag_Frg_OpcionIncorrecta;
+import com.example.tolan.dialogs.Diag_Frg_AyudaEspecial;
 import com.example.tolan.models.ModelUser;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public class AdpRecycler_SeleccionarParesTextoImagen extends RecyclerView.Adapter<txtHolder> {
@@ -114,14 +107,7 @@ public class AdpRecycler_SeleccionarParesTextoImagen extends RecyclerView.Adapte
         holder.texto.setText(listElements.get(position));
         holder.texto.setId(position);
 
-        holder.imagen_ayuda_especial.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(mContext, "Ayuda especial", Toast.LENGTH_LONG).show();
-                Diag_Frg_OpcionIncorrecta diag_frg_opcionIncorrecta = new Diag_Frg_OpcionIncorrecta();
-                diag_frg_opcionIncorrecta.show(fragment.getParentFragmentManager(), "kol");
-            }
-        });
+
 
 
         holder.cardview_texto.setOnClickListener(new View.OnClickListener() {
@@ -474,6 +460,15 @@ public class AdpRecycler_SeleccionarParesTextoImagen extends RecyclerView.Adapte
             public void onResponse(Bitmap response) {
                 holder.imagen.setImageBitmap(response);
                 holder.imagen.setId(pos);
+
+                holder.imagen_ayuda_especial.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(mContext, "Ayuda especial", Toast.LENGTH_LONG).show();
+                        Diag_Frg_AyudaEspecial diag_frg_ayudaEspecial = new Diag_Frg_AyudaEspecial(response,map_DatosEmparejados.get(rutaImagen));
+                        diag_frg_ayudaEspecial.show(fragment.getParentFragmentManager(), "Infromación de Ayuda Especial");
+                    }
+                });
             }
         }, 0, 0, ImageView.ScaleType.CENTER, null, new Response.ErrorListener() {
             @Override

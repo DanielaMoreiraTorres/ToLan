@@ -234,7 +234,7 @@ public class Frg_ReconocerFiguras extends Fragment implements AdapterView.OnItem
                                     Toast.makeText(getContext(), response.get("message").toString(), Toast.LENGTH_LONG).show();
                             } catch (Exception e) {
                                 //Toast.makeText(getContext(), "Error de conexión", Toast.LENGTH_LONG).show();
-                                Toast.makeText(getContext(), "Error de conexión [" + e.getMessage() + "]", Toast.LENGTH_LONG).show();
+                                //Toast.makeText(getContext(), "Error de conexión [" + e.getMessage() + "]", Toast.LENGTH_LONG).show();
                             }
                         }
                     }, new Response.ErrorListener() {

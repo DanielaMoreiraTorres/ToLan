@@ -1,17 +1,14 @@
 package com.example.tolan.fragments;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.graphics.drawable.AnimatedStateListDrawableCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
-import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,7 +29,6 @@ import com.example.tolan.R;
 import com.example.tolan.adapters.AdpRecycler_SeleccionarParesTextoImagen;
 import com.example.tolan.clases.ClssConvertirTextoAVoz;
 import com.example.tolan.clases.ClssNavegacionActividades;
-import com.example.tolan.dialogs.Diag_Frg_OpcionIncorrecta;
 import com.example.tolan.models.ModelUser;
 import com.google.android.flexbox.AlignItems;
 import com.google.android.flexbox.FlexDirection;
@@ -172,6 +168,8 @@ public class Frg_SeleccionarParesImagenTexto extends Fragment implements View.On
                 JSONObject item_contenido = contenido.getJSONObject(i);
                 boolean isenunciado = item_contenido.getBoolean("enunciado");
                 if (isenunciado) {
+                    //Elimino los que son de tipo enunciado
+                    //contenido.remove(i);
                     txt_enunciado.setText(item_contenido.getString("descripcion"));
                     txt_enunciado.setOnClickListener(v -> ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce(txt_enunciado.getText().toString()));
                     //tts.reproduce(txt_enunciado.getText().toString()));
@@ -180,11 +178,17 @@ public class Frg_SeleccionarParesImagenTexto extends Fragment implements View.On
                     JSONArray multimedia_contenido = item_contenido.getJSONArray("multimedia");
                     for (int j = 0; j < multimedia_contenido.length(); j++) {
                         JSONObject item_multimedia_contenido = multimedia_contenido.getJSONObject(j);
-                        listRutasMultimedia.add(item_multimedia_contenido.getString("url"));
-                        System.out.println("ok");
+
+                        if (item_multimedia_contenido.getBoolean("inicial")) {
+                            listRutasMultimedia.add(item_multimedia_contenido.getString("url"));
+                        } else {
+                            Toast.makeText(view.getContext(), item_multimedia_contenido.getString("descripcion"), Toast.LENGTH_LONG).show();
+                        }
                     }
                 }
             }
+
+            prepararJson(contenido);
 
             for (int i = 0; i < listRutasMultimedia.size(); i++) {
                 map_DatosEmparejados.put(listRutasMultimedia.get(i), listItemsMultimedia.get(i));
@@ -202,6 +206,47 @@ public class Frg_SeleccionarParesImagenTexto extends Fragment implements View.On
 
         view.findViewById(R.id.btn_comprobar_actividades).setOnClickListener(this);
     }
+
+
+    List<JSONObject> lst_contenido= new ArrayList<>();
+    List<JSONArray> lst_multimedia_contenido;
+
+    public void prepararJson(JSONArray contenido) throws JSONException {
+
+
+        lst_multimedia_contenido = new ArrayList<>();
+        //Eliminar contenido de tipo enunciado
+        for (int i = 0; i < contenido.length(); i++) {
+            JSONObject item_contenido = contenido.getJSONObject(i);
+
+            boolean isenunciado = item_contenido.getBoolean("enunciado");
+            if (isenunciado) {
+                //Elimino los que son de tipo enunciado
+                contenido.remove(i);
+            } else {
+            }
+        }
+        lst_contenido= (List<JSONObject>) contenido;
+        //Eliminar items multimedia
+        for (int i = 0; i < contenido.length(); i++) {
+            JSONObject item_contenido = contenido.getJSONObject(i);
+            //lst_contenido.add(item_contenido);
+            JSONArray multimedia_contenido = item_contenido.getJSONArray("multimedia");
+            lst_multimedia_contenido.add(multimedia_contenido);
+            item_contenido.remove("multimedia");
+        }
+        //Mezclo los elemetos de la lista para hacerlos aleatorios
+        Collections.shuffle(lst_multimedia_contenido);
+
+
+        System.out.println(" \n Contenido \n");
+        System.out.println(contenido);
+
+        System.out.println(" \n Multimedia \n");
+        System.out.println(lst_multimedia_contenido);
+
+    }
+
 
     MenuItem mr;
 
