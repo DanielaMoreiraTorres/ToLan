@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tolan.R;
@@ -43,7 +44,7 @@ public class AdpOptionIdentifyTxt extends RecyclerView.Adapter<AdpOptionIdentify
     public AdpOptionIdentifyTxt.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflr = LayoutInflater.from(ccontext);
         View view = inflr.inflate(R.layout.item_option_identify_txt,null,false);
-        view.setOnClickListener(this);
+        //view.setOnClickListener(this);
         return new ViewHolder(view);
     }
 
@@ -52,6 +53,8 @@ public class AdpOptionIdentifyTxt extends RecyclerView.Adapter<AdpOptionIdentify
         try {
             ModelContent content = lista.get(position);
             holder.txtOp.setText(content.getDescripcion());
+            holder.cvOpcion.setId(position);
+            holder.cvOpcion.setOnClickListener(this);
         }catch (Exception e){
             String res = e.toString();
         }
@@ -63,10 +66,12 @@ public class AdpOptionIdentifyTxt extends RecyclerView.Adapter<AdpOptionIdentify
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        CardView cvOpcion;
         TextView txtOp;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtOp = (TextView) itemView.findViewById(R.id.txtOp);
+            cvOpcion = (CardView) itemView.findViewById(R.id.cvOpcion);
         }
     }
 }

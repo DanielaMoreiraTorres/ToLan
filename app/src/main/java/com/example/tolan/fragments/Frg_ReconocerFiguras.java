@@ -381,7 +381,9 @@ public class Frg_ReconocerFiguras extends Fragment implements AdapterView.OnItem
                 }
             } else {
             }
-        } catch (Exception e){}
+        } catch (Exception e){
+            lstOptions.setOnItemClickListener(this);
+        }
     }
 
     private String generarAleatorio() {

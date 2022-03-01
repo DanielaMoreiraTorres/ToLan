@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -44,7 +45,7 @@ public class AdpOptionIdentifyImg extends RecyclerView.Adapter<AdpOptionIdentify
     public AdpOptionIdentifyImg.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflr = LayoutInflater.from(ccontext);
         View view = inflr.inflate(R.layout.item_option_identify_img,null,false);
-        view.setOnClickListener(this);
+        //view.setOnClickListener(this);
         return new ViewHolder(view);
     }
 
@@ -55,7 +56,8 @@ public class AdpOptionIdentifyImg extends RecyclerView.Adapter<AdpOptionIdentify
             Glide.with(ccontext)
                     .load(content.getMultimedia().getJSONObject(0).getString("url"))
                     .into(holder.imgOption);
-
+            holder.cvOpcion.setId(position);
+            holder.cvOpcion.setOnClickListener(this);
             holder.imgView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -74,11 +76,13 @@ public class AdpOptionIdentifyImg extends RecyclerView.Adapter<AdpOptionIdentify
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        CardView cvOpcion;
         ImageView imgOption, imgView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imgOption = (ImageView) itemView.findViewById(R.id.imgOp);
             imgView = (ImageView) itemView.findViewById(R.id.imgView);
+            cvOpcion = (CardView) itemView.findViewById(R.id.cvOpcion);
         }
     }
 }

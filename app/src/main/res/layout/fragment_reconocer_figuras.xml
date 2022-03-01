@@ -6,28 +6,6 @@
     android:background="@color/white"
     tools:context=".fragments.Frg_ReconocerFiguras">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <include
-            android:id="@+id/toolbar"
-            layout="@layout/toolbar"></include>
-
-        <TextView
-            android:id="@+id/titulo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="30dp"
-            android:textAlignment="center"
-            android:fontFamily="@font/baloo"
-            android:shadowColor="@color/secundario"
-            android:shadowRadius="4"
-            android:text="@string/tituloReco"
-            android:textColor="@color/secundario"
-            android:textSize="22sp" />
-
     <ScrollView
         android:id="@+id/scrollRF"
         android:layout_width="match_parent"
@@ -41,11 +19,33 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/toolbar"></include>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/titulo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="30dp"
+                    android:textAlignment="center"
+                    android:fontFamily="@font/baloo"
+                    android:shadowColor="@color/secundario"
+                    android:shadowRadius="4"
+                    android:text="@string/tituloReco"
+                    android:textColor="@color/secundario"
+                    android:textSize="22sp" />
+
+            </RelativeLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_weight="1"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp">
 
@@ -59,9 +59,9 @@
 
                 <ImageView
                     android:id="@+id/imgOp"
-                    android:layout_width="match_parent"
+                    android:layout_width="200dp"
                     android:layout_height="180dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:scaleType="fitXY"
                     android:src="@drawable/background_image" />
@@ -79,12 +79,11 @@
             <LinearLayout
                 android:id="@+id/state"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:background="#AAFAB1"
                 android:orientation="vertical"
-                android:padding="10dp"
-                android:layout_weight="3"
-                android:gravity="bottom">
+                android:padding="10dp">
 
                 <TextView
                     android:id="@+id/txt_tit"
@@ -127,21 +126,19 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
-                    android:clickable="true"
                     android:layout_marginBottom="10dp"
                     android:backgroundTint="#12D724"
                     android:minHeight="48dp"
                     android:text="CONTINUAR"
                     android:fontFamily="@font/baloo"
                     android:textAlignment="center"
-                    android:textColor="@color/white"/>
+                    android:textColor="@color/white"
+                    tools:ignore="TouchTargetSizeCheck" />
 
             </LinearLayout>
 
         </LinearLayout>
 
     </ScrollView>
-
-    </LinearLayout>
 
 </FrameLayout>

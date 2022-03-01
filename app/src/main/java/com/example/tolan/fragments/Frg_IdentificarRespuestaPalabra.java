@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -51,6 +52,7 @@ import com.example.tolan.models.ModelUser;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +72,8 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment implements View.On
     ModelContent modelContent;
     private ListView lstLista;
     private RecyclerView rcvOptions;
-    private LinearLayout state;
+    private CardView cvSel;
+    private LinearLayout lySel, state;
     private JSONArray contenido;
     List<ModelContent> modelContentsEnun;
     ArrayList<ModelContent> modelContentsOp;
@@ -196,12 +199,14 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment implements View.On
         } catch (Exception e) {}
     }
 
-    private void AccionOk(int op) {
+    private void AccionOk() {
         try {
             animar(false);
             adpOptiosIdentifyTxt.setOnClickListener(this);
-            rcvOptions.getChildAt(op).setBackgroundResource(R.drawable.borde);
-            rcvOptions.getChildAt(op).setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
+            lySel.setBackgroundResource(R.drawable.borde);
+            lySel.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
+            /*rcvOptions.getChildAt(op).setBackgroundResource(R.drawable.borde);
+            rcvOptions.getChildAt(op).setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));*/
             scrollView.post(new Runnable() {
                 public void run() {
                     scrollView.scrollTo(0, scrollView.getTop());
@@ -280,15 +285,20 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment implements View.On
     @Override
     public void onClick(View view) {
         try {
-            int opcselec = rcvOptions.getChildAdapterPosition(view);
+            //int opcselec = rcvOptions.getChildAdapterPosition(view);
+            cvSel = (CardView) view;
+            lySel = (LinearLayout) cvSel.getParent();
+            int opcselec = cvSel.getId();
             opSelected = modelContentsOp.get(opcselec);
             adpOptiosIdentifyTxt.setOnClickListener(null);
-            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(opSelected.getDescripcion());
             Toast.makeText(getContext(),opSelected.getDescripcion().trim(),Toast.LENGTH_SHORT);
+            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(opSelected.getDescripcion());
             if (respuestas.size() == 1) {
                 if (opSelected.getRespuesta().equals(true)) {
-                    rcvOptions.getChildAt(opcselec).setBackgroundResource(R.drawable.borde);
-                    rcvOptions.getChildAt(opcselec).setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#44CCCC")));
+                    lySel.setBackgroundResource(R.drawable.borde);
+                    lySel.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#44CCCC")));
+                    /*rcvOptions.getChildAt(opcselec).setBackgroundResource(R.drawable.borde);
+                    rcvOptions.getChildAt(opcselec).setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#44CCCC")));*/
                     respuesta = true;
                     state.setVisibility(View.VISIBLE);
                     scrollView.post(new Runnable() {
@@ -321,8 +331,10 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment implements View.On
                     state.setVisibility(View.VISIBLE);
                     CompleteActivity(view);
                 } else {
-                    rcvOptions.getChildAt(opcselec).setBackgroundResource(R.drawable.borde);
-                    rcvOptions.getChildAt(opcselec).setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#C70039")));
+                    lySel.setBackgroundResource(R.drawable.borde);
+                    lySel.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#C70039")));
+                    /*rcvOptions.getChildAt(opcselec).setBackgroundResource(R.drawable.borde);
+                    rcvOptions.getChildAt(opcselec).setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#C70039")));*/
                     respuesta = false;
                     animar(true);
                     scrollView.post(new Runnable() {
@@ -351,13 +363,15 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment implements View.On
                     state.getChildAt(3).setVisibility(View.GONE);
                     //Seteamos evento click a boton OK
                     state.getChildAt(2).setVisibility(View.VISIBLE);
-                    state.getChildAt(2).setOnClickListener(vok -> AccionOk(opcselec));
+                    state.getChildAt(2).setOnClickListener(vok -> AccionOk());
                     state.setVisibility(View.VISIBLE);
                 }
             } else if (respuestas.size() > 1) {
                 resp.add(opSelected);
             }
         } catch (Exception e) {
+            //Toast.makeText(getContext(),e.toString(),Toast.LENGTH_SHORT).show();
+            adpOptiosIdentifyTxt.setOnClickListener(this);
         }
     }
 }
