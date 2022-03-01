@@ -42,6 +42,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.tolan.R;
 import com.example.tolan.adapters.AdpEnunciado;
 import com.example.tolan.adapters.AdpOptionIdentifyImg;
+import com.example.tolan.clases.ClssAnimation;
 import com.example.tolan.clases.ClssConvertirTextoAVoz;
 import com.example.tolan.clases.ClssNavegacionActividades;
 import com.example.tolan.clases.ClssStaticGrupo;
@@ -58,7 +59,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
-public class Frg_IdentificarRespuestaImagen extends Fragment implements View.OnClickListener{
+public class Frg_IdentificarRespuestaImagen extends Fragment implements View.OnClickListener {
 
     NavController navController;
     private Toolbar toolbar;
@@ -201,7 +202,8 @@ public class Frg_IdentificarRespuestaImagen extends Fragment implements View.OnC
             jsonActivities.remove(0);
             ClssNavegacionActividades clssNavegacionActividades = new ClssNavegacionActividades(navController, jsonActivities, v);
             clssNavegacionActividades.navegar();
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
     }
 
     private void AccionOk() {
@@ -227,28 +229,36 @@ public class Frg_IdentificarRespuestaImagen extends Fragment implements View.OnC
 
     private void animar(boolean mostrar) {
         try {
-            AnimationSet set = new AnimationSet(true);
-            Animation animation = null;
+            //AnimationSet set = new AnimationSet(true);
+            //Animation animation = null;
             if (mostrar) {
-                animation = new TranslateAnimation(
+                state.setLayoutAnimation(ClssAnimation.getInstanciaAnimation().getLayoutAnimationController());
+                state.startAnimation(ClssAnimation.getInstanciaAnimation().getAnimationDown());
+              /*  animation = new TranslateAnimation(
                         Animation.RELATIVE_TO_SELF, 0.0f,
                         Animation.RELATIVE_TO_SELF, 0.0f,
                         Animation.RELATIVE_TO_SELF, 1.0f,
                         Animation.RELATIVE_TO_SELF, 0.0f);
+              */
             } else {
+                state.setLayoutAnimation(ClssAnimation.getInstanciaAnimation().getLayoutAnimationController());
+                state.startAnimation(ClssAnimation.getInstanciaAnimation().getAnimationUp());
+                /*
                 animation = new TranslateAnimation(
                         Animation.RELATIVE_TO_SELF, 0.0f,
                         Animation.RELATIVE_TO_SELF, 0.0f,
                         Animation.RELATIVE_TO_SELF, 0.0f,
                         Animation.RELATIVE_TO_SELF, 1.0f);
+                 */
             }
             //duración en milisegundos
-            animation.setDuration(500);
-            set.addAnimation(animation);
-            LayoutAnimationController controller = new LayoutAnimationController(set, 0.25f);
-            state.setLayoutAnimation(controller);
-            state.startAnimation(animation);
-        } catch (Exception e) {}
+            //animation.setDuration(500);
+            //set.addAnimation(animation);
+            //LayoutAnimationController controller = new LayoutAnimationController(set, 0.25f);
+            //state.setLayoutAnimation(controller);
+            //state.startAnimation(animation);
+        } catch (Exception e) {
+        }
     }
 
     private void CompleteActivity(View v) {
@@ -303,7 +313,7 @@ public class Frg_IdentificarRespuestaImagen extends Fragment implements View.OnC
             int opcselec = cvSel.getId();
             opSelected = modelContentsOp.get(opcselec);
             adpOptiosIdentifyImg.setOnClickListener(null);
-            Toast.makeText(getContext(),opSelected.getDescripcion().trim(),Toast.LENGTH_SHORT);
+            Toast.makeText(getContext(), opSelected.getDescripcion().trim(), Toast.LENGTH_SHORT);
             ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(opSelected.getDescripcion());
             if (respuestas.size() == 1) {
                 if (opSelected.getRespuesta().equals(true)) {

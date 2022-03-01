@@ -42,6 +42,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.tolan.R;
 import com.example.tolan.adapters.AdpEnunciado;
 import com.example.tolan.adapters.AdpOptionIdentifyTxt;
+import com.example.tolan.clases.ClssAnimation;
 import com.example.tolan.clases.ClssConvertirTextoAVoz;
 import com.example.tolan.clases.ClssNavegacionActividades;
 import com.example.tolan.clases.ClssStaticGrupo;
@@ -221,27 +222,35 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment implements View.On
 
     private void animar(boolean mostrar) {
         try {
-            AnimationSet set = new AnimationSet(true);
-            Animation animation = null;
+            //AnimationSet set = new AnimationSet(true);
+            //Animation animation = null;
             if (mostrar) {
+                state.setLayoutAnimation(ClssAnimation.getInstanciaAnimation().getLayoutAnimationController());
+                state.startAnimation(ClssAnimation.getInstanciaAnimation().getAnimationDown());
+                /*
                 animation = new TranslateAnimation(
                         Animation.RELATIVE_TO_SELF, 0.0f,
                         Animation.RELATIVE_TO_SELF, 0.0f,
                         Animation.RELATIVE_TO_SELF, 1.0f,
                         Animation.RELATIVE_TO_SELF, 0.0f);
+                */
             } else {
+                state.setLayoutAnimation(ClssAnimation.getInstanciaAnimation().getLayoutAnimationController());
+                state.startAnimation(ClssAnimation.getInstanciaAnimation().getAnimationUp());
+                /*
                 animation = new TranslateAnimation(
                         Animation.RELATIVE_TO_SELF, 0.0f,
                         Animation.RELATIVE_TO_SELF, 0.0f,
                         Animation.RELATIVE_TO_SELF, 0.0f,
                         Animation.RELATIVE_TO_SELF, 1.0f);
+                        */
+
             }
             //duración en milisegundos
-            animation.setDuration(500);
-            set.addAnimation(animation);
-            LayoutAnimationController controller = new LayoutAnimationController(set, 0.25f);
-            state.setLayoutAnimation(controller);
-            state.startAnimation(animation);
+            //animation.setDuration(500);
+            //set.addAnimation(animation);
+            //LayoutAnimationController controller = new LayoutAnimationController(set, 0.25f);
+
         } catch (Exception e) {}
     }
 
@@ -306,7 +315,7 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment implements View.On
                             scrollView.scrollTo(0, scrollView.getBottom());
                         }
                     });
-                    animar(true);
+
                     //Seteamos el background verde
                     state.setBackgroundColor(Color.parseColor("#AAFAB1"));
                     //Seteamos el texto de continuar y lo mostramos
@@ -324,11 +333,13 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment implements View.On
                     ImageView img = (ImageView) state.getChildAt(1);
                     img.setImageResource(R.drawable.icon_valor);
                     img.setColorFilter(Color.parseColor("#048710"));
-                    state.getChildAt(2).setVisibility(View.GONE);
+
                     state.getChildAt(3).setVisibility(View.VISIBLE);
+                    state.getChildAt(2).setVisibility(View.GONE);
                     state.getChildAt(3).setOnClickListener(vcont -> Navegacion(vcont));
                     //Ubicamos el layout visible
                     state.setVisibility(View.VISIBLE);
+                    animar(true);
                     CompleteActivity(view);
                 } else {
                     lySel.setBackgroundResource(R.drawable.borde);

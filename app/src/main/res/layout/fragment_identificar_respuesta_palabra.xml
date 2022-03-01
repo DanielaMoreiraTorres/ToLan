@@ -7,6 +7,7 @@
     tools:context=".fragments.Frg_IdentificarRespuestaPalabra">
 
     <ScrollView
+        android:layout_marginBottom="10dp"
         android:id="@+id/scrollRT"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -97,7 +98,7 @@
 
                 <Button
                     android:id="@+id/btn_Error"
-                    android:layout_width="350dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
@@ -112,7 +113,7 @@
 
                 <Button
                     android:id="@+id/btn_comprobar_actividadesRT"
-                    android:layout_width="350dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"

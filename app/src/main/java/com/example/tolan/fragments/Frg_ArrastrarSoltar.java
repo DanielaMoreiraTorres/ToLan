@@ -45,6 +45,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.tolan.R;
 import com.example.tolan.adapters.AdpEnunciado;
 import com.example.tolan.adapters.AdpOptionArrastrarSoltarTxt;
+import com.example.tolan.clases.ClssAnimation;
 import com.example.tolan.clases.ClssConvertirTextoAVoz;
 import com.example.tolan.clases.ClssNavegacionActividades;
 import com.example.tolan.clases.ClssStaticGrupo;
@@ -363,27 +364,35 @@ public class Frg_ArrastrarSoltar extends Fragment {
 
     private void animar(boolean mostrar) {
         try {
-            AnimationSet set = new AnimationSet(true);
-            Animation animation = null;
+            //AnimationSet set = new AnimationSet(true);
+            //Animation animation = null;
             if (mostrar) {
-                animation = new TranslateAnimation(
+                state.setLayoutAnimation(ClssAnimation.getInstanciaAnimation().getLayoutAnimationController());
+                state.startAnimation(ClssAnimation.getInstanciaAnimation().getAnimationDown());
+                /*animation = new TranslateAnimation(
                         Animation.RELATIVE_TO_SELF, 0.0f,
                         Animation.RELATIVE_TO_SELF, 0.0f,
                         Animation.RELATIVE_TO_SELF, 1.0f,
                         Animation.RELATIVE_TO_SELF, 0.0f);
+
+                 */
             } else {
-                animation = new TranslateAnimation(
+                state.setLayoutAnimation(ClssAnimation.getInstanciaAnimation().getLayoutAnimationController());
+                state.startAnimation(ClssAnimation.getInstanciaAnimation().getAnimationUp());
+                /*animation = new TranslateAnimation(
                         Animation.RELATIVE_TO_SELF, 0.0f,
                         Animation.RELATIVE_TO_SELF, 0.0f,
                         Animation.RELATIVE_TO_SELF, 0.0f,
                         Animation.RELATIVE_TO_SELF, 1.0f);
+
+                 */
             }
             //duración en milisegundos
-            animation.setDuration(500);
-            set.addAnimation(animation);
-            LayoutAnimationController controller = new LayoutAnimationController(set, 0.25f);
-            state.setLayoutAnimation(controller);
-            state.startAnimation(animation);
+            //animation.setDuration(500);
+            //set.addAnimation(animation);
+            //LayoutAnimationController controller = new LayoutAnimationController(set, 0.25f);
+            //state.setLayoutAnimation(controller);
+            //state.startAnimation(animation);
         } catch (Exception e) {}
     }
 

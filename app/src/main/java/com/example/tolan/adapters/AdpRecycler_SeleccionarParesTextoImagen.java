@@ -37,6 +37,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.tolan.R;
+import com.example.tolan.clases.ClssAnimation;
 import com.example.tolan.clases.ClssConvertirTextoAVoz;
 import com.example.tolan.clases.ClssStaticGrupo;
 import com.example.tolan.clases.ClssVolleySingleton;
@@ -106,8 +107,6 @@ public class AdpRecycler_SeleccionarParesTextoImagen extends RecyclerView.Adapte
 
         holder.texto.setText(listElements.get(position));
         holder.texto.setId(position);
-
-
 
 
         holder.cardview_texto.setOnClickListener(new View.OnClickListener() {
@@ -465,7 +464,7 @@ public class AdpRecycler_SeleccionarParesTextoImagen extends RecyclerView.Adapte
                     @Override
                     public void onClick(View v) {
                         Toast.makeText(mContext, "Ayuda especial", Toast.LENGTH_LONG).show();
-                        Diag_Frg_AyudaEspecial diag_frg_ayudaEspecial = new Diag_Frg_AyudaEspecial(response,map_DatosEmparejados.get(rutaImagen));
+                        Diag_Frg_AyudaEspecial diag_frg_ayudaEspecial = new Diag_Frg_AyudaEspecial(response, map_DatosEmparejados.get(rutaImagen));
                         diag_frg_ayudaEspecial.show(fragment.getParentFragmentManager(), "Infromación de Ayuda Especial");
                     }
                 });
@@ -510,29 +509,38 @@ public class AdpRecycler_SeleccionarParesTextoImagen extends RecyclerView.Adapte
     }
 
     private void animar(boolean mostrar, LinearLayout ry_state) {
-        AnimationSet set = new AnimationSet(true);
-        Animation animation = null;
+        //AnimationSet set = new AnimationSet(true);
+        //Animation animation = null;
         if (mostrar) {
-
+            ry_state.setLayoutAnimation(ClssAnimation.getInstanciaAnimation().getLayoutAnimationController());
+            ry_state.startAnimation(ClssAnimation.getInstanciaAnimation().getAnimationDown());
+            /*
             animation = new TranslateAnimation(
                     Animation.RELATIVE_TO_SELF, 0.0f,
                     Animation.RELATIVE_TO_SELF, 0.0f,
                     Animation.RELATIVE_TO_SELF, 1.0f,
                     Animation.RELATIVE_TO_SELF, 0.0f);
+
+            */
         } else {
+            ry_state.setLayoutAnimation(ClssAnimation.getInstanciaAnimation().getLayoutAnimationController());
+            ry_state.startAnimation(ClssAnimation.getInstanciaAnimation().getAnimationUp());
+            /*
             animation = new TranslateAnimation(
                     Animation.RELATIVE_TO_SELF, 0.0f,
                     Animation.RELATIVE_TO_SELF, 0.0f,
                     Animation.RELATIVE_TO_SELF, 0.0f,
                     Animation.RELATIVE_TO_SELF, 1.0f);
+
+             */
         }
         //duración en milisegundos
-        animation.setDuration(500);
-        set.addAnimation(animation);
-        LayoutAnimationController controller = new LayoutAnimationController(set, 0.25f);
+        //animation.setDuration(500);
+        //set.addAnimation(animation);
+        //LayoutAnimationController controller = new LayoutAnimationController(set, 0.25f);
 
-        ry_state.setLayoutAnimation(controller);
-        ry_state.startAnimation(animation);
+        //ry_state.setLayoutAnimation(controller);
+        //ry_state.startAnimation(animation);
     }
 
 
