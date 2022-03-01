@@ -188,7 +188,7 @@ public class Frg_SeleccionarParesImagenTexto extends Fragment implements View.On
                 }
             }
 
-            prepararJson(contenido);
+            //prepararJson(contenido);
 
             for (int i = 0; i < listRutasMultimedia.size(); i++) {
                 map_DatosEmparejados.put(listRutasMultimedia.get(i), listItemsMultimedia.get(i));
