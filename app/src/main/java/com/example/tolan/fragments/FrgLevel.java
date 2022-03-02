@@ -1,33 +1,39 @@
 package com.example.tolan.fragments;
 
-import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.Volley;
-import com.example.tolan.ActivityAddLevel;
-import com.example.tolan.ActivitySublevel;
 import com.example.tolan.R;
 import com.example.tolan.adapters.AdpLevel;
+import com.example.tolan.clases.ClssConvertirTextoAVoz;
+import com.example.tolan.clases.ClssVolleySingleton;
 import com.example.tolan.models.ModelLevel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,13 +43,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class FrgLevel extends Fragment {
+public class FrgLevel extends Fragment implements SearchView.OnQueryTextListener {
 
     private Toolbar toolbar;
     private Fragment fragment;
     private FloatingActionButton fab;
+    private SearchView searchView;
     private RecyclerView rcvLevels;
-    private RequestQueue requestQueue;
+    private CardView cvSel;
+    private RelativeLayout lySel;
     private JsonArrayRequest jsonArrayRequest;
     private String url;
     ArrayList<ModelLevel> levels;
@@ -71,12 +79,16 @@ public class FrgLevel extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_frg_level, container, false);
+        View view = inflater.inflate(R.layout.fragment_level, container, false);
         try {
-            ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+            toolbar = view.findViewById(R.id.toolbar);
             setHasOptionsMenu(true);
+            ((AppCompatActivity) this.getActivity()).setSupportActionBar(toolbar);
+            ((AppCompatActivity) this.getActivity()).getSupportActionBar().setTitle("");
             url = getString(R.string.urlBase) + "nivel";
             levels = new ArrayList<>();
+            searchView = view.findViewById(R.id.busquedaNiv);
+            searchView.setOnQueryTextListener(this);
             rcvLevels = (RecyclerView) view.findViewById(R.id.rcvNiveles);
             //Definir la forma de la lista vertical
             rcvLevels.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -87,10 +99,17 @@ public class FrgLevel extends Fragment {
         return view;
     }
 
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_toolbar, menu);
+        MenuItem mc = menu.findItem(R.id.btnCaritas);
+        mc.setVisible(false);
+        MenuItem mr = menu.findItem(R.id.btnRecompensa);
+        mr.setVisible(false);
+    }
+
     public void getLevels(){
         try {
-            // Crear nueva cola de peticiones
-            requestQueue = Volley.newRequestQueue(getContext());
             jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                     new Response.Listener<JSONArray>() {
                         @Override
@@ -120,18 +139,32 @@ public class FrgLevel extends Fragment {
                                 adpLevel.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        int opcselec = rcvLevels.getChildAdapterPosition(view);
+                                        //int opcselec = rcvLevels.getChildAdapterPosition(view);
+                                        cvSel = (CardView) view;
+                                        lySel = (RelativeLayout) cvSel.getParent();
+                                        int opcselec = cvSel.getId();
                                         levelSelected = levels.get(opcselec);
+                                        lySel.setBackgroundResource(R.drawable.borde);
+                                        lySel.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#44CCCC")));
+                                        Toast.makeText(getContext(),levelSelected.getNombre().trim(),Toast.LENGTH_SHORT);
+                                        ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(levelSelected.getNombre());
                                         bundle = new Bundle();
-                                        bundle.putString("levelSelected", new Gson().toJson(levelSelected));
-                                        Intent intent = new Intent(getContext(), ActivitySublevel.class);
-                                        intent.putExtras(bundle);
-                                        startActivity(intent);
+                                        //bundle.putString("levelSelected", new Gson().toJson(levelSelected));
+                                        bundle.putSerializable("levelSelected", levelSelected);
+                                        fragment = new FrgSublevel();
+                                        fragment.setArguments(bundle);
+                                        final Handler handler = new Handler();
+                                        handler.postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
+                                            }
+                                        }, 750);
                                     }
                                 });
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                                Toast.makeText(getContext(), e.toString(), Toast.LENGTH_LONG).show();
+                                Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
                             }
                         }
                     },
@@ -141,12 +174,24 @@ public class FrgLevel extends Fragment {
                             VolleyLog.e("Error: ", error.getMessage());
                         }
                     });
-            requestQueue.add(jsonArrayRequest);
+            //requestQueue.add(jsonArrayRequest);
+            ClssVolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonArrayRequest);
         } catch (Exception e) {}
     }
 
     private void addLevel(){
-        Intent intent = new Intent(getContext(), ActivityAddLevel.class);
-        startActivity(intent);
+        fragment = new FrgAddLevel();
+        getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        adpLevel.filtrado(newText);
+        return false;
     }
 }

@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.tolan.ActivitySkin;
-import com.example.tolan.ActivitySublevel;
 import com.example.tolan.R;
 import com.example.tolan.activity_group_admin;
 
@@ -47,7 +46,7 @@ public class FrgMenuAdmin extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_frg_menu_admin, container, false);
+        View view = inflater.inflate(R.layout.fragment_menu_admin, container, false);
         try {
             toolbar = view.findViewById(R.id.toolbar);
             setHasOptionsMenu(true);
@@ -97,8 +96,8 @@ public class FrgMenuAdmin extends Fragment {
             getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
         }
         else if(tag == 2){
-            Intent intent = new Intent(getContext(), ActivitySublevel.class);
-            startActivity(intent);
+            fragment = new FrgSublevel();
+            getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
         }
         else if(tag == 3){
 

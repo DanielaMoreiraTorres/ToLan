@@ -16,7 +16,6 @@
         android:theme="@style/Theme.ToLan.NoActionBar"
         android:usesCleartextTraffic="true">
 
-
         <activity
             android:name=".ActivityEstudents"
             android:exported="false" />
@@ -42,15 +41,6 @@
             android:name=".ActivitySkin"
             android:exported="false" />
         <activity
-            android:name=".ActivityAddLevel"
-            android:exported="false" />
-        <activity
-            android:name=".ActivityLevel"
-            android:exported="false" />
-        <activity
-            android:name=".ActivityMenuAdmin"
-            android:exported="false" />
-        <activity
             android:name=".ActivityChooseVideo"
             android:exported="false" />
         <activity
@@ -58,9 +48,6 @@
             android:exported="false" />
         <activity
             android:name=".Multimedia_ImagActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ActivitySublevel"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

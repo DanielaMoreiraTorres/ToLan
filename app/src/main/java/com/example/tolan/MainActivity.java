@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
                     fragment = new FrgWelcome();
                     getSupportFragmentManager().popBackStack();
                     getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
-                } else if (i == 0) {
+                } else if (i == 0 || i > 2) {
                     super.onBackPressed();
                 }
             } else {

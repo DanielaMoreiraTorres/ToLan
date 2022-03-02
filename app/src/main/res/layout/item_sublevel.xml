@@ -93,7 +93,7 @@
                 android:layout_below="@+id/txtId"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="15dp"
-                android:layout_toEndOf="@+id/lblId"
+                android:layout_toEndOf="@+id/lblTitleSubniv"
                 android:alpha="0.6"
                 android:text="@string/subniv" />
 
@@ -102,7 +102,7 @@
                 style="@style/TextAppearance.AppCompat.Body1"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/lblTitleSubniv"
+                android:layout_below="@+id/txtTitleSubnivel"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toEndOf="@+id/imgSubnivel"
@@ -128,7 +128,7 @@
                 style="@style/TextAppearance.AppCompat.Body1"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/lblDescription"
+                android:layout_below="@+id/txtDescription"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toEndOf="@+id/imgSubnivel"
@@ -144,8 +144,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txtDescription"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_toEndOf="@+id/lblDescription"
+                android:layout_marginTop="20dp"
+                android:layout_toEndOf="@+id/lblNumAct"
                 android:alpha="0.6"
                 android:text="@string/numac" />
 
@@ -171,7 +171,7 @@
                 android:layout_below="@+id/lblNumAct"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_toEndOf="@+id/lblDescription"
+                android:layout_toEndOf="@+id/lblPrioridad"
                 android:alpha="0.6"
                 android:text="@string/priori" />
 
