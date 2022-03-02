@@ -66,7 +66,7 @@
 
                 </RelativeLayout>
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                <!--<com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/delNivel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -75,12 +75,12 @@
                     android:src="@drawable/icon_delete"
                     app:maxImageSize="30dp"
                     app:backgroundTint="@color/flat_red_1"
-                    app:tint="@color/white" />
+                    app:tint="@color/white" />-->
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="30dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp">
 
@@ -109,6 +109,7 @@
                                 android:drawablePadding="10dp"
                                 android:drawableTint="@color/principal"
                                 android:inputType="text"
+                                android:maxLength="50"
                                 android:selectAllOnFocus="true" />
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -130,6 +131,7 @@
                                 android:drawablePadding="10dp"
                                 android:drawableTint="@color/principal"
                                 android:inputType="text|textMultiLine"
+                                android:maxLength="255"
                                 android:selectAllOnFocus="true" />
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -219,5 +221,14 @@
             app:tint="@color/white" />-->
 
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:max="100"
+        android:visibility="gone" />
 
 </FrameLayout>

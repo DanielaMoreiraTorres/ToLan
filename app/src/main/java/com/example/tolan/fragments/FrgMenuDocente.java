@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.example.tolan.ActivityContact;
 import com.example.tolan.R;
 
 public class FrgMenuDocente extends Fragment {
@@ -76,8 +75,8 @@ public class FrgMenuDocente extends Fragment {
             getFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
         }
         if(id == R.id.btnContacts) {
-            Intent intent = new Intent(getContext(), ActivityContact.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivity(intent);
+            /*Intent intent = new Intent(getContext(), ActivityContact.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);*/
         }
         return super.onOptionsItemSelected(item);
     }

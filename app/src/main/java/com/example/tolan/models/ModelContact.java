@@ -6,10 +6,10 @@ public class ModelContact {
     String phone;
     String email;
 
-    public ModelContact(String name, String phone, String email) {
+    public ModelContact(String name) {
         this.name = name;
-        this.phone = phone;
-        this.email = email;
+        /*this.phone = phone;
+        this.email = email;*/
     }
 
     public String getName() {

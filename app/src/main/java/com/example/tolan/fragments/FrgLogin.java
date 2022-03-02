@@ -120,67 +120,69 @@ public class FrgLogin extends Fragment {
     }
 
     private void getUsuario() {
-        // Crear nueva cola de peticiones
-        //requestQueue = Volley.newRequestQueue(getContext());
-        //Parámetros a enviar a la API
-        Map<String, String> parameters = new HashMap<>();
-        parameters.put("username", user.getText().toString().trim());
-        parameters.put("password", password.getText().toString().trim());
+        try {
+            // Crear nueva cola de peticiones
+            //requestQueue = Volley.newRequestQueue(getContext());
+            //Parámetros a enviar a la API
+            Map<String, String> parameters = new HashMap<>();
+            parameters.put("username", user.getText().toString().trim());
+            parameters.put("password", password.getText().toString().trim());
         /*user.setText("");
         password.setText("");*/
-        JsonObjectRequest request_json = new JsonObjectRequest(url, new JSONObject(parameters),
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            if (response.length() > 1) {
-                                ModelUser user = new ModelUser();
-                                user.setUsuario(response.getString("usuario").trim());
-                                user.setClave(response.getString("clave").trim());
-                                user.setTipousuario(response.getString("tipousuario").trim());
-                                user.setActivo(response.getBoolean("activo"));
-                                if (user.getTipousuario().equals("ES")) {
-                                    JSONObject ObjDatos = (JSONObject) response.get("estudiante");
-                                    user.setEstudiante(ObjDatos);
-                                    //user.setStockcaritas(ObjDatos.getInt("stockcaritas"));
-                                    ModelUser.stockcaritas = ObjDatos.getInt("stockcaritas");
-                                    user.setGrupo((JSONArray) ObjDatos.get("grupo"));
-                                    int idGrupo = (int) user.getGrupo().getJSONObject(0).get("id");
-                                    ObtIdDocente(idGrupo, user);
-                                } else if (user.getTipousuario().equals("DC")) {
-                                    JSONObject ObjDatos = (JSONObject) response.get("docente");
-                                    user.setDocente(ObjDatos);
-                                    idDocente = ObjDatos.getInt("id");
-                                    Iniciar(user);
-                                } else
-                                    Iniciar(user);
-                                //tts.reproduce("Inicio exitoso");
-                                ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Inicio exitoso");
-                                progressBar.setVisibility(View.GONE);
-                            } else {
-                                //tts.reproduce(response.get("message").toString());
-                                Toast.makeText(getContext(), response.get("message").toString(), Toast.LENGTH_SHORT).show();
-                                ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(response.get("message").toString());
-                                progressBar.setVisibility(View.GONE);
-                            }
+            JsonObjectRequest request_json = new JsonObjectRequest(url, new JSONObject(parameters),
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                if (response.length() > 1) {
+                                    ModelUser user = new ModelUser();
+                                    user.setUsuario(response.getString("usuario").trim());
+                                    user.setClave(response.getString("clave").trim());
+                                    user.setTipousuario(response.getString("tipousuario").trim());
+                                    user.setActivo(response.getBoolean("activo"));
+                                    if (user.getTipousuario().equals("ES")) {
+                                        JSONObject ObjDatos = (JSONObject) response.get("estudiante");
+                                        user.setEstudiante(ObjDatos);
+                                        //user.setStockcaritas(ObjDatos.getInt("stockcaritas"));
+                                        ModelUser.stockcaritas = ObjDatos.getInt("stockcaritas");
+                                        user.setGrupo((JSONArray) ObjDatos.get("grupo"));
+                                        int idGrupo = (int) user.getGrupo().getJSONObject(0).get("id");
+                                        ObtIdDocente(idGrupo, user);
+                                    } else if (user.getTipousuario().equals("DC")) {
+                                        JSONObject ObjDatos = (JSONObject) response.get("docente");
+                                        user.setDocente(ObjDatos);
+                                        idDocente = ObjDatos.getInt("id");
+                                        Iniciar(user);
+                                    } else
+                                        Iniciar(user);
+                                    //tts.reproduce("Inicio exitoso");
+                                    ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Inicio exitoso");
+                                    progressBar.setVisibility(View.GONE);
+                                } else {
+                                    //tts.reproduce(response.get("message").toString());
+                                    Toast.makeText(getContext(), response.get("message").toString(), Toast.LENGTH_SHORT).show();
+                                    ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(response.get("message").toString());
+                                    progressBar.setVisibility(View.GONE);
+                                }
 
-                        } catch (Exception e) {
-                            //Toast.makeText(getContext(),e.toString(),Toast.LENGTH_LONG).show();
+                            } catch (Exception e) {
+                                //Toast.makeText(getContext(),e.toString(),Toast.LENGTH_LONG).show();
+                            }
                         }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.e("Error: ", error.getMessage());
-                Toast.makeText(getContext(), "Error de conexión con el servidor\nIntente nuevamente", Toast.LENGTH_SHORT).show();
-                //tts.reproduce("Error de conexión con el servidor. Intente nuevamente");
-                ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Error de conexión con el servidor. Intente nuevamente");
-                progressBar.setVisibility(View.GONE);
-            }
-        });
-        // Añadir petición a la cola
-        //requestQueue.add(request_json);
-        ClssVolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(request_json);
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    VolleyLog.e("Error: ", error.getMessage());
+                    Toast.makeText(getContext(), "Error de conexión con el servidor\nIntente nuevamente", Toast.LENGTH_SHORT).show();
+                    //tts.reproduce("Error de conexión con el servidor. Intente nuevamente");
+                    ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Error de conexión con el servidor. Intente nuevamente");
+                    progressBar.setVisibility(View.GONE);
+                }
+            });
+            // Añadir petición a la cola
+            //requestQueue.add(request_json);
+            ClssVolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(request_json);
+        } catch (Exception e) {}
     }
 
     private void ObtIdDocente(int idGrupo, ModelUser muser) {

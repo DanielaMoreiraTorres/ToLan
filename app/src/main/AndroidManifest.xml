@@ -32,9 +32,6 @@
             android:name=".ActivityMenuDocente"
             android:exported="false" />
         <activity
-            android:name=".ActivityContact"
-            android:exported="false" />
-        <activity
             android:name=".ActivityAddSkin"
             android:exported="false" />
         <activity

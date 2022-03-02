@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.tolan.adapters.VHoldRecyclerChild_ItemSubnivel;
 import com.example.tolan.clases.ClssConvertirTextoAVoz;
 import com.example.tolan.clases.ClssNavegacionActividades;
+import com.example.tolan.fragments.FrgContact;
 import com.example.tolan.fragments.FrgLogin;
 import com.example.tolan.fragments.FrgRegisterUser;
 import com.example.tolan.fragments.FrgWelcome;
@@ -84,8 +85,11 @@ public class MainActivity extends AppCompatActivity {
         if(id == R.id.btnContacts) {
             //tts.reproduce("Información de contacto");
             ClssConvertirTextoAVoz.getIntancia(this).reproduce("Información de contacto");
-            Intent intent = new Intent(MainActivity.this, ActivityContact.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivity(intent);
+            /*Intent intent = new Intent(MainActivity.this, ActivityContact.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);*/
+            fragment = new FrgContact();
+            getSupportFragmentManager().popBackStack();
+            getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
         }
         return super.onOptionsItemSelected(item);
     }

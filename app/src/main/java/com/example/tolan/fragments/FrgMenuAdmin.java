@@ -15,15 +15,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.tolan.ActivitySkin;
 import com.example.tolan.R;
 import com.example.tolan.activity_group_admin;
+import com.example.tolan.clases.ClssConvertirTextoAVoz;
+import com.example.tolan.clases.ClssStaticGrupo;
+
+import org.w3c.dom.Text;
 
 public class FrgMenuAdmin extends Fragment {
 
     private Fragment fragment;
     Toolbar toolbar;
+    private TextView txtMenu;
     private ImageView iconNiveles, iconSubNiveles, iconActividades, iconSkins, iconGrupos, iconHistorial;
 
     public FrgMenuAdmin() {
@@ -52,6 +58,8 @@ public class FrgMenuAdmin extends Fragment {
             setHasOptionsMenu(true);
             ((AppCompatActivity) this.getActivity()).setSupportActionBar(toolbar);
             ((AppCompatActivity) this.getActivity()).getSupportActionBar().setTitle("");
+            txtMenu = view.findViewById(R.id.txtMenu);
+            txtMenu.setOnClickListener(v -> ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce(txtMenu.getText().toString()));
             iconNiveles = view.findViewById(R.id.iconNiveles);
             iconNiveles.setOnClickListener(v -> {
                 OptionsMenuAdmin(v);
@@ -93,25 +101,29 @@ public class FrgMenuAdmin extends Fragment {
         int tag = Integer.parseInt(view.getTag().toString());
         if(tag == 1) {
             fragment = new FrgLevel();
+            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Niveles");
             getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
         }
         else if(tag == 2){
             fragment = new FrgSublevel();
+            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Subniveles");
             getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
         }
         else if(tag == 3){
-
+            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Actividades");
         }
         else if(tag == 4){
             Intent intent = new Intent(getContext(), ActivitySkin.class);
+            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Artículos");
             startActivity(intent);
         }
         else if(tag == 5){
             Intent intent = new Intent(getContext(), activity_group_admin.class);
+            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Grupos");
             startActivity(intent);
         }
         else if(tag == 6){
-
+            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Historial");
         }
     }
 }

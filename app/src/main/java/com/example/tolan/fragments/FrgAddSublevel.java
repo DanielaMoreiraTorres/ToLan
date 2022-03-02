@@ -17,11 +17,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -69,6 +71,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class FrgAddSublevel extends Fragment {
 
     private Toolbar toolbar;
+    private ProgressBar progressBar;
     private FloatingActionButton btnimagen, btnaddNSubnivel;
     public static final int PICK_IMAGE = 1;
     private static int contResult = 0;
@@ -129,6 +132,9 @@ public class FrgAddSublevel extends Fragment {
             levels = new ArrayList<>();
             nivel = view.findViewById(R.id.nivel);
             validate = new ClssValidations();
+            progressBar = view.findViewById(R.id.progressBar);
+            txttxtTitleS = view.findViewById(R.id.txtTitleS);
+            txttxtTitleS.setOnClickListener(v -> ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce(txttxtTitleS.getText().toString()));
             nivel.setThreshold(1);
             autocomplete();
             Lnivel = view.findViewById(R.id.Lnivel);
@@ -146,7 +152,7 @@ public class FrgAddSublevel extends Fragment {
             llenarComponents();
             validate.TextChanged(null, nivel, Lnivel, Merror);
             validate.TextChanged(txtnameS, null, Lnombre, Merror);
-            validate.TextChanged(txtdescripcionS, null, Ldescripcion, Merror);
+            //validate.TextChanged(txtdescripcionS, null, Ldescripcion, Merror);
         } catch (Exception e) {}
         return view;
     }
@@ -161,6 +167,7 @@ public class FrgAddSublevel extends Fragment {
     }
 
     private void openGallery() {
+        ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Seleccionar imagen");
         Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         startActivityForResult(gallery, PICK_IMAGE);
     }
@@ -266,8 +273,12 @@ public class FrgAddSublevel extends Fragment {
 
     private void AddOrRegister(){
         try{
-            if(validate.Validar(null,nivel,Lnivel,Merror) & validate.Validar(txtnameS,null,Lnombre,Merror)
-                    & validate.Validar(txtdescripcionS,null,Ldescripcion,Merror)) {
+            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(acceptS.getText().toString());
+            if(validate.Validar(null,nivel,Lnivel,Merror) & validate.Validar(txtnameS,null,Lnombre,Merror)) {
+                //Ocultar teclado
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(getContext().INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(txtdescripcionS.getWindowToken(), 0);
+                progressBar.setVisibility(View.VISIBLE);
                 if (sublevelSel != null) {
                     if (contResult > 0)
                         registerMultimedia();
@@ -302,43 +313,49 @@ public class FrgAddSublevel extends Fragment {
             Retrofit retrofit = new Retrofit.Builder().baseUrl(getString(R.string.urlBase))
                     .addConverterFactory(GsonConverterFactory.create()).build();
             multimediaApi = retrofit.create(MultimediaApi.class);
-            if (file == null) {
-                String path = clssGetRealPath.getRealPath(getContext(), imageUri);
-                file = new File(path);
-            }
-            RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-            requestImage = MultipartBody.Part.createFormData("multipartFile", URLEncoder.encode(file.getName(), "utf-8"), requestFile);
-            Call<ModelUploadImage> call = multimediaApi.uploadImage(requestImage);
-            call.enqueue(new Callback<ModelUploadImage>() {
-                @Override
-                public void onResponse(Call<ModelUploadImage> call, retrofit2.Response<ModelUploadImage> response) {
-                    if (response.isSuccessful()) {
-                        try {
-                            response.body();
-                            multimedia = new JSONObject();
-                            url = response.body().getUrl();
-                            publicid = response.body().getPublicid();
-                            multimedia.put("publicid", publicid);
-                            multimedia.put("url", url);
-                            if(sublevelSel != null){
-                                updateSublevel();
-                                //updateSublevel();
+            if(imageUri != null) {
+                if (file == null) {
+                    String path = clssGetRealPath.getRealPath(getContext(), imageUri);
+                    file = new File(path);
+                }
+                RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+                requestImage = MultipartBody.Part.createFormData("multipartFile", URLEncoder.encode(file.getName(), "utf-8"), requestFile);
+                Call<ModelUploadImage> call = multimediaApi.uploadImage(requestImage);
+                call.enqueue(new Callback<ModelUploadImage>() {
+                    @Override
+                    public void onResponse(Call<ModelUploadImage> call, retrofit2.Response<ModelUploadImage> response) {
+                        if (response.isSuccessful()) {
+                            try {
+                                response.body();
+                                multimedia = new JSONObject();
+                                url = response.body().getUrl();
+                                publicid = response.body().getPublicid();
+                                multimedia.put("publicid", publicid);
+                                multimedia.put("url", url);
+                                if (sublevelSel != null) {
+                                    updateSublevel();
+                                    //updateSublevel();
+                                } else
+                                    registerSublevel();
+                            } catch (JSONException | AuthFailureError e) {
+                                e.printStackTrace();
                             }
-                            else
-                                registerSublevel();
-                        } catch (JSONException | AuthFailureError e) {
-                            e.printStackTrace();
+                            //Toast.makeText(getContext(), "Imagen registrada correctamente", Toast.LENGTH_SHORT).show();
                         }
-                        //Toast.makeText(getContext(), "Imagen registrada correctamente", Toast.LENGTH_SHORT).show();
-                    } else
-                        Toast.makeText(getContext(), response.errorBody().toString(), Toast.LENGTH_SHORT).show();
-                }
+                        //Toast.makeText(getContext(), response.errorBody().toString(), Toast.LENGTH_SHORT).show();
+                    }
 
-                @Override
-                public void onFailure(Call<ModelUploadImage> call, Throwable t) {
-                    //Toast.makeText(getContext(), "Error: " + t, Toast.LENGTH_SHORT).show();
-                }
-            });
+                    @Override
+                    public void onFailure(Call<ModelUploadImage> call, Throwable t) {
+                        //Toast.makeText(getContext(), "Error: " + t, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+            else{
+                Toast.makeText(getContext(), "Seleccione una imagen", Toast.LENGTH_SHORT).show();
+                ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Seleccione una imagen");
+                progressBar.setVisibility(View.GONE);
+            }
         } catch (Exception e) {
             String error = e.toString();
         }
@@ -359,9 +376,14 @@ public class FrgAddSublevel extends Fragment {
                             try {
                                 if (response.length() > 1) {
                                     Toast.makeText(getContext(), "Subnivel registrado exitosamente", Toast.LENGTH_SHORT).show();
+                                    ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Subnivel registrado exitosamente");
+                                    progressBar.setVisibility(View.GONE);
                                     redirectSublevels();
-                                } else
+                                } else{
                                     Toast.makeText(getContext(), response.get("message").toString(), Toast.LENGTH_SHORT).show();
+                                    ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(response.get("message").toString());
+                                    progressBar.setVisibility(View.GONE);
+                                }
                             } catch (Exception e) {
                                 //Toast.makeText(getContext(),"Error de conexión",Toast.LENGTH_LONG).show();
                             }
@@ -371,6 +393,9 @@ public class FrgAddSublevel extends Fragment {
                 public void onErrorResponse(VolleyError error) {
                     VolleyLog.e("Error: ", error.getMessage());
                     //Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Error de conexión con el servidor\nIntente nuevamente", Toast.LENGTH_SHORT).show();
+                    ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Error de conexión con el servidor. Intente nuevamente");
+                    progressBar.setVisibility(View.GONE);
                 }
             });
             ClssVolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
@@ -396,7 +421,8 @@ public class FrgAddSublevel extends Fragment {
                     new com.android.volley.Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
-                            Toast.makeText(getContext(),"Subnivel actualizado exitosamente", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(),"Subnivel actualizado exitosamente", Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.GONE);
                             redirectSublevels();
                         }
                     },
@@ -404,13 +430,18 @@ public class FrgAddSublevel extends Fragment {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             //Toast.makeText(getContext(),error.getMessage(), Toast.LENGTH_LONG).show();
-                            System.out.println("Este es el error:" + error.networkResponse.data);
+                            //System.out.println("Este es el error:" + error.networkResponse.data);
+                            try {
+                                updateSublevel();
+                            } catch (AuthFailureError authFailureError) {
+                                authFailureError.printStackTrace();
+                            }
                         }
                     });
             // Añadir petición a la cola
             ClssVolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
         } catch (Exception e) {
-            Toast.makeText(getContext(),e.getMessage(), Toast.LENGTH_LONG).show();
+            //Toast.makeText(getContext(),e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 

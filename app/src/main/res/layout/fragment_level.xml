@@ -110,4 +110,13 @@
         app:maxImageSize="30dp"
         app:tint="@color/white" />
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:max="100"
+        android:visibility="gone" />
+
 </FrameLayout>

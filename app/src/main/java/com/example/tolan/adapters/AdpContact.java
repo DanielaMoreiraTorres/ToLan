@@ -15,9 +15,10 @@ import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.util.List;
 
-public class AdpContact extends RecyclerView.Adapter<AdpContact.ViewHolder> {
+public class AdpContact extends RecyclerView.Adapter<AdpContact.ViewHolder> implements View.OnClickListener {
 
     private List<ModelContact> data;
+    private View.OnClickListener listener;
     public AdpContact(List<ModelContact> data){this.data = data;}
     public static boolean showShimmer = true;
     int cantShimmer = 4;
@@ -27,6 +28,7 @@ public class AdpContact extends RecyclerView.Adapter<AdpContact.ViewHolder> {
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = null;
         view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_contact,null,false);
+        view.setOnClickListener(this);
         return new ViewHolder(view);
     }
 
@@ -39,7 +41,7 @@ public class AdpContact extends RecyclerView.Adapter<AdpContact.ViewHolder> {
                 holder.shimmerFrameLayout.stopShimmer();
                 holder.shimmerFrameLayout.setShimmer(null);
                 holder.txtContact.setBackground(null);
-                holder.txtEmail.setBackground(null);
+                //holder.txtEmail.setBackground(null);
                 holder.add_data(data.get(position));
             }
         }
@@ -53,25 +55,36 @@ public class AdpContact extends RecyclerView.Adapter<AdpContact.ViewHolder> {
         }catch (Exception e) {return cantShimmer;}
     }
 
+    public void setOnClickListener(View.OnClickListener listener) {
+        this.listener = listener;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (listener != null) {
+            listener.onClick(view);
+        }
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         ShimmerFrameLayout shimmerFrameLayout;
         TextView txtContact;
         ImageView btnShimmer;
-        TextView txtEmail;
-        ImageView btnShimmer1;
+        /*TextView txtEmail;
+        ImageView btnShimmer1;*/
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             shimmerFrameLayout = itemView.findViewById(R.id.shimmer);
             txtContact = (TextView) itemView.findViewById(R.id.txtContactName);
             btnShimmer = itemView.findViewById(R.id.imageViewliPart);
-            txtEmail = (TextView) itemView.findViewById(R.id.txtEmail);
-            btnShimmer1 = itemView.findViewById(R.id.imageViewliEm);
+            /*txtEmail = (TextView) itemView.findViewById(R.id.txtEmail);
+            btnShimmer1 = itemView.findViewById(R.id.imageViewliEm);*/
         }
 
         public void add_data(ModelContact valor) {
             txtContact.setText(valor.getName());
-            txtEmail.setText(valor.getEmail());
+            //txtEmail.setText(valor.getEmail());
         }
     }
 }

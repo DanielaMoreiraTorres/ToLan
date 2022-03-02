@@ -21,8 +21,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -52,10 +54,12 @@ SearchView.OnQueryTextListener {
 
     private Toolbar toolbar;
     private Fragment fragment;
+    private ProgressBar progressBar;
     private FloatingActionButton fab;
     private SearchView searchView;
     private CardView cvSel;
     private RelativeLayout lySel;
+    private TextView lblTiTleSubNiv;
     private JsonArrayRequest jsonArrayRequest;
     private String url, urlN;
     private Spinner cbbNiveles;
@@ -100,8 +104,11 @@ SearchView.OnQueryTextListener {
             ((AppCompatActivity) this.getActivity()).getSupportActionBar().setTitle("");
             url = getString(R.string.urlBase) + "subnivel";
             urlN = getString(R.string.urlBase) + "nivel";
+            progressBar = view.findViewById(R.id.progressBar);
             levels = new ArrayList<>();
             nivelesList = new ArrayList();
+            lblTiTleSubNiv = view.findViewById(R.id.lblTiTleSubNiv);
+            lblTiTleSubNiv.setOnClickListener(v -> ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce(lblTiTleSubNiv.getText().toString()));
             searchView = view.findViewById(R.id.busquedaSubniv);
             searchView.setOnQueryTextListener(this);
             cbbNiveles = (Spinner) view.findViewById(R.id.cbbNivel);
@@ -171,6 +178,7 @@ SearchView.OnQueryTextListener {
     }
 
     private void getS(){
+        progressBar.setVisibility(View.VISIBLE);
         sublevels = new ArrayList<>();
         if (niv != 0)
             getSublevels(url+"/byNivel?idNivel="+niv);
@@ -201,26 +209,27 @@ SearchView.OnQueryTextListener {
                             Collections.sort(sublevels, new Comparator<ModelSublevel>() {
                                 @Override
                                 public int compare(ModelSublevel s1, ModelSublevel s2) {
-                                    return new Integer(s1.getPrioridad()).compareTo(new Integer(s2.getPrioridad()));
+                                    return new Integer(s1.getId()).compareTo(new Integer(s2.getId()));
                                 }
                             });
-                            adpSublevel = new AdpSublevel(getContext(), sublevels);
-                            rcvSublevels.setAdapter(adpSublevel);
-                            adpSublevel.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    //int opcselec = rcvSublevels.getChildAdapterPosition(view);
-                                    cvSel = (CardView) view;
-                                    lySel = (RelativeLayout) cvSel.getParent();
-                                    int opcselec = cvSel.getId();
-                                    sublevelSelected = sublevels.get(opcselec);
-                                    lySel.setBackgroundResource(R.drawable.borde);
-                                    lySel.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#44CCCC")));
-                                    Toast.makeText(getContext(),sublevelSelected.getDescripcion().trim(),Toast.LENGTH_SHORT);
-                                    ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(sublevelSelected.getDescripcion());
-                                    bundle = new Bundle();
-                                    //bundle.putString("sublevelSelected", new Gson().toJson(sublevelSelected));
-                                    bundle.putSerializable("sublevelSelected", sublevelSelected);
+                            if(getContext() != null) {
+                                adpSublevel = new AdpSublevel(getContext(), sublevels);
+                                rcvSublevels.setAdapter(adpSublevel);
+                                adpSublevel.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        //int opcselec = rcvSublevels.getChildAdapterPosition(view);
+                                        cvSel = (CardView) view;
+                                        lySel = (RelativeLayout) cvSel.getParent();
+                                        int opcselec = cvSel.getId();
+                                        sublevelSelected = sublevels.get(opcselec);
+                                        lySel.setBackgroundResource(R.drawable.borde);
+                                        lySel.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#44CCCC")));
+                                        Toast.makeText(getContext(), sublevelSelected.getNombre().trim(), Toast.LENGTH_SHORT);
+                                        ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(sublevelSelected.getNombre());
+                                        bundle = new Bundle();
+                                        //bundle.putString("sublevelSelected", new Gson().toJson(sublevelSelected));
+                                        bundle.putSerializable("sublevelSelected", sublevelSelected);
                                     /*fragment = new FrgSublevel();
                                     fragment.setArguments(bundle);
                                     final Handler handler = new Handler();
@@ -230,11 +239,14 @@ SearchView.OnQueryTextListener {
                                             getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
                                         }
                                     }, 750);*/
-                                }
-                            });
+                                    }
+                                });
+                            }
+                            progressBar.setVisibility(View.GONE);
                         }catch (JSONException e){
                             e.printStackTrace();
-                            Toast.makeText(getContext(),e.toString(),Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getContext(),e.toString(),Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.GONE);
                         }
                     }
                 },
@@ -249,13 +261,17 @@ SearchView.OnQueryTextListener {
                                             adpSublevel = new AdpSublevel(getContext(), sublevels);
                                             rcvSublevels.setAdapter(adpSublevel);
                                             Toast.makeText(getContext(),response.getString("message"),Toast.LENGTH_SHORT).show();
+                                            progressBar.setVisibility(View.GONE);
                                         } catch (Exception e) {
-                                            Toast.makeText(getContext(),e.toString(),Toast.LENGTH_SHORT).show();                                        }
+                                            //Toast.makeText(getContext(),e.toString(),Toast.LENGTH_SHORT).show();
+                                            progressBar.setVisibility(View.GONE);
+                                        }
                                     }
                                 }, new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
                                 VolleyLog.e("Error: ", error.getMessage());
+                                progressBar.setVisibility(View.GONE);
                             }
                         });
                         ClssVolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(request_json);
@@ -275,6 +291,7 @@ SearchView.OnQueryTextListener {
             }
         }
         else {
+            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(cbbNiveles.getItemAtPosition(i).toString().trim());
             if(i != 0)
                 niv = levels.get(i-1).getId();
             else
@@ -288,6 +305,7 @@ SearchView.OnQueryTextListener {
 
     private void addSublevel(){
         fragment = new FrgAddSublevel();
+        ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Agregar subnivel");
         getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
     }
 
