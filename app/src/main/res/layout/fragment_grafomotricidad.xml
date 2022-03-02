@@ -43,7 +43,7 @@
                     android:padding="30dp"
                     android:shadowColor="@color/secundario"
                     android:shadowRadius="4"
-                    android:text="Grafomotricidad"
+                    android:text="Rompecabezas"
                     android:textColor="@color/black"
                     android:textSize="24sp" />
 
@@ -52,7 +52,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="236dp"
 
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp">
@@ -68,8 +68,8 @@
 
                 <ImageView
                     android:id="@+id/imgEnunciado"
-                    android:layout_width="160dp"
-                    android:layout_height="120dp"
+                    android:layout_width="212dp"
+                    android:layout_height="189dp"
                     android:layout_below="@+id/enunciado"
                     android:layout_centerInParent="true"
                     android:layout_marginTop="10dp"
@@ -86,19 +86,181 @@
                     android:layout_toEndOf="@id/imgEnunciado"
                     app:srcCompat="@drawable/icon_audio" />
 
-                <RelativeLayout
-                    android:id="@+id/grafo"
-                    android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    android:layout_below="@+id/imgEnunciado"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/borde2">
-
-                </RelativeLayout>
-
 
             </RelativeLayout>
 
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="152dp"
+                    tools:ignore="SpeakableTextPresentCheck">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/car1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp">
+
+                            <ImageView
+                                android:id="@+id/imP1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="8dp"
+                                android:adjustViewBounds="true"
+                                android:scaleType="centerInside"
+                                android:tag="fig1"
+                                app:srcCompat="@drawable/ic_launcher_foreground" />
+
+                            <TextView
+                                android:id="@+id/txtP1"
+                                android:layout_width="108dp"
+                                android:layout_height="112dp"
+                                android:text="1"
+                                android:textAlignment="center"
+                                android:textSize="48sp" />
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp">
+
+                            <ImageView
+                                android:id="@+id/imP2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="8dp"
+                                android:adjustViewBounds="true"
+                                android:scaleType="centerInside"
+                                android:tag="fig2"
+                                app:srcCompat="@drawable/ic_launcher_foreground" />
+
+                            <TextView
+                                android:id="@+id/txtP2"
+                                android:layout_width="108dp"
+                                android:layout_height="112dp"
+                                android:text="2"
+                                android:textAlignment="center"
+                                android:textSize="48sp" />
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp">
+
+                            <ImageView
+                                android:id="@+id/imP3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="8dp"
+                                android:adjustViewBounds="true"
+                                android:scaleType="centerInside"
+                                android:tag="fig3"
+                                app:srcCompat="@drawable/ic_launcher_foreground" />
+
+                            <TextView
+                                android:id="@+id/txtP3"
+                                android:layout_width="108dp"
+                                android:layout_height="112dp"
+                                android:text="3"
+                                android:textAlignment="center"
+                                android:textSize="48sp" />
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp">
+
+                            <ImageView
+                                android:id="@+id/imP4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="8dp"
+                                android:adjustViewBounds="true"
+                                android:scaleType="centerInside"
+                                android:tag="fig4"
+                                app:srcCompat="@drawable/ic_launcher_foreground" />
+
+                            <TextView
+                                android:id="@+id/txtP4"
+                                android:layout_width="108dp"
+                                android:layout_height="112dp"
+                                android:text="4"
+                                android:textAlignment="center"
+                                android:textSize="48sp" />
+                        </androidx.cardview.widget.CardView>
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+            </FrameLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="261dp"
+
+                android:layout_margin="30dp"
+                android:layout_marginLeft="30dp">
+
+                <ImageView
+                    android:id="@+id/prt3"
+                    android:layout_width="175dp"
+                    android:layout_height="123dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginBottom="0dp"
+                    android:adjustViewBounds="true"
+                    android:tag="fig3"
+                    app:srcCompat="@drawable/ic_launcher_foreground" />
+
+                <ImageView
+                    android:id="@+id/prt4"
+                    android:layout_width="175dp"
+                    android:layout_height="123dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="0dp"
+                    android:layout_marginBottom="0dp"
+                    android:adjustViewBounds="true"
+                    android:tag="fig4"
+                    app:srcCompat="@drawable/ic_launcher_foreground" />
+
+                <ImageView
+                    android:id="@+id/prt1"
+                    android:layout_width="175dp"
+                    android:layout_height="129dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="0dp"
+                    android:adjustViewBounds="true"
+                    android:maxWidth="100dp"
+                    android:maxHeight="200dp"
+                    android:tag="fig1"
+                    app:srcCompat="@drawable/ic_launcher_foreground" />
+
+                <ImageView
+                    android:id="@+id/prt2"
+                    android:layout_width="175dp"
+                    android:layout_height="134dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="0dp"
+                    android:adjustViewBounds="true"
+                    android:maxWidth="100dp"
+                    android:maxHeight="100dp"
+                    android:tag="fig2"
+                    app:srcCompat="@drawable/ic_launcher_foreground" />
+            </RelativeLayout>
             <Button
                 android:id="@+id/btn_comprobar_actividades"
                 android:layout_width="350dp"
