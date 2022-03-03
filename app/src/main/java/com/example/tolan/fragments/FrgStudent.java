@@ -89,6 +89,8 @@ public class FrgStudent extends Fragment {
             lblTiTleE = view.findViewById(R.id.lblTiTleE);
             if(ClssStaticGrupo.iddocente != 0)
                 lblTiTleE.setText("Mis estudiantes");
+            else
+                lblTiTleE.setText("Estudiantes");
             lblTiTleE.setOnClickListener(v -> ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce(lblTiTleE.getText().toString().trim()));
             estudianteRcl = (RecyclerView) view.findViewById(R.id.rcvEstudiantes);
             estudianteRcl.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));

@@ -89,7 +89,7 @@ public class FrgMenuDocente extends Fragment {
         }
         else if(tag == 2){
             fragment = new FrgRegisterUser();
-            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Regstrar estudiante");
+            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Registrar estudiante");
             getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
         }
         else if(tag == 3){

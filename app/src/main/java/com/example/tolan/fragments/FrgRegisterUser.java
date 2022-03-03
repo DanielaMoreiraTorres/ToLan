@@ -3,10 +3,15 @@ package com.example.tolan.fragments;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -14,6 +19,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,9 +30,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.tolan.MainActivity;
 import com.example.tolan.R;
 import com.example.tolan.adapters.AdpAutocompleteDocente;
 import com.example.tolan.clases.ClssConvertirTextoAVoz;
+import com.example.tolan.clases.ClssStaticGrupo;
 import com.example.tolan.clases.ClssValidations;
 import com.example.tolan.clases.ClssVolleySingleton;
 import com.example.tolan.models.ModelUser;
@@ -47,6 +55,9 @@ public class FrgRegisterUser extends Fragment {
     //static ClssConvertirTextoAVoz tts;
     //private RequestQueue requestQueue;
     private JsonArrayRequest jsonArrayRequest;
+    private Toolbar toolbar;
+    private ProgressBar progressBar;
+    private View linea;
     private String url;
     private TextView txtReg,txtDatPer, txtDatUser;
     private TextInputLayout Lnombres, Lapellidos, Ltelefono, Lemail, LFechaNac, Ldocente, Lusuario, Lclave, Lconfclave;
@@ -89,8 +100,15 @@ public class FrgRegisterUser extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_register_user, container, false);
         try {
-            ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+            toolbar = view.findViewById(R.id.toolbar);
+            toolbar.setVisibility(View.GONE);
+            setHasOptionsMenu(true);
+            ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("");
+            linea = view.findViewById(R.id.linea);
+            linea.setVisibility(View.GONE);
             url = getString(R.string.urlBase) + "usuario";
+            progressBar = view.findViewById(R.id.progressBar);
             validate = new ClssValidations();
             docentes = new ArrayList<>();
             txtReg = view.findViewById(R.id.txtReg);
@@ -133,13 +151,36 @@ public class FrgRegisterUser extends Fragment {
             datosDocente = view.findViewById(R.id.datosDocente);
             Ldocente = view.findViewById(R.id.Ldocente);
             docente = view.findViewById(R.id.docente);
-            docente.setThreshold(1);
-            autocomplete();
+            if(!ClssStaticGrupo.docente.isEmpty()) {
+                toolbar.setVisibility(View.VISIBLE);
+                linea.setVisibility(View.VISIBLE);
+                txtReg.setText("Registro de estudiante");
+                rbDocente.setEnabled(false);
+                docente.setText(ClssStaticGrupo.docente);
+                docente.setEnabled(false);
+                selectedDocente = new JSONObject();
+                selectedDocente.put("id", ClssStaticGrupo.iddocente);
+                selectedDocente.put("nombres", ClssStaticGrupo.nombredocente);
+                selectedDocente.put("apellidos", ClssStaticGrupo.apellidodocente);
+            } else {
+                txtReg.setText("Registro de usuario");
+                docente.setThreshold(1);
+                autocomplete();
+            }
             btnRegistrarse = view.findViewById(R.id.btnRegister);
             btnRegistrarse.setOnClickListener(v -> RegisterUser());
         }
         catch (Exception e){}
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_toolbar, menu);
+        MenuItem mc = menu.findItem(R.id.btnCaritas);
+        mc.setVisible(false);
+        MenuItem mr = menu.findItem(R.id.btnRecompensa);
+        mr.setVisible(false);
     }
 
     private void showDialog(){
@@ -236,6 +277,7 @@ public class FrgRegisterUser extends Fragment {
     }
 
     private void RegisterUser(){
+        ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(btnRegistrarse.getText().toString().trim());
         if(!rbDocente.isChecked()){
             if(!validate.Validar(null,docente,Ldocente,Merror)){
                 Ldocente.setError("Docente no válido");
@@ -270,6 +312,7 @@ public class FrgRegisterUser extends Fragment {
     }
 
     private void createUsuario() throws JSONException {
+        progressBar.setVisibility(View.VISIBLE);
         // Crear nueva cola de peticiones
         //requestQueue= Volley.newRequestQueue(getContext());
         //Parámetros a enviar a la API
@@ -282,6 +325,7 @@ public class FrgRegisterUser extends Fragment {
                 //tts.reproduce("Docente no válido");
                 ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Docente no válido");
                 Ldocente.setError("Docente no válido");
+                progressBar.setVisibility(View.GONE);
                 return;
             }
             else{
@@ -293,6 +337,7 @@ public class FrgRegisterUser extends Fragment {
                     //tts.reproduce("Docente no válido");
                     ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Docente no válido");
                     Ldocente.setError("Docente no válido");
+                    progressBar.setVisibility(View.GONE);
                     return;
                 }
             }
@@ -310,16 +355,19 @@ public class FrgRegisterUser extends Fragment {
                             if(response.length() > 1)
                             {
                                 //tts.reproduce("Usuario Registrado");
+                                progressBar.setVisibility(View.GONE);
                                 ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Usuario Registrado");
                                 Toast.makeText(getContext(),"Usuario Registrado",Toast.LENGTH_SHORT).show();
                                 redirectLogin();
                             }
                             else{
                                 //tts.reproduce(response.get("message").toString());
+                                progressBar.setVisibility(View.GONE);
                                 ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(response.get("message").toString());
                                 Toast.makeText(getContext(),response.get("message").toString(),Toast.LENGTH_SHORT).show();
                             }
                         } catch (Exception e) {
+                            progressBar.setVisibility(View.GONE);
                             //Toast.makeText(getContext(),"Error de conexión",Toast.LENGTH_LONG).show();
                         }
                     }
@@ -327,6 +375,7 @@ public class FrgRegisterUser extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.e("Error: ", error.getMessage());
+                progressBar.setVisibility(View.GONE);
                 Toast.makeText(getContext(),"Error de conexión con el servidor. Intente nuevamente",Toast.LENGTH_SHORT).show();
                 //tts.reproduce("Error de conexión con el servidor. Intente nuevamente");
                 ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Error de conexión con el servidor. Intente nuevamente");

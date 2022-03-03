@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private Fragment fragment;
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
+    private int aux = 0;
     //static ClssConvertirTextoAVoz tts;
 
     @Override
@@ -76,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
         }*/
         if(id == R.id.btnLogIn) {
-            //tts.reproduce("Cerrar sesión");
             ClssConvertirTextoAVoz.getIntancia(this).reproduce("Cerrar sesión");
             fragment = new FrgLogin();
             int i = getSupportFragmentManager().getBackStackEntryCount();
@@ -86,11 +86,13 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
         }
         if(id == R.id.btnContacts) {
-            //tts.reproduce("Información de contacto");
             ClssConvertirTextoAVoz.getIntancia(this).reproduce("Información de contacto");
-            fragment = new FrgContact();
-            //getSupportFragmentManager().popBackStack();
-            getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
+            if(aux == 0) {
+                fragment = new FrgContact();
+                //getSupportFragmentManager().popBackStack();
+                getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
+                aux += 1;
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -111,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
                     getSupportFragmentManager().popBackStack();
                     getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
                 } else if (i == 0 || i > 2) {
+                    aux = 0;
                     super.onBackPressed();
                 }
             } else {
