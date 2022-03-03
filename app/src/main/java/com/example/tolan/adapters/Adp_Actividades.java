@@ -11,14 +11,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.tolan.R;
 import com.example.tolan.fragments.FrgAddActividad;
 import com.example.tolan.models.ModelActivity;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -130,9 +133,12 @@ public class Adp_Actividades extends RecyclerView.Adapter<Adp_Actividades.ViewHo
         //holder.txt_DificultadActividad.setRotation(90);;
 
 
-        holder.cardview_activity.setOnClickListener(v -> {
-            Fragment frg= new FrgAddActividad("edit",listaActividades.get(position));
-            fragment.getFragmentManager().beginTransaction().replace(R.id.content, frg).addToBackStack(null).commit();
+        holder.fabtneditarActividad.setOnClickListener(v -> {
+            FragmentManager manager = ((AppCompatActivity) fragment.getContext()).getSupportFragmentManager();
+            Fragment frg = new FrgAddActividad("edit", listaActividades.get(position));
+            manager.beginTransaction().replace(R.id.content, frg).addToBackStack(null).commit();
+
+            //fragment.getFragmentManager().beginTransaction().replace(R.id.content, frg).addToBackStack(null).commit();
 
         });
     }
@@ -150,12 +156,13 @@ public class Adp_Actividades extends RecyclerView.Adapter<Adp_Actividades.ViewHo
                 txt_DescripctionActividad,
                 txt_DificultadActividad,
                 txt_tipoActividad,
-                txt_idActividad,txt_SubnivelActividad;
+                txt_idActividad, txt_SubnivelActividad;
         CheckBox checkedTextView;
         //CircleImageView imgCIV_Actividad;
 
         CardView cardview_activity;
         RelativeLayout rly, ryl_superior;
+        FloatingActionButton fabtneditarActividad;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -166,11 +173,12 @@ public class Adp_Actividades extends RecyclerView.Adapter<Adp_Actividades.ViewHo
             txt_DificultadActividad = itemView.findViewById(R.id.txt_dificultadActividad);
             txt_tipoActividad = itemView.findViewById(R.id.txt_tipoActividad);
             txt_idActividad = itemView.findViewById(R.id.txt_idActividad);
-            txt_SubnivelActividad=itemView.findViewById(R.id.txt_SubnivelActividad);
+            txt_SubnivelActividad = itemView.findViewById(R.id.txt_SubnivelActividad);
 
             cardview_activity = itemView.findViewById(R.id.cardview_activity);
             rly = itemView.findViewById(R.id.rly);
             ryl_superior = itemView.findViewById(R.id.ryl_superior);
+            fabtneditarActividad = itemView.findViewById(R.id.fabtneditarActividad);
         }
     }
 }

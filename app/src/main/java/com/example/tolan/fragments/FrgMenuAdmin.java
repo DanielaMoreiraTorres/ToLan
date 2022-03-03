@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import com.example.tolan.ActivitySkin;
 import com.example.tolan.R;
 import com.example.tolan.activity_group_admin;
+import com.example.tolan.clases.ClssConvertirTextoAVoz;
 
 public class FrgMenuAdmin extends Fragment {
 
@@ -113,6 +114,9 @@ public class FrgMenuAdmin extends Fragment {
             Intent intent = new Intent(getContext(), activity_group_admin.class);
             startActivity(intent);
         } else if (tag == 6) {
+            fragment = new Frg_Historial();
+            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Historial");
+            getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
 
         } else if (tag == 7) {
             fragment = new Frg_Contenido();

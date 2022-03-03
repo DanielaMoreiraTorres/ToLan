@@ -84,6 +84,17 @@
             android:layout_marginTop="5dp"
             app:cardCornerRadius="15dp">
 
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fabtneditarActividad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                app:backgroundTint="@color/principal"
+                app:fabSize="mini"
+                app:srcCompat="@drawable/icon_editt"
+                app:tint="@color/white"
+                tools:ignore="SpeakableTextPresentCheck" />
+
             <RelativeLayout
                 android:id="@+id/rly"
 
@@ -109,8 +120,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/baloo"
                     android:text="id"
                     android:textColor="@color/white"
                     android:textSize="25sp"
@@ -140,6 +152,8 @@
 
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
+
+
     </ScrollView>
 
 

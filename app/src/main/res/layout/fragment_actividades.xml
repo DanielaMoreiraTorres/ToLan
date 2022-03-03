@@ -10,6 +10,11 @@
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar"></include>
+    <View
+        android:id="@+id/lineactmenuadmin"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/plomo" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -24,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="15sp"
-            android:src="@drawable/checkbox"
+            android:src="@drawable/icon_new"
             tools:ignore="SpeakableTextPresentCheck" />
 
 
@@ -70,6 +75,7 @@
                 app:queryHint="@string/search" />
 
             <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgActivities"
                 android:layout_width="130dp"
                 android:layout_height="130dp"
                 android:layout_alignParentRight="true"
@@ -78,24 +84,13 @@
             </de.hdodenhof.circleimageview.CircleImageView>
 
 
-            <TextView
-                android:id="@+id/txtdesc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/srch_busquedad"
-                android:fontFamily="sans-serif-medium"
-                android:gravity="fill_horizontal"
-                android:padding="10dp"
-                android:textSize="14sp"
-                android:text="@string/activity_description"
-                android:textColor="#272727"
-                android:textStyle="bold" />
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/RecyclerViewActividades"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/txtdesc"
+                android:layout_below="@id/srch_busquedad"
 
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 

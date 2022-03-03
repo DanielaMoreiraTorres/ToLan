@@ -17,6 +17,12 @@
             android:id="@+id/toolbar"
             layout="@layout/toolbar"></include>
 
+        <View
+            android:id="@+id/lineactmenuadmin"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/plomo" />
+
         <RelativeLayout
             android:id="@+id/rl_superior"
             android:layout_width="match_parent"
@@ -78,7 +84,7 @@
                 android:id="@+id/rv_DetalleEncabezado"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/txtdesc"
+
 
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
@@ -106,7 +112,7 @@
                 android:id="@+id/rv_DetalleOpciones"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/txtdesc"
+
 
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 

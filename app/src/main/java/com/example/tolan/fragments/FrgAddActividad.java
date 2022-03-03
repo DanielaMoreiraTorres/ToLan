@@ -307,10 +307,12 @@ public class FrgAddActividad extends Fragment implements View.OnClickListener {
 
                             }
 
-                            arrayAdapter_lstsubnivel = new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item
-                                    , sublevelsName);
-                            act_lstsubnivel.setAdapter(arrayAdapter_lstsubnivel);
-                            act_lstsubnivel.setThreshold(1);
+                            if (getContext() != null) {
+                                arrayAdapter_lstsubnivel = new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item
+                                        , sublevelsName);
+                                act_lstsubnivel.setAdapter(arrayAdapter_lstsubnivel);
+                                act_lstsubnivel.setThreshold(1);
+                            }
 
                             if (modelActivity != null) {
                                 //Add the sublevel selected
@@ -402,11 +404,12 @@ public class FrgAddActividad extends Fragment implements View.OnClickListener {
 
                             }
 
-
-                            arrayAdapter_lstdocente = new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item
-                                    , subdocenteName);
-                            act_lstdocente.setAdapter(arrayAdapter_lstdocente);
-                            act_lstdocente.setThreshold(1);
+                            if (getContext() != null) {
+                                arrayAdapter_lstdocente = new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item
+                                        , subdocenteName);
+                                act_lstdocente.setAdapter(arrayAdapter_lstdocente);
+                                act_lstdocente.setThreshold(1);
+                            }
 
                         } catch (JSONException e) {
                             e.printStackTrace();
