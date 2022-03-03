@@ -15,21 +15,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tolan.R;
 import com.example.tolan.models.ModelGroup;
+import com.example.tolan.models.ModelHistorial_Cabz;
 
 import java.util.ArrayList;
 
-public class adpGrupo_Admin extends RecyclerView.Adapter<adpGrupo_Admin.MyViewHolder>
+public class adpHistorial extends RecyclerView.Adapter<adpHistorial.MyViewHolder>
         implements View.OnClickListener {
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_LIST = 0;
 
-    public adpGrupo_Admin(ArrayList<ModelGroup> mLista) {
+    public adpHistorial(ArrayList<ModelHistorial_Cabz> mLista) {
         this.mLista = mLista;
     }
 
     private int selectedPos = RecyclerView.NO_POSITION;
     private View.OnClickListener listener;
-    private ArrayList<ModelGroup> mLista;
+    private ArrayList<ModelHistorial_Cabz> mLista;
 
     @Override
     public void onClick(View view) {
@@ -40,10 +41,10 @@ public class adpGrupo_Admin extends RecyclerView.Adapter<adpGrupo_Admin.MyViewHo
 
     @NonNull
     @Override
-    public adpGrupo_Admin.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public adpHistorial.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
         view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_group_admin, null, false);
+                .inflate(R.layout.item_historial, null, false);
         view.setOnClickListener(this);
         return new MyViewHolder(view);
     }
@@ -53,11 +54,11 @@ public class adpGrupo_Admin extends RecyclerView.Adapter<adpGrupo_Admin.MyViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull adpGrupo_Admin.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull adpHistorial.MyViewHolder holder, int position) {
         try {
-            holder.lblNombreDocente.setText("Docente Encargado: " + mLista.get(position).getDocente());
-            holder.lblDescripcion.setText(mLista.get(position).getEstudiantesNombre());
-            holder.lblFecha.setText("Alumnos Totales: " + mLista.get(position).getEstudiantes().size());
+            holder.lblNombre.setText("Estudiante: " + mLista.get(position).getEstudiante());
+            holder.lblActiv.setText(mLista.get(position).getActividades());
+            holder.lblActvComp.setText("Actividades Completas: " + mLista.get(position).getHistorial().size());
         } catch (Exception e) {
 
         }
@@ -73,12 +74,12 @@ public class adpGrupo_Admin extends RecyclerView.Adapter<adpGrupo_Admin.MyViewHo
         public Button arrowBtn;
         public CardView cardView;
 
-        public TextView lblNombreDocente, lblDescripcion, lblFecha;
+        public TextView lblNombre, lblActiv, lblActvComp;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            lblNombreDocente = (TextView) itemView.findViewById(R.id.txtNombreDocente);
-            lblFecha = (TextView) itemView.findViewById(R.id.fecha);
-            lblDescripcion = (TextView) itemView.findViewById(R.id.txtDescripcion);
+            lblNombre = (TextView) itemView.findViewById(R.id.txtNombre);
+            lblActiv = (TextView) itemView.findViewById(R.id.txtDescripcion);
+            lblActvComp = (TextView) itemView.findViewById(R.id.NumActivCompl);
 
             expandableView = itemView.findViewById(R.id.expandableView);
             arrowBtn = itemView.findViewById(R.id.arrowBtn);

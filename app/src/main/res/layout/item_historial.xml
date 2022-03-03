@@ -25,20 +25,20 @@
             android:paddingBottom="12dp">
 
             <TextView
-                android:id="@+id/txtNombreDocente"
+                android:id="@+id/txtNombre"
                 style="@style/TextAppearance.AppCompat.Title"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="10dp"
-                android:text="DOCENTE" />
+                android:text="ALUMNO" />
 
             <TextView
-                android:id="@+id/fecha"
+                android:id="@+id/NumActivCompl"
                 style="@style/TextAppearance.AppCompat.Body1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txtNombreDocente"
+                android:layout_below="@+id/txtNombre"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="5dp"
 
@@ -56,20 +56,20 @@
                 android:background="@drawable/expand"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.885"
-                app:layout_constraintStart_toEndOf="@+id/txtNombreDocente"
+                app:layout_constraintStart_toEndOf="@+id/txtNombre"
                 tools:ignore="MissingConstraints" />
 
             <RelativeLayout
                 android:id="@+id/expandableView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/fecha"
+                android:layout_below="@id/NumActivCompl"
                 android:layout_marginTop="10dp"
                 android:paddingBottom="2dp"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fecha">
+                app:layout_constraintTop_toBottomOf="@+id/NumActivCompl">
 
                 <TextView
                     android:id="@+id/txtDescripcion"
@@ -77,7 +77,7 @@
                     android:layout_height="wrap_content"
                     android:cursorVisible="false"
                     android:inputType="textMultiLine"
-                    android:textAlignment="center" />
+                    android:textAlignment="textStart" />
 
 
             </RelativeLayout>

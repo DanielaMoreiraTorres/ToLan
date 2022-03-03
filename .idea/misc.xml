@@ -3,6 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Universidad/8 tvo/POO MOVILES/ToLanF/app/src/main/res/layout/activity_group_admin.xml" value="0.17074275362318841" />
+        <entry key="..\:/Universidad/8 tvo/POO MOVILES/ToLanF/app/src/main/res/layout/item_group_admin.xml" value="0.17074275362318841" />
+        <entry key="..\:/Universidad/8 tvo/POO MOVILES/ToLanF/app/src/main/res/layout/item_group_estudent.xml" value="0.17074275362318841" />
+        <entry key="..\:/Universidad/8 tvo/POO MOVILES/ToLanF/app/src/main/res/layout/item_historial.xml" value="0.5" />
+        <entry key="..\:/Universidad/8 tvo/POO MOVILES/ToLanF/app/src/main/res/layout/item_historial_estd.xml" value="0.33" />
+        <entry key="..\:/Universidad/8 tvo/POO MOVILES/ToLanF/app/src/main/res/layout/item_sublevel.xml" value="0.17074275362318841" />
+        <entry key="..\:/Universidad/8 tvo/POO MOVILES/ToLanF/app/src/main/res/layout/items_subnv_editar.xml" value="0.17074275362318841" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/drawable-anydpi/addImagen.xml" value="0.19583333333333333" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/drawable-anydpi/admin.xml" value="0.19583333333333333" />
         <entry key="..\:/Users/DANIELA/AndroidStudioProjects/ToLan/app/src/main/res/drawable-anydpi/contactos.xml" value="0.19583333333333333" />

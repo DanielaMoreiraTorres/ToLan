@@ -55,9 +55,11 @@ public class ModelEstudent  {
         return activo;
     }
     public String getActivoS() {
-        return String.valueOf(activo);
+        if(String.valueOf(activo).equals("true"))
+        return "Activo";
+        else
+            return "Inactivo";
     }
-
     public void setActivo(Boolean activo) {
         this.activo = activo;
     }

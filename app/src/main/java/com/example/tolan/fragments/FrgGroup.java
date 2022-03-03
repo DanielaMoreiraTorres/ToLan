@@ -182,9 +182,7 @@ public class FrgGroup extends Fragment {
                                     estud_item.getString("estudiante"),
                                     estud_item.getString("fecha"),
                                     estud_item.getBoolean("activo"));
-                            int e3 = Log.e("datag", String.valueOf(estud_item.getInt("id")));
                             estudentList.add(tup);
-                            int e5 = Log.e("dataf", String.valueOf(estudentList.size()));
                         }
                     }
                     grupo = new ModelGroup(
@@ -194,7 +192,6 @@ public class FrgGroup extends Fragment {
                             estudentList
                     );
                     Grupos.add(grupo);
-                    int e2 = Log.e("dataNollega",grupo.toString());
                 } catch (JSONException e) {
                     int e1 = Log.e("Resu", "Error de parsing: " + e.getMessage());
                 }

@@ -30,11 +30,14 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.tolan.R;
 import com.example.tolan.adapters.adpEstudent;
 import com.example.tolan.adapters.adpHist_Estudent;
+import com.example.tolan.adapters.adpHistorial;
 import com.example.tolan.clases.ClssConvertirTextoAVoz;
 import com.example.tolan.clases.ClssStaticGrupo;
 import com.example.tolan.clases.ClssVolleySingleton;
 import com.example.tolan.models.ModelEstudent;
+import com.example.tolan.models.ModelGroup;
 import com.example.tolan.models.ModelHistorial;
+import com.example.tolan.models.ModelHistorial_Cabz;
 import com.example.tolan.models.ModelUser;
 
 import org.json.JSONArray;
@@ -49,7 +52,7 @@ public class Frg_Historial extends Fragment {
     private ProgressBar progressBar;
     private TextView titulo;
     private Toolbar toolbar;
-    private ArrayList<ModelHistorial>  modelHistorial;
+    private ArrayList<ModelHistorial_Cabz>  modelHistorial;
     private RecyclerView rcvhist;
     private String url;
 
@@ -91,7 +94,7 @@ public class Frg_Historial extends Fragment {
             url = getString(R.string.urlBase) + "historial";
             progressBar = view.findViewById(R.id.progressBar);
             rcvhist = (RecyclerView) view.findViewById(R.id.rcvHist_Estd);
-            modelHistorial = new ArrayList<ModelHistorial>();
+            modelHistorial = new ArrayList<ModelHistorial_Cabz>();
             CargaData();
         } catch (Exception e) {}
     }
@@ -118,7 +121,7 @@ public class Frg_Historial extends Fragment {
                                 LinearLayoutManager llm = new LinearLayoutManager(getContext());
                                 llm.setOrientation(LinearLayoutManager.VERTICAL);
                                 rcvhist.setLayoutManager(llm);
-                                adpHist_Estudent adapter = new adpHist_Estudent(getContext(),modelHistorial);
+                                adpHistorial adapter = new adpHistorial(modelHistorial);
                                 rcvhist.setAdapter(adapter);
                                 progressBar.setVisibility(View.GONE);
                             }
@@ -145,27 +148,34 @@ public class Frg_Historial extends Fragment {
         // Añadir petición a la cola
         ClssVolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(request_json);
     }
-    public ArrayList<ModelHistorial> parseJson(JSONArray jsonArray) {
+    public ArrayList<ModelHistorial_Cabz> parseJson(JSONArray jsonArray) {
         // Variables locales
-        ArrayList<ModelHistorial> Hist = new ArrayList();
-        ModelHistorial mdh;
+        ArrayList<ModelHistorial_Cabz> Historial = new ArrayList();
+        ModelHistorial_Cabz modelHis;
         try {
             // Obtener el array del objeto
             for (int i = 0; i < jsonArray.length(); i++) {
+                List<ModelHistorial> actvList = new ArrayList<>();
                 try {
                     JSONObject objeto = jsonArray.getJSONObject(i);
                     JSONArray act = objeto.getJSONArray("actividadesCompletas");
                     for (int j = 0; j < act.length(); j++) {
                         if (act.length() > 0) {
                             JSONObject hist_item = act.getJSONObject(j);
-                            mdh = new ModelHistorial(
+                            ModelHistorial mdht = new ModelHistorial(
                                     hist_item.getInt("id"),
                                     hist_item.getInt("idactividad"),
                                     hist_item.getString("nombre"),
                                     hist_item.getInt("recompensa"));
-                            Hist.add(mdh);
+                            actvList.add(mdht);
                         }
                     }
+                    modelHis = new ModelHistorial_Cabz(
+                            objeto.getInt("idestudiante"),
+                            objeto.getString("estudiante"),
+                            actvList
+                    );
+                    Historial.add(modelHis);
                 } catch (JSONException e) {
                     int e1 = Log.e("Resu", "Error de parsing: " + e.getMessage());
                 }
@@ -174,7 +184,7 @@ public class Frg_Historial extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return Hist;
+        return Historial;
     }
 
 }

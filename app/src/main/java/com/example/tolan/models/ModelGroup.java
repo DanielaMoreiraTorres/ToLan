@@ -24,8 +24,10 @@ public class ModelGroup {
 
     public String getEstudiantesNombre() {
         String Nombres="Alumnos"+"\n";
+        String Alumnos="";
         for(int i=0; i<estudiantes.size();i++)
-            Nombres+=estudiantes.get(i).getEstudiante()+"\n";
+            Alumnos+=estudiantes.get(i).getEstudiante()+" \n";
+        Nombres=Nombres+Alumnos;
         return Nombres;
     }
     public String getEstudiantesT() {
