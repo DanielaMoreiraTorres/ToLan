@@ -184,6 +184,7 @@ public class FrgLevel extends Fragment implements SearchView.OnQueryTextListener
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             VolleyLog.e("Error: ", error.getMessage());
+                            Toast.makeText(getContext(), "Error de conexión con el servidor\n Intente nuevamente", Toast.LENGTH_SHORT);
                             progressBar.setVisibility(View.GONE);
                         }
                     });

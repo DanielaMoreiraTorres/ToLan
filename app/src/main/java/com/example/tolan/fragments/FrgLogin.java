@@ -53,6 +53,7 @@ public class FrgLogin extends Fragment {
     //private RequestQueue requestQueue;
     private String url, urlGrupo;
     JSONObject grupo;
+    String docente;
     int idDocente = 0;
 
     public FrgLogin() {
@@ -152,6 +153,7 @@ public class FrgLogin extends Fragment {
                                         JSONObject ObjDatos = (JSONObject) response.get("docente");
                                         user.setDocente(ObjDatos);
                                         idDocente = ObjDatos.getInt("id");
+                                        docente = ObjDatos.getString("nombres") + ObjDatos.getString("apellidos");
                                         Iniciar(user);
                                     } else
                                         Iniciar(user);
@@ -233,6 +235,8 @@ public class FrgLogin extends Fragment {
             }, 1500);
         } else if (muser.getTipousuario().trim().equals("DC")) {
             fragment = new FrgMenuDocente();
+            ClssStaticGrupo.iddocente = idDocente;
+            ClssStaticGrupo.docente = docente;
             Toast.makeText(getContext(), "Bienvenido " + ClssStaticGrupo.docente, Toast.LENGTH_SHORT).show();
             final Handler handler = new Handler();
             handler.postDelayed(new Runnable() {

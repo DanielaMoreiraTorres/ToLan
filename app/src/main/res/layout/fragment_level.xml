@@ -47,7 +47,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="30dp"
-                android:fontFamily="sans-serif-black"
+                android:fontFamily="@font/baloo"
                 android:shadowColor="@color/secundario"
                 android:shadowRadius="4"
                 android:text="@string/niveles"

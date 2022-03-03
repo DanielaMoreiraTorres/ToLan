@@ -28,7 +28,7 @@ import org.w3c.dom.Text;
 public class FrgMenuAdmin extends Fragment {
 
     private Fragment fragment;
-    Toolbar toolbar;
+    private Toolbar toolbar;
     private TextView txtMenu;
     private ImageView iconNiveles, iconSubNiveles, iconActividades, iconSkins, iconGrupos, iconHistorial;
 
@@ -118,9 +118,12 @@ public class FrgMenuAdmin extends Fragment {
             startActivity(intent);
         }
         else if(tag == 5){
-            Intent intent = new Intent(getContext(), activity_group_admin.class);
+            /*Intent intent = new Intent(getContext(), activity_group_admin.class);
             ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Grupos");
-            startActivity(intent);
+            startActivity(intent);*/
+            fragment = new FrgGroup();
+            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Grupos");
+            getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
         }
         else if(tag == 6){
             ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Historial");

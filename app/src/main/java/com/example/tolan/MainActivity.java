@@ -79,17 +79,18 @@ public class MainActivity extends AppCompatActivity {
             //tts.reproduce("Cerrar sesión");
             ClssConvertirTextoAVoz.getIntancia(this).reproduce("Cerrar sesión");
             fragment = new FrgLogin();
-            getSupportFragmentManager().popBackStack();
+            int i = getSupportFragmentManager().getBackStackEntryCount();
+            for(int c=1; c < i; c++){
+                getSupportFragmentManager().popBackStack();
+            }
             getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
         }
         if(id == R.id.btnContacts) {
             //tts.reproduce("Información de contacto");
             ClssConvertirTextoAVoz.getIntancia(this).reproduce("Información de contacto");
-            /*Intent intent = new Intent(MainActivity.this, ActivityContact.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivity(intent);*/
             fragment = new FrgContact();
-            getSupportFragmentManager().popBackStack();
-            getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
+            //getSupportFragmentManager().popBackStack();
+            getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -97,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         try {
+            ClssConvertirTextoAVoz.getIntancia(this).reproduce("Regresar");
             NavController c = VHoldRecyclerChild_ItemSubnivel.navController;
             int i = getSupportFragmentManager().getBackStackEntryCount();
             if (c == null) {

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -16,6 +17,9 @@ import android.provider.Browser;
 import android.text.Html;
 import android.text.util.Linkify;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -25,6 +29,7 @@ import com.codesgood.views.JustifiedTextView;
 import com.example.tolan.R;
 import com.example.tolan.adapters.AdpContact;
 import com.example.tolan.clases.ClssConvertirTextoAVoz;
+import com.example.tolan.clases.ClssStaticGrupo;
 import com.example.tolan.models.ModelContact;
 
 import java.util.ArrayList;
@@ -251,6 +256,18 @@ public class FrgContact extends Fragment {
         }
         catch (Exception e) {}
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_toolbar, menu);
+        if(ClssStaticGrupo.idestudiante == 0)
+        {
+            MenuItem mc = menu.findItem(R.id.btnCaritas);
+            mc.setVisible(false);
+            MenuItem mr = menu.findItem(R.id.btnRecompensa);
+            mr.setVisible(false);
+        }
     }
 
     private void goLink(View v){

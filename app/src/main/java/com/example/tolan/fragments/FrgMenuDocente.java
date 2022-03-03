@@ -1,6 +1,5 @@
 package com.example.tolan.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,13 +14,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.tolan.R;
+import com.example.tolan.clases.ClssConvertirTextoAVoz;
 
 public class FrgMenuDocente extends Fragment {
 
     private Toolbar toolbar;
     private Fragment fragment;
+    private TextView txtMenu;
     private ImageView iconActividades, iconUsuarios, iconGrupos, iconHistorial;
 
     public FrgMenuDocente() {
@@ -43,58 +45,60 @@ public class FrgMenuDocente extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_frg_menu_docente, container, false);
-        toolbar = view.findViewById(R.id.toolbar);
-        setHasOptionsMenu(true);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("");
-        iconActividades = view.findViewById(R.id.iconActividades);
-        iconActividades.setOnClickListener(v->{OptionsMenuDocente(v);});
-        iconUsuarios = view.findViewById(R.id.iconUsuarios);
-        iconUsuarios.setOnClickListener(v->{OptionsMenuDocente(v);});
-        iconGrupos = view.findViewById(R.id.iconGrupos);
-        iconGrupos.setOnClickListener(v->{OptionsMenuDocente(v);});
-        iconHistorial = view.findViewById(R.id.iconHistorial);
-        iconHistorial.setOnClickListener(v->{OptionsMenuDocente(v);});
+        View view = inflater.inflate(R.layout.fragment_menu_docente, container, false);
+        try {
+            toolbar = view.findViewById(R.id.toolbar);
+            setHasOptionsMenu(true);
+            ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("");
+            txtMenu = view.findViewById(R.id.txtMenu);
+            txtMenu.setOnClickListener(v -> ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce(txtMenu.getText().toString()));
+            iconActividades = view.findViewById(R.id.iconActividades);
+            iconActividades.setOnClickListener(v -> {
+                OptionsMenuDocente(v);
+            });
+            iconUsuarios = view.findViewById(R.id.iconUsuarios);
+            iconUsuarios.setOnClickListener(v -> {
+                OptionsMenuDocente(v);
+            });
+            iconGrupos = view.findViewById(R.id.iconGrupos);
+            iconGrupos.setOnClickListener(v -> {
+                OptionsMenuDocente(v);
+            });
+            iconHistorial = view.findViewById(R.id.iconHistorial);
+            iconHistorial.setOnClickListener(v -> {
+                OptionsMenuDocente(v);
+            });
+        } catch (Exception e) {}
         return view;
     }
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        ((AppCompatActivity)getActivity()).getMenuInflater().inflate(R.menu.menu_toolbar,menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        /*if(id == R.id.btnMyInfo) {
-
-        }*/
-        if(id == R.id.btnLogIn) {
-            fragment = new FrgLogin();
-            getFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
-        }
-        if(id == R.id.btnContacts) {
-            /*Intent intent = new Intent(getContext(), ActivityContact.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivity(intent);*/
-        }
-        return super.onOptionsItemSelected(item);
+        inflater.inflate(R.menu.menu_toolbar, menu);
+        MenuItem mc = menu.findItem(R.id.btnCaritas);
+        mc.setVisible(false);
+        MenuItem mr = menu.findItem(R.id.btnRecompensa);
+        mr.setVisible(false);
     }
 
     public void OptionsMenuDocente(View view){
         int tag = Integer.parseInt(view.getTag().toString());
         if(tag == 1) {
-
+            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Actividades");
         }
         else if(tag == 2){
             fragment = new FrgRegisterUser();
+            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Regstrar estudiante");
             getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
         }
         else if(tag == 3){
-
+            fragment = new FrgStudent();
+            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Mis estudiantes");
+            getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
         }
         else if(tag == 4){
-
+            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Historial");
         }
     }
 }
