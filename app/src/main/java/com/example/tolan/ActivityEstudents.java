@@ -5,10 +5,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -16,20 +14,16 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.tolan.adapters.adpEstudent;
-import com.example.tolan.adapters.adpGrupo_Admin;
 import com.example.tolan.models.ModelEstudent;
-import com.example.tolan.models.ModelGroup;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ActivityEstudents extends AppCompatActivity {
 
@@ -50,7 +44,7 @@ public class ActivityEstudents extends AppCompatActivity {
         getSupportActionBar().setTitle("");
 
         revistaRcl = new RecyclerView(this);
-        revistaRcl = (RecyclerView) findViewById(R.id.rcvEstudiantes);
+        revistaRcl = (RecyclerView) findViewById(R.id.rcvHist_Estd);
         revistaRcl.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         lstEstudents = new ArrayList<ModelEstudent>();
         requestQueue = Volley.newRequestQueue(this);
@@ -60,7 +54,6 @@ public class ActivityEstudents extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        int e5= Log.e("dataf", response.toString());
                         lstEstudents = parseJson(response);
                         adpEstudent adapter = new adpEstudent(lstEstudents);
                         revistaRcl.setAdapter(adapter);
