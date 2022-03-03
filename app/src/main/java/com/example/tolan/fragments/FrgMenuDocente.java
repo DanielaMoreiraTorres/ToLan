@@ -98,7 +98,9 @@ public class FrgMenuDocente extends Fragment {
             getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
         }
         else if(tag == 4){
+            fragment = new Frg_Historial();
             ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Historial");
+            getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
         }
     }
 }

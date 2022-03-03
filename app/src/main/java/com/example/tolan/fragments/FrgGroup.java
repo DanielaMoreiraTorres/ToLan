@@ -109,34 +109,41 @@ public class FrgGroup extends Fragment {
                     new Response.Listener<JSONArray>() {
                         @Override
                         public void onResponse(JSONArray response) {
-                            lstGrupos = parseJson(response);
-                            adpGrupo_Admin adapter = new adpGrupo_Admin(lstGrupos);
-                            adapter.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    int opcselec = grupoRcl.getChildAdapterPosition(view);
-                                    ClssConvertirTextoAVoz.getIntancia(getContext()).
-                                            reproduce("Grupo de docente: " + lstGrupos.get(opcselec).getDocente());
-                                    fragment = new FrgStudent();
-                                    bundle = new Bundle();
-                                    bundle.putInt("GrupoIDDocent", lstGrupos.get(opcselec).getIddocente());
-                                    fragment.setArguments(bundle);
-                                    final Handler handler = new Handler();
-                                    handler.postDelayed(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
-                                        }
-                                    }, 750);
+                            if(response.length() > 0) {
+                                lstGrupos = parseJson(response);
+                                adpGrupo_Admin adapter = new adpGrupo_Admin(lstGrupos);
+                                adapter.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        int opcselec = grupoRcl.getChildAdapterPosition(view);
+                                        ClssConvertirTextoAVoz.getIntancia(getContext()).
+                                                reproduce("Grupo de docente: " + lstGrupos.get(opcselec).getDocente());
+                                        fragment = new FrgStudent();
+                                        bundle = new Bundle();
+                                        bundle.putInt("GrupoIDDocent", lstGrupos.get(opcselec).getIddocente());
+                                        fragment.setArguments(bundle);
+                                        final Handler handler = new Handler();
+                                        handler.postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
+                                            }
+                                        }, 750);
                                 /*Intent intent = new Intent(activity_group_admin.this, ActivityEstudents.class);
                                 intent.putExtra("GrupoIDDocent", lstGrupos.get(opcselec).getIddocente());
                                 int e4= Log.e("dataNollega",lstGrupos.get(opcselec).getIddocente().toString());
                                 startActivity(intent);*/
-                                }
-                            });
-                            if (getContext() != null)
-                                grupoRcl.setAdapter(adapter);
-                            progressBar.setVisibility(View.GONE);
+                                    }
+                                });
+                                if (getContext() != null)
+                                    grupoRcl.setAdapter(adapter);
+                                progressBar.setVisibility(View.GONE);
+                            }
+                            else {
+                                progressBar.setVisibility(View.GONE);
+                                Toast.makeText(getContext(),"No existen grupos registrados",Toast.LENGTH_SHORT).show();
+                                ClssConvertirTextoAVoz.clssConvertirTextoAVoz.reproduce("No existen grupos registrados");
+                            }
                         }
                     },
                     new Response.ErrorListener() {

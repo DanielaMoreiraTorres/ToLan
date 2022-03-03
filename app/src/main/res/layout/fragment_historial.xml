@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.Frg_Historial">
 
     <LinearLayout
@@ -28,8 +29,7 @@
                 android:id="@+id/Viewfondo1"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="-3dp"
+                android:layout_below="@+id/lineactniv"
                 android:background="@color/principal" />
 
             <View
@@ -40,13 +40,13 @@
                 android:background="@drawable/ic_down" />
 
             <TextView
-                android:id="@+id/lblTiTleNiv"
+                android:id="@+id/lblTiTleH"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="31dp"
-                android:fontFamily="sans-serif-black"
+                android:layout_marginLeft="30dp"
+                android:fontFamily="@font/baloo"
                 android:shadowColor="@color/secundario"
                 android:shadowRadius="4"
                 android:text="Historial"
@@ -54,13 +54,15 @@
                 android:textSize="24sp" />
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/imgNiv"
+                android:id="@+id/imgG"
                 android:layout_width="130dp"
                 android:layout_height="130dp"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="10dp"
-                android:src="@drawable/nivel"
-                />
+                android:src="@drawable/historial"
+                app:civ_border_color="@color/plomo"
+                app:civ_border_width="2dp"
+                app:civ_circle_background_color="@color/white" />
 
         </RelativeLayout>
 
@@ -91,5 +93,14 @@
             android:layout_marginBottom="10dp" />
 
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:max="100"
+        android:visibility="gone" />
 
 </FrameLayout>

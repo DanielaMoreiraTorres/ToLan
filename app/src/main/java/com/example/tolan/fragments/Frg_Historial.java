@@ -12,8 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,40 +44,22 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Frg_Historial#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class Frg_Historial extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private ProgressBar progressBar;
+    private TextView titulo;
+    private Toolbar toolbar;
+    private ArrayList<ModelHistorial>  modelHistorial;
+    private RecyclerView rcvhist;
+    private String url;
 
     public Frg_Historial() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Frg_Historial.
-     */
-    // TODO: Rename and change types and number of parameters
     public static Frg_Historial newInstance(String param1, String param2) {
         Frg_Historial fragment = new Frg_Historial();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -82,8 +68,6 @@ public class Frg_Historial extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -94,51 +78,67 @@ public class Frg_Historial extends Fragment {
         return inflater.inflate(R.layout.fragment_historial, container, false);
     }
 
-    private TextView titulo;
-    private Toolbar toolbar;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        titulo = view.findViewById(R.id.titulo);
-        //titulo.setOnClickListener(v -> ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce(titulo.getText().toString()));
-        toolbar = view.findViewById(R.id.toolbar);
-        setHasOptionsMenu(true);
-        ((AppCompatActivity) this.getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity) this.getActivity()).getSupportActionBar().setTitle("");
-        CargaData(view);
+        try {
+            titulo = view.findViewById(R.id.lblTiTleH);
+            titulo.setOnClickListener(v -> ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce(titulo.getText().toString()));
+            toolbar = view.findViewById(R.id.toolbar);
+            setHasOptionsMenu(true);
+            ((AppCompatActivity) this.getActivity()).setSupportActionBar(toolbar);
+            ((AppCompatActivity) this.getActivity()).getSupportActionBar().setTitle("");
+            url = getString(R.string.urlBase) + "historial";
+            progressBar = view.findViewById(R.id.progressBar);
+            rcvhist = (RecyclerView) view.findViewById(R.id.rcvHist_Estd);
+            modelHistorial = new ArrayList<ModelHistorial>();
+            CargaData();
+        } catch (Exception e) {}
     }
 
-    ArrayList<ModelHistorial>  modelHistorial;
-    RecyclerView rcvhist;
-    public void CargaData(View v) {
-        rcvhist = (RecyclerView) v.findViewById(R.id.rcvHist_Estd);
-        modelHistorial = new ArrayList<ModelHistorial>();
-        String url = "https://db-bartolucci.herokuapp.com/historial";
-        JSONObject param = new JSONObject();
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_toolbar, menu);
+        MenuItem mc = menu.findItem(R.id.btnCaritas);
+        mc.setVisible(false);
+        MenuItem mr = menu.findItem(R.id.btnRecompensa);
+        mr.setVisible(false);
+    }
+
+    public void CargaData() {
         //param.put("idEstudiante", ClssStaticGrupo.idestudiante);
+        progressBar.setVisibility(View.VISIBLE);
         JsonArrayRequest request_json = new JsonArrayRequest(Request.Method.GET,url, null,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
                         try {
-                            if (response.length() > 1) {
+                            if (response.length() > 0) {
                                 modelHistorial = parseJson(response);
                                 LinearLayoutManager llm = new LinearLayoutManager(getContext());
                                 llm.setOrientation(LinearLayoutManager.VERTICAL);
                                 rcvhist.setLayoutManager(llm);
                                 adpHist_Estudent adapter = new adpHist_Estudent(getContext(),modelHistorial);
                                 rcvhist.setAdapter(adapter);
-                            } else
-                                Toast.makeText(getContext(), "Error", Toast.LENGTH_LONG).show();
+                                progressBar.setVisibility(View.GONE);
+                            }
+                            else {
+                                progressBar.setVisibility(View.GONE);
+                                Toast.makeText(getContext(),"No existe historial registrado",Toast.LENGTH_SHORT).show();
+                                ClssConvertirTextoAVoz.clssConvertirTextoAVoz.reproduce("No existe historial registrado");
+                            }
                         } catch (Exception e) {
                             //Toast.makeText(getContext(), "Error de conexión", Toast.LENGTH_LONG).show();
+                            progressBar.setVisibility(View.GONE);
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.e("Error: ", error.getMessage());
-                ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce("Error de conexión con el servidor");
+                Toast.makeText(getContext(), "Error de conexión con el servidor\n Intente nuevamente", Toast.LENGTH_SHORT);
+                ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Error de conexión con el servidor\nIntente nuevamente");
+                progressBar.setVisibility(View.GONE);
             }
         });
 

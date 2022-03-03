@@ -126,7 +126,9 @@ public class FrgMenuAdmin extends Fragment {
             getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
         }
         else if(tag == 6){
+            fragment = new Frg_Historial();
             ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Historial");
+            getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
         }
     }
 }

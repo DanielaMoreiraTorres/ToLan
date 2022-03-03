@@ -118,18 +118,25 @@ public class FrgStudent extends Fragment {
                         public void onResponse(JSONObject response) {
                             int e5 = Log.e("dataf", response.toString());
                             lstEstudents = parseJson(response);
-                            if (getContext() != null){
-                                adpEstudent adapter = new adpEstudent(lstEstudents);
-                                estudianteRcl.setAdapter(adapter);
-                                adapter.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        int opcselec = estudianteRcl.getChildAdapterPosition(view);
-                                        ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(lstEstudents.get(opcselec).getEstudiante());
-                                    }
-                                });
+                            if(lstEstudents.size() > 0) {
+                                if (getContext() != null) {
+                                    adpEstudent adapter = new adpEstudent(lstEstudents);
+                                    estudianteRcl.setAdapter(adapter);
+                                    adapter.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            int opcselec = estudianteRcl.getChildAdapterPosition(view);
+                                            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(lstEstudents.get(opcselec).getEstudiante());
+                                        }
+                                    });
+                                }
+                                progressBar.setVisibility(View.GONE);
                             }
-                            progressBar.setVisibility(View.GONE);
+                            else {
+                                progressBar.setVisibility(View.GONE);
+                                Toast.makeText(getContext(),"No existen estudiantes asignados al docente",Toast.LENGTH_SHORT).show();
+                                ClssConvertirTextoAVoz.clssConvertirTextoAVoz.reproduce("No existen estudiantes asignados al docente");
+                            }
                         }
                     },
                     new Response.ErrorListener() {
@@ -154,7 +161,7 @@ public class FrgStudent extends Fragment {
                 JSONArray estud = jsonArray.getJSONArray("estudiantes");
                 for (int j=0; j < estud.length();j++)
                 {
-                    if(estud.length()>0) {
+                    if(estud.length() > 0) {
                         JSONObject estud_item = estud.getJSONObject(j);
                         ModelEstudent tup = new ModelEstudent(
                                 estud_item.getInt("id"),

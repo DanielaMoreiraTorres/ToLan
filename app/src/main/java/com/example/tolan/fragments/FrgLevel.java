@@ -136,43 +136,50 @@ public class FrgLevel extends Fragment implements SearchView.OnQueryTextListener
                                     level.setActivo(objLevel.getBoolean("activo"));
                                     levels.add(level);
                                 }
-                                Collections.sort(levels, new Comparator<ModelLevel>() {
-                                    @Override
-                                    public int compare(ModelLevel l1, ModelLevel l2) {
-                                        return new Integer(l1.getId()).compareTo(new Integer(l2.getId()));
-                                    }
-                                });
-                                if(getContext() != null) {
-                                    adpLevel = new AdpLevel(getContext(), levels);
-                                    rcvLevels.setAdapter(adpLevel);
-                                    adpLevel.setOnClickListener(new View.OnClickListener() {
+                                if(levels.size() > 0) {
+                                    Collections.sort(levels, new Comparator<ModelLevel>() {
                                         @Override
-                                        public void onClick(View view) {
-                                            //int opcselec = rcvLevels.getChildAdapterPosition(view);
-                                            cvSel = (CardView) view;
-                                            lySel = (RelativeLayout) cvSel.getParent();
-                                            int opcselec = cvSel.getId();
-                                            levelSelected = levels.get(opcselec);
-                                            lySel.setBackgroundResource(R.drawable.borde);
-                                            lySel.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#44CCCC")));
-                                            Toast.makeText(getContext(), levelSelected.getNombre().trim(), Toast.LENGTH_SHORT);
-                                            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(levelSelected.getNombre());
-                                            bundle = new Bundle();
-                                            //bundle.putString("levelSelected", new Gson().toJson(levelSelected));
-                                            bundle.putSerializable("levelSelected", levelSelected);
-                                            fragment = new FrgSublevel();
-                                            fragment.setArguments(bundle);
-                                            final Handler handler = new Handler();
-                                            handler.postDelayed(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
-                                                }
-                                            }, 750);
+                                        public int compare(ModelLevel l1, ModelLevel l2) {
+                                            return new Integer(l1.getId()).compareTo(new Integer(l2.getId()));
                                         }
                                     });
+                                    if (getContext() != null) {
+                                        adpLevel = new AdpLevel(getContext(), levels);
+                                        rcvLevels.setAdapter(adpLevel);
+                                        adpLevel.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                //int opcselec = rcvLevels.getChildAdapterPosition(view);
+                                                cvSel = (CardView) view;
+                                                lySel = (RelativeLayout) cvSel.getParent();
+                                                int opcselec = cvSel.getId();
+                                                levelSelected = levels.get(opcselec);
+                                                lySel.setBackgroundResource(R.drawable.borde);
+                                                lySel.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#44CCCC")));
+                                                Toast.makeText(getContext(), levelSelected.getNombre().trim(), Toast.LENGTH_SHORT);
+                                                ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(levelSelected.getNombre());
+                                                bundle = new Bundle();
+                                                //bundle.putString("levelSelected", new Gson().toJson(levelSelected));
+                                                bundle.putSerializable("levelSelected", levelSelected);
+                                                fragment = new FrgSublevel();
+                                                fragment.setArguments(bundle);
+                                                final Handler handler = new Handler();
+                                                handler.postDelayed(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
+                                                    }
+                                                }, 750);
+                                            }
+                                        });
+                                    }
+                                    progressBar.setVisibility(View.GONE);
                                 }
-                                progressBar.setVisibility(View.GONE);
+                                else {
+                                    progressBar.setVisibility(View.GONE);
+                                    Toast.makeText(getContext(),"No existen niveles registrados",Toast.LENGTH_SHORT).show();
+                                    ClssConvertirTextoAVoz.clssConvertirTextoAVoz.reproduce("No existen niveles registrados");
+                                }
                             } catch (JSONException e) {
                                 e.printStackTrace();
                                 //Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
@@ -184,7 +191,8 @@ public class FrgLevel extends Fragment implements SearchView.OnQueryTextListener
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             VolleyLog.e("Error: ", error.getMessage());
-                            Toast.makeText(getContext(), "Error de conexión con el servidor\n Intente nuevamente", Toast.LENGTH_SHORT);
+                            /*Toast.makeText(getContext(), "Error de conexión con el servidor\n Intente nuevamente", Toast.LENGTH_SHORT);
+                            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Error de conexión con el servidor\nIntente nuevamente");*/
                             progressBar.setVisibility(View.GONE);
                         }
                     });

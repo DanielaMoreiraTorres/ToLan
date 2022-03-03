@@ -206,30 +206,31 @@ SearchView.OnQueryTextListener {
                                 sublevel.setActivo(objSublevel.getBoolean("activo"));
                                 sublevels.add(sublevel);
                             }
-                            Collections.sort(sublevels, new Comparator<ModelSublevel>() {
-                                @Override
-                                public int compare(ModelSublevel s1, ModelSublevel s2) {
-                                    return new Integer(s1.getId()).compareTo(new Integer(s2.getId()));
-                                }
-                            });
-                            if(getContext() != null) {
-                                adpSublevel = new AdpSublevel(getContext(), sublevels);
-                                rcvSublevels.setAdapter(adpSublevel);
-                                adpSublevel.setOnClickListener(new View.OnClickListener() {
+                            if(sublevels.size() > 0) {
+                                Collections.sort(sublevels, new Comparator<ModelSublevel>() {
                                     @Override
-                                    public void onClick(View view) {
-                                        //int opcselec = rcvSublevels.getChildAdapterPosition(view);
-                                        cvSel = (CardView) view;
-                                        lySel = (RelativeLayout) cvSel.getParent();
-                                        int opcselec = cvSel.getId();
-                                        sublevelSelected = sublevels.get(opcselec);
-                                        lySel.setBackgroundResource(R.drawable.borde);
-                                        lySel.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#44CCCC")));
-                                        Toast.makeText(getContext(), sublevelSelected.getNombre().trim(), Toast.LENGTH_SHORT);
-                                        ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(sublevelSelected.getNombre());
-                                        bundle = new Bundle();
-                                        //bundle.putString("sublevelSelected", new Gson().toJson(sublevelSelected));
-                                        bundle.putSerializable("sublevelSelected", sublevelSelected);
+                                    public int compare(ModelSublevel s1, ModelSublevel s2) {
+                                        return new Integer(s1.getId()).compareTo(new Integer(s2.getId()));
+                                    }
+                                });
+                                if (getContext() != null) {
+                                    adpSublevel = new AdpSublevel(getContext(), sublevels);
+                                    rcvSublevels.setAdapter(adpSublevel);
+                                    adpSublevel.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            //int opcselec = rcvSublevels.getChildAdapterPosition(view);
+                                            cvSel = (CardView) view;
+                                            lySel = (RelativeLayout) cvSel.getParent();
+                                            int opcselec = cvSel.getId();
+                                            sublevelSelected = sublevels.get(opcselec);
+                                            lySel.setBackgroundResource(R.drawable.borde);
+                                            lySel.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#44CCCC")));
+                                            Toast.makeText(getContext(), sublevelSelected.getNombre().trim(), Toast.LENGTH_SHORT);
+                                            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(sublevelSelected.getNombre());
+                                            bundle = new Bundle();
+                                            //bundle.putString("sublevelSelected", new Gson().toJson(sublevelSelected));
+                                            bundle.putSerializable("sublevelSelected", sublevelSelected);
                                     /*fragment = new FrgSublevel();
                                     fragment.setArguments(bundle);
                                     final Handler handler = new Handler();
@@ -239,10 +240,16 @@ SearchView.OnQueryTextListener {
                                             getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
                                         }
                                     }, 750);*/
-                                    }
-                                });
+                                        }
+                                    });
+                                }
+                                progressBar.setVisibility(View.GONE);
                             }
-                            progressBar.setVisibility(View.GONE);
+                            else {
+                                progressBar.setVisibility(View.GONE);
+                                Toast.makeText(getContext(),"No existen subniveles registrados",Toast.LENGTH_SHORT).show();
+                                ClssConvertirTextoAVoz.clssConvertirTextoAVoz.reproduce("No existen subniveles registrados");
+                            }
                         }catch (JSONException e){
                             e.printStackTrace();
                             //Toast.makeText(getContext(),e.toString(),Toast.LENGTH_SHORT).show();

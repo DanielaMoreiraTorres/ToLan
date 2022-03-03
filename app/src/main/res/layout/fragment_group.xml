@@ -60,11 +60,13 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="10dp"
                 android:src="@drawable/group"
+                app:civ_border_color="@color/plomo"
+                app:civ_border_width="2dp"
                 app:civ_circle_background_color="@color/white" />
 
         </RelativeLayout>
 
-        <!--<LinearLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -72,7 +74,7 @@
             android:padding="5dp">
 
             <androidx.appcompat.widget.SearchView
-                android:id="@+id/busquedaNiv"
+                android:id="@+id/busquedaG"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/borde2"
@@ -80,7 +82,7 @@
                 app:defaultQueryHint="@string/searchNivel"
                 app:queryHint="@string/searchNivel" />
 
-        </LinearLayout>-->
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcvGrupos"
