@@ -7,13 +7,29 @@ import java.io.Serializable;
 public class ModelActivity implements Serializable {
 
     private int id;
+    private int idSubnivel;
+    private String subnivel;
+    private int idDocente;
+    private String docente;
     private String nombre;
     private String descripcion;
     private int recompensavalor;
     private String tipo;
     private Boolean activo;
-    private JSONArray historial;
-    private JSONArray contenido;
+
+
+    public ModelActivity(int id, int idSubnivel, String subnivel, int idDocente, String docente, String nombre, String descripcion, int recompensavalor, String tipo, Boolean activo) {
+        this.id = id;
+        this.idSubnivel = idSubnivel;
+        this.subnivel = subnivel;
+        this.idDocente = idDocente;
+        this.docente = docente;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.recompensavalor = recompensavalor;
+        this.tipo = tipo;
+        this.activo = activo;
+    }
 
     public int getId() {
         return id;
@@ -63,19 +79,35 @@ public class ModelActivity implements Serializable {
         this.activo = activo;
     }
 
-    public JSONArray getHistorial() {
-        return historial;
+    public int getIdSubnivel() {
+        return idSubnivel;
     }
 
-    public void setHistorial(JSONArray historial) {
-        this.historial = historial;
+    public void setIdSubnivel(int idSubnivel) {
+        this.idSubnivel = idSubnivel;
     }
 
-    public JSONArray getContenido() {
-        return contenido;
+    public String getSubnivel() {
+        return subnivel;
     }
 
-    public void setContenido(JSONArray contenido) {
-        this.contenido = contenido;
+    public void setSubnivel(String subnivel) {
+        this.subnivel = subnivel;
+    }
+
+    public int getIdDocente() {
+        return idDocente;
+    }
+
+    public void setIdDocente(int idDocente) {
+        this.idDocente = idDocente;
+    }
+
+    public String getDocente() {
+        return docente;
+    }
+
+    public void setDocente(String docente) {
+        this.docente = docente;
     }
 }

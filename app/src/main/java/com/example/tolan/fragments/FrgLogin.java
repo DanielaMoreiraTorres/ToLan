@@ -80,6 +80,7 @@ public class FrgLogin extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         try {
+            resetClssStatic();
             ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
             validate = new ClssValidations();
             progressBar = view.findViewById(R.id.progressBar);
@@ -104,6 +105,16 @@ public class FrgLogin extends Fragment {
         } catch (Exception e) {
         }
         return view;
+    }
+
+    private void resetClssStatic() {
+        ClssStaticGrupo.id = 0 ;
+        ClssStaticGrupo.iddocente= 0;
+        ClssStaticGrupo.docente = null;
+        ClssStaticGrupo.nombredocente = null;
+        ClssStaticGrupo.apellidodocente = null;
+        ClssStaticGrupo.idestudiante = 0;
+        ClssStaticGrupo.estudiante = null;
     }
 
     private void Login() {
@@ -153,7 +164,9 @@ public class FrgLogin extends Fragment {
                                         JSONObject ObjDatos = (JSONObject) response.get("docente");
                                         user.setDocente(ObjDatos);
                                         idDocente = ObjDatos.getInt("id");
-                                        docente = ObjDatos.getString("nombres") + ObjDatos.getString("apellidos");
+                                        docente = ObjDatos.getString("nombres").trim() + " " + ObjDatos.getString("apellidos").trim();
+                                        ClssStaticGrupo.nombredocente = ObjDatos.getString("nombres").trim();
+                                        ClssStaticGrupo.apellidodocente = ObjDatos.getString("apellidos").trim();
                                         Iniciar(user);
                                     } else
                                         Iniciar(user);

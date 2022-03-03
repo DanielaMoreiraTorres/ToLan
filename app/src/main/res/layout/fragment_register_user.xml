@@ -11,14 +11,28 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar"
+            android:visibility="gone">
+        </include>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <View
+                android:id="@+id/linea"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/plomo"
+                android:visibility="gone" />
+
+            <View
                 android:id="@+id/view6"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
+                android:layout_below="@+id/linea"
                 android:background="@color/principal" />
 
             <View

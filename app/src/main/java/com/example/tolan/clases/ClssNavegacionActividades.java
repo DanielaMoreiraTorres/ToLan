@@ -63,7 +63,7 @@ public class ClssNavegacionActividades {
                         navController.navigate(R.id.fragmentIdentificarRespuestaImagen, bundle);
                         //Toast.makeText(v.getContext(), "Layout Identificar entre palabras no existe", Toast.LENGTH_SHORT).show();
                         break;
-                    case "Armar rompecabezass":
+                    case "Armar rompecabezas":
                         //Toast.makeText(v.getContext(), "Layout Armar rompecabezass no existe", Toast.LENGTH_SHORT).show();
                         break;
                     case "Seleccionar pares imagen con texto":

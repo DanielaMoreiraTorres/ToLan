@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.Frg_Actividades"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"></include>
+    <View
+        android:id="@+id/lineactmenuadmin"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/plomo" />
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="0dp">
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabtn_agregarActividad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="15sp"
+            android:src="@drawable/icon_new"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+
+        <RelativeLayout
+            android:id="@+id/rl_superior"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+
+            <View
+                android:id="@+id/topView"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="#44cccc" />
+
+            <View
+                android:id="@+id/downView"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@id/topView"
+                android:background="@drawable/ic_down" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rl_superior"
+                android:fontFamily="sans-serif-black"
+                android:padding="10dp"
+                android:text="@string/activity_title"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                tools:ignore="NotSibling" />
+
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/srch_busquedad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/downView"
+
+                android:iconifiedByDefault="false"
+                app:defaultQueryHint="@string/search"
+                app:queryHint="@string/search" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgActivities"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/activitities">
+
+            </de.hdodenhof.circleimageview.CircleImageView>
+
+
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/RecyclerViewActividades"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/srch_busquedad"
+
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        </RelativeLayout>
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</LinearLayout>
