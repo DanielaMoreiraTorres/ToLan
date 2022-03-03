@@ -15,22 +15,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.tolan.ActivitySkin;
 import com.example.tolan.R;
 import com.example.tolan.activity_group_admin;
-import com.example.tolan.clases.ClssConvertirTextoAVoz;
-import com.example.tolan.clases.ClssStaticGrupo;
-
-import org.w3c.dom.Text;
 
 public class FrgMenuAdmin extends Fragment {
 
     private Fragment fragment;
-    private Toolbar toolbar;
-    private TextView txtMenu;
-    private ImageView iconNiveles, iconSubNiveles, iconActividades, iconSkins, iconGrupos, iconHistorial;
+    Toolbar toolbar;
+    private ImageView iconNiveles, iconSubNiveles, iconActividades, iconSkins, iconGrupos, iconHistorial, iconContenido;
 
     public FrgMenuAdmin() {
         // Required empty public constructor
@@ -58,8 +52,6 @@ public class FrgMenuAdmin extends Fragment {
             setHasOptionsMenu(true);
             ((AppCompatActivity) this.getActivity()).setSupportActionBar(toolbar);
             ((AppCompatActivity) this.getActivity()).getSupportActionBar().setTitle("");
-            txtMenu = view.findViewById(R.id.txtMenu);
-            txtMenu.setOnClickListener(v -> ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce(txtMenu.getText().toString()));
             iconNiveles = view.findViewById(R.id.iconNiveles);
             iconNiveles.setOnClickListener(v -> {
                 OptionsMenuAdmin(v);
@@ -84,7 +76,12 @@ public class FrgMenuAdmin extends Fragment {
             iconHistorial.setOnClickListener(v -> {
                 OptionsMenuAdmin(v);
             });
-        } catch (Exception e) {}
+            iconContenido = view.findViewById(R.id.iconContenido);
+            iconContenido.setOnClickListener(v -> {
+                OptionsMenuAdmin(v);
+            });
+        } catch (Exception e) {
+        }
         return view;
     }
 
@@ -97,37 +94,28 @@ public class FrgMenuAdmin extends Fragment {
         mr.setVisible(false);
     }
 
-    public void OptionsMenuAdmin(View view){
+    public void OptionsMenuAdmin(View view) {
         int tag = Integer.parseInt(view.getTag().toString());
-        if(tag == 1) {
+        if (tag == 1) {
             fragment = new FrgLevel();
-            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Niveles");
             getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
-        }
-        else if(tag == 2){
+        } else if (tag == 2) {
             fragment = new FrgSublevel();
-            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Subniveles");
             getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
-        }
-        else if(tag == 3){
-            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Actividades");
-        }
-        else if(tag == 4){
+        } else if (tag == 3) {
+            fragment = new Frg_Actividades();
+            getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
+
+        } else if (tag == 4) {
             Intent intent = new Intent(getContext(), ActivitySkin.class);
-            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Artículos");
             startActivity(intent);
-        }
-        else if(tag == 5){
-            /*Intent intent = new Intent(getContext(), activity_group_admin.class);
-            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Grupos");
-            startActivity(intent);*/
-            fragment = new FrgGroup();
-            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Grupos");
-            getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
-        }
-        else if(tag == 6){
-            fragment = new Frg_Historial();
-            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Historial");
+        } else if (tag == 5) {
+            Intent intent = new Intent(getContext(), activity_group_admin.class);
+            startActivity(intent);
+        } else if (tag == 6) {
+
+        } else if (tag == 7) {
+            fragment = new Frg_Contenido();
             getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
         }
     }

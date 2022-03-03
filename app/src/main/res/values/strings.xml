@@ -105,4 +105,33 @@
     <string name="tituloReco">Reconocer figura</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="activity_description">Desgloce de actividades pertenecientes al subnivel X</string>
+    <string name="activity_title">Actividades</string>
+    <string name="search">Busqueda de Actividades</string>
+    <string name="item_activity_title">Item de actividad</string>
+    <string-array name="dificultad_list">
+        <item>Muy Baja</item>
+        <item>Baja</item>
+        <item>Media</item>
+        <item>Alta</item>
+        <item>Muy Alta</item>
+        <item>Extrema</item>
+    </string-array>
+
+    <string-array name="tipos_list">
+        <item>Actividad Común</item>
+        <item>Evaluación</item>
+    </string-array>
+
+    <string-array name="actividades_list">
+        <item>Reconocer figuras</item>
+        <item>Ordenar secuencias</item>
+        <item>Identificar entre palabras</item>
+        <item>Identificar entre imágenes</item>
+        <item>Armar rompecabezas</item>
+        <item>Seleccionar pares imagen con texto</item>
+        <item>Seleccionar pares imagen con imagen</item>
+        <item>Arrastrar y soltar texto</item>
+    </string-array>
 </resources>
