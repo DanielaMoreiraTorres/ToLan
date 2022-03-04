@@ -7,8 +7,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.view.Menu;
@@ -28,6 +31,7 @@ import com.example.tolan.models.ModelUser;
 
 import org.json.JSONArray;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
@@ -43,6 +47,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //ArrarList de permisos
+        ArrayList<String> permisos = new ArrayList<String>();
+        permisos.add(Manifest.permission.INTERNET);
+        permisos.add(Manifest.permission.CAMERA);
+        permisos.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        permisos.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+        getPermission(permisos);
+
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
@@ -54,6 +66,26 @@ public class MainActivity extends AppCompatActivity {
 
         fragment = new FrgWelcome();
         getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
+    }
+
+    private void getPermission(ArrayList<String> permisosSolicitados)
+    {
+        ArrayList<String> listPermisosNOAprob = getPermisosNoAprobados(permisosSolicitados);
+        if (listPermisosNOAprob.size()>0)
+            if (Build.VERSION.SDK_INT >= 23)
+                requestPermissions(listPermisosNOAprob.toArray(new String[listPermisosNOAprob.size()]), 1);
+    }
+
+    private ArrayList<String> getPermisosNoAprobados(ArrayList<String> listaPermisos)
+    {
+        ArrayList<String> list = new ArrayList<String>();
+        for(String permiso: listaPermisos) {
+            if (Build.VERSION.SDK_INT >= 23)
+                if(checkSelfPermission(permiso) != PackageManager.PERMISSION_GRANTED)
+                    list.add(permiso);
+
+        }
+        return list;
     }
 
     /*@Override
