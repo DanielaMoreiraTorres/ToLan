@@ -19,6 +19,7 @@
     <string name="reg">Registro de usuario</string>
     <string name="dtperson">Datos personales</string>
     <string name="dtusuario">Datos de usuario</string>
+    <string name="estadocuenta">Estado de la cuenta</string>
     <string name="tipo">Tipo de usuario: </string>
     <string name="docente">Docente</string>
     <string name="estudiante">Estudiante</string>

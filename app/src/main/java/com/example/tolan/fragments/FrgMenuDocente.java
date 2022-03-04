@@ -25,6 +25,7 @@ public class FrgMenuDocente extends Fragment {
     private Fragment fragment;
     private TextView txtMenu;
     private ImageView iconActividades, iconUsuarios, iconGrupos, iconHistorial;
+    private Bundle bundle;
 
     public FrgMenuDocente() {
         // Required empty public constructor
@@ -89,6 +90,9 @@ public class FrgMenuDocente extends Fragment {
         }
         else if(tag == 2){
             fragment = new FrgRegisterUser();
+            bundle = new Bundle();
+            bundle.putBoolean("registrar", true);
+            fragment.setArguments(bundle);
             ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Registrar estudiante");
             getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
         }

@@ -122,20 +122,22 @@ public class Frg_Historial extends Fragment {
                         public void onResponse(JSONArray response) {
                             try {
                                 if (response.length() >= 1) {
-                                    modelHistorial = parseJson(response);
-                                    LinearLayoutManager llm = new LinearLayoutManager(getContext());
-                                    llm.setOrientation(LinearLayoutManager.VERTICAL);
-                                    rcvhist.setLayoutManager(llm);
-                                    adpHistorial adapter = new adpHistorial(modelHistorial);
-                                    rcvhist.setAdapter(adapter);
+                                    if(getContext() != null) {
+                                        modelHistorial = parseJson(response);
+                                        LinearLayoutManager llm = new LinearLayoutManager(getContext());
+                                        llm.setOrientation(LinearLayoutManager.VERTICAL);
+                                        rcvhist.setLayoutManager(llm);
+                                        adpHistorial adapter = new adpHistorial(modelHistorial);
+                                        rcvhist.setAdapter(adapter);
+                                    }
                                     progressBar.setVisibility(View.GONE);
                                 } else {
                                     progressBar.setVisibility(View.GONE);
-                                    Toast.makeText(getContext(), "No existe historial registrado", Toast.LENGTH_SHORT).show();
-                                    ClssConvertirTextoAVoz.clssConvertirTextoAVoz.reproduce("No existe historial registrado");
+                                    //Toast.makeText(getContext(), "No existe historial registrado", Toast.LENGTH_SHORT).show();
+                                    //ClssConvertirTextoAVoz.clssConvertirTextoAVoz.reproduce("No existe historial registrado");
                                 }
                             } catch (Exception e) {
-                                Toast.makeText(getContext(), "Error de conexión", Toast.LENGTH_LONG).show();
+                                //Toast.makeText(getContext(), "Error de conexión", Toast.LENGTH_LONG).show();
                                 progressBar.setVisibility(View.GONE);
                             }
                         }
@@ -143,15 +145,33 @@ public class Frg_Historial extends Fragment {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     VolleyLog.e("Error: ", error.getMessage());
-                    Toast.makeText(getContext(), "Error de conexión con el servidor\n Intente nuevamente", Toast.LENGTH_SHORT);
-                    ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Error de conexión con el servidor\nIntente nuevamente");
-                    progressBar.setVisibility(View.GONE);
+                    JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                            new Response.Listener<JSONObject>() {
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    try {
+                                        progressBar.setVisibility(View.GONE);
+                                        Toast.makeText(getContext(), response.getString("message").trim(), Toast.LENGTH_SHORT);
+                                        ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(response.getString("message"));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                        progressBar.setVisibility(View.GONE);
+                                    }
+                                }
+                            },
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Toast.makeText(getContext(), "Error de conexión con el servidor\n Intente nuevamente", Toast.LENGTH_SHORT);
+                                    ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Error de conexión con el servidor\nIntente nuevamente");
+                                    progressBar.setVisibility(View.GONE);
+                                }
+                            });
+                    ClssVolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(request);
                 }
             });
-
             // Añadir petición a la cola
             ClssVolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(request_json);
-
     }
     public ArrayList<ModelHistorial_Cabz> parseJson(JSONArray jsonArray) {
         // Variables locales

@@ -22,7 +22,9 @@ import com.example.tolan.clases.ClssNavegacionActividades;
 import com.example.tolan.fragments.FrgContact;
 import com.example.tolan.fragments.FrgLogin;
 import com.example.tolan.fragments.FrgRegisterUser;
+import com.example.tolan.fragments.FrgSublevel;
 import com.example.tolan.fragments.FrgWelcome;
+import com.example.tolan.models.ModelUser;
 
 import org.json.JSONArray;
 
@@ -33,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private Fragment fragment;
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
-    private int aux = 0;
+    private int aux = 0, auxInfo = 0;
     //static ClssConvertirTextoAVoz tts;
 
     @Override
@@ -68,18 +70,37 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if(id == R.id.btnCaritas) {
-            //tts.reproduce("Tienes ");
+            ClssConvertirTextoAVoz.getIntancia(this).reproduce("Tienes "+ ModelUser.stockcaritas + " caritas ganadas");
+            if(aux != 0)
+                aux = 0;
+            if (auxInfo != 0)
+                auxInfo = 0;
         }
-        /*if(id == R.id.btnMyInfo) {
-            tts.reproduce("Mi información");
-            fragment = new FrgRegisterUser();
-            getSupportFragmentManager().popBackStack();
-            getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
-        }*/
+        if(id == R.id.btnMyInfo) {
+            ClssConvertirTextoAVoz.getIntancia(this).reproduce("Mi información");
+            if(auxInfo == 0) {
+                fragment = new FrgRegisterUser();
+                auxInfo += 1;
+                getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
+            }
+            /*else if (auxInfo != 0)
+                getSupportFragmentManager().popBackStack();
+            else if(auxInfo == 0){
+                fragment = new FrgRegisterUser();
+                getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
+            }
+            else if(aux != 0) {
+                aux = 0;
+            }*/
+        }
         if(id == R.id.btnLogIn) {
             ClssConvertirTextoAVoz.getIntancia(this).reproduce("Cerrar sesión");
             fragment = new FrgLogin();
             int i = getSupportFragmentManager().getBackStackEntryCount();
+            if(aux != 0)
+                aux = 0;
+            if (auxInfo != 0)
+                auxInfo = 0;
             for(int c=1; c < i; c++){
                 getSupportFragmentManager().popBackStack();
             }
@@ -89,10 +110,17 @@ public class MainActivity extends AppCompatActivity {
             ClssConvertirTextoAVoz.getIntancia(this).reproduce("Información de contacto");
             if(aux == 0) {
                 fragment = new FrgContact();
-                //getSupportFragmentManager().popBackStack();
-                getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
                 aux += 1;
+                getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
             }
+            /*else if(aux != 0) {
+                fragment = new FrgContact();
+                getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
+            }
+            else if(aux == 0) {
+                fragment = new FrgContact();
+                getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
+            }*/
         }
         return super.onOptionsItemSelected(item);
     }
@@ -113,7 +141,10 @@ public class MainActivity extends AppCompatActivity {
                     getSupportFragmentManager().popBackStack();
                     getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
                 } else if (i == 0 || i > 2) {
-                    aux = 0;
+                    if(aux != 0)
+                        aux = 0;
+                    if (auxInfo != 0)
+                        auxInfo = 0;
                     super.onBackPressed();
                 }
             } else {

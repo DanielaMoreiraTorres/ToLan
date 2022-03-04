@@ -26,6 +26,7 @@ import com.example.tolan.ActivityHomeUser;
 import com.example.tolan.R;
 import com.example.tolan.clases.ClssConvertirTextoAVoz;
 import com.example.tolan.clases.ClssStaticGrupo;
+import com.example.tolan.clases.ClssStaticUser;
 import com.example.tolan.clases.ClssValidations;
 import com.example.tolan.clases.ClssVolleySingleton;
 import com.example.tolan.models.ModelUser;
@@ -111,8 +112,6 @@ public class FrgLogin extends Fragment {
         ClssStaticGrupo.id = 0 ;
         ClssStaticGrupo.iddocente= 0;
         ClssStaticGrupo.docente = null;
-        ClssStaticGrupo.nombredocente = null;
-        ClssStaticGrupo.apellidodocente = null;
         ClssStaticGrupo.idestudiante = 0;
         ClssStaticGrupo.estudiante = null;
     }
@@ -148,6 +147,7 @@ public class FrgLogin extends Fragment {
                             try {
                                 if (response.length() > 1) {
                                     ModelUser user = new ModelUser();
+                                    user.setId(response.getInt("id"));
                                     user.setUsuario(response.getString("usuario").trim());
                                     user.setClave(response.getString("clave").trim());
                                     user.setTipousuario(response.getString("tipousuario").trim());
@@ -165,8 +165,8 @@ public class FrgLogin extends Fragment {
                                         user.setDocente(ObjDatos);
                                         idDocente = ObjDatos.getInt("id");
                                         docente = ObjDatos.getString("nombres").trim() + " " + ObjDatos.getString("apellidos").trim();
-                                        ClssStaticGrupo.nombredocente = ObjDatos.getString("nombres").trim();
-                                        ClssStaticGrupo.apellidodocente = ObjDatos.getString("apellidos").trim();
+                                        ClssStaticUser.nombres = ObjDatos.getString("nombres").trim();
+                                        ClssStaticUser.apellidos = ObjDatos.getString("apellidos").trim();
                                         Iniciar(user);
                                     } else
                                         Iniciar(user);
@@ -235,6 +235,7 @@ public class FrgLogin extends Fragment {
 
     private void Iniciar(ModelUser muser) throws JSONException {
         Bundle b = new Bundle();
+        setDataUserLogin(muser);
         if (muser.getTipousuario().trim().equals("AD")) {
             fragment = new FrgMenuAdmin();
             Toast.makeText(getContext(), "Bienvenido Admin", Toast.LENGTH_SHORT).show();
@@ -295,6 +296,28 @@ public class FrgLogin extends Fragment {
         ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(forgetPass.getText().toString());
         fragment = new FrgRecoveryPassword();
         getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
+    }
+
+    public void setDataUserLogin(ModelUser datos) throws JSONException {
+        ClssStaticUser.id = datos.getId();
+        ClssStaticUser.usuario = datos.getUsuario().trim();
+        ClssStaticUser.clave = datos.getClave().trim();
+        ClssStaticUser.tipousuario = datos.getTipousuario();
+        ClssStaticUser.activo = datos.isActivo();
+        if(datos.getTipousuario().trim().equals("DC")) {
+            ClssStaticUser.nombres = datos.getDocente().getString("nombres");
+            ClssStaticUser.apellidos = datos.getDocente().getString("apellidos");
+            ClssStaticUser.telefono = datos.getDocente().getString("telefono");
+            ClssStaticUser.correo = datos.getDocente().getString("correo");
+            ClssStaticUser.fechanacimiento = datos.getDocente().getString("fechanacimiento");
+        }
+        else if(datos.getTipousuario().trim().equals("ES")) {
+            ClssStaticUser.nombres = datos.getEstudiante().getString("nombres");
+            ClssStaticUser.apellidos = datos.getEstudiante().getString("apellidos");
+            ClssStaticUser.telefono = datos.getEstudiante().getString("telefono");
+            ClssStaticUser.correo = datos.getEstudiante().getString("correo");
+            ClssStaticUser.fechanacimiento = datos.getEstudiante().getString("fechanacimiento");
+        }
     }
 
     public void sendDataGroup(JSONObject grupo) throws JSONException {

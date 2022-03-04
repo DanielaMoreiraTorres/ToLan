@@ -18,7 +18,6 @@ import android.widget.ImageView;
 
 import com.example.tolan.ActivitySkin;
 import com.example.tolan.R;
-import com.example.tolan.activity_group_admin;
 import com.example.tolan.clases.ClssConvertirTextoAVoz;
 
 public class FrgMenuAdmin extends Fragment {
@@ -99,27 +98,33 @@ public class FrgMenuAdmin extends Fragment {
         int tag = Integer.parseInt(view.getTag().toString());
         if (tag == 1) {
             fragment = new FrgLevel();
+            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Niveles");
             getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
         } else if (tag == 2) {
             fragment = new FrgSublevel();
+            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Subniveles");
             getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
         } else if (tag == 3) {
             fragment = new Frg_Actividades();
+            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Actividades");
             getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
 
         } else if (tag == 4) {
             Intent intent = new Intent(getContext(), ActivitySkin.class);
+            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Artículos");
             startActivity(intent);
         } else if (tag == 5) {
-            Intent intent = new Intent(getContext(), activity_group_admin.class);
-            startActivity(intent);
+            fragment = new FrgGroup();
+            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Grupos");
+            getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
         } else if (tag == 6) {
             fragment = new Frg_Historial();
-            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Historial");
+            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Historial de Actividades");
             getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
 
         } else if (tag == 7) {
             fragment = new Frg_Contenido();
+            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Contenido de Actividades");
             getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
         }
     }

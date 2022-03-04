@@ -339,6 +339,7 @@ public class FrgAddSublevel extends Fragment {
                                     registerSublevel();
                             } catch (JSONException | AuthFailureError e) {
                                 e.printStackTrace();
+                                progressBar.setVisibility(View.GONE);
                             }
                             //Toast.makeText(getContext(), "Imagen registrada correctamente", Toast.LENGTH_SHORT).show();
                         }
@@ -348,6 +349,7 @@ public class FrgAddSublevel extends Fragment {
                     @Override
                     public void onFailure(Call<ModelUploadImage> call, Throwable t) {
                         //Toast.makeText(getContext(), "Error: " + t, Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.GONE);
                     }
                 });
             }
@@ -358,6 +360,7 @@ public class FrgAddSublevel extends Fragment {
             }
         } catch (Exception e) {
             String error = e.toString();
+            progressBar.setVisibility(View.GONE);
         }
     }
 

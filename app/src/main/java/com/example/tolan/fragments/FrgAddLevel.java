@@ -271,13 +271,14 @@ public class FrgAddLevel extends Fragment {
                                 e.printStackTrace();
                             }
                             //Toast.makeText(getContext(), "Imagen registrada correctamente", Toast.LENGTH_SHORT).show();
-                        } /*else
-                        Toast.makeText(getContext(), response.errorBody().toString(), Toast.LENGTH_SHORT).show();*/
+                        } else
+                            progressBar.setVisibility(View.GONE);
                     }
 
                     @Override
                     public void onFailure(Call<ModelUploadImage> call, Throwable t) {
                         //Toast.makeText(getContext(), "Error: " + t, Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.GONE);
                     }
                 });
             }
@@ -288,6 +289,7 @@ public class FrgAddLevel extends Fragment {
             }
         } catch (Exception e) {
             String error = e.toString();
+            progressBar.setVisibility(View.GONE);
         }
     }
 

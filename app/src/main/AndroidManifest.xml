@@ -17,19 +17,10 @@
         android:usesCleartextTraffic="true">
 
         <activity
-            android:name=".ActivityEstudents"
-            android:exported="false" />
-        <activity
-            android:name=".activity_group_admin"
-            android:exported="false" />
-        <activity
             android:name=".ActivitySuccessfull"
             android:exported="false" />
         <activity
             android:name=".MoreInfoMultimedia"
-            android:exported="false" />
-        <activity
-            android:name=".ActivityMenuDocente"
             android:exported="false" />
         <activity
             android:name=".ActivityAddSkin"

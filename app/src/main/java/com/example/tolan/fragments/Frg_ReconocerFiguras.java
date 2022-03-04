@@ -263,10 +263,9 @@ public class Frg_ReconocerFiguras extends Fragment implements AdapterView.OnItem
 
     private void AccionOk(int i) {
         try {
+        /*lstOptions.getChildAt(i).setBackgroundResource(R.drawable.borde);
+        lstOptions.getChildAt(i).setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));*/
             animar(false);
-            lstOptions.setOnItemClickListener(this);
-            lstOptions.getChildAt(i).setBackgroundResource(R.drawable.borde);
-            lstOptions.getChildAt(i).setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
             scrollView.post(new Runnable() {
                 public void run() {
                     scrollView.scrollTo(0, scrollView.getTop());
@@ -275,42 +274,37 @@ public class Frg_ReconocerFiguras extends Fragment implements AdapterView.OnItem
             state.setVisibility(View.GONE);
             TextView txt = (TextView) state.getChildAt(2);
             ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(txt.getText().toString());
+            lstOptions.setOnItemClickListener(this);
         } catch (Exception e) {}
     }
 
     private void animar(boolean mostrar) {
         try {
-            //AnimationSet set = new AnimationSet(true);
-            //Animation animation = null;
+            /*AnimationSet set = new AnimationSet(true);
+            Animation animation = null;*/
             if (mostrar) {
                 state.setLayoutAnimation(ClssAnimation.getInstanciaAnimation().getLayoutAnimationController());
                 state.startAnimation(ClssAnimation.getInstanciaAnimation().getAnimationDown());
-                /*
-                animation = new TranslateAnimation(
+                /*animation = new TranslateAnimation(
                         Animation.RELATIVE_TO_SELF, 0.0f,
                         Animation.RELATIVE_TO_SELF, 0.0f,
                         Animation.RELATIVE_TO_SELF, 1.0f,
-                        Animation.RELATIVE_TO_SELF, 0.0f);
-
-                 */
+                        Animation.RELATIVE_TO_SELF, 0.0f);*/
             } else {
                 state.setLayoutAnimation(ClssAnimation.getInstanciaAnimation().getLayoutAnimationController());
                 state.startAnimation(ClssAnimation.getInstanciaAnimation().getAnimationUp());
-                /*
-                animation = new TranslateAnimation(
+                /*animation = new TranslateAnimation(
                         Animation.RELATIVE_TO_SELF, 0.0f,
                         Animation.RELATIVE_TO_SELF, 0.0f,
                         Animation.RELATIVE_TO_SELF, 0.0f,
-                        Animation.RELATIVE_TO_SELF, 1.0f);
-
-                 */
+                        Animation.RELATIVE_TO_SELF, 1.0f);*/
             }
             //duración en milisegundos
-            //animation.setDuration(500);
-            //set.addAnimation(animation);
-            //LayoutAnimationController controller = new LayoutAnimationController(set, 0.25f);
-            //state.setLayoutAnimation(controller);
-            //state.startAnimation(animation);
+            /*animation.setDuration(500);
+            set.addAnimation(animation);
+            LayoutAnimationController controller = new LayoutAnimationController(set, 0.25f);
+            state.setLayoutAnimation(controller);
+            state.startAnimation(animation);*/
         } catch (Exception e) {}
     }
 
