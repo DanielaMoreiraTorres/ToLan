@@ -90,6 +90,8 @@ public class FrgAddActividad extends Fragment implements View.OnClickListener {
         mc.setVisible(false);
         MenuItem mr = menu.findItem(R.id.btnRecompensa);
         mr.setVisible(false);
+        MenuItem mi = menu.findItem(R.id.btnMyInfo);
+        mi.setVisible(false);
     }
 
     @Override

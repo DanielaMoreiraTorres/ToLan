@@ -76,24 +76,23 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
+                    <TextView
+                        android:id="@+id/txtDatPer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/baloo"
+                        android:shadowColor="@color/secundario"
+                        android:shadowRadius="0.6"
+                        android:text="@string/dtperson"
+                        android:textAlignment="center"
+                        android:textColor="@color/principal"
+                        android:textSize="22sp" />
+
                     <LinearLayout
-                        android:id="@+id/datPerson"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="10dp"
                         android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/txtDatPer"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/baloo"
-                            android:shadowColor="@color/secundario"
-                            android:shadowRadius="0.6"
-                            android:text="@string/dtperson"
-                            android:textAlignment="center"
-                            android:textColor="@color/principal"
-                            android:textSize="22sp" />
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/Lnombres"
@@ -208,56 +207,24 @@
 
                     </LinearLayout>
 
+                    <TextView
+                        android:id="@+id/txtDatUser"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/baloo"
+                        android:shadowColor="@color/secundario"
+                        android:shadowRadius="0.6"
+                        android:text="@string/dtusuario"
+                        android:textAlignment="center"
+                        android:textColor="@color/principal"
+                        android:textSize="22sp" />
+
                     <LinearLayout
-                        android:id="@+id/datUser"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="10dp"
                         android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/txtDatUser"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:fontFamily="@font/baloo"
-                            android:shadowColor="@color/secundario"
-                            android:shadowRadius="0.6"
-                            android:text="@string/dtusuario"
-                            android:textAlignment="center"
-                            android:textColor="@color/principal"
-                            android:textSize="22sp" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:fontFamily="@font/baloo"
-                                android:gravity="center_vertical"
-                                android:text="@string/estadocuenta"
-                                android:textColor="@color/secundario"
-                                android:textSize="14sp" />
-
-                            <CheckBox
-                                android:id="@+id/checkBoxUser"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:gravity="center_vertical"
-                                android:layout_marginTop="10dp"
-                                android:checked="true"
-                                android:enabled="false"
-                                android:fontFamily="sans-serif-medium"
-                                android:text="Activo"
-                                android:textColor="@color/secundario"
-                                android:textSize="18sp" />
-
-                        </LinearLayout>
 
                         <RadioGroup
                             android:id="@+id/rgTipoUser"
@@ -354,27 +321,6 @@
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/LclaveAct"
-                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Contraseña actual"
-                            app:endIconMode="password_toggle"
-                            app:errorEnabled="true"
-                            android:visibility="gone">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/claveAct"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:drawableStart="@drawable/password"
-                                android:fontFamily="sans-serif-medium"
-                                android:inputType="textPassword"
-                                android:padding="16dp" />
-
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                        <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/Lclave"
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
@@ -414,20 +360,20 @@
 
                         </com.google.android.material.textfield.TextInputLayout>
 
-                    </LinearLayout>
+                        <Button
+                            android:id="@+id/btnRegister"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="10dp"
+                            android:backgroundTint="@color/verde"
+                            app:icon="@drawable/icon_reg_user"
+                            app:iconGravity="textStart"
+                            android:fontFamily="sans-serif-black"
+                            android:text="@string/registrarse"
+                            android:textColor="@color/white"
+                            android:textSize="12sp" />
 
-                    <Button
-                        android:id="@+id/btnRegister"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="10dp"
-                        android:backgroundTint="@color/verde"
-                        app:icon="@drawable/icon_reg_user"
-                        app:iconGravity="textStart"
-                        android:fontFamily="sans-serif-black"
-                        android:text="@string/registrarse"
-                        android:textColor="@color/white"
-                        android:textSize="12sp" />
+                    </LinearLayout>
 
                 </LinearLayout>
 

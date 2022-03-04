@@ -77,12 +77,12 @@ public class MainActivity extends AppCompatActivity {
                 auxInfo = 0;
         }
         if(id == R.id.btnMyInfo) {
-            ClssConvertirTextoAVoz.getIntancia(this).reproduce("Mi información");
+            /*ClssConvertirTextoAVoz.getIntancia(this).reproduce("Mi información");
             if(auxInfo == 0) {
                 fragment = new FrgRegisterUser();
                 auxInfo += 1;
                 getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
-            }
+            }*/
             /*else if (auxInfo != 0)
                 getSupportFragmentManager().popBackStack();
             else if(auxInfo == 0){

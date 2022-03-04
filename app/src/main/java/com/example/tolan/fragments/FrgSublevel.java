@@ -134,6 +134,8 @@ SearchView.OnQueryTextListener {
         mc.setVisible(false);
         MenuItem mr = menu.findItem(R.id.btnRecompensa);
         mr.setVisible(false);
+        MenuItem mi = menu.findItem(R.id.btnMyInfo);
+        mi.setVisible(false);
     }
 
     public void llenarSpinner(){
