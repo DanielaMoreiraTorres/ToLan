@@ -17,7 +17,9 @@ public class ModelHistorial_Cabz {
         String Nombres="Actividades"+"\n";
         String Alumnos="";
         for(int i=0; i<historial.size();i++)
-            Alumnos+=historial.get(i).getNombre()+" \n";
+            Alumnos+="\n"+historial.get(i).getDescripcion()+
+                    " \nFecha Realizada: "+historial.get(i).getFecha()+
+                    "\nRecompensa Obtenida: "+historial.get(i).getRecompensa()+"\n";
         Nombres=Nombres+Alumnos;
         return Nombres;
     }

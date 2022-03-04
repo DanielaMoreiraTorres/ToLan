@@ -109,44 +109,49 @@ public class Frg_Historial extends Fragment {
     }
 
     public void CargaData() {
-        //param.put("idEstudiante", ClssStaticGrupo.idestudiante);
+        Integer i = ClssStaticGrupo.iddocente;
+        JsonArrayRequest request_json;
+        if(i>0)
+        {
+            url+="/byDocente?idDocente="+i.toString();
+        }
         progressBar.setVisibility(View.VISIBLE);
-        JsonArrayRequest request_json = new JsonArrayRequest(Request.Method.GET,url, null,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        try {
-                            if (response.length() > 0) {
-                                modelHistorial = parseJson(response);
-                                LinearLayoutManager llm = new LinearLayoutManager(getContext());
-                                llm.setOrientation(LinearLayoutManager.VERTICAL);
-                                rcvhist.setLayoutManager(llm);
-                                adpHistorial adapter = new adpHistorial(modelHistorial);
-                                rcvhist.setAdapter(adapter);
+            request_json = new JsonArrayRequest(Request.Method.GET, url, null,
+                    new Response.Listener<JSONArray>() {
+                        @Override
+                        public void onResponse(JSONArray response) {
+                            try {
+                                if (response.length() >= 1) {
+                                    modelHistorial = parseJson(response);
+                                    LinearLayoutManager llm = new LinearLayoutManager(getContext());
+                                    llm.setOrientation(LinearLayoutManager.VERTICAL);
+                                    rcvhist.setLayoutManager(llm);
+                                    adpHistorial adapter = new adpHistorial(modelHistorial);
+                                    rcvhist.setAdapter(adapter);
+                                    progressBar.setVisibility(View.GONE);
+                                } else {
+                                    progressBar.setVisibility(View.GONE);
+                                    Toast.makeText(getContext(), "No existe historial registrado", Toast.LENGTH_SHORT).show();
+                                    ClssConvertirTextoAVoz.clssConvertirTextoAVoz.reproduce("No existe historial registrado");
+                                }
+                            } catch (Exception e) {
+                                Toast.makeText(getContext(), "Error de conexión", Toast.LENGTH_LONG).show();
                                 progressBar.setVisibility(View.GONE);
                             }
-                            else {
-                                progressBar.setVisibility(View.GONE);
-                                Toast.makeText(getContext(),"No existe historial registrado",Toast.LENGTH_SHORT).show();
-                                ClssConvertirTextoAVoz.clssConvertirTextoAVoz.reproduce("No existe historial registrado");
-                            }
-                        } catch (Exception e) {
-                            //Toast.makeText(getContext(), "Error de conexión", Toast.LENGTH_LONG).show();
-                            progressBar.setVisibility(View.GONE);
                         }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.e("Error: ", error.getMessage());
-                Toast.makeText(getContext(), "Error de conexión con el servidor\n Intente nuevamente", Toast.LENGTH_SHORT);
-                ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Error de conexión con el servidor\nIntente nuevamente");
-                progressBar.setVisibility(View.GONE);
-            }
-        });
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    VolleyLog.e("Error: ", error.getMessage());
+                    Toast.makeText(getContext(), "Error de conexión con el servidor\n Intente nuevamente", Toast.LENGTH_SHORT);
+                    ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Error de conexión con el servidor\nIntente nuevamente");
+                    progressBar.setVisibility(View.GONE);
+                }
+            });
 
-        // Añadir petición a la cola
-        ClssVolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(request_json);
+            // Añadir petición a la cola
+            ClssVolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(request_json);
+
     }
     public ArrayList<ModelHistorial_Cabz> parseJson(JSONArray jsonArray) {
         // Variables locales
@@ -163,9 +168,8 @@ public class Frg_Historial extends Fragment {
                         if (act.length() > 0) {
                             JSONObject hist_item = act.getJSONObject(j);
                             ModelHistorial mdht = new ModelHistorial(
-                                    hist_item.getInt("id"),
-                                    hist_item.getInt("idactividad"),
-                                    hist_item.getString("nombre"),
+                                    hist_item.getString("descripcion"),
+                                    hist_item.getString("fecha"),
                                     hist_item.getInt("recompensa"));
                             actvList.add(mdht);
                         }

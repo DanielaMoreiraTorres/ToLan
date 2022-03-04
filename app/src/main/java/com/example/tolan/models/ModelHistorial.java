@@ -4,12 +4,29 @@ public class ModelHistorial {
     private Integer id;
     private Integer idactividad;
     private String nombre;
+    private String descripcion;
+    private String fecha;
     private Integer recompensa;
 
-    public ModelHistorial(Integer id, Integer idactividad, String nombre, Integer recompensa) {
-        this.id = id;
-        this.idactividad = idactividad;
-        this.nombre = nombre;
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public ModelHistorial(String descripcion, String fecha, Integer recompensa) {
+        this.descripcion = descripcion;
+        this.fecha = fecha;
         this.recompensa = recompensa;
     }
 
