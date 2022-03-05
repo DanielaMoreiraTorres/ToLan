@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/inicioFragment"
-        android:name="com.example.tolan.fragments.Frg_HomeFragment"
+        android:name="com.example.tolan.fragments.FrgHomeFragment"
         android:label="fragment_inicio"
         tools:layout="@layout/fragment_inicio">
 
@@ -20,9 +20,9 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentReconocerFiguras"
-        android:name="com.example.tolan.fragments.Frg_ReconocerFiguras"
+        android:name="com.example.tolan.fragments.FrgRecognizeFigure"
         android:label="fragment_ReconocerFiguras"
-        tools:layout="@layout/fragment_reconocer_figuras">
+        tools:layout="@layout/fragment_recognize_figure">
 
         <!--
        <action
@@ -32,9 +32,9 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentArrastrarSoltar"
-        android:name="com.example.tolan.fragments.Frg_ArrastrarSoltar"
+        android:name="com.example.tolan.fragments.FrgDragAndDrop"
         android:label="fragment_ArrastrarSoltar"
-        tools:layout="@layout/fragment_arrastrar_soltar">
+        tools:layout="@layout/fragment_drag_and_drop">
         <!--
         <action
             android:id="@+id/action_tercerFragment_to_inicioFragment"
@@ -45,32 +45,32 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentSeleccionarParesImagenImagen"
-        android:name="com.example.tolan.fragments.Frg_SeleccionarParesImagenImagen"
+        android:name="com.example.tolan.fragments.FrgSeleccionarParesImagenImagen"
         android:label="fragment_seleccionar_pares_imagen_imagen"
         tools:layout="@layout/fragment_seleccionar_pares_imagen_imagen" />
     <fragment
         android:id="@+id/fragmentGrafomotricidad"
-        android:name="com.example.tolan.fragments.Frg_Grafomotricidad"
+        android:name="com.example.tolan.fragments.FrgGrafomotricity"
         android:label="fragment_grafomotricidad"
-        tools:layout="@layout/fragment_grafomotricidad" />
+        tools:layout="@layout/fragment_grafomotricity" />
     <fragment
         android:id="@+id/fragmentIdentificarRespuestaImagen"
-        android:name="com.example.tolan.fragments.Frg_IdentificarRespuestaImagen"
+        android:name="com.example.tolan.fragments.FrgIdentifyImg"
         android:label="fragment_identificar_respuesta_imagen"
-        tools:layout="@layout/fragment_identificar_respuesta_imagen" />
+        tools:layout="@layout/fragment_identify_img" />
     <fragment
         android:id="@+id/fragmentIdentificarRespuestaPalabra"
-        android:name="com.example.tolan.fragments.Frg_IdentificarRespuestaPalabra"
+        android:name="com.example.tolan.fragments.FrgIdentifyTxt"
         android:label="fragment_identificar_respuesta_palabra"
-        tools:layout="@layout/fragment_identificar_respuesta_palabra" />
+        tools:layout="@layout/fragment_identify_txt" />
     <fragment
         android:id="@+id/fragmentOrdenarSecuenciasImagenes"
-        android:name="com.example.tolan.fragments.Frg_OrdenarSecuenciasImagenes"
+        android:name="com.example.tolan.fragments.FrgOrdenarSecuenciasImagenes"
         android:label="fragment_ordenar_secuencias_imagenes"
         tools:layout="@layout/fragment_ordenar_secuencias_imagenes" />
     <fragment
         android:id="@+id/fragmentSeleccionarParesImagenTexto"
-        android:name="com.example.tolan.fragments.Frg_SeleccionarParesImagenTexto"
+        android:name="com.example.tolan.fragments.FrgSeleccionarParesImagenTexto"
         android:label="fragment_seleccionar_pares_imagen_texto"
         tools:layout="@layout/fragment_seleccionar_pares_imagen_texto" />
 </navigation>

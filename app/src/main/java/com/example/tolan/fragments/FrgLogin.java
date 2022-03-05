@@ -24,8 +24,8 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.tolan.ActivityHomeUser;
 import com.example.tolan.R;
-import com.example.tolan.clases.ClssConvertirTextoAVoz;
-import com.example.tolan.clases.ClssStaticGrupo;
+import com.example.tolan.clases.ClssConvertTextToSpeech;
+import com.example.tolan.clases.ClssStaticGroup;
 import com.example.tolan.clases.ClssStaticUser;
 import com.example.tolan.clases.ClssValidations;
 import com.example.tolan.clases.ClssVolleySingleton;
@@ -43,7 +43,7 @@ import java.util.Map;
 public class FrgLogin extends Fragment {
 
     ProgressBar progressBar;
-    //static ClssConvertirTextoAVoz tts;
+    //static ClssConvertTextToSpeech tts;
     private Button btnLogin, register;
     private TextView forgetPass, txtIni;
     private TextInputEditText user, password;
@@ -69,7 +69,7 @@ public class FrgLogin extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //tts = new ClssConvertirTextoAVoz();
+        //tts = new ClssConvertTextToSpeech();
         //tts.init(getContext());
         if (getArguments() != null) {
         }
@@ -90,7 +90,7 @@ public class FrgLogin extends Fragment {
             url = getString(R.string.urlBase) + "usuario/login";
             urlGrupo = getString(R.string.urlBase) + "grupo/";
             txtIni = view.findViewById(R.id.txtIni);
-            txtIni.setOnClickListener(v -> ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce(txtIni.getText().toString()));
+            txtIni.setOnClickListener(v -> ClssConvertTextToSpeech.getIntancia(v.getContext()).reproduce(txtIni.getText().toString()));
             //tts.reproduce(txtIni.getText().toString()));
             user = view.findViewById(R.id.txtuser);
             validate.TextChanged(user, null, Lusuario, Merror);
@@ -109,11 +109,11 @@ public class FrgLogin extends Fragment {
     }
 
     private void resetClssStatic() {
-        ClssStaticGrupo.id = 0 ;
-        ClssStaticGrupo.iddocente= 0;
-        ClssStaticGrupo.docente = null;
-        ClssStaticGrupo.idestudiante = 0;
-        ClssStaticGrupo.estudiante = null;
+        ClssStaticGroup.id = 0 ;
+        ClssStaticGroup.iddocente= 0;
+        ClssStaticGroup.docente = null;
+        ClssStaticGroup.idestudiante = 0;
+        ClssStaticGroup.estudiante = null;
     }
 
     private void Login() {
@@ -121,13 +121,13 @@ public class FrgLogin extends Fragment {
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(getContext().INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(password.getWindowToken(), 0);
         //tts.reproduce(btnLogin.getText().toString());
-        ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(btnLogin.getText().toString());
+        ClssConvertTextToSpeech.getIntancia(getContext()).reproduce(btnLogin.getText().toString());
         if (validate.Validar(user, null, Lusuario, Merror) & validate.Validar(password, null, Lclave, Merror)) {
             progressBar.setVisibility(View.VISIBLE);
             getUsuario();
         } else
             //tts.reproduce("Datos no válidos");
-            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Datos no válidos");
+            ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("Datos no válidos");
     }
 
     private void getUsuario() {
@@ -171,12 +171,12 @@ public class FrgLogin extends Fragment {
                                     } else
                                         Iniciar(user);
                                     //tts.reproduce("Inicio exitoso");
-                                    ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Inicio exitoso");
+                                    ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("Inicio exitoso");
                                     progressBar.setVisibility(View.GONE);
                                 } else {
                                     //tts.reproduce(response.get("message").toString());
                                     Toast.makeText(getContext(), response.get("message").toString(), Toast.LENGTH_SHORT).show();
-                                    ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(response.get("message").toString());
+                                    ClssConvertTextToSpeech.getIntancia(getContext()).reproduce(response.get("message").toString());
                                     progressBar.setVisibility(View.GONE);
                                 }
 
@@ -190,7 +190,7 @@ public class FrgLogin extends Fragment {
                     VolleyLog.e("Error: ", error.getMessage());
                     Toast.makeText(getContext(), "Error de conexión con el servidor\nIntente nuevamente", Toast.LENGTH_SHORT).show();
                     //tts.reproduce("Error de conexión con el servidor. Intente nuevamente");
-                    ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Error de conexión con el servidor. Intente nuevamente");
+                    ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("Error de conexión con el servidor. Intente nuevamente");
                     progressBar.setVisibility(View.GONE);
                 }
             });
@@ -244,32 +244,32 @@ public class FrgLogin extends Fragment {
                 @Override
                 public void run() {
                     //tts.reproduce("Bienvenido Admin");
-                    ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Bienvenido Admin");
+                    ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("Bienvenido Admin");
                 }
             }, 1500);
         } else if (muser.getTipousuario().trim().equals("DC")) {
-            fragment = new FrgMenuDocente();
-            ClssStaticGrupo.iddocente = idDocente;
-            ClssStaticGrupo.docente = docente;
-            Toast.makeText(getContext(), "Bienvenido " + ClssStaticGrupo.docente, Toast.LENGTH_SHORT).show();
+            fragment = new FrgMenuTeacher();
+            ClssStaticGroup.iddocente = idDocente;
+            ClssStaticGroup.docente = docente;
+            Toast.makeText(getContext(), "Bienvenido " + ClssStaticGroup.docente, Toast.LENGTH_SHORT).show();
             final Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    //tts.reproduce("Bienvenido " + ClssStaticGrupo.docente);
-                    ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Bienvenido " + ClssStaticGrupo.docente);
+                    //tts.reproduce("Bienvenido " + ClssStaticGroup.docente);
+                    ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("Bienvenido " + ClssStaticGroup.docente);
                 }
             }, 1500);
         } else {
             fragment = new ActivityHomeUser();
             sendDataGroup(grupo);
-            Toast.makeText(getContext(), "Bienvenido " + ClssStaticGrupo.estudiante, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Bienvenido " + ClssStaticGroup.estudiante, Toast.LENGTH_SHORT).show();
             final Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    //tts.reproduce("Bienvenido " + ClssStaticGrupo.estudiante);
-                    ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Bienvenido " + ClssStaticGrupo.estudiante);
+                    //tts.reproduce("Bienvenido " + ClssStaticGroup.estudiante);
+                    ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("Bienvenido " + ClssStaticGroup.estudiante);
                 }
             }, 1500);
             //b.putString("grupo", grupo.toString());
@@ -284,7 +284,7 @@ public class FrgLogin extends Fragment {
 
     private void RegisterUs() {
         //tts.reproduce(register.getText().toString());
-        ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(register.getText().toString());
+        ClssConvertTextToSpeech.getIntancia(getContext()).reproduce(register.getText().toString());
         fragment = new FrgRegisterUser();
         getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
     }
@@ -293,7 +293,7 @@ public class FrgLogin extends Fragment {
     private void Forget() {
         forgetPass.setTextColor(Color.parseColor("#44cccc"));
         //tts.reproduce(forgetPass.getText().toString());
-        ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(forgetPass.getText().toString());
+        ClssConvertTextToSpeech.getIntancia(getContext()).reproduce(forgetPass.getText().toString());
         fragment = new FrgRecoveryPassword();
         getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
     }
@@ -321,12 +321,12 @@ public class FrgLogin extends Fragment {
     }
 
     public void sendDataGroup(JSONObject grupo) throws JSONException {
-        ClssStaticGrupo.id = grupo.getInt("id");
-        ClssStaticGrupo.iddocente = grupo.getInt("iddocente");
-        ClssStaticGrupo.docente = grupo.getString("docente").trim();
-        ClssStaticGrupo.idestudiante = grupo.getInt("idestudiante");
-        ClssStaticGrupo.estudiante = grupo.getString("estudiante").trim();
-        ClssStaticGrupo.fecha = grupo.getString("fecha").trim();
-        ClssStaticGrupo.activo = grupo.getBoolean("activo");
+        ClssStaticGroup.id = grupo.getInt("id");
+        ClssStaticGroup.iddocente = grupo.getInt("iddocente");
+        ClssStaticGroup.docente = grupo.getString("docente").trim();
+        ClssStaticGroup.idestudiante = grupo.getInt("idestudiante");
+        ClssStaticGroup.estudiante = grupo.getString("estudiante").trim();
+        ClssStaticGroup.fecha = grupo.getString("fecha").trim();
+        ClssStaticGroup.activo = grupo.getBoolean("activo");
     }
 }

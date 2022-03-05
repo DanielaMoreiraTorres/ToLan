@@ -6,8 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.speech.tts.TextToSpeech;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,32 +14,25 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.tolan.R;
-import com.example.tolan.clases.ClssConvertirTextoAVoz;
+import com.example.tolan.clases.ClssConvertTextToSpeech;
 import com.example.tolan.clases.ClssValidations;
 import com.example.tolan.clases.ClssVolleySingleton;
-import com.example.tolan.models.ModelUser;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 public class FrgRecoveryPassword extends Fragment {
 
     static TextToSpeech textToSpeech;
-    //ClssConvertirTextoAVoz tts;
+    //ClssConvertTextToSpeech tts;
     private Button otro, recovery;
     private TextView txtRec, txtTittle;
     private TextInputEditText celular, correo;
@@ -75,7 +66,7 @@ public class FrgRecoveryPassword extends Fragment {
             textToSpeech.setLanguage(Locale.getDefault());
             textToSpeech.speak(mensaje, TextToSpeech.QUEUE_FLUSH, null);
         }
-        //tts = new ClssConvertirTextoAVoz();
+        //tts = new ClssConvertTextToSpeech();
         //tts.init(getContext());
     }
 
@@ -90,10 +81,10 @@ public class FrgRecoveryPassword extends Fragment {
             urlP = getString(R.string.urlBase) + "usuario/recoveryPhone?telefono=";
             urlE = getString(R.string.urlBase) + "usuario/recoveryEmail?correo=";
             txtRec = view.findViewById(R.id.txtRec);
-            txtRec.setOnClickListener(v -> ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce(txtRec.getText().toString()));
+            txtRec.setOnClickListener(v -> ClssConvertTextToSpeech.getIntancia(v.getContext()).reproduce(txtRec.getText().toString()));
             //tts.reproduce(txtRec.getText().toString()));
             txtTittle = view.findViewById(R.id.txtRecoveryMetodo);
-            txtTittle.setOnClickListener(v -> ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce(txtTittle.getText().toString()));
+            txtTittle.setOnClickListener(v -> ClssConvertTextToSpeech.getIntancia(v.getContext()).reproduce(txtTittle.getText().toString()));
             //tts.reproduce(txtTittle.getText().toString()));
             Lcelular = view.findViewById(R.id.Ltelefono);
             celular = view.findViewById(R.id.telefono);
@@ -114,17 +105,17 @@ public class FrgRecoveryPassword extends Fragment {
 
     public void OtroMetodo() {
         //tts.reproduce(otro.getText().toString());
-        ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(otro.getText().toString());
+        ClssConvertTextToSpeech.getIntancia(getContext()).reproduce(otro.getText().toString());
         if (Lcorreo.getVisibility() == View.GONE) {
             txtTittle.setText(getString(R.string.msrecemail));
             //tts.reproduce(txtTittle.getText().toString());
-            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(txtTittle.getText().toString());
+            ClssConvertTextToSpeech.getIntancia(getContext()).reproduce(txtTittle.getText().toString());
             Lcorreo.setVisibility(View.VISIBLE);
             Lcelular.setVisibility(View.GONE);
         } else {
             txtTittle.setText(getString(R.string.msrectel));
             //tts.reproduce(txtTittle.getText().toString());
-            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(txtTittle.getText().toString());
+            ClssConvertTextToSpeech.getIntancia(getContext()).reproduce(txtTittle.getText().toString());
             Lcorreo.setVisibility(View.GONE);
             Lcelular.setVisibility(View.VISIBLE);
         }
@@ -139,7 +130,7 @@ public class FrgRecoveryPassword extends Fragment {
                     public void onResponse(JSONObject response) {
                         try {
                             //tts.reproduce(response.get("message").toString());
-                            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(response.get("message").toString());
+                            ClssConvertTextToSpeech.getIntancia(getContext()).reproduce(response.get("message").toString());
                             Toast.makeText(getContext(), response.get("message").toString(), Toast.LENGTH_SHORT).show();
                         } catch (Exception e) {
                             //Toast.makeText(getContext(),"Error de conexión",Toast.LENGTH_SHORT).show();
@@ -151,7 +142,7 @@ public class FrgRecoveryPassword extends Fragment {
                 VolleyLog.e("Error: ", error.getMessage());
                 Toast.makeText(getContext(), "Error de conexión con el servidor.\nIntente nuevamente", Toast.LENGTH_SHORT).show();
                 //tts.reproduce("Error de conexión con el servidor. Intente nuevamente");
-                ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Error de conexión con el servidor. Intente nuevamente");
+                ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("Error de conexión con el servidor. Intente nuevamente");
             }
         });
         // Añadir petición a la cola
@@ -161,7 +152,7 @@ public class FrgRecoveryPassword extends Fragment {
 
     public void Recovery() {
         //tts.reproduce(recovery.getText().toString());
-        ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(recovery.getText().toString());
+        ClssConvertTextToSpeech.getIntancia(getContext()).reproduce(recovery.getText().toString());
         String url = "";
         if (Lcorreo.getVisibility() == View.GONE) {
             url = urlP + celular.getText().toString().trim();
@@ -169,7 +160,7 @@ public class FrgRecoveryPassword extends Fragment {
                 SendDatos(url);
             else {
                 //tts.reproduce("Número de celular no válido");
-                ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Número de celular no válido");
+                ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("Número de celular no válido");
                 Toast.makeText(getContext(), "Número de celular no válido", Toast.LENGTH_SHORT).show();
             }
         } else {
@@ -178,7 +169,7 @@ public class FrgRecoveryPassword extends Fragment {
                 SendDatos(url);
             else {
                 //tts.reproduce("Correo no válido");
-                ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Correo no válido");
+                ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("Correo no válido");
                 Toast.makeText(getContext(), "Correo no válido", Toast.LENGTH_SHORT).show();
 
             }

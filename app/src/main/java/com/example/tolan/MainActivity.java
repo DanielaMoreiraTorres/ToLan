@@ -9,30 +9,19 @@ import androidx.navigation.NavController;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
 import com.example.tolan.adapters.VHoldRecyclerChild_ItemSubnivel;
-import com.example.tolan.clases.ClssConvertirTextoAVoz;
-import com.example.tolan.clases.ClssNavegacionActividades;
+import com.example.tolan.clases.ClssConvertTextToSpeech;
 import com.example.tolan.fragments.FrgContact;
 import com.example.tolan.fragments.FrgLogin;
-import com.example.tolan.fragments.FrgRegisterUser;
-import com.example.tolan.fragments.FrgSublevel;
 import com.example.tolan.fragments.FrgWelcome;
 import com.example.tolan.models.ModelUser;
 
-import org.json.JSONArray;
-
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private int aux = 0, auxInfo = 0;
-    //static ClssConvertirTextoAVoz tts;
+    //static ClssConvertTextToSpeech tts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        //tts = new ClssConvertirTextoAVoz();
+        //tts = new ClssConvertTextToSpeech();
         //tts.init(this);
 
         fragment = new FrgWelcome();
@@ -102,14 +91,14 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if(id == R.id.btnCaritas) {
-            ClssConvertirTextoAVoz.getIntancia(this).reproduce("Tienes "+ ModelUser.stockcaritas + " caritas ganadas");
+            ClssConvertTextToSpeech.getIntancia(this).reproduce("Tienes "+ ModelUser.stockcaritas + " caritas ganadas");
             if(aux != 0)
                 aux = 0;
             if (auxInfo != 0)
                 auxInfo = 0;
         }
         if(id == R.id.btnMyInfo) {
-            /*ClssConvertirTextoAVoz.getIntancia(this).reproduce("Mi información");
+            /*ClssConvertTextToSpeech.getIntancia(this).reproduce("Mi información");
             if(auxInfo == 0) {
                 fragment = new FrgRegisterUser();
                 auxInfo += 1;
@@ -126,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
             }*/
         }
         if(id == R.id.btnLogIn) {
-            ClssConvertirTextoAVoz.getIntancia(this).reproduce("Cerrar sesión");
+            ClssConvertTextToSpeech.getIntancia(this).reproduce("Cerrar sesión");
             fragment = new FrgLogin();
             int i = getSupportFragmentManager().getBackStackEntryCount();
             if(aux != 0)
@@ -139,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
         }
         if(id == R.id.btnContacts) {
-            ClssConvertirTextoAVoz.getIntancia(this).reproduce("Información de contacto");
+            ClssConvertTextToSpeech.getIntancia(this).reproduce("Información de contacto");
             if(aux == 0) {
                 fragment = new FrgContact();
                 aux += 1;
@@ -160,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         try {
-            ClssConvertirTextoAVoz.getIntancia(this).reproduce("Regresar");
+            ClssConvertTextToSpeech.getIntancia(this).reproduce("Regresar");
             NavController c = VHoldRecyclerChild_ItemSubnivel.navController;
             int i = getSupportFragmentManager().getBackStackEntryCount();
             if (c == null) {

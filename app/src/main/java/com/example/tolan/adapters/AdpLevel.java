@@ -1,7 +1,6 @@
 package com.example.tolan.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.tolan.R;
-import com.example.tolan.clases.ClssConvertirTextoAVoz;
+import com.example.tolan.clases.ClssConvertTextToSpeech;
 import com.example.tolan.fragments.FrgAddLevel;
 import com.example.tolan.models.ModelLevel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -99,7 +98,7 @@ public class AdpLevel extends RecyclerView.Adapter<AdpLevel.ViewHolder>
                 public void onClick(View view) {
                     notifyDataSetChanged();
                     //Toast.makeText(ccontext,String.valueOf(level.getId()),Toast.LENGTH_SHORT).show();
-                    ClssConvertirTextoAVoz.getIntancia(ccontext).reproduce("Editar nivel");
+                    ClssConvertTextToSpeech.getIntancia(ccontext).reproduce("Editar nivel");
                     fragment = new FrgAddLevel();
                     bundle = new Bundle();
                     bundle.putSerializable("levelSelected", level);

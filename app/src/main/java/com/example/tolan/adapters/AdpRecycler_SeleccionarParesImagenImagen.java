@@ -4,15 +4,9 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Handler;
-import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.LayoutAnimationController;
-import android.view.animation.TranslateAnimation;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -32,19 +26,17 @@ import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.tolan.R;
 import com.example.tolan.clases.ClssAnimation;
-import com.example.tolan.clases.ClssConvertirTextoAVoz;
-import com.example.tolan.clases.ClssStaticGrupo;
+import com.example.tolan.clases.ClssConvertTextToSpeech;
+import com.example.tolan.clases.ClssStaticGroup;
 import com.example.tolan.clases.ClssVolleySingleton;
 import com.example.tolan.models.ModelUser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -59,7 +51,7 @@ public class AdpRecycler_SeleccionarParesImagenImagen extends RecyclerView.Adapt
     ScrollView mScrollView;
     int idActividad;
 
-    //private static ClssConvertirTextoAVoz clssConvertirTextoAVoz;
+    //private static ClssConvertTextToSpeech clssConvertirTextoAVoz;
 
 
     public AdpRecycler_SeleccionarParesImagenImagen(Context mContext, ArrayList<String> listElements, int[] numerosAleatorios, LinearLayout ry_state, ScrollView mScrollView, int idActividad) {
@@ -260,14 +252,14 @@ public class AdpRecycler_SeleccionarParesImagenImagen extends RecyclerView.Adapt
                     msg_true = mContext.getResources().getStringArray(R.array.msg_true);
                     String mensaje=generarAleatorio();
 
-                    //ClssConvertirTextoAVoz.getIntancia(mContext).reproduce(mensaje);
+                    //ClssConvertTextToSpeech.getIntancia(mContext).reproduce(mensaje);
                     final Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            //ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("La actividad no tiene contenido");
+                            //ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("La actividad no tiene contenido");
                             //tts.reproduce("La actividad no tiene contenido");
-                            ClssConvertirTextoAVoz.getIntancia(mContext).reproduce(mensaje);
+                            ClssConvertTextToSpeech.getIntancia(mContext).reproduce(mensaje);
                         }
                     }, 1000);
 
@@ -301,9 +293,9 @@ public class AdpRecycler_SeleccionarParesImagenImagen extends RecyclerView.Adapt
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        //ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("La actividad no tiene contenido");
+                        //ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("La actividad no tiene contenido");
                         //tts.reproduce("La actividad no tiene contenido");
-                        ClssConvertirTextoAVoz.getIntancia(mContext).reproduce("¡Ups! Vuelve a intentarlo");
+                        ClssConvertTextToSpeech.getIntancia(mContext).reproduce("¡Ups! Vuelve a intentarlo");
                     }
                 }, 1000);
 
@@ -356,7 +348,7 @@ public class AdpRecycler_SeleccionarParesImagenImagen extends RecyclerView.Adapt
             //RequestQueue requestQueue = Volley.newRequestQueue(mContext);
             //Parámetros a enviar a la API
             JSONObject param = new JSONObject();
-            param.put("idEstudiante", ClssStaticGrupo.idestudiante);
+            param.put("idEstudiante", ClssStaticGroup.idestudiante);
             param.put("idActividad", idActividad);
             param.put("statusRespuesta", true);
             param.put("idsContenido", new JSONObject());

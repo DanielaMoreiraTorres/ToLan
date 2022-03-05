@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.tolan.R;
-import com.example.tolan.clases.ClssConvertirTextoAVoz;
+import com.example.tolan.clases.ClssConvertTextToSpeech;
 
 import org.imaginativeworld.whynotimagecarousel.CarouselItem;
 import org.imaginativeworld.whynotimagecarousel.ImageCarousel;
@@ -28,7 +28,7 @@ public class FrgWelcome extends Fragment {
     private List list;
     private ImageCarousel carousel;
     static TextToSpeech textToSpeech;
-    //ClssConvertirTextoAVoz tts;
+    //ClssConvertTextToSpeech tts;
     private Button btnIniciar, btnRegistrarse;
     private Fragment fragment;
 
@@ -63,8 +63,8 @@ public class FrgWelcome extends Fragment {
         View view = inflater.inflate(R.layout.fragment_welcome, container, false);
         try {
             ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
-            ClssConvertirTextoAVoz.getIntancia(getContext());
-            ClssConvertirTextoAVoz.clssConvertirTextoAVoz.onInit(1);
+            ClssConvertTextToSpeech.getIntancia(getContext());
+            ClssConvertTextToSpeech.clssConvertirTextoAVoz.onInit(1);
             carousel = view.findViewById(R.id.carousel);
             btnRegistrarse = view.findViewById(R.id.register);
             btnRegistrarse.setOnClickListener(v -> Register());
@@ -79,7 +79,7 @@ public class FrgWelcome extends Fragment {
                 @Override
                 public void onClick(int i, @NonNull CarouselItem carouselItem) {
                     //tts.reproduce(carouselItem.getCaption());
-                    ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(carouselItem.getCaption());
+                    ClssConvertTextToSpeech.getIntancia(getContext()).reproduce(carouselItem.getCaption());
                 }
 
                 @Override
@@ -93,14 +93,14 @@ public class FrgWelcome extends Fragment {
 
     private void Register() {
         //tts.reproduce(getString(R.string.registrarse));
-        ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(getString(R.string.registrarse));
+        ClssConvertTextToSpeech.getIntancia(getContext()).reproduce(getString(R.string.registrarse));
         fragment = new FrgRegisterUser();
         getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
     }
 
     private void Iniciar() {
         //tts.reproduce(getString(R.string.iniciar_sesion));
-        ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(getString(R.string.iniciar_sesion));
+        ClssConvertTextToSpeech.getIntancia(getContext()).reproduce(getString(R.string.iniciar_sesion));
         fragment = new FrgLogin();
         getFragmentManager().popBackStack();
         getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();

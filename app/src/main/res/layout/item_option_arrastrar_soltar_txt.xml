@@ -18,7 +18,6 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:gravity="center"
-
             android:fontFamily="sans-serif-condensed"
             android:text="Opción"
             android:textColor="@color/secundario"

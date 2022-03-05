@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
 import android.provider.Browser;
-import android.text.Html;
 import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,13 +22,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.codesgood.views.JustifiedTextView;
 import com.example.tolan.R;
 import com.example.tolan.adapters.AdpContact;
-import com.example.tolan.clases.ClssConvertirTextoAVoz;
-import com.example.tolan.clases.ClssStaticGrupo;
+import com.example.tolan.clases.ClssConvertTextToSpeech;
+import com.example.tolan.clases.ClssStaticGroup;
 import com.example.tolan.models.ModelContact;
 
 import java.util.ArrayList;
@@ -70,17 +68,17 @@ public class FrgContact extends Fragment {
             ((AppCompatActivity) this.getActivity()).setSupportActionBar(toolbar);
             ((AppCompatActivity) this.getActivity()).getSupportActionBar().setTitle("");
             txtInf = view.findViewById(R.id.txtInf);
-            txtInf.setOnClickListener(v-> ClssConvertirTextoAVoz.clssConvertirTextoAVoz.reproduce(txtInf.getText().toString().trim()));
+            txtInf.setOnClickListener(v-> ClssConvertTextToSpeech.clssConvertirTextoAVoz.reproduce(txtInf.getText().toString().trim()));
             textviewDT = view.findViewById(R.id.textviewDT);
-            textviewDT.setOnClickListener(v-> ClssConvertirTextoAVoz.clssConvertirTextoAVoz.reproduce(textviewDT.getText().toString().trim()));
+            textviewDT.setOnClickListener(v-> ClssConvertTextToSpeech.clssConvertirTextoAVoz.reproduce(textviewDT.getText().toString().trim()));
             textviewD = view.findViewById(R.id.textviewD);
-            textviewD.setOnClickListener(v-> ClssConvertirTextoAVoz.clssConvertirTextoAVoz.reproduce(textviewD.getText().toString().trim()));
+            textviewD.setOnClickListener(v-> ClssConvertTextToSpeech.clssConvertirTextoAVoz.reproduce(textviewD.getText().toString().trim()));
             textviewA = view.findViewById(R.id.textviewA);
-            textviewA.setOnClickListener(v-> ClssConvertirTextoAVoz.clssConvertirTextoAVoz.reproduce(textviewA.getText().toString().trim()));
+            textviewA.setOnClickListener(v-> ClssConvertTextToSpeech.clssConvertirTextoAVoz.reproduce(textviewA.getText().toString().trim()));
             textviewC = view.findViewById(R.id.textviewC);
-            textviewC.setOnClickListener(v-> ClssConvertirTextoAVoz.clssConvertirTextoAVoz.reproduce(textviewC.getText().toString().trim()));
+            textviewC.setOnClickListener(v-> ClssConvertTextToSpeech.clssConvertirTextoAVoz.reproduce(textviewC.getText().toString().trim()));
             txtIn = view.findViewById(R.id.txtIn);
-            txtIn.setOnClickListener(v-> ClssConvertirTextoAVoz.clssConvertirTextoAVoz.reproduce(txtIn.getText().toString().trim()));
+            txtIn.setOnClickListener(v-> ClssConvertTextToSpeech.clssConvertirTextoAVoz.reproduce(txtIn.getText().toString().trim()));
             //Desarrollado por
             rcvContacts = view.findViewById(R.id.rcvContacts);
             LinearLayoutManager linear = new LinearLayoutManager(getContext());
@@ -118,7 +116,7 @@ public class FrgContact extends Fragment {
                         public void onClick(View view) {
                             int posicion = rcvContacts.getChildAdapterPosition(view);
                             ModelContact opSelected = finalList.get(posicion);
-                            ClssConvertirTextoAVoz.clssConvertirTextoAVoz.reproduce(opSelected.getName());
+                            ClssConvertTextToSpeech.clssConvertirTextoAVoz.reproduce(opSelected.getName());
                         }
                     });
                 }
@@ -157,7 +155,7 @@ public class FrgContact extends Fragment {
                         public void onClick(View view) {
                             int posicion = rcvD.getChildAdapterPosition(view);
                             ModelContact opSelected = finalListD.get(posicion);
-                            ClssConvertirTextoAVoz.clssConvertirTextoAVoz.reproduce(opSelected.getName());
+                            ClssConvertTextToSpeech.clssConvertirTextoAVoz.reproduce(opSelected.getName());
                         }
                     });
                 }
@@ -204,7 +202,7 @@ public class FrgContact extends Fragment {
                         public void onClick(View view) {
                             int posicion = rcvA.getChildAdapterPosition(view);
                             ModelContact opSelected = finalListA.get(posicion);
-                            ClssConvertirTextoAVoz.clssConvertirTextoAVoz.reproduce(opSelected.getName());
+                            ClssConvertTextToSpeech.clssConvertirTextoAVoz.reproduce(opSelected.getName());
                         }
                     });
                 }
@@ -241,7 +239,7 @@ public class FrgContact extends Fragment {
                         public void onClick(View view) {
                             int posicion = rcvC.getChildAdapterPosition(view);
                             ModelContact opSelected = finalListC.get(posicion);
-                            ClssConvertirTextoAVoz.clssConvertirTextoAVoz.reproduce(opSelected.getName());
+                            ClssConvertTextToSpeech.clssConvertirTextoAVoz.reproduce(opSelected.getName());
                         }
                     });
                 }
@@ -261,7 +259,7 @@ public class FrgContact extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.menu_toolbar, menu);
-        if(ClssStaticGrupo.idestudiante == 0)
+        if(ClssStaticGroup.idestudiante == 0)
         {
             MenuItem mc = menu.findItem(R.id.btnCaritas);
             mc.setVisible(false);

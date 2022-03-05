@@ -6,7 +6,6 @@ import android.widget.Toast;
 
 import androidx.navigation.NavController;
 import androidx.navigation.NavOptions;
-import androidx.navigation.Navigation;
 
 import com.example.tolan.R;
 
@@ -91,7 +90,7 @@ public class ClssNavegacionActividades {
                         break;
                 }
             } else {
-                ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce("Redirigiendo al menú principal");
+                ClssConvertTextToSpeech.getIntancia(v.getContext()).reproduce("Redirigiendo al menú principal");
                 Toast.makeText(v.getContext(), "Redirigiendo al menú principal..", Toast.LENGTH_SHORT).show();
                 //Volvemos al fragmento principal eliminando los recursos en pila
                 navController.navigate(R.id.inicioFragment, null, new NavOptions.Builder()

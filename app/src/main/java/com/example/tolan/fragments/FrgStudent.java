@@ -27,11 +27,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.tolan.R;
-import com.example.tolan.adapters.adpEstudent;
-import com.example.tolan.clases.ClssConvertirTextoAVoz;
-import com.example.tolan.clases.ClssStaticGrupo;
+import com.example.tolan.adapters.AdpStudent;
+import com.example.tolan.clases.ClssConvertTextToSpeech;
+import com.example.tolan.clases.ClssStaticGroup;
 import com.example.tolan.clases.ClssVolleySingleton;
-import com.example.tolan.models.ModelEstudent;
+import com.example.tolan.models.ModelStudent;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,7 +51,7 @@ public class FrgStudent extends Fragment {
     private Integer in;
     private JsonObjectRequest jsArrayRequest;
     private RecyclerView estudianteRcl;
-    private ArrayList<ModelEstudent> lstEstudents;
+    private ArrayList<ModelStudent> lstEstudents;
 
     public FrgStudent() {
         // Required empty public constructor
@@ -69,7 +69,7 @@ public class FrgStudent extends Fragment {
             in = (Integer) getArguments().getSerializable("GrupoIDDocent");
         }
         else
-            in = ClssStaticGrupo.iddocente;
+            in = ClssStaticGroup.iddocente;
     }
 
     @Override
@@ -85,14 +85,14 @@ public class FrgStudent extends Fragment {
             url = getString(R.string.urlBase) + "grupo/byDocente?idDocente=";
             progressBar = view.findViewById(R.id.progressBar);
             lblTiTleE = view.findViewById(R.id.lblTiTleE);
-            if(ClssStaticGrupo.iddocente != 0)
+            if(ClssStaticGroup.iddocente != 0)
                 lblTiTleE.setText("Mis estudiantes");
             else
                 lblTiTleE.setText("Estudiantes");
-            lblTiTleE.setOnClickListener(v -> ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce(lblTiTleE.getText().toString().trim()));
+            lblTiTleE.setOnClickListener(v -> ClssConvertTextToSpeech.getIntancia(v.getContext()).reproduce(lblTiTleE.getText().toString().trim()));
             estudianteRcl = (RecyclerView) view.findViewById(R.id.rcvEstudiantes);
             estudianteRcl.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-            lstEstudents = new ArrayList<ModelEstudent>();
+            lstEstudents = new ArrayList<ModelStudent>();
             getStudentByDocente();
         } catch (Exception e) {}
         return view;
@@ -122,13 +122,13 @@ public class FrgStudent extends Fragment {
                             lstEstudents = parseJson(response);
                             if(lstEstudents.size() > 0) {
                                 if (getContext() != null) {
-                                    adpEstudent adapter = new adpEstudent(lstEstudents);
+                                    AdpStudent adapter = new AdpStudent(lstEstudents);
                                     estudianteRcl.setAdapter(adapter);
                                     adapter.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View view) {
                                             int opcselec = estudianteRcl.getChildAdapterPosition(view);
-                                            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(lstEstudents.get(opcselec).getEstudiante());
+                                            ClssConvertTextToSpeech.getIntancia(getContext()).reproduce(lstEstudents.get(opcselec).getEstudiante());
                                         }
                                     });
                                 }
@@ -137,7 +137,7 @@ public class FrgStudent extends Fragment {
                             else {
                                 progressBar.setVisibility(View.GONE);
                                 Toast.makeText(getContext(),"No existen estudiantes asignados al docente",Toast.LENGTH_SHORT).show();
-                                ClssConvertirTextoAVoz.clssConvertirTextoAVoz.reproduce("No existen estudiantes asignados al docente");
+                                ClssConvertTextToSpeech.clssConvertirTextoAVoz.reproduce("No existen estudiantes asignados al docente");
                             }
                         }
                     },
@@ -146,7 +146,7 @@ public class FrgStudent extends Fragment {
                         public void onErrorResponse(VolleyError volleyError) {
                             VolleyLog.e("Error: ", volleyError.getMessage());
                             Toast.makeText(getContext(), "No se ha podido establecer conexión con el servidor\nIntente nuevamente",Toast.LENGTH_LONG).show();
-                            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("No se ha podido establecer conexión con el servidor\nIntente nuevamente");
+                            ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("No se ha podido establecer conexión con el servidor\nIntente nuevamente");
                             progressBar.setVisibility(View.GONE);
                         }
                     });
@@ -154,9 +154,9 @@ public class FrgStudent extends Fragment {
         } catch (Exception e) {}
     }
 
-    private ArrayList<ModelEstudent> parseJson(JSONObject jsonArray) {
+    private ArrayList<ModelStudent> parseJson(JSONObject jsonArray) {
         // Variables locales
-        ArrayList<ModelEstudent> Estudents = new ArrayList();
+        ArrayList<ModelStudent> Estudents = new ArrayList();
         try {
             // Obtener el array del objeto
             try {
@@ -165,7 +165,7 @@ public class FrgStudent extends Fragment {
                 {
                     if(estud.length() > 0) {
                         JSONObject estud_item = estud.getJSONObject(j);
-                        ModelEstudent tup = new ModelEstudent(
+                        ModelStudent tup = new ModelStudent(
                                 estud_item.getInt("id"),
                                 estud_item.getInt("idestudiante"),
                                 estud_item.getString("estudiante"),

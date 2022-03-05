@@ -1,23 +1,14 @@
 package com.example.tolan.fragments;
 
-import static android.app.Activity.RESULT_OK;
-
 import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -29,8 +20,6 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,18 +32,13 @@ import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.bumptech.glide.Glide;
 import com.example.tolan.R;
-import com.example.tolan.adapters.AdpSublevel;
-import com.example.tolan.clases.ClssConvertirTextoAVoz;
 import com.example.tolan.clases.ClssVolleySingleton;
 import com.example.tolan.models.ModelActivity;
-import com.example.tolan.models.ModelDocente;
+import com.example.tolan.models.ModelTeacher;
 import com.example.tolan.models.ModelSublevel;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONArray;
@@ -62,8 +46,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 
@@ -116,7 +98,7 @@ public class FrgAddActividad extends Fragment implements View.OnClickListener {
     TextView txt_TituloFrg;
 
     ModelSublevel modelSublevelSelected;
-    ModelDocente modelDocenteSelected;
+    ModelTeacher modelDocenteSelected;
     String dificultadSelected, tipoSelected, actividad_selected;
 
     @Override
@@ -377,7 +359,7 @@ public class FrgAddActividad extends Fragment implements View.OnClickListener {
     }
 
 
-    List<ModelDocente> docentes;
+    List<ModelTeacher> docentes;
 
     public void loadDocentes(String urlR) {
         docentes = new ArrayList<>();
@@ -385,13 +367,13 @@ public class FrgAddActividad extends Fragment implements View.OnClickListener {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        ModelDocente docente = null;
+                        ModelTeacher docente = null;
                         ArrayList subdocenteName = new ArrayList<>();
                         try {
                             for (int i = 0; i < response.length(); i++) {
 
                                 JSONObject objDocente = response.getJSONObject(i);
-                                docente = new ModelDocente(
+                                docente = new ModelTeacher(
                                         objDocente.getInt("id"),
                                         objDocente.getString("nombres"),
                                         objDocente.getString("apellidos"),
@@ -702,7 +684,7 @@ public class FrgAddActividad extends Fragment implements View.OnClickListener {
     Fragment fragment;
 
     public void redirectActividades() {
-        fragment = new Frg_Actividades();
+        fragment = new FrgActividad();
         getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
     }
 

@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.tolan.R;
-import com.example.tolan.clases.ClssConvertirTextoAVoz;
+import com.example.tolan.clases.ClssConvertTextToSpeech;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -22,7 +22,7 @@ public class VHoldRecyclerMain_SectionSubnivel extends RecyclerView.ViewHolder i
     RecyclerView childRecyclerView;
     LinearLayout ly_continueActivities;
     ImageView imgNivel;
-    //ClssConvertirTextoAVoz clssConvertirTextoAVoz;
+    //ClssConvertTextToSpeech clssConvertirTextoAVoz;
 
     public VHoldRecyclerMain_SectionSubnivel(@NonNull View itemView) {
         super(itemView);
@@ -34,7 +34,7 @@ public class VHoldRecyclerMain_SectionSubnivel extends RecyclerView.ViewHolder i
         txt_numeroNivel = itemView.findViewById(R.id.txt_numeroNivel);
         ly_continueActivities = itemView.findViewById(R.id.ly_continueActivities);
         imgNivel = itemView.findViewById(R.id.imgNivel);
-        //clssConvertirTextoAVoz = new ClssConvertirTextoAVoz();
+        //clssConvertirTextoAVoz = new ClssConvertTextToSpeech();
         //clssConvertirTextoAVoz.init(itemView.getContext());
 
     }
@@ -43,6 +43,6 @@ public class VHoldRecyclerMain_SectionSubnivel extends RecyclerView.ViewHolder i
     public void onClick(View v) {
         Toast.makeText(v.getContext(), "Sección " + sectionNameTextView.getText(), Toast.LENGTH_SHORT).show();
         //clssConvertirTextoAVoz.reproduce("Sección " + sectionNameTextView.getText());
-        ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce("Sección " + sectionNameTextView.getText());
+        ClssConvertTextToSpeech.getIntancia(v.getContext()).reproduce("Sección " + sectionNameTextView.getText());
     }
 }

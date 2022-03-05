@@ -56,16 +56,18 @@
         <RelativeLayout
             android:layout_width="130dp"
             android:layout_height="130dp"
+            android:layout_marginTop="10dp"
             android:layout_alignParentRight="true"
             android:background="@drawable/fondo_blanco"
             android:padding="10dp">
+
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imgNiv"
                 android:layout_width="130dp"
                 android:layout_height="130dp"
                 android:layout_alignParentRight="true"
-
                 android:background="@drawable/subnivel" />
+
         </RelativeLayout>
 
         </RelativeLayout>

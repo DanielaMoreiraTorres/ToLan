@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -16,7 +15,6 @@ import androidx.fragment.app.DialogFragment;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -38,12 +36,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.bumptech.glide.Glide;
 import com.example.tolan.R;
-import com.example.tolan.clases.ClssConvertirTextoAVoz;
+import com.example.tolan.clases.ClssConvertTextToSpeech;
 import com.example.tolan.clases.ClssGetRealPath;
-import com.example.tolan.clases.ClssGifImageView;
 import com.example.tolan.clases.ClssVolleySingleton;
 import com.example.tolan.interfaces.MultimediaApi;
-import com.example.tolan.models.ModelContenido;
 import com.example.tolan.models.ModelUploadImage;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -132,7 +128,7 @@ public class Diag_Frg_CargaMultimedia extends DialogFragment {
 
 
     private void openGallery(View view) {
-        ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Seleccionar imagen");
+        ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("Seleccionar imagen");
         Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         startActivityForResult(gallery, PICK_IMAGE);
     }

@@ -14,15 +14,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.tolan.R;
-import com.example.tolan.clases.ClssConvertirTextoAVoz;
-import com.example.tolan.models.ModelRecyclerItemActividad;
+import com.example.tolan.clases.ClssConvertTextToSpeech;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -35,7 +31,7 @@ public class VHoldRecyclerChild_ItemSubnivel extends RecyclerView.ViewHolder imp
     ImageView imgv_corona;
     CardView cardView;
     JSONArray lstitem_Activities;
-    //ClssConvertirTextoAVoz clssConvertirTextoAVoz;
+    //ClssConvertTextToSpeech clssConvertirTextoAVoz;
 
     public VHoldRecyclerChild_ItemSubnivel(@NonNull View itemView) {
         super(itemView);
@@ -44,7 +40,7 @@ public class VHoldRecyclerChild_ItemSubnivel extends RecyclerView.ViewHolder imp
         imgv_corona = (ImageView) itemView.findViewById(R.id.imgv_corona);
         cardView = (CardView) itemView.findViewById(R.id.cardview_actividad);
         //this.lstitem_Activities=lstitem_Activities;
-        //clssConvertirTextoAVoz = new ClssConvertirTextoAVoz();
+        //clssConvertirTextoAVoz = new ClssConvertTextToSpeech();
         //clssConvertirTextoAVoz.init(itemView.getContext());
         cardView.setOnClickListener(this);
 
@@ -143,7 +139,7 @@ public class VHoldRecyclerChild_ItemSubnivel extends RecyclerView.ViewHolder imp
             } else {
                 Toast.makeText(v.getContext(), "El subnivel [" + txt_actividad.getText() + "] no tiene actividades", Toast.LENGTH_SHORT).show();
                 //clssConvertirTextoAVoz.reproduce();
-                ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce("El subnivel [" + txt_actividad.getText() + "] no tiene actividades configuradas");
+                ClssConvertTextToSpeech.getIntancia(v.getContext()).reproduce("El subnivel [" + txt_actividad.getText() + "] no tiene actividades configuradas");
 
             }
         } catch (JSONException ex) {
@@ -151,7 +147,7 @@ public class VHoldRecyclerChild_ItemSubnivel extends RecyclerView.ViewHolder imp
             System.out.println("Error lógica JSON : " + ex.getMessage());
             //Toast.makeText(v.getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
             //clssConvertirTextoAVoz.reproduce("Error de lógica JSON");
-            //ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce("Error de lógica JSON");
+            //ClssConvertTextToSpeech.getIntancia(v.getContext()).reproduce("Error de lógica JSON");
         }
 
     }

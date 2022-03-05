@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".fragments.Frg_Actividades">
+    tools:context=".fragments.FrgActividad">
 
     <include
         android:id="@+id/toolbar"
@@ -101,6 +101,7 @@
             <RelativeLayout
                 android:layout_width="130dp"
                 android:layout_height="130dp"
+                android:layout_marginTop="10dp"
                 android:layout_alignParentRight="true"
                 android:background="@drawable/fondo_blanco"
                 android:padding="10dp">

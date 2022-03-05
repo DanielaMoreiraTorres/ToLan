@@ -36,9 +36,8 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.bumptech.glide.Glide;
 import com.example.tolan.R;
-import com.example.tolan.adapters.AdpAutocompleteDocente;
 import com.example.tolan.adapters.AdpAutocompleteLevel;
-import com.example.tolan.clases.ClssConvertirTextoAVoz;
+import com.example.tolan.clases.ClssConvertTextToSpeech;
 import com.example.tolan.clases.ClssGetRealPath;
 import com.example.tolan.clases.ClssValidations;
 import com.example.tolan.clases.ClssVolleySingleton;
@@ -46,7 +45,6 @@ import com.example.tolan.interfaces.MultimediaApi;
 import com.example.tolan.models.ModelLevel;
 import com.example.tolan.models.ModelSublevel;
 import com.example.tolan.models.ModelUploadImage;
-import com.example.tolan.models.ModelUser;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -134,7 +132,7 @@ public class FrgAddSublevel extends Fragment {
             validate = new ClssValidations();
             progressBar = view.findViewById(R.id.progressBar);
             txttxtTitleS = view.findViewById(R.id.txtTitleS);
-            txttxtTitleS.setOnClickListener(v -> ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce(txttxtTitleS.getText().toString()));
+            txttxtTitleS.setOnClickListener(v -> ClssConvertTextToSpeech.getIntancia(v.getContext()).reproduce(txttxtTitleS.getText().toString()));
             nivel.setThreshold(1);
             autocomplete();
             Lnivel = view.findViewById(R.id.Lnivel);
@@ -169,7 +167,7 @@ public class FrgAddSublevel extends Fragment {
     }
 
     private void openGallery() {
-        ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Seleccionar imagen");
+        ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("Seleccionar imagen");
         Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         startActivityForResult(gallery, PICK_IMAGE);
     }
@@ -275,7 +273,7 @@ public class FrgAddSublevel extends Fragment {
 
     private void AddOrRegister(){
         try{
-            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(acceptS.getText().toString());
+            ClssConvertTextToSpeech.getIntancia(getContext()).reproduce(acceptS.getText().toString());
             if(validate.Validar(null,nivel,Lnivel,Merror) & validate.Validar(txtnameS,null,Lnombre,Merror)) {
                 //Ocultar teclado
                 InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(getContext().INPUT_METHOD_SERVICE);
@@ -294,14 +292,14 @@ public class FrgAddSublevel extends Fragment {
                         registerMultimedia();
                     }
                     else{
-                        ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Nivel no válido");
+                        ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("Nivel no válido");
                         Lnivel.setError("Nivel no válido");
                         return;
                     }
                 }
             }
             else {
-                ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Datos no válidos");
+                ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("Datos no válidos");
                 Toast.makeText(getContext(),"Datos no válidos",Toast.LENGTH_SHORT).show();
             }
         } catch (AuthFailureError | JSONException authFailureError) {
@@ -357,7 +355,7 @@ public class FrgAddSublevel extends Fragment {
             }
             else{
                 Toast.makeText(getContext(), "Seleccione una imagen", Toast.LENGTH_SHORT).show();
-                ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Seleccione una imagen");
+                ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("Seleccione una imagen");
                 progressBar.setVisibility(View.GONE);
             }
         } catch (Exception e) {
@@ -381,12 +379,12 @@ public class FrgAddSublevel extends Fragment {
                             try {
                                 if (response.length() > 1) {
                                     Toast.makeText(getContext(), "Subnivel registrado exitosamente", Toast.LENGTH_SHORT).show();
-                                    ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Subnivel registrado exitosamente");
+                                    ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("Subnivel registrado exitosamente");
                                     progressBar.setVisibility(View.GONE);
                                     redirectSublevels();
                                 } else{
                                     Toast.makeText(getContext(), response.get("message").toString(), Toast.LENGTH_SHORT).show();
-                                    ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(response.get("message").toString());
+                                    ClssConvertTextToSpeech.getIntancia(getContext()).reproduce(response.get("message").toString());
                                     progressBar.setVisibility(View.GONE);
                                 }
                             } catch (Exception e) {
@@ -399,7 +397,7 @@ public class FrgAddSublevel extends Fragment {
                     VolleyLog.e("Error: ", error.getMessage());
                     //Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
                     Toast.makeText(getContext(), "Error de conexión con el servidor\nIntente nuevamente", Toast.LENGTH_SHORT).show();
-                    ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Error de conexión con el servidor. Intente nuevamente");
+                    ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("Error de conexión con el servidor. Intente nuevamente");
                     progressBar.setVisibility(View.GONE);
                 }
             });

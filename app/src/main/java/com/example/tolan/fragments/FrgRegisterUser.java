@@ -30,11 +30,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.example.tolan.MainActivity;
 import com.example.tolan.R;
-import com.example.tolan.adapters.AdpAutocompleteDocente;
-import com.example.tolan.clases.ClssConvertirTextoAVoz;
-import com.example.tolan.clases.ClssStaticGrupo;
+import com.example.tolan.adapters.AdpAutocompleteTeacher;
+import com.example.tolan.clases.ClssConvertTextToSpeech;
+import com.example.tolan.clases.ClssStaticGroup;
 import com.example.tolan.clases.ClssStaticUser;
 import com.example.tolan.clases.ClssValidations;
 import com.example.tolan.clases.ClssVolleySingleton;
@@ -53,7 +52,7 @@ import java.util.List;
 
 public class FrgRegisterUser extends Fragment {
 
-    //static ClssConvertirTextoAVoz tts;
+    //static ClssConvertTextToSpeech tts;
     //private RequestQueue requestQueue;
     private JsonArrayRequest jsonArrayRequest;
     private Toolbar toolbar;
@@ -73,7 +72,7 @@ public class FrgRegisterUser extends Fragment {
     private String Merror= "Campo obligatorio";
     private int anio, mes, dia;
     private List<ModelUser> docentes;
-    private AdpAutocompleteDocente adp;
+    private AdpAutocompleteTeacher adp;
     private JSONObject selectedDocente;
     private ModelUser selectedDoc;
 
@@ -89,7 +88,7 @@ public class FrgRegisterUser extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //tts = new ClssConvertirTextoAVoz();
+        //tts = new ClssConvertTextToSpeech();
         //tts.init(getContext());
         if (getArguments() != null) {
         }
@@ -113,13 +112,13 @@ public class FrgRegisterUser extends Fragment {
             validate = new ClssValidations();
             docentes = new ArrayList<>();
             txtReg = view.findViewById(R.id.txtReg);
-            txtReg.setOnClickListener(v ->  ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce(txtReg.getText().toString()));
+            txtReg.setOnClickListener(v ->  ClssConvertTextToSpeech.getIntancia(v.getContext()).reproduce(txtReg.getText().toString()));
             //tts.reproduce(txtReg.getText().toString()));
             txtDatPer = view.findViewById(R.id.txtDatPer);
-            txtDatPer.setOnClickListener(v ->  ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce(txtDatPer.getText().toString()));
+            txtDatPer.setOnClickListener(v ->  ClssConvertTextToSpeech.getIntancia(v.getContext()).reproduce(txtDatPer.getText().toString()));
             //tts.reproduce(txtDatPer.getText().toString()));
             txtDatUser = view.findViewById(R.id.txtDatUser);
-            txtDatUser.setOnClickListener(v ->  ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce(txtDatUser.getText().toString()));
+            txtDatUser.setOnClickListener(v ->  ClssConvertTextToSpeech.getIntancia(v.getContext()).reproduce(txtDatUser.getText().toString()));
             //tts.reproduce(txtDatUser.getText().toString()));
             Lnombres = view.findViewById(R.id.Lnombres);
             nombre = view.findViewById(R.id.nombres);
@@ -152,15 +151,15 @@ public class FrgRegisterUser extends Fragment {
             datosDocente = view.findViewById(R.id.datosDocente);
             Ldocente = view.findViewById(R.id.Ldocente);
             docente = view.findViewById(R.id.docente);
-            if(ClssStaticGrupo.docente != null) {
+            if(ClssStaticGroup.docente != null) {
                 toolbar.setVisibility(View.VISIBLE);
                 linea.setVisibility(View.VISIBLE);
                 txtReg.setText("Registro de estudiante");
                 rbDocente.setEnabled(false);
-                docente.setText(ClssStaticGrupo.docente);
+                docente.setText(ClssStaticGroup.docente);
                 docente.setEnabled(false);
                 selectedDocente = new JSONObject();
-                selectedDocente.put("id", ClssStaticGrupo.iddocente);
+                selectedDocente.put("id", ClssStaticGroup.iddocente);
                 selectedDocente.put("nombres", ClssStaticUser.nombres);
                 selectedDocente.put("apellidos", ClssStaticUser.apellidos);
             } else {
@@ -241,7 +240,7 @@ public class FrgRegisterUser extends Fragment {
                                     }
                                 }
                                 if(getContext() != null) {
-                                    adp = new AdpAutocompleteDocente(getContext(), docentes);
+                                    adp = new AdpAutocompleteTeacher(getContext(), docentes);
                                     docente.setAdapter(adp);
                                     docente.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                         @Override
@@ -278,12 +277,12 @@ public class FrgRegisterUser extends Fragment {
     }
 
     private void RegisterUser(){
-        ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(btnRegistrarse.getText().toString().trim());
+        ClssConvertTextToSpeech.getIntancia(getContext()).reproduce(btnRegistrarse.getText().toString().trim());
         if(!rbDocente.isChecked()){
             if(!validate.Validar(null,docente,Ldocente,Merror)){
                 Ldocente.setError("Docente no válido");
                 //tts.reproduce("Docente no válido");
-                ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Docente no válido");
+                ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("Docente no válido");
                 return;
             }
         }
@@ -301,13 +300,13 @@ public class FrgRegisterUser extends Fragment {
             }
             else{
                 //tts.reproduce("Las contraseñas no coinciden");
-                ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Las contraseñas no coinciden");
+                ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("Las contraseñas no coinciden");
                 Lconfclave.setError("Las contraseñas no coinciden");
             }
         }
         else{
             //tts.reproduce("Datos no válidos");
-            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Datos no válidos");
+            ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("Datos no válidos");
             Toast.makeText(getContext(),"Datos no válidos",Toast.LENGTH_SHORT).show();
         }
     }
@@ -324,7 +323,7 @@ public class FrgRegisterUser extends Fragment {
         if(!rbDocente.isChecked()){
             if(selectedDocente.equals(null)){
                 //tts.reproduce("Docente no válido");
-                ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Docente no válido");
+                ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("Docente no válido");
                 Ldocente.setError("Docente no válido");
                 progressBar.setVisibility(View.GONE);
                 return;
@@ -336,7 +335,7 @@ public class FrgRegisterUser extends Fragment {
                 }
                 else{
                     //tts.reproduce("Docente no válido");
-                    ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Docente no válido");
+                    ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("Docente no válido");
                     Ldocente.setError("Docente no válido");
                     progressBar.setVisibility(View.GONE);
                     return;
@@ -357,14 +356,14 @@ public class FrgRegisterUser extends Fragment {
                             {
                                 //tts.reproduce("Usuario Registrado");
                                 progressBar.setVisibility(View.GONE);
-                                ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Usuario Registrado");
+                                ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("Usuario Registrado");
                                 Toast.makeText(getContext(),"Usuario Registrado",Toast.LENGTH_SHORT).show();
                                 redirectLogin();
                             }
                             else{
                                 //tts.reproduce(response.get("message").toString());
                                 progressBar.setVisibility(View.GONE);
-                                ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(response.get("message").toString());
+                                ClssConvertTextToSpeech.getIntancia(getContext()).reproduce(response.get("message").toString());
                                 Toast.makeText(getContext(),response.get("message").toString(),Toast.LENGTH_SHORT).show();
                             }
                         } catch (Exception e) {
@@ -379,7 +378,7 @@ public class FrgRegisterUser extends Fragment {
                 progressBar.setVisibility(View.GONE);
                 Toast.makeText(getContext(),"Error de conexión con el servidor. Intente nuevamente",Toast.LENGTH_SHORT).show();
                 //tts.reproduce("Error de conexión con el servidor. Intente nuevamente");
-                ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Error de conexión con el servidor. Intente nuevamente");
+                ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("Error de conexión con el servidor. Intente nuevamente");
             }
         });
         // Añadir petición a la cola

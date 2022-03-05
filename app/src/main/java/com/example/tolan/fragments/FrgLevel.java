@@ -32,7 +32,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.tolan.R;
 import com.example.tolan.adapters.AdpLevel;
-import com.example.tolan.clases.ClssConvertirTextoAVoz;
+import com.example.tolan.clases.ClssConvertTextToSpeech;
 import com.example.tolan.clases.ClssVolleySingleton;
 import com.example.tolan.models.ModelLevel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -93,7 +93,7 @@ public class FrgLevel extends Fragment implements SearchView.OnQueryTextListener
             progressBar = view.findViewById(R.id.progressBar);
             levels = new ArrayList<>();
             lblTiTleNiv = view.findViewById(R.id.lblTiTleNiv);
-            lblTiTleNiv.setOnClickListener(v -> ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce(lblTiTleNiv.getText().toString()));
+            lblTiTleNiv.setOnClickListener(v -> ClssConvertTextToSpeech.getIntancia(v.getContext()).reproduce(lblTiTleNiv.getText().toString()));
             searchView = view.findViewById(R.id.busquedaNiv);
             searchView.setOnQueryTextListener(this);
             rcvLevels = (RecyclerView) view.findViewById(R.id.rcvNiveles);
@@ -159,7 +159,7 @@ public class FrgLevel extends Fragment implements SearchView.OnQueryTextListener
                                                 lySel.setBackgroundResource(R.drawable.borde);
                                                 lySel.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#44CCCC")));
                                                 Toast.makeText(getContext(), levelSelected.getNombre().trim(), Toast.LENGTH_SHORT);
-                                                ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(levelSelected.getNombre());
+                                                ClssConvertTextToSpeech.getIntancia(getContext()).reproduce(levelSelected.getNombre());
                                                 bundle = new Bundle();
                                                 //bundle.putString("levelSelected", new Gson().toJson(levelSelected));
                                                 bundle.putSerializable("levelSelected", levelSelected);
@@ -180,7 +180,7 @@ public class FrgLevel extends Fragment implements SearchView.OnQueryTextListener
                                 else {
                                     progressBar.setVisibility(View.GONE);
                                     Toast.makeText(getContext(),"No existen niveles registrados",Toast.LENGTH_SHORT).show();
-                                    ClssConvertirTextoAVoz.clssConvertirTextoAVoz.reproduce("No existen niveles registrados");
+                                    ClssConvertTextToSpeech.clssConvertirTextoAVoz.reproduce("No existen niveles registrados");
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -194,7 +194,7 @@ public class FrgLevel extends Fragment implements SearchView.OnQueryTextListener
                         public void onErrorResponse(VolleyError error) {
                             VolleyLog.e("Error: ", error.getMessage());
                             /*Toast.makeText(getContext(), "Error de conexión con el servidor\n Intente nuevamente", Toast.LENGTH_SHORT);
-                            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Error de conexión con el servidor\nIntente nuevamente");*/
+                            ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("Error de conexión con el servidor\nIntente nuevamente");*/
                             progressBar.setVisibility(View.GONE);
                         }
                     });
@@ -205,7 +205,7 @@ public class FrgLevel extends Fragment implements SearchView.OnQueryTextListener
 
     private void addLevel(){
         fragment = new FrgAddLevel();
-        ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Agregar nivel");
+        ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("Agregar nivel");
         getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
     }
 

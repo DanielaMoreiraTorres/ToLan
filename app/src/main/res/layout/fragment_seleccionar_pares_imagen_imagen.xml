@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.Frg_SeleccionarParesImagenImagen">
+    tools:context=".fragments.FrgSeleccionarParesImagenImagen">
 
     <ScrollView
         android:id="@+id/mScrollView"
@@ -23,12 +23,6 @@
             <include
                 android:id="@+id/toolbar"
                 layout="@layout/toolbar"></include>
-
-            <View
-                android:id="@+id/lineactmenuadmin"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@color/plomo" />
 
             <RelativeLayout
                 android:layout_width="match_parent"

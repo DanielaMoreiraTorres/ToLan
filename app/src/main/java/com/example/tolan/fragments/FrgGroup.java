@@ -28,10 +28,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.tolan.R;
-import com.example.tolan.adapters.adpGrupo_Admin;
-import com.example.tolan.clases.ClssConvertirTextoAVoz;
+import com.example.tolan.adapters.AdpGroup;
+import com.example.tolan.clases.ClssConvertTextToSpeech;
 import com.example.tolan.clases.ClssVolleySingleton;
-import com.example.tolan.models.ModelEstudent;
+import com.example.tolan.models.ModelStudent;
 import com.example.tolan.models.ModelGroup;
 
 import org.json.JSONArray;
@@ -84,7 +84,7 @@ public class FrgGroup extends Fragment {
             url = getString(R.string.urlBase) + "grupo";
             progressBar = view.findViewById(R.id.progressBar);
             lblTiTleG = view.findViewById(R.id.lblTiTleG);
-            lblTiTleG.setOnClickListener(v -> ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce(lblTiTleG.getText().toString().trim()));
+            lblTiTleG.setOnClickListener(v -> ClssConvertTextToSpeech.getIntancia(v.getContext()).reproduce(lblTiTleG.getText().toString().trim()));
             grupoRcl = (RecyclerView) view.findViewById(R.id.rcvGrupos);
             grupoRcl.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
             lstGrupos = new ArrayList<ModelGroup>();
@@ -113,12 +113,12 @@ public class FrgGroup extends Fragment {
                         public void onResponse(JSONArray response) {
                             if(response.length() > 0) {
                                 lstGrupos = parseJson(response);
-                                adpGrupo_Admin adapter = new adpGrupo_Admin(lstGrupos);
+                                AdpGroup adapter = new AdpGroup(lstGrupos);
                                 adapter.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
                                         int opcselec = grupoRcl.getChildAdapterPosition(view);
-                                        ClssConvertirTextoAVoz.getIntancia(getContext()).
+                                        ClssConvertTextToSpeech.getIntancia(getContext()).
                                                 reproduce("Grupo de docente: " + lstGrupos.get(opcselec).getDocente());
                                         fragment = new FrgStudent();
                                         bundle = new Bundle();
@@ -144,7 +144,7 @@ public class FrgGroup extends Fragment {
                             else {
                                 progressBar.setVisibility(View.GONE);
                                 Toast.makeText(getContext(),"No existen grupos registrados",Toast.LENGTH_SHORT).show();
-                                ClssConvertirTextoAVoz.clssConvertirTextoAVoz.reproduce("No existen grupos registrados");
+                                ClssConvertTextToSpeech.clssConvertirTextoAVoz.reproduce("No existen grupos registrados");
                             }
                         }
                     },
@@ -153,7 +153,7 @@ public class FrgGroup extends Fragment {
                         public void onErrorResponse(VolleyError volleyError) {
                             VolleyLog.e("Error: ", volleyError.getMessage());
                             Toast.makeText(getContext(), "No se ha podido establecer conexión con el servidor\n Intente nuevamente", Toast.LENGTH_SHORT);
-                            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("No se ha podido establecer conexión con el servidor\nIntente nuevamente");
+                            ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("No se ha podido establecer conexión con el servidor\nIntente nuevamente");
                             progressBar.setVisibility(View.GONE);
                         /*Toast.makeText(getContext(), "No se ha podido establecer conexión con el servidor" +
                                 " " + volleyError.toString(), Toast.LENGTH_LONG).show();*/
@@ -170,7 +170,7 @@ public class FrgGroup extends Fragment {
         try {
             // Obtener el array del objeto
             for (int i = 0; i < jsonArray.length(); i++) {
-                List<ModelEstudent> estudentList = new ArrayList<>();
+                List<ModelStudent> estudentList = new ArrayList<>();
                 try {
                     JSONObject objeto = jsonArray.getJSONObject(i);
                     JSONArray estud = objeto.getJSONArray("estudiantes");
@@ -178,7 +178,7 @@ public class FrgGroup extends Fragment {
                     {
                         if(estud.length()>0) {
                             JSONObject estud_item = estud.getJSONObject(j);
-                            ModelEstudent tup = new ModelEstudent(
+                            ModelStudent tup = new ModelStudent(
                                     estud_item.getInt("id"),
                                     estud_item.getInt("idestudiante"),
                                     estud_item.getString("estudiante"),

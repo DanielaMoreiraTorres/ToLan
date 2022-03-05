@@ -23,16 +23,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.tolan.R;
-import com.example.tolan.clases.ClssStaticGrupo;
+import com.example.tolan.clases.ClssStaticGroup;
 import com.example.tolan.clases.ClssVolleySingleton;
-import com.example.tolan.models.ModelRecyclerItemActividad;
 import com.example.tolan.models.ModelRecyclerItemSubnivel;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AdpRecycler_Child extends RecyclerView.Adapter<VHoldRecyclerChild_ItemSubnivel> {
@@ -70,7 +66,7 @@ public class AdpRecycler_Child extends RecyclerView.Adapter<VHoldRecyclerChild_I
         cargarWebService("https://db-bartolucci.herokuapp.com/actividad/bySubnivelAndDocente?idSubnivel="
                 + mData.get(position).getId()
                 + "&idDocente="
-                + String.valueOf(ClssStaticGrupo.iddocente), holder);
+                + String.valueOf(ClssStaticGroup.iddocente), holder);
 
         //forma antigua de pasar las actividades
         //holder.lstitem_Activities = mData.get(position).getRecyclerItemActividades();

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.FrgContent"
+    tools:ignore="SpeakableTextPresentCheck">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar"></include>
+
+        <View
+            android:id="@+id/lineactmenuadmin"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/plomo" />
+
+        <RelativeLayout
+            android:id="@+id/rl_superior"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="MissingConstraints">
+
+            <View
+                android:id="@+id/topView"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="#44cccc" />
+
+            <View
+                android:id="@+id/downView"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@id/topView"
+                android:background="@drawable/ic_down" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rl_superior"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="30dp"
+                android:fontFamily="sans-serif-black"
+                android:padding="10dp"
+                android:shadowColor="@color/secundario"
+                android:shadowRadius="4"
+                android:text="Contenido"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                tools:ignore="NotSibling" />
+
+            <RelativeLayout
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/fondo_blanco"
+                android:padding="10dp">
+
+                <ImageView
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/contenido"></ImageView>
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical"
+            android:padding="20dp"
+            tools:ignore="MissingConstraints">
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_lstActividades"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp">
+
+                <AutoCompleteTextView
+                    android:id="@+id/act_lstactividades"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/icon_widgets"
+                    android:drawableLeft="@drawable/icon_widgets"
+                    android:drawablePadding="10dp"
+                    android:enabled="false"
+                    android:hint="Actividades"
+                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_descripcion_contenido"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:hint="Descripción del contenido">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/descripcion_contenido"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/icon_edit"
+                        android:drawableLeft="@drawable/icon_edit"
+                        android:drawablePadding="10dp"
+                        android:inputType="text"
+                        android:maxLength="255"
+                        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <CheckBox
+                    android:id="@+id/chkIsEnunciado"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/til_descripcion_contenido"
+                    android:layout_marginBottom="10dp"
+                    android:text="¿Es enunciado?" />
+
+                <CheckBox
+                    android:id="@+id/chkIsRespuesta"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/til_descripcion_contenido"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginBottom="10dp"
+                    android:text="¿Es respuesta?" />
+
+
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/btn_añadir"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="@color/verde"
+                android:fontFamily="@font/baloo"
+                android:minHeight="48dp"
+                android:text="Registrar"
+                android:textColor="@color/white"
+                app:icon="@drawable/icon_save"
+                app:iconGravity="textStart"
+                tools:ignore="TouchTargetSizeCheck |ButtonStyle"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_ContenidosRegistrados"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</ScrollView>

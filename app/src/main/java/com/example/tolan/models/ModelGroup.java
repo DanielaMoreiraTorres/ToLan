@@ -6,19 +6,19 @@ public class ModelGroup {
     private Integer id;
     private Integer iddocente;
     private String docente;
-    private List<ModelEstudent> estudiantes= null;
+    private List<ModelStudent> estudiantes= null;
 
     public ModelGroup() {
     }
 
-    public ModelGroup(Integer id, Integer iddocente, String docente, List<ModelEstudent> estudiantes) {
+    public ModelGroup(Integer id, Integer iddocente, String docente, List<ModelStudent> estudiantes) {
         this.id = id;
         this.iddocente = iddocente;
         this.docente = docente;
         this.estudiantes = estudiantes;
     }
 
-    public List<ModelEstudent> getEstudiantes() {
+    public List<ModelStudent> getEstudiantes() {
         return estudiantes;
     }
 
@@ -37,7 +37,7 @@ public class ModelGroup {
         return estudiantes.get(pos).getActivo();
     }
 
-    public void setEstudiantes(List<ModelEstudent> estudiantes) {
+    public void setEstudiantes(List<ModelStudent> estudiantes) {
         this.estudiantes = estudiantes;
     }
 

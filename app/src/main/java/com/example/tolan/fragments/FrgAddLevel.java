@@ -26,21 +26,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.Cache;
-import com.android.volley.Network;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.BasicNetwork;
-import com.android.volley.toolbox.DiskBasedCache;
-import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.tolan.R;
-import com.example.tolan.clases.ClssConvertirTextoAVoz;
+import com.example.tolan.clases.ClssConvertTextToSpeech;
 import com.example.tolan.clases.ClssGetRealPath;
 import com.example.tolan.clases.ClssValidations;
 import com.example.tolan.clases.ClssVolleySingleton;
@@ -55,10 +47,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.net.URISyntaxException;
 import java.net.URLEncoder;
-import java.util.HashMap;
-import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -128,7 +117,7 @@ public class FrgAddLevel extends Fragment {
             validate = new ClssValidations();
             progressBar = view.findViewById(R.id.progressBar);
             txttxtTitleN = view.findViewById(R.id.txtTitleN);
-            txttxtTitleN.setOnClickListener(v -> ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce(txttxtTitleN.getText().toString()));
+            txttxtTitleN.setOnClickListener(v -> ClssConvertTextToSpeech.getIntancia(v.getContext()).reproduce(txttxtTitleN.getText().toString()));
             Lnombre = view.findViewById(R.id.nameNivel);
             Ldescripcion = view.findViewById(R.id.descripcionNivel);
             txtnameNi = view.findViewById(R.id.nameNi);
@@ -149,7 +138,7 @@ public class FrgAddLevel extends Fragment {
 
     private void AddOrRegister(){
         try{
-            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(acceptN.getText().toString());
+            ClssConvertTextToSpeech.getIntancia(getContext()).reproduce(acceptN.getText().toString());
             if(validate.Validar(txtnameNi,null,Lnombre,Merror)){
                 //Ocultar teclado
                 InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(getContext().INPUT_METHOD_SERVICE);
@@ -168,7 +157,7 @@ public class FrgAddLevel extends Fragment {
                 }
             }
             else {
-                ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Nombre de nivel no válido");
+                ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("Nombre de nivel no válido");
                 Toast.makeText(getContext(),"Nombre de nivel no válido",Toast.LENGTH_SHORT).show();
             }
         } catch (AuthFailureError authFailureError) {
@@ -188,7 +177,7 @@ public class FrgAddLevel extends Fragment {
     }
 
     private void openGallery() {
-        ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Seleccionar imagen");
+        ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("Seleccionar imagen");
         Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         startActivityForResult(gallery, PICK_IMAGE);
     }
@@ -286,7 +275,7 @@ public class FrgAddLevel extends Fragment {
             }
             else{
                 Toast.makeText(getContext(), "Seleccione una imagen", Toast.LENGTH_SHORT).show();
-                ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Seleccione una imagen");
+                ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("Seleccione una imagen");
                 progressBar.setVisibility(View.GONE);
             }
         } catch (Exception e) {
@@ -309,12 +298,12 @@ public class FrgAddLevel extends Fragment {
                             try {
                                 if (response.length() > 1) {
                                     Toast.makeText(getContext(), "Nivel registrado exitosamente", Toast.LENGTH_SHORT).show();
-                                    ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Nivel registrado exitosamente");
+                                    ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("Nivel registrado exitosamente");
                                     progressBar.setVisibility(View.GONE);
                                     redirectLevels();
                                 } else{
                                     Toast.makeText(getContext(), response.get("message").toString(), Toast.LENGTH_SHORT).show();
-                                    ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(response.get("message").toString());
+                                    ClssConvertTextToSpeech.getIntancia(getContext()).reproduce(response.get("message").toString());
                                     progressBar.setVisibility(View.GONE);
                                 }
                             } catch (Exception e) {
@@ -327,7 +316,7 @@ public class FrgAddLevel extends Fragment {
                     VolleyLog.e("Error: ", error.getMessage());
                     //Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
                     Toast.makeText(getContext(), "Error de conexión con el servidor\nIntente nuevamente", Toast.LENGTH_SHORT).show();
-                    ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Error de conexión con el servidor. Intente nuevamente");
+                    ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("Error de conexión con el servidor. Intente nuevamente");
                     progressBar.setVisibility(View.GONE);
                 }
             });

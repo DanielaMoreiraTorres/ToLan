@@ -35,7 +35,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.tolan.R;
 import com.example.tolan.adapters.AdpSublevel;
-import com.example.tolan.clases.ClssConvertirTextoAVoz;
+import com.example.tolan.clases.ClssConvertTextToSpeech;
 import com.example.tolan.clases.ClssVolleySingleton;
 import com.example.tolan.models.ModelLevel;
 import com.example.tolan.models.ModelSublevel;
@@ -108,7 +108,7 @@ SearchView.OnQueryTextListener {
             levels = new ArrayList<>();
             nivelesList = new ArrayList();
             lblTiTleSubNiv = view.findViewById(R.id.lblTiTleSubNiv);
-            lblTiTleSubNiv.setOnClickListener(v -> ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce(lblTiTleSubNiv.getText().toString()));
+            lblTiTleSubNiv.setOnClickListener(v -> ClssConvertTextToSpeech.getIntancia(v.getContext()).reproduce(lblTiTleSubNiv.getText().toString()));
             searchView = view.findViewById(R.id.busquedaSubniv);
             searchView.setOnQueryTextListener(this);
             cbbNiveles = (Spinner) view.findViewById(R.id.cbbNivel);
@@ -229,7 +229,7 @@ SearchView.OnQueryTextListener {
                                             lySel.setBackgroundResource(R.drawable.borde);
                                             lySel.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#44CCCC")));
                                             Toast.makeText(getContext(), sublevelSelected.getNombre().trim(), Toast.LENGTH_SHORT);
-                                            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(sublevelSelected.getNombre());
+                                            ClssConvertTextToSpeech.getIntancia(getContext()).reproduce(sublevelSelected.getNombre());
                                             bundle = new Bundle();
                                             //bundle.putString("sublevelSelected", new Gson().toJson(sublevelSelected));
                                             bundle.putSerializable("sublevelSelected", sublevelSelected);
@@ -250,7 +250,7 @@ SearchView.OnQueryTextListener {
                             else {
                                 progressBar.setVisibility(View.GONE);
                                 Toast.makeText(getContext(),"No existen subniveles registrados",Toast.LENGTH_SHORT).show();
-                                ClssConvertirTextoAVoz.clssConvertirTextoAVoz.reproduce("No existen subniveles registrados");
+                                ClssConvertTextToSpeech.clssConvertirTextoAVoz.reproduce("No existen subniveles registrados");
                             }
                         }catch (JSONException e){
                             e.printStackTrace();
@@ -300,7 +300,7 @@ SearchView.OnQueryTextListener {
             }
         }
         else {
-            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(cbbNiveles.getItemAtPosition(i).toString().trim());
+            ClssConvertTextToSpeech.getIntancia(getContext()).reproduce(cbbNiveles.getItemAtPosition(i).toString().trim());
             if(i != 0)
                 niv = levels.get(i-1).getId();
             else
@@ -314,7 +314,7 @@ SearchView.OnQueryTextListener {
 
     private void addSublevel(){
         fragment = new FrgAddSublevel();
-        ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Agregar subnivel");
+        ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("Agregar subnivel");
         getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
     }
 
