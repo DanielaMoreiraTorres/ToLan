@@ -353,7 +353,7 @@ public class FrgContent extends Fragment {
     }
 
     public void limpiar() {
-        modelActivitySelected = null;
+        //modelActivitySelected = null;
         descripcion_contenido.setText("");
         chkIsEnunciado.setChecked(false);
         chkIsRespuesta.setChecked(false);

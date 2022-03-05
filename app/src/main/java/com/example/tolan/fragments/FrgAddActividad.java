@@ -166,6 +166,13 @@ public class FrgAddActividad extends Fragment implements View.OnClickListener {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 modelDocenteSelected = docentes.get(position);
                 //Toast.makeText(getContext(), modelDocenteSelected.getId() + modelDocenteSelected.getNombres() + modelDocenteSelected.getApellidos(), Toast.LENGTH_LONG).show();
+
+
+                ////////Borrar
+
+                getIdDocente("https://db-bartolucci.herokuapp.com/usuario/" + modelDocenteSelected.getId());
+
+                /////Borrar
             }
         });
 
@@ -522,7 +529,17 @@ public class FrgAddActividad extends Fragment implements View.OnClickListener {
                 try {
                     //Parámetros a enviar a la API
                     param.put("idSubnivel", modelSublevelSelected.getId());
-                    param.put("idDocente", modelDocenteSelected.getId());
+
+
+                    //Original
+                    //param.put("idDocente", modelDocenteSelected.getId());
+
+
+                    ////Quitar
+                    param.put("idDocente", idDocente);
+                    ///Quitar
+
+
                     param.put("nombre", actividad_selected);
                     param.put("descripcion", descripcion_actividad.getText().toString());
                     param.put("recompensavalor", getDificultad(dificultadSelected));
@@ -687,6 +704,71 @@ public class FrgAddActividad extends Fragment implements View.OnClickListener {
         fragment = new FrgActividad();
         getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
     }
+
+
+    ///////Eliminar
+    int idDocente;
+
+    public void getIdDocente(String urlR) {
+        jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, urlR, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONObject obj = response.getJSONObject("docente");
+                            idDocente = obj.getInt("id");
+
+                            //Toast.makeText(getContext(), "ID docente recuperado :" + idDocente, Toast.LENGTH_LONG).show();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        if (error instanceof NetworkError) {
+                            Toast.makeText(getContext(),
+                                    "Oops. Network Error! " + error.toString(),
+                                    Toast.LENGTH_LONG).show();
+                        } else if (error instanceof ServerError) {
+                            Toast.makeText(getContext(),
+                                    "Oops. Server Error! " + error.toString(),
+                                    Toast.LENGTH_LONG).show();
+                        } else if (error instanceof AuthFailureError) {
+                            Toast.makeText(getContext(),
+                                    "Oops. Auth FailureError! " + error.toString(),
+                                    Toast.LENGTH_LONG).show();
+                        } else if (error instanceof ParseError) {
+                            Toast.makeText(getContext(),
+                                    "Oops. Parse Error! " + error.toString(),
+                                    Toast.LENGTH_LONG).show();
+                        } else if (error instanceof NoConnectionError) {
+                            Toast.makeText(getContext(),
+                                    "Oops. NoConnection Error! " + error.toString(),
+                                    Toast.LENGTH_LONG).show();
+                        } else if (error instanceof TimeoutError) {
+                            Toast.makeText(getContext(),
+                                    "Oops. Timeout error! " + error.toString(),
+                                    Toast.LENGTH_LONG).show();
+                        } else {
+
+                            Toast.makeText(getContext(),
+                                    "No se puede conectar " + error.toString(), Toast.LENGTH_LONG).show();
+                            //System.out.println();
+
+                            // Log.d("ERROR: ", error.toString());
+                        }
+                        ClssVolleySingleton.getIntanciaVolley(getContext()).getRequestQueue().stop();
+
+                        //ClssVolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(request_json);
+                    }
+                });
+        ClssVolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
+
+    }
+    ////Eliminar
 
 }
 
