@@ -274,7 +274,7 @@ public class FrgAddSublevel extends Fragment {
     private void AddOrRegister(){
         try{
             ClssConvertTextToSpeech.getIntancia(getContext()).reproduce(acceptS.getText().toString());
-            if (sublevelSel != null) {
+            if (sublevelSel == null) {
                 if(!(validate.Validar(null,nivel,Lnivel,Merror))) {
                     ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("Datos no válidos");
                     Toast.makeText(getContext(),"Datos no válidos",Toast.LENGTH_SHORT).show();
