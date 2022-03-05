@@ -29,6 +29,7 @@ import com.example.tolan.adapters.AdpContact;
 import com.example.tolan.clases.ClssConvertTextToSpeech;
 import com.example.tolan.clases.ClssStaticGroup;
 import com.example.tolan.models.ModelContact;
+import com.example.tolan.models.ModelUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,7 @@ import java.util.List;
 public class FrgContact extends Fragment {
 
     private Fragment fragment;
+    MenuItem mr;
     private RecyclerView rcvContacts, rcvD, rcvA, rcvC;
     private JustifiedTextView txtInf;
     private TextView textviewDT, textviewD, textviewA, textviewC, txtIn,link, linkfb;
@@ -267,6 +269,10 @@ public class FrgContact extends Fragment {
             mr.setVisible(false);
             MenuItem mi = menu.findItem(R.id.btnMyInfo);
             mi.setVisible(false);
+        }
+        else {
+            mr = menu.findItem(R.id.btnRecompensa);
+            mr.setTitle(String.valueOf(ModelUser.stockcaritas));
         }
     }
 

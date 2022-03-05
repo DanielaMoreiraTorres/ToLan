@@ -274,7 +274,14 @@ public class FrgAddSublevel extends Fragment {
     private void AddOrRegister(){
         try{
             ClssConvertTextToSpeech.getIntancia(getContext()).reproduce(acceptS.getText().toString());
-            if(validate.Validar(null,nivel,Lnivel,Merror) & validate.Validar(txtnameS,null,Lnombre,Merror)) {
+            if (sublevelSel != null) {
+                if(!(validate.Validar(null,nivel,Lnivel,Merror))) {
+                    ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("Datos no válidos");
+                    Toast.makeText(getContext(),"Datos no válidos",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+            if(validate.Validar(txtnameS,null,Lnombre,Merror)) {
                 //Ocultar teclado
                 InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(getContext().INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(txtdescripcionS.getWindowToken(), 0);

@@ -172,7 +172,12 @@ public class MainActivity extends AppCompatActivity {
                 @SuppressLint("RestrictedApi")
                 int nav = c.getBackStack().size();
                 if(nav > 2){
-                    c.popBackStack(R.id.inicioFragment,false);
+                    if(aux != 0) {
+                        aux = 0;
+                        super.onBackPressed();
+                    }
+                    else
+                        c.popBackStack(R.id.inicioFragment,false);
                 }
                 else if (nav == 2){
                     c.popBackStack();
