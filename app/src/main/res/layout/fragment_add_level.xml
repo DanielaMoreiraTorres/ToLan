@@ -157,7 +157,8 @@
                             android:src="@drawable/icon_add_photo"
                             app:backgroundTint="@color/principal"
                             app:maxImageSize="30dp"
-                            app:tint="@color/white" />
+                            app:tint="@color/white"
+                            tools:ignore="SpeakableTextPresentCheck" />
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -193,7 +194,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:backgroundTint="@color/verde"
-                            android:fontFamily="sans-serif-black"
+                            android:fontFamily="@font/baloo"
                             android:onClick="registerMultimedia"
                             android:text="ACEPTAR"
                             android:textColor="@color/white"

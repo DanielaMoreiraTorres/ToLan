@@ -34,6 +34,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+
                     android:id="@+id/txtIni"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -44,6 +45,7 @@
                     android:shadowColor="@color/secundario"
                     android:shadowRadius="2"
                     android:text="@string/login"
+                    android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="24sp" />
 
@@ -53,7 +55,10 @@
                     android:layout_height="160dp"
                     android:layout_marginTop="40dp"
                     android:layout_weight="0"
-                    android:src="@drawable/loginuser" />
+                    android:src="@drawable/user_login"
+                    app:civ_border_color="@color/plomo"
+                    app:civ_border_width="2dp"
+                    app:civ_circle_background_color="@color/white" />
 
             </LinearLayout>
 
@@ -143,7 +148,8 @@
                             android:text="@string/forget"
                             android:textAllCaps="false"
                             android:textColor="@color/secundario"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+                            tools:ignore="TouchTargetSizeCheck" />
 
                     </LinearLayout>
 

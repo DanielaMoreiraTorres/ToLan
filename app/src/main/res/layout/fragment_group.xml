@@ -46,23 +46,27 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="30dp"
-                android:fontFamily="@font/baloo"
+                android:fontFamily="sans-serif-black"
                 android:shadowColor="@color/secundario"
                 android:shadowRadius="4"
                 android:text="Grupos"
                 android:textColor="@color/white"
                 android:textSize="24sp" />
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/imgG"
+            <RelativeLayout
                 android:layout_width="130dp"
                 android:layout_height="130dp"
                 android:layout_alignParentRight="true"
-                android:layout_marginTop="10dp"
-                android:src="@drawable/group"
-                app:civ_border_color="@color/plomo"
-                app:civ_border_width="2dp"
-                app:civ_circle_background_color="@color/white" />
+                android:background="@drawable/fondo_blanco"
+                android:padding="10dp">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/imgG"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/group" />
+            </RelativeLayout>
 
         </RelativeLayout>
 

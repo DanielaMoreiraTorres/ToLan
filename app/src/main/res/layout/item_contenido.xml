@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/ryl_superior"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/borde"
+        android:gravity="center_horizontal"
+        android:padding="5dp"
+        android:textAlignment="center">
+
+        <CheckBox
+            android:id="@+id/chkEnunciado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="-4dp"
+            android:clickable="false"
+            android:gravity="center"
+            android:minHeight="48dp"
+            android:padding="5dp"
+            android:text="¿Es enunciado?"
+            android:textColor="#0F86C2"
+            android:textSize="12dp"
+            android:textStyle="bold"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <CheckBox
+            android:id="@+id/chkRespuesta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="-4dp"
+            android:clickable="false"
+            android:gravity="center"
+            android:minHeight="48dp"
+            android:padding="5dp"
+            android:text="¿Es respuesta?"
+            android:textColor="#0F86C2"
+            android:textSize="12dp"
+            android:textStyle="bold"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <TextView
+            android:id="@+id/txt_DescripctionActividad"
+            android:layout_width="330dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/chkRespuesta"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:maxLength="255"
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore " />
+
+        <TextView
+            android:id="@+id/txt_IdActividad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/chkRespuesta"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/baloo"
+            android:gravity="center"
+            android:text="999" />
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabtnAñadirMultimedia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            app:backgroundTint="@color/principal"
+            app:fabSize="mini"
+            app:srcCompat="@drawable/ic_baseline_photo_library"
+            app:tint="@color/white"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>

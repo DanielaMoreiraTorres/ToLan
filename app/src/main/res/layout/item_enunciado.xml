@@ -8,10 +8,11 @@
         android:id="@+id/lblTitulo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-black"
+        android:fontFamily="sans-serif-condensed"
         android:textAlignment="textStart"
         android:textColor="@color/secundario"
         android:textSize="20sp"
-        android:text="titulo"/>
+        android:text="titulo"
+        android:textStyle="bold"/>
 
 </LinearLayout>

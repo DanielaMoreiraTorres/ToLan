@@ -11,6 +11,7 @@
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar"></include>
+
     <View
         android:id="@+id/lineactmenuadmin"
         android:layout_width="match_parent"
@@ -54,23 +55,35 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/rl_superior"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
                     android:fontFamily="sans-serif-black"
                     android:padding="10dp"
+                    android:shadowColor="@color/secundario"
+                    android:shadowRadius="4"
                     android:text="Editar"
                     android:textColor="@color/white"
                     android:textSize="30sp"
                     android:textStyle="bold"
                     tools:ignore="NotSibling" />
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/civ"
+
+                <RelativeLayout
                     android:layout_width="130dp"
                     android:layout_height="130dp"
                     android:layout_alignParentRight="true"
-                    android:src="@drawable/img_edit_activity">
+                    android:background="@drawable/fondo_blanco"
+                    android:padding="10dp">
 
-                </de.hdodenhof.circleimageview.CircleImageView>
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/civ"
+                        android:layout_width="130dp"
+                        android:layout_height="130dp"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/img_edit_activity">
 
+                    </de.hdodenhof.circleimageview.CircleImageView>
+                </RelativeLayout>
             </RelativeLayout>
 
 
@@ -110,8 +123,6 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
 
-
-
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/til_lstsubnivel"
                         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
@@ -133,7 +144,6 @@
                             android:hint="Subnivel"
                             tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
                     </com.google.android.material.textfield.TextInputLayout>
-
 
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -172,12 +182,9 @@
                             android:drawableLeft="@drawable/icon_edit"
                             android:drawablePadding="10dp"
                             android:hint="Nombre de actividad"
-                        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+                            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
                     </com.google.android.material.textfield.TextInputLayout>
-
-
-
 
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -191,12 +198,12 @@
                             android:id="@+id/descripcion_actividad"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:maxLength="255"
                             android:drawableStart="@drawable/icon_edit"
                             android:drawableLeft="@drawable/icon_edit"
-
                             android:drawablePadding="10dp"
+
                             android:inputType="text"
+                            android:maxLength="255"
                             tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -258,6 +265,7 @@
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/custom_button_edit"
                 android:minHeight="48dp"
+                android:fontFamily="@font/baloo"
                 android:text="Actualizar"
                 android:textAlignment="center"
                 android:textColor="@color/white"

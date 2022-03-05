@@ -64,10 +64,12 @@ public class FrgMenuAdmin extends Fragment {
             iconActividades.setOnClickListener(v -> {
                 OptionsMenuAdmin(v);
             });
+            /*
             iconSkins = view.findViewById(R.id.iconSkins);
             iconSkins.setOnClickListener(v -> {
                 OptionsMenuAdmin(v);
             });
+            */
             iconGrupos = view.findViewById(R.id.iconGrupos);
             iconGrupos.setOnClickListener(v -> {
                 OptionsMenuAdmin(v);
@@ -112,9 +114,10 @@ public class FrgMenuAdmin extends Fragment {
             getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
 
         } else if (tag == 4) {
-            Intent intent = new Intent(getContext(), ActivitySkin.class);
-            ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Artículos");
-            startActivity(intent);
+            //Esto corresponde a la seccion articulos
+            //Intent intent = new Intent(getContext(), ActivitySkin.class);
+            //ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Artículos");
+            //startActivity(intent);
         } else if (tag == 5) {
             fragment = new FrgGroup();
             ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("Grupos");

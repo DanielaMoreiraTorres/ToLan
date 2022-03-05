@@ -129,6 +129,9 @@ public class Frg_SeleccionarParesImagenTexto extends Fragment implements View.On
 
     int idActividad;
 
+    Map<String, String> map_MultimediaExtra = new HashMap<>();
+    String urlInicial;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -181,8 +184,10 @@ public class Frg_SeleccionarParesImagenTexto extends Fragment implements View.On
 
                         if (item_multimedia_contenido.getBoolean("inicial")) {
                             listRutasMultimedia.add(item_multimedia_contenido.getString("url"));
+                            urlInicial=item_multimedia_contenido.getString("url");
                         } else {
                             Toast.makeText(view.getContext(), item_multimedia_contenido.getString("descripcion"), Toast.LENGTH_LONG).show();
+                            map_MultimediaExtra.put(urlInicial, item_multimedia_contenido.getString("url"));
                         }
                     }
                 }
@@ -195,7 +200,7 @@ public class Frg_SeleccionarParesImagenTexto extends Fragment implements View.On
             }
             Collections.shuffle(listRutasMultimedia);
             Collections.shuffle(listItemsMultimedia);
-            AdpRecycler_SeleccionarParesTextoImagen adpRecycler_seleccionarPares = new AdpRecycler_SeleccionarParesTextoImagen(getContext(), listItemsMultimedia, listRutasMultimedia, map_DatosEmparejados, this, idActividad);
+            AdpRecycler_SeleccionarParesTextoImagen adpRecycler_seleccionarPares = new AdpRecycler_SeleccionarParesTextoImagen(getContext(), listItemsMultimedia, listRutasMultimedia, map_DatosEmparejados, this, idActividad,map_MultimediaExtra);
             rcv_datosSeleccionarPares.setAdapter(adpRecycler_seleccionarPares);
 
 
@@ -208,7 +213,7 @@ public class Frg_SeleccionarParesImagenTexto extends Fragment implements View.On
     }
 
 
-    List<JSONObject> lst_contenido= new ArrayList<>();
+    List<JSONObject> lst_contenido = new ArrayList<>();
     List<JSONArray> lst_multimedia_contenido;
 
     public void prepararJson(JSONArray contenido) throws JSONException {
@@ -226,7 +231,7 @@ public class Frg_SeleccionarParesImagenTexto extends Fragment implements View.On
             } else {
             }
         }
-        lst_contenido= (List<JSONObject>) contenido;
+        lst_contenido = (List<JSONObject>) contenido;
         //Eliminar items multimedia
         for (int i = 0; i < contenido.length(); i++) {
             JSONObject item_contenido = contenido.getJSONObject(i);

@@ -106,7 +106,7 @@ public class VHoldRecyclerChild_ItemSubnivel extends RecyclerView.ViewHolder imp
                         //Toast.makeText(v.getContext(), "Layout Identificar entre palabras no existe", Toast.LENGTH_SHORT).show();
                         break;
 
-                    case "Armar rompecabezass":
+                    case "Armar rompecabezas":
                         //Toast.makeText(v.getContext(), "La actividad [" +actividad+"] no esta configurada aun", Toast.LENGTH_SHORT).show();
                         break;
 
@@ -143,7 +143,7 @@ public class VHoldRecyclerChild_ItemSubnivel extends RecyclerView.ViewHolder imp
                 Toast.makeText(v.getContext(), "El subnivel [" + txt_actividad.getText() + "] no tiene actividades", Toast.LENGTH_SHORT).show();
                 //clssConvertirTextoAVoz.reproduce();
                 ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce("El subnivel [" + txt_actividad.getText() + "] no tiene actividades configuradas");
-                ;
+
             }
         } catch (JSONException ex) {
 

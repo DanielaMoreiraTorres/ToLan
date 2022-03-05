@@ -36,12 +36,12 @@
                         android:id="@+id/titulo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="30dp"
-                        android:textAlignment="center"
                         android:fontFamily="@font/baloo"
+                        android:padding="30dp"
                         android:shadowColor="@color/secundario"
                         android:shadowRadius="4"
                         android:text="Arastrar y soltar"
+                        android:textAlignment="center"
                         android:textColor="@color/secundario"
                         android:textSize="22sp" />
 

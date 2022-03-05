@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.Frg_Actividades"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".fragments.Frg_Actividades">
 
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar"></include>
+
     <View
         android:id="@+id/lineactmenuadmin"
         android:layout_width="match_parent"
@@ -29,6 +30,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="15sp"
+            app:backgroundTint="@color/principal"
+            app:tint="@color/white"
+            app:maxImageSize="30dp"
             android:src="@drawable/icon_new"
             tools:ignore="SpeakableTextPresentCheck" />
 
@@ -39,58 +43,88 @@
             android:layout_height="wrap_content">
 
 
-            <View
-                android:id="@+id/topView"
+            <RelativeLayout
+                android:id="@+id/ry_1"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:background="#44cccc" />
+                android:layout_height="wrap_content">
 
-            <View
-                android:id="@+id/downView"
+                <View
+                    android:id="@+id/topView"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="#44cccc" />
+
+                <View
+                    android:id="@+id/downView"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/topView"
+                    android:background="@drawable/ic_down" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rl_superior"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="30dp"
+                    android:fontFamily="sans-serif-black"
+                    android:padding="10dp"
+                    android:shadowColor="@color/secundario"
+                    android:shadowRadius="4"
+                    android:text="@string/activity_title"
+                    android:textColor="@color/white"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    tools:ignore="NotSibling" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/ly1"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_below="@id/topView"
-                android:background="@drawable/ic_down" />
-
-            <TextView
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/rl_superior"
-                android:fontFamily="sans-serif-black"
-                android:padding="10dp"
-                android:text="@string/activity_title"
-                android:textColor="@color/white"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                tools:ignore="NotSibling" />
+                android:layout_below="@id/ry_1"
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal"
+                android:padding="5dp">
 
-            <androidx.appcompat.widget.SearchView
-                android:id="@+id/srch_busquedad"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/downView"
+                <androidx.appcompat.widget.SearchView
+                    android:id="@+id/srch_busquedad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/borde2"
+                    android:iconifiedByDefault="false"
+                    app:defaultQueryHint="@string/search"
+                    app:queryHint="@string/search" />
+            </LinearLayout>
 
-                android:iconifiedByDefault="false"
-                app:defaultQueryHint="@string/search"
-                app:queryHint="@string/search" />
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/imgActivities"
+            <RelativeLayout
                 android:layout_width="130dp"
                 android:layout_height="130dp"
                 android:layout_alignParentRight="true"
-                android:src="@drawable/activitities">
+                android:background="@drawable/fondo_blanco"
+                android:padding="10dp">
 
-            </de.hdodenhof.circleimageview.CircleImageView>
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/imgActivities"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/actividad">
 
-
+                </de.hdodenhof.circleimageview.CircleImageView>
+            </RelativeLayout>
 
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/RecyclerViewActividades"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/srch_busquedad"
+                android:layout_below="@id/ly1"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="10dp"
 
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 

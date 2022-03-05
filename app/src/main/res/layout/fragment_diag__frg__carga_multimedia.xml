@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".dialogs.Diag_Frg_CargaMultimedia">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/txtIdContenido"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:fontFamily="@font/baloo"
+            android:text="id"
+            android:textSize="25dp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_descripcion_multimedia"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtIdContenido"
+            android:layout_marginBottom="10dp"
+            android:hint="Descripción de multimedia">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/descripcion_multimedia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/icon_edit"
+                android:drawableLeft="@drawable/icon_edit"
+                android:drawablePadding="10dp"
+                android:inputType="text"
+                android:maxLength="255"
+                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_lst_tipoMultimedia"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/til_descripcion_multimedia"
+            android:layout_marginBottom="5dp">
+
+            <AutoCompleteTextView
+                android:id="@+id/act_lst_tipoMultimedia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/icon_widgets"
+                android:drawableLeft="@drawable/icon_widgets"
+                android:drawablePadding="10dp"
+                android:enabled="false"
+                android:hint="Tipo de multimedia"
+                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <CheckBox
+            android:id="@+id/chkIsEnunciado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/til_lst_tipoMultimedia"
+            android:layout_marginBottom="10dp"
+            android:text="¿Es contenido de apoyo?" />
+
+        <ImageView
+            android:id="@+id/imgMultimedia"
+            android:layout_width="250dp"
+            android:layout_height="200dp"
+            android:layout_below="@id/chkIsEnunciado"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/background_image" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabtn_seleccionarimg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/chkIsEnunciado"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="bottom|end"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/icon_add_photo"
+            app:backgroundTint="@color/principal"
+            app:maxImageSize="30dp"
+            app:tint="@color/white"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <Button
+            android:id="@+id/btn_registrar_multimedia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imgMultimedia"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/baloo"
+            android:backgroundTint="@color/verde"
+            android:minHeight="48dp"
+            android:text="Registrar"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            app:icon="@drawable/icon_save"
+            app:iconGravity="textStart"
+            tools:ignore="TouchTargetSizeCheck" />
+
+
+    </RelativeLayout>
+
+
+</FrameLayout>

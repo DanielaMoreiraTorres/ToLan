@@ -29,7 +29,6 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.tolan.R;
 import com.example.tolan.adapters.adpEstudent;
-import com.example.tolan.adapters.adpHist_Estudent;
 import com.example.tolan.adapters.adpHistorial;
 import com.example.tolan.clases.ClssConvertirTextoAVoz;
 import com.example.tolan.clases.ClssStaticGrupo;

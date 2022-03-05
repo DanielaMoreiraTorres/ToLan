@@ -26,8 +26,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/txtNombreEstudiante"
@@ -35,8 +35,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
-                    android:text="ALUMNO"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:text="ALUMNO" />
 
                 <TextView
                     android:id="@+id/fecha"
@@ -44,9 +44,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
+                    android:layout_weight="2"
                     android:text="Fecha de Registro"
-                    android:textColor="#8A000000"
-                    android:layout_weight="2" />
+                    android:textColor="#8A000000" />
 
             </LinearLayout>
 
@@ -55,9 +55,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="10dp"
+                android:layout_weight="2"
+                android:enabled="false"
                 android:gravity="center"
-                tools:ignore="MissingConstraints"
-                android:layout_weight="2" />
+                tools:ignore="MissingConstraints,SpeakableTextPresentCheck" />
 
         </LinearLayout>
 

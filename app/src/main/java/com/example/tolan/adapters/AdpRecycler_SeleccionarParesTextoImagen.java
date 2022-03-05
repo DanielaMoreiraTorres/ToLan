@@ -48,6 +48,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class AdpRecycler_SeleccionarParesTextoImagen extends RecyclerView.Adapter<txtHolder> {
@@ -58,15 +59,18 @@ public class AdpRecycler_SeleccionarParesTextoImagen extends RecyclerView.Adapte
     Fragment fragment;
     int idActividad;
 
+    Map<String, String> map_MultimediaExtra;
+
     //private static ClssConvertirTextoAVoz clssConvertirTextoAVoz;
 
-    public AdpRecycler_SeleccionarParesTextoImagen(Context mContext, ArrayList<String> listElements, ArrayList<String> listRutas, Map<String, String> map_DatosEmparejados, Fragment fragment, int idActividad) {
+    public AdpRecycler_SeleccionarParesTextoImagen(Context mContext, ArrayList<String> listElements, ArrayList<String> listRutas, Map<String, String> map_DatosEmparejados, Fragment fragment, int idActividad, Map<String, String> map_MultimediaExtra) {
         this.mContext = mContext;
         this.listElements = listElements;
         this.listRutas = listRutas;
         this.map_DatosEmparejados = map_DatosEmparejados;
         this.fragment = fragment;
         this.idActividad = idActividad;
+        this.map_MultimediaExtra = map_MultimediaExtra;
 
         //clssConvertirTextoAVoz = new ClssConvertirTextoAVoz();
         //clssConvertirTextoAVoz.init(mContext);
@@ -460,11 +464,13 @@ public class AdpRecycler_SeleccionarParesTextoImagen extends RecyclerView.Adapte
                 holder.imagen.setImageBitmap(response);
                 holder.imagen.setId(pos);
 
+
                 holder.imagen_ayuda_especial.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Toast.makeText(mContext, " Son :"+ map_MultimediaExtra.get(rutaImagen), Toast.LENGTH_SHORT).show();
                         Toast.makeText(mContext, "Ayuda especial", Toast.LENGTH_LONG).show();
-                        Diag_Frg_AyudaEspecial diag_frg_ayudaEspecial = new Diag_Frg_AyudaEspecial(response, map_DatosEmparejados.get(rutaImagen));
+                        Diag_Frg_AyudaEspecial diag_frg_ayudaEspecial = new Diag_Frg_AyudaEspecial(response, map_DatosEmparejados.get(rutaImagen),"","Seleccionar pares imagen con texto");
                         diag_frg_ayudaEspecial.show(fragment.getParentFragmentManager(), "Infromación de Ayuda Especial");
                     }
                 });

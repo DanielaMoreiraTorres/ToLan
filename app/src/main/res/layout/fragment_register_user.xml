@@ -368,7 +368,7 @@
                             android:backgroundTint="@color/verde"
                             app:icon="@drawable/icon_reg_user"
                             app:iconGravity="textStart"
-                            android:fontFamily="sans-serif-black"
+                            android:fontFamily="@font/baloo"
                             android:text="@string/registrarse"
                             android:textColor="@color/white"
                             android:textSize="12sp" />

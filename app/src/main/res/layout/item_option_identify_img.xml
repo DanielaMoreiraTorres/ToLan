@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="150dp"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
@@ -27,7 +27,7 @@
                 <ImageView
                     android:id="@+id/imgOp"
                     android:layout_width="match_parent"
-                    android:layout_height="120dp"
+                    android:layout_height="150dp"
                     android:scaleType="fitXY"
                     android:src="@drawable/background_image" />
 
@@ -40,10 +40,11 @@
                     <ImageView
                         android:id="@+id/imgView"
                         android:layout_width="30dp"
-                        android:layout_height="38dp"
+                        android:layout_height="30dp"
                         android:layout_gravity="end"
-                        android:src="@drawable/icon_info"
-                        android:tint="@color/secundario"
+                        android:background="@drawable/icon_ayuda_especial"
+
+
                         tools:ignore="UseAppTint" />
 
                 </LinearLayout>

@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <include
@@ -60,20 +60,20 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="40dp"
             android:fillViewport="true"
             android:scrollbars="vertical"
             tools:ignore="UselessParent">
 
             <RelativeLayout
+                android:gravity="center_vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp">
 
                 <GridLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:alignmentMode="alignMargins"
                     android:columnCount="2"
                     android:columnOrderPreserved="false"
@@ -106,10 +106,10 @@
                                 android:id="@+id/textActividades"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:textAlignment="center"
                                 android:layout_marginTop="12dp"
                                 android:fontFamily="sans-serif-medium"
                                 android:text="@string/actividades"
+                                android:textAlignment="center"
                                 android:textColor="@color/secundario"
                                 android:textSize="16sp" />
 
@@ -138,16 +138,16 @@
                                 android:layout_width="80dp"
                                 android:layout_height="80dp"
                                 android:tag="2"
-                                app:srcCompat="@drawable/loginuser" />
+                                app:srcCompat="@drawable/add_user_student" />
 
                             <TextView
                                 android:id="@+id/txtUsuarios"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:textAlignment="center"
                                 android:layout_marginTop="12dp"
                                 android:fontFamily="sans-serif-medium"
                                 android:text="Registrar estudiante"
+                                android:textAlignment="center"
                                 android:textColor="@color/secundario"
                                 android:textSize="16sp" />
 
@@ -182,10 +182,10 @@
                                 android:id="@+id/textGrupos"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:textAlignment="center"
                                 android:layout_marginTop="12dp"
                                 android:fontFamily="sans-serif-medium"
                                 android:text="Mis estudiantes"
+                                android:textAlignment="center"
                                 android:textColor="@color/secundario"
                                 android:textSize="16sp" />
 
@@ -220,10 +220,10 @@
                                 android:id="@+id/textHistorial"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:textAlignment="center"
                                 android:layout_marginTop="12dp"
                                 android:fontFamily="sans-serif-medium"
                                 android:text="@string/historial"
+                                android:textAlignment="center"
                                 android:textColor="@color/secundario"
                                 android:textSize="16sp" />
 

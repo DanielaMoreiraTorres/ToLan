@@ -28,8 +28,9 @@
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/btnContacts"
-        android:icon="@drawable/icon_contacts"
-        android:iconTint="@color/secundario"
+        android:icon="@drawable/icon_copyright"
+        android:iconTint="@color/white"
         android:title="@string/contactos"
+
         app:showAsAction="ifRoom" />
 </menu>

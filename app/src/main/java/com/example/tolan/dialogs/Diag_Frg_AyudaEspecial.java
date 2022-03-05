@@ -30,15 +30,17 @@ public class Diag_Frg_AyudaEspecial extends DialogFragment {
     Button btn_comprobar;
     TextView txt_titulo_original;
     ImageView img_original;
-    String respuesta, url;
+    String respuesta, url, frg_actividad;
     Context mcontext;
 
 
-
     Bitmap response;
-    public Diag_Frg_AyudaEspecial(Bitmap response,String respuesta) {
-        this.response=response;
+
+    public Diag_Frg_AyudaEspecial(Bitmap response, String respuesta, String url, String frg_actividad) {
+        this.response = response;
         this.respuesta = respuesta;
+        this.url = url;
+        this.frg_actividad = frg_actividad;
     }
 
 
@@ -54,10 +56,10 @@ public class Diag_Frg_AyudaEspecial extends DialogFragment {
         View v = layoutInflater.inflate(R.layout.fragment_diag_ayuda_especial, null);
         builder.setView(v);
         btn_comprobar = v.findViewById(R.id.btn_comprobar);
-        txt_titulo_original= v.findViewById(R.id.txt_titulo_original);
+        txt_titulo_original = v.findViewById(R.id.txt_titulo_original);
         txt_titulo_original.setText(respuesta);
 
-        img_original= v.findViewById(R.id.img_original);
+        img_original = v.findViewById(R.id.img_original);
         img_original.setImageBitmap(response);
 
         //Glide.with(getContext()).load(url).into(img_respuesta);
@@ -79,26 +81,26 @@ public class Diag_Frg_AyudaEspecial extends DialogFragment {
     }
 
 
-/*
-    VideoView vid_ayudaEspecial;
-    public void LoadVideo() {
+    /*
+        VideoView vid_ayudaEspecial;
+        public void LoadVideo() {
 
-        try {
-            MediaController mediaController = new MediaController(getActivity());
-            mediaController.setAnchorView(vid_ayudaEspecial);
+            try {
+                MediaController mediaController = new MediaController(getActivity());
+                mediaController.setAnchorView(vid_ayudaEspecial);
 
-            vid_ayudaEspecial.setMediaController(mediaController);
-            //vid_ayudaEspecial.setVideoPath("https://videocdn.bodybuilding.com/video/mp4/62000/62792m.mp4");
-            vid_ayudaEspecial.setVideoURI(Uri.parse("https://www.youtube.com/watch?v=S-cx-IiDUHg&t=4s.mp4"));// use methods to set url
-            vid_ayudaEspecial.requestFocus();
-            vid_ayudaEspecial.start();
-            mediaController.show();
-        } catch (Exception ex) {
-            System.out.println("Player error :" + ex.getMessage());
+                vid_ayudaEspecial.setMediaController(mediaController);
+                //vid_ayudaEspecial.setVideoPath("https://videocdn.bodybuilding.com/video/mp4/62000/62792m.mp4");
+                vid_ayudaEspecial.setVideoURI(Uri.parse("https://www.youtube.com/watch?v=S-cx-IiDUHg&t=4s.mp4"));// use methods to set url
+                vid_ayudaEspecial.requestFocus();
+                vid_ayudaEspecial.start();
+                mediaController.show();
+            } catch (Exception ex) {
+                System.out.println("Player error :" + ex.getMessage());
+            }
+            //vid_ayudaEspecial.start();
         }
-        //vid_ayudaEspecial.start();
-    }
-*/
+    */
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
