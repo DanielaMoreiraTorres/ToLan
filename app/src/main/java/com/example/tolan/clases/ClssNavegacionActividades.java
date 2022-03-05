@@ -86,18 +86,21 @@ public class ClssNavegacionActividades {
                         navController.navigate(R.id.fragmentArrastrarSoltar, bundle);
                         break;
                     default:
-                        Toast.makeText(v.getContext(), "Revise que la actividad :" + actividad + " esté configurada por favor", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(v.getContext(), "Revise que la actividad :" + actividad + " esté configurada por favor", Toast.LENGTH_SHORT).show();
+                        System.out.println("Revise que la actividad :" + actividad + " esté configurada por favor");
                         break;
                 }
             } else {
-                Toast.makeText(v.getContext(), "Redirigiendo al menu principal..", Toast.LENGTH_SHORT).show();
+                ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce("Redirigiendo al menú principal");
+                Toast.makeText(v.getContext(), "Redirigiendo al menú principal..", Toast.LENGTH_SHORT).show();
                 //Volvemos al fragmento principal eliminando los recursos en pila
                 navController.navigate(R.id.inicioFragment, null, new NavOptions.Builder()
                         .setPopUpTo(R.id.inicioFragment, true)
                         .build());
             }
         } catch (JSONException ex) {
-            Toast.makeText(v.getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(v.getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+            System.out.println(ex.getMessage());
         }
         //Fin Navegación
     }

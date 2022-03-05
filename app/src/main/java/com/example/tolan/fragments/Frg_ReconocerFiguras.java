@@ -231,8 +231,8 @@ public class Frg_ReconocerFiguras extends Fragment implements AdapterView.OnItem
                                     //Actualice el itemMenú creado
                                     mr.setTitle(String.valueOf(ModelUser.stockcaritas));
                                     //Toast.makeText(getContext(), "Actividad exitosa", Toast.LENGTH_LONG).show();
-                                } else
-                                    Toast.makeText(getContext(), response.get("message").toString(), Toast.LENGTH_LONG).show();
+                                } //else
+                                    //Toast.makeText(getContext(), response.get("message").toString(), Toast.LENGTH_LONG).show();
                             } catch (Exception e) {
                                 //Toast.makeText(getContext(), "Error de conexión", Toast.LENGTH_LONG).show();
                                 //Toast.makeText(getContext(), "Error de conexión [" + e.getMessage() + "]", Toast.LENGTH_LONG).show();
@@ -242,7 +242,7 @@ public class Frg_ReconocerFiguras extends Fragment implements AdapterView.OnItem
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     VolleyLog.e("Error: ", error.getMessage());
-                    Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
                 }
             });
             ClssVolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(request_json);
@@ -364,7 +364,7 @@ public class Frg_ReconocerFiguras extends Fragment implements AdapterView.OnItem
                     state.setBackgroundColor(Color.parseColor("#F7B9B9"));
                     //Seteamos el texto de error y lo mostramos
                     TextView txt = (TextView) state.getChildAt(0);
-                    txt.setText("¡Incorrecto!\n¡Vuelve a intentarlo!");
+                    txt.setText("¡Ups! Vuelve a intentarlo");
                     txt.setTextColor(Color.parseColor("#C70039"));
                     txt.setVisibility(View.VISIBLE);
                     final Handler handler = new Handler();

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,6 +51,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 public class AdpRecycler_SeleccionarParesTextoImagen extends RecyclerView.Adapter<txtHolder> {
 
@@ -119,7 +121,8 @@ public class AdpRecycler_SeleccionarParesTextoImagen extends RecyclerView.Adapte
                 if (!estadoAplicacion) {
                     comprobar_cardview_texto(holder);
                 } else {
-                    Toast.makeText(mContext, "Ok para continuar...", Toast.LENGTH_LONG).show();
+
+                    //Toast.makeText(mContext, "Ok para continuar...", Toast.LENGTH_LONG).show();
                 }
                 ClssConvertirTextoAVoz.getIntancia(mContext).reproduce(listElements.get(position));
                 //ClssVolleySingleton.getIntanciaVolley(mContext).addToRequestQueue(request_json);
@@ -133,7 +136,7 @@ public class AdpRecycler_SeleccionarParesTextoImagen extends RecyclerView.Adapte
                 if (!estadoAplicacion) {
                     comprobar_cardview_imagen(holder);
                 } else {
-                    Toast.makeText(mContext, "Ok para continuar...", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(mContext, "Ok para continuar...", Toast.LENGTH_LONG).show();
                 }
                 //clssConvertirTextoAVoz.reproduce("Imagen de " + listElements.get(position));
             }
@@ -161,7 +164,9 @@ public class AdpRecycler_SeleccionarParesTextoImagen extends RecyclerView.Adapte
                 //Es verdad ya hay un elemento en pila seleccionado, entonces procedemos a deseleccionarlo
                 if (cardview_selectedRight.equals(holder.cardview_texto)) {
                     //Antes de deseleccionarlo verificamos si selecciono el mismo elemento
-                    Toast.makeText(mContext, "Haz seleccionado el mismo elemento varias veces", Toast.LENGTH_LONG).show();
+
+                    //Toast.makeText(mContext, "Haz seleccionado el mismo elemento varias veces", Toast.LENGTH_LONG).show();
+
                     //Como se cumple procedemos a deseleccionarlo y vaciar la pila de valores
                     pintarBorde(holder.ryl_fondo_bordes_texto, "deseleccionado");
                     //holder.ryl_fondo_bordes_texto.setBackgroundResource(R.drawable.fondo_bordes_imagen);
@@ -212,7 +217,9 @@ public class AdpRecycler_SeleccionarParesTextoImagen extends RecyclerView.Adapte
                 //Es verdad ya hay un elemento en pila seleccionado, entonces procedemos a deseleccionarlo
                 if (cardview_selectedLeft.equals(holder.cardview_imagen)) {
                     //Antes de deseleccionarlo verificamos si selecciono el mismo elemento
-                    Toast.makeText(mContext, "Haz seleccionado el mismo elemento varias veces", Toast.LENGTH_LONG).show();
+
+                    //Toast.makeText(mContext, "Haz seleccionado el mismo elemento varias veces", Toast.LENGTH_LONG).show();
+
                     //Como se cumple procedemos a deseleccionarlo y vaciar la pila de valores
                     pintarBorde(holder.ryl_fondo_bordes_imagen, "deseleccionado");
                     nElementsSelectedLeft = 0;
@@ -314,6 +321,15 @@ public class AdpRecycler_SeleccionarParesTextoImagen extends RecyclerView.Adapte
 
     private static int elementosCorrectos;
 
+
+    String[] msg_true;
+
+    private String generarAleatorio() {
+        Random random = new Random();
+        String r = msg_true[random.nextInt(msg_true.length)];
+        return r;
+    }
+
     public void comprobarSimilitud(String id, String elemento) {
 
         //Obtengo mi scrollview
@@ -327,7 +343,21 @@ public class AdpRecycler_SeleccionarParesTextoImagen extends RecyclerView.Adapte
             //      Toast.LENGTH_LONG).show();
             elementosCorrectos++;
             if (elementosCorrectos == listElements.size()) {
-                Toast.makeText(mContext, "No hay mas parejas", Toast.LENGTH_LONG).show();
+                //Toast.makeText(mContext, "No hay mas parejas", Toast.LENGTH_LONG).show();
+
+                msg_true = mContext.getResources().getStringArray(R.array.msg_true);
+                String mensaje = generarAleatorio();
+                //ClssConvertirTextoAVoz.getIntancia(mContext).reproduce(mensaje);
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("La actividad no tiene contenido");
+                        //tts.reproduce("La actividad no tiene contenido");
+                        ClssConvertirTextoAVoz.getIntancia(mContext).reproduce(mensaje);
+                    }
+                }, 1000);
+
 
                 elementosCorrectos = 0;
                 mScrollView.post(new Runnable() {
@@ -343,7 +373,7 @@ public class AdpRecycler_SeleccionarParesTextoImagen extends RecyclerView.Adapte
                 ry_state.setBackgroundColor(Color.parseColor("#AAFAB1"));
                 //Seteamos el texto de continuar y lo mostramos
                 TextView txt = (TextView) ry_state.getChildAt(0);
-                txt.setText("¡Excelente!");
+                txt.setText(mensaje);
                 txt.setTextColor(Color.parseColor("#048710"));
 
                 ry_state.getChildAt(2).setVisibility(View.GONE);
@@ -357,8 +387,18 @@ public class AdpRecycler_SeleccionarParesTextoImagen extends RecyclerView.Adapte
 
             disabled_Opciones(true);
         } else {
-            Toast.makeText(mContext, "Elementos incorrectos",
-                    Toast.LENGTH_LONG).show();
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    //ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("La actividad no tiene contenido");
+                    //tts.reproduce("La actividad no tiene contenido");
+                    ClssConvertirTextoAVoz.getIntancia(mContext).reproduce("¡Ups! Vuelve a intentarlo");
+                }
+            }, 1000);
+
+            //Toast.makeText(mContext, "Elementos incorrectos",
+            //        Toast.LENGTH_LONG).show();
 
 
             //Ehecutar animacion de despliegue arriba/abajo
@@ -374,7 +414,8 @@ public class AdpRecycler_SeleccionarParesTextoImagen extends RecyclerView.Adapte
 
             //Seteo el texto de error y el color de letra en rojo respectivo
             TextView txt = (TextView) ry_state.getChildAt(0);
-            txt.setText("¡Oppps! No son pares");
+            txt.setText("¡Ups! Vuelve a intentarlo");
+
             txt.setTextColor(Color.parseColor("#C70039"));
             //Setear color rojo de background
             ry_state.setBackgroundColor(Color.parseColor("#F7B9B9"));
@@ -432,8 +473,8 @@ public class AdpRecycler_SeleccionarParesTextoImagen extends RecyclerView.Adapte
                                     ModelUser.stockcaritas += response.getInt("recompensaganada");
                                     //Toast.makeText(getContext(), "Actividad exitosa", Toast.LENGTH_LONG).show();
                                     //Navegacion(v);
-                                } else
-                                    Toast.makeText(mContext, response.get("message").toString(), Toast.LENGTH_LONG).show();
+                                } //else
+                                //Toast.makeText(mContext, response.get("message").toString(), Toast.LENGTH_LONG).show();
                             } catch (Exception e) {
                                 Toast.makeText(mContext, "Error de conexión", Toast.LENGTH_LONG).show();
                             }
@@ -468,9 +509,9 @@ public class AdpRecycler_SeleccionarParesTextoImagen extends RecyclerView.Adapte
                 holder.imagen_ayuda_especial.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(mContext, " Son :"+ map_MultimediaExtra.get(rutaImagen), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, " Son :" + map_MultimediaExtra.get(rutaImagen), Toast.LENGTH_SHORT).show();
                         Toast.makeText(mContext, "Ayuda especial", Toast.LENGTH_LONG).show();
-                        Diag_Frg_AyudaEspecial diag_frg_ayudaEspecial = new Diag_Frg_AyudaEspecial(response, map_DatosEmparejados.get(rutaImagen),"","Seleccionar pares imagen con texto");
+                        Diag_Frg_AyudaEspecial diag_frg_ayudaEspecial = new Diag_Frg_AyudaEspecial(response, map_DatosEmparejados.get(rutaImagen), "", "Seleccionar pares imagen con texto");
                         diag_frg_ayudaEspecial.show(fragment.getParentFragmentManager(), "Infromación de Ayuda Especial");
                     }
                 });

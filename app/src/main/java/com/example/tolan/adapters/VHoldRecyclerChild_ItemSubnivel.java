@@ -134,7 +134,8 @@ public class VHoldRecyclerChild_ItemSubnivel extends RecyclerView.ViewHolder imp
                         break;
 
                     default:
-                        Toast.makeText(v.getContext(), "Revise que la actividad :" + actividad + " esté configurada por favor", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(v.getContext(), "Revise que la actividad :" + actividad + " esté configurada por favor", Toast.LENGTH_SHORT).show();
+                        System.out.println("Revise que la actividad :" + actividad + " esté configurada por favor");
                         break;
                 }
                 //clssConvertirTextoAVoz.reproduce((String) txt_actividad.getText());
@@ -147,9 +148,10 @@ public class VHoldRecyclerChild_ItemSubnivel extends RecyclerView.ViewHolder imp
             }
         } catch (JSONException ex) {
 
-            Toast.makeText(v.getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+            System.out.println("Error lógica JSON : " + ex.getMessage());
+            //Toast.makeText(v.getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
             //clssConvertirTextoAVoz.reproduce("Error de lógica JSON");
-            ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce("Error de lógica JSON");
+            //ClssConvertirTextoAVoz.getIntancia(v.getContext()).reproduce("Error de lógica JSON");
         }
 
     }

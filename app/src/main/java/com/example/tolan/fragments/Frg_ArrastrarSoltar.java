@@ -160,7 +160,7 @@ public class Frg_ArrastrarSoltar extends Fragment {
                 RespuestasOk();
             } else {
                 //jsonActivities.remove(0);
-                Toast.makeText(getContext(), "La actividad no tiene contenido", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), "La actividad no tiene contenido", Toast.LENGTH_SHORT).show();
                 final Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
@@ -304,7 +304,7 @@ public class Frg_ArrastrarSoltar extends Fragment {
                             state.setBackgroundColor(Color.parseColor("#F7B9B9"));
                             //Seteamos el texto de error y lo mostramos
                             TextView txt = (TextView) state.getChildAt(0);
-                            txt.setText("¡Incorrecto!\n¡Vuelve a intentarlo!");
+                            txt.setText("¡Ups! Vuelve a intentarlo");
                             txt.setTextColor(Color.parseColor("#C70039"));
                             txt.setVisibility(View.VISIBLE);
                             //tts.reproduce(txt.getText().toString());
@@ -414,8 +414,8 @@ public class Frg_ArrastrarSoltar extends Fragment {
                                     ModelUser.stockcaritas += recompensa;
                                     mr.setTitle(String.valueOf(ModelUser.stockcaritas));
                                     //Toast.makeText(getContext(), "Actividad exitosa", Toast.LENGTH_LONG).show();
-                                } else
-                                    Toast.makeText(getContext(), response.get("message").toString(), Toast.LENGTH_LONG).show();
+                                } //else
+                                    //Toast.makeText(getContext(), response.get("message").toString(), Toast.LENGTH_LONG).show();
                             } catch (Exception e) {
                                 //Toast.makeText(getContext(), "Error de conexión", Toast.LENGTH_LONG).show();
                             }

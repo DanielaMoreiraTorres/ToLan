@@ -60,7 +60,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
-public class Frg_IdentificarRespuestaPalabra extends Fragment implements View.OnClickListener{
+public class Frg_IdentificarRespuestaPalabra extends Fragment implements View.OnClickListener {
 
     JSONArray jsonActivities;
     NavController navController;
@@ -111,7 +111,8 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment implements View.On
                 textToSpeech.setLanguage(Locale.getDefault());
                 textToSpeech.speak(mensaje, TextToSpeech.QUEUE_FLUSH, null);
             }
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
     }
 
     @Override
@@ -197,7 +198,8 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment implements View.On
             jsonActivities.remove(0);
             ClssNavegacionActividades clssNavegacionActividades = new ClssNavegacionActividades(navController, jsonActivities, v);
             clssNavegacionActividades.navegar();
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
     }
 
     private void AccionOk() {
@@ -217,7 +219,8 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment implements View.On
             TextView txt = (TextView) state.getChildAt(2);
             //tts.reproduce(txt.getText().toString());
             ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(txt.getText().toString());
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
     }
 
     private void animar(boolean mostrar) {
@@ -251,7 +254,8 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment implements View.On
             //set.addAnimation(animation);
             //LayoutAnimationController controller = new LayoutAnimationController(set, 0.25f);
 
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
     }
 
     private void CompleteActivity(View v) {
@@ -272,8 +276,8 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment implements View.On
                                     ModelUser.stockcaritas += recompensa;
                                     mr.setTitle(String.valueOf(ModelUser.stockcaritas));
                                     //Toast.makeText(getContext(), "Actividad exitosa", Toast.LENGTH_LONG).show();
-                                } else
-                                    Toast.makeText(getContext(), response.get("message").toString(), Toast.LENGTH_LONG).show();
+                                } //else
+                                    //Toast.makeText(getContext(), response.get("message").toString(), Toast.LENGTH_LONG).show();
                             } catch (Exception e) {
                                 //Toast.makeText(getContext(), "Error de conexión", Toast.LENGTH_LONG).show();
                             }
@@ -282,7 +286,7 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment implements View.On
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     VolleyLog.e("Error: ", error.getMessage());
-                    Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
                 }
             });
             ClssVolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(request_json);
@@ -300,7 +304,7 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment implements View.On
             int opcselec = cvSel.getId();
             opSelected = modelContentsOp.get(opcselec);
             adpOptiosIdentifyTxt.setOnClickListener(null);
-            Toast.makeText(getContext(),opSelected.getDescripcion().trim(),Toast.LENGTH_SHORT);
+            Toast.makeText(getContext(), opSelected.getDescripcion().trim(), Toast.LENGTH_SHORT);
             ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce(opSelected.getDescripcion());
             if (respuestas.size() == 1) {
                 if (opSelected.getRespuesta().equals(true)) {
@@ -357,7 +361,7 @@ public class Frg_IdentificarRespuestaPalabra extends Fragment implements View.On
                     state.setBackgroundColor(Color.parseColor("#F7B9B9"));
                     //Seteamos el texto de error y lo mostramos
                     TextView txt = (TextView) state.getChildAt(0);
-                    txt.setText("¡Incorrecto!\n¡Vuelve a intentarlo!");
+                    txt.setText("¡Ups! Vuelve a intentarlo");
                     txt.setTextColor(Color.parseColor("#C70039"));
                     txt.setVisibility(View.VISIBLE);
                     final Handler handler = new Handler();

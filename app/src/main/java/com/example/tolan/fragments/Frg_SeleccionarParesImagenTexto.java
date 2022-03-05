@@ -205,7 +205,8 @@ public class Frg_SeleccionarParesImagenTexto extends Fragment implements View.On
 
 
         } catch (JSONException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            System.out.println(e.getMessage());
         }
 
 

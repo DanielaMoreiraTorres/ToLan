@@ -176,7 +176,8 @@ public class AdpRecycler_Main extends RecyclerView.Adapter<VHoldRecyclerMain_Sec
                             Toast.LENGTH_LONG).show();
                 } else {
 
-                    Toast.makeText(mContext, "Error al cargar la imagen", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(mContext, "Error al cargar la imagen", Toast.LENGTH_SHORT).show();
+                    System.out.println("Error al cargar la imagen");
                 }
                 //
             }

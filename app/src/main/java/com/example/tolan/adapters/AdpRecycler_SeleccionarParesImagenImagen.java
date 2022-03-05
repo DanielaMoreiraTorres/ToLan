@@ -3,6 +3,7 @@ package com.example.tolan.adapters;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -105,7 +106,7 @@ public class AdpRecycler_SeleccionarParesImagenImagen extends RecyclerView.Adapt
                 if (!estadoAplicacion) {
                     comprobarOpcionesLeft(holder);
                 } else {
-                    Toast.makeText(mContext, "Reproducir audio", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(mContext, "Reproducir audio", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -117,7 +118,7 @@ public class AdpRecycler_SeleccionarParesImagenImagen extends RecyclerView.Adapt
                 if (!estadoAplicacion) {
                     comprobarOpcionesRight(holder);
                 } else {
-                    Toast.makeText(mContext, "Reproducir audio", Toast.LENGTH_LONG).show();
+                    // Toast.makeText(mContext, "Reproducir audio", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -239,6 +240,14 @@ public class AdpRecycler_SeleccionarParesImagenImagen extends RecyclerView.Adapt
 
     private static int elementosCorrectos;
 
+    String[] msg_true;
+
+    private String generarAleatorio() {
+        Random random = new Random();
+        String r = msg_true[random.nextInt(msg_true.length)];
+        return r;
+    }
+
     public void comprobarSimilitud() {
         if (nOptionsSelected == 2) {
             if (idLeft == idRight) {
@@ -247,7 +256,23 @@ public class AdpRecycler_SeleccionarParesImagenImagen extends RecyclerView.Adapt
                 elementosCorrectos++;
                 //Quiere decir que no hay mas pares por registrar
                 if (elementosCorrectos == listElements.size()) {
-                    Toast.makeText(mContext, "No hay mas parejas", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(mContext, "No hay mas parejas", Toast.LENGTH_LONG).show();
+                    msg_true = mContext.getResources().getStringArray(R.array.msg_true);
+                    String mensaje=generarAleatorio();
+
+                    //ClssConvertirTextoAVoz.getIntancia(mContext).reproduce(mensaje);
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            //ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("La actividad no tiene contenido");
+                            //tts.reproduce("La actividad no tiene contenido");
+                            ClssConvertirTextoAVoz.getIntancia(mContext).reproduce(mensaje);
+                        }
+                    }, 1000);
+
+
+
                     elementosCorrectos = 0;
 
                     mScrollView.post(new Runnable() {
@@ -262,7 +287,7 @@ public class AdpRecycler_SeleccionarParesImagenImagen extends RecyclerView.Adapt
                     ry_state.setBackgroundColor(Color.parseColor("#AAFAB1"));
                     //Seteamos el texto de continuar y lo mostramos
                     TextView txt = (TextView) ry_state.getChildAt(0);
-                    txt.setText("¡Excelente!");
+                    txt.setText(mensaje);
                     txt.setTextColor(Color.parseColor("#048710"));
 
                     ry_state.getChildAt(2).setVisibility(View.GONE);
@@ -272,6 +297,17 @@ public class AdpRecycler_SeleccionarParesImagenImagen extends RecyclerView.Adapt
                     CompleteActivity();
                 }
             } else {
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //ClssConvertirTextoAVoz.getIntancia(getContext()).reproduce("La actividad no tiene contenido");
+                        //tts.reproduce("La actividad no tiene contenido");
+                        ClssConvertirTextoAVoz.getIntancia(mContext).reproduce("¡Ups! Vuelve a intentarlo");
+                    }
+                }, 1000);
+
+
                 //Toast.makeText(mContext, "No son similares", Toast.LENGTH_LONG).show();
                 resetAll("error");
                 animar(true);
@@ -284,7 +320,7 @@ public class AdpRecycler_SeleccionarParesImagenImagen extends RecyclerView.Adapt
                 });
                 //Seteamos el texto de error y lo mostramos
                 TextView txt = (TextView) ry_state.getChildAt(0);
-                txt.setText("¡Oppps! No son pares");
+                txt.setText("¡Ups! Vuelve a intentarlo");
                 txt.setTextColor(Color.parseColor("#C70039"));
                 txt.setVisibility(View.VISIBLE);
                 //Seteamos el backgroun rojo
@@ -333,17 +369,20 @@ public class AdpRecycler_SeleccionarParesImagenImagen extends RecyclerView.Adapt
                                     ModelUser.stockcaritas += response.getInt("recompensaganada");
                                     //Toast.makeText(getContext(), "Actividad exitosa", Toast.LENGTH_LONG).show();
                                     //Navegacion(v);
-                                } else
-                                    Toast.makeText(mContext, response.get("message").toString(), Toast.LENGTH_LONG).show();
+                                } else {
+                                    //Toast.makeText(mContext, response.get("message").toString(), Toast.LENGTH_LONG).show();
+                                    System.out.println(response.get("message").toString());
+                                }
                             } catch (Exception e) {
-                                Toast.makeText(mContext, "Error de conexión", Toast.LENGTH_LONG).show();
+                                //Toast.makeText(mContext, "Error de conexión", Toast.LENGTH_LONG).show();
+                                System.out.println(e.getMessage());
                             }
                         }
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    VolleyLog.e("Error: ", error.getMessage());
-                    Toast.makeText(mContext, error.getMessage(), Toast.LENGTH_LONG).show();
+                    System.out.println("Error: " + error.getMessage());
+                    //Toast.makeText(mContext, error.getMessage(), Toast.LENGTH_LONG).show();
                 }
             });
             // Añadir petición a la cola
@@ -457,7 +496,8 @@ public class AdpRecycler_SeleccionarParesImagenImagen extends RecyclerView.Adapt
                             Toast.LENGTH_LONG).show();
                 } else {
 
-                    Toast.makeText(mContext, "Error al cargar la imagen", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(mContext, "Error al cargar la imagen", Toast.LENGTH_SHORT).show();
+                    System.out.println("Error " + error.getMessage());
                 }
                 //
             }
