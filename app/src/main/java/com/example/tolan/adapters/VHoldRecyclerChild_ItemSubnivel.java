@@ -3,6 +3,7 @@ package com.example.tolan.adapters;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +32,7 @@ public class VHoldRecyclerChild_ItemSubnivel extends RecyclerView.ViewHolder imp
     ImageView imgv_corona;
     CardView cardView;
     JSONArray lstitem_Activities;
+    RelativeLayout ry_fondo_superior_actividad;
     //ClssConvertTextToSpeech clssConvertirTextoAVoz;
 
     public VHoldRecyclerChild_ItemSubnivel(@NonNull View itemView) {
@@ -39,6 +41,7 @@ public class VHoldRecyclerChild_ItemSubnivel extends RecyclerView.ViewHolder imp
         img_actividad = (CircleImageView) itemView.findViewById(R.id.img_actividad);
         imgv_corona = (ImageView) itemView.findViewById(R.id.imgv_corona);
         cardView = (CardView) itemView.findViewById(R.id.cardview_actividad);
+        ry_fondo_superior_actividad = itemView.findViewById(R.id.ry_fondo_superior_actividad);
         //this.lstitem_Activities=lstitem_Activities;
         //clssConvertirTextoAVoz = new ClssConvertTextToSpeech();
         //clssConvertirTextoAVoz.init(itemView.getContext());

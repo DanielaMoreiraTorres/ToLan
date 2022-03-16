@@ -15,4 +15,7 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="lightOrange">#fed8b1</color>
+
+    <color name="lightGris">#DFE1E1</color>
+
 </resources>

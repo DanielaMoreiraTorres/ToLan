@@ -4,6 +4,7 @@ import java.util.List;
 
 public class ModelRecyclerItemNivel {
 
+    private int idNivel;
     private String sectionName;
     private String image ;
 
@@ -11,10 +12,11 @@ public class ModelRecyclerItemNivel {
 
     private List<ModelRecyclerItemSubnivel> sectionItems;
 
-    public ModelRecyclerItemNivel(String sectionName, String image, List<ModelRecyclerItemSubnivel> sectionItems) {
+    public ModelRecyclerItemNivel(String sectionName, String image, List<ModelRecyclerItemSubnivel> sectionItems, int idNivel) {
         this.sectionName = sectionName;
         this.image = image;
         this.sectionItems = sectionItems;
+        this.idNivel=idNivel;
     }
 
     public String getSectionName() {
@@ -41,6 +43,14 @@ public class ModelRecyclerItemNivel {
         this.sectionItems = sectionItems;
     }
 
+    public int getIdNivel() {
+        return idNivel;
+    }
+
+    public void setIdNivel(int idNivel) {
+        this.idNivel = idNivel;
+    }
+
     @Override
     public String toString() {
         return "Section{" +
@@ -48,4 +58,6 @@ public class ModelRecyclerItemNivel {
                 ", sectionItems=" + sectionItems +
                 '}';
     }
+
+
 }

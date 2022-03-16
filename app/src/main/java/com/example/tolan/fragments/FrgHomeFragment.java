@@ -252,12 +252,16 @@ public class FrgHomeFragment extends Fragment implements Response.Listener<JSONA
                             subnivel_item.get("nombre").toString(),
                             subnivel_item.get("url").toString(),
                             subnivel_item.getInt("id")));
+                    if (j == subniveles.length() - 1) {
+                        //Toast.makeText(getContext(), "Ultimo subnivel", Toast.LENGTH_SHORT).show();
+                        all_subniveles.add(crearSubnivel("Evaluación", "https://res.cloudinary.com/ddgl3cxau/image/upload/v1646930311/fqqoocpuleggxxrgsepn.png", 0));
+                    }
                 }
 
                 all_niveles.add(crearNivel(
                         nivel_item.get("nombre").toString(),
                         nivel_item.get("url").toString(),
-                        all_subniveles));
+                        all_subniveles, nivel_item.getInt("id")));
                 // System.out.println("-------------------------------------");
 
             }
@@ -286,8 +290,8 @@ public class FrgHomeFragment extends Fragment implements Response.Listener<JSONA
         return new ModelRecyclerItemSubnivel(titulo, image, id);
     }
 
-    public ModelRecyclerItemNivel crearNivel(String sectionName, String image, List<ModelRecyclerItemSubnivel> all_subniveles) {
-        return new ModelRecyclerItemNivel(sectionName, image, all_subniveles);
+    public ModelRecyclerItemNivel crearNivel(String sectionName, String image, List<ModelRecyclerItemSubnivel> all_subniveles, int idNivel) {
+        return new ModelRecyclerItemNivel(sectionName, image, all_subniveles, idNivel);
     }
 
 

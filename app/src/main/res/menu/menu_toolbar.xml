@@ -5,7 +5,7 @@
 
     <item
         android:id="@+id/btnCaritas"
-        android:icon="@drawable/carita"
+        android:icon="@drawable/img"
         android:title="@string/recompensa"
         app:showAsAction="always" />
 

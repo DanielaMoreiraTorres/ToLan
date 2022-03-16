@@ -3,6 +3,7 @@ package com.example.tolan.adapters;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,8 @@ public class VHoldRecyclerMain_SectionSubnivel extends RecyclerView.ViewHolder i
     RecyclerView childRecyclerView;
     LinearLayout ly_continueActivities;
     ImageView imgNivel;
+    TextView txtactividades_completadas,txtactividades_totales;
+    ProgressBar barra_progreso;
     //ClssConvertTextToSpeech clssConvertirTextoAVoz;
 
     public VHoldRecyclerMain_SectionSubnivel(@NonNull View itemView) {
@@ -34,6 +37,9 @@ public class VHoldRecyclerMain_SectionSubnivel extends RecyclerView.ViewHolder i
         txt_numeroNivel = itemView.findViewById(R.id.txt_numeroNivel);
         ly_continueActivities = itemView.findViewById(R.id.ly_continueActivities);
         imgNivel = itemView.findViewById(R.id.imgNivel);
+        txtactividades_completadas=itemView.findViewById(R.id.txtactividades_completadas);
+        txtactividades_totales=itemView.findViewById(R.id.txtactividades_totales);
+        barra_progreso=itemView.findViewById(R.id.barra_progreso);
         //clssConvertirTextoAVoz = new ClssConvertTextToSpeech();
         //clssConvertirTextoAVoz.init(itemView.getContext());
 

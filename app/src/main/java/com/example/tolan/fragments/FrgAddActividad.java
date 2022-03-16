@@ -170,7 +170,7 @@ public class FrgAddActividad extends Fragment implements View.OnClickListener {
 
                 ////////Borrar
 
-                getIdDocente("https://db-bartolucci.herokuapp.com/usuario/" + modelDocenteSelected.getId());
+                //getIdDocente("https://db-bartolucci.herokuapp.com/usuario/" + modelDocenteSelected.getId());
 
                 /////Borrar
             }
@@ -381,7 +381,7 @@ public class FrgAddActividad extends Fragment implements View.OnClickListener {
 
                                 JSONObject objDocente = response.getJSONObject(i);
                                 docente = new ModelTeacher(
-                                        objDocente.getInt("id"),
+                                        objDocente.getInt("idPersona"),
                                         objDocente.getString("nombres"),
                                         objDocente.getString("apellidos"),
                                         objDocente.getString("telefono"),
@@ -532,11 +532,11 @@ public class FrgAddActividad extends Fragment implements View.OnClickListener {
 
 
                     //Original
-                    //param.put("idDocente", modelDocenteSelected.getId());
+                    param.put("idDocente", modelDocenteSelected.getId());
 
 
                     ////Quitar
-                    param.put("idDocente", idDocente);
+                    //param.put("idDocente", idDocente);
                     ///Quitar
 
 
@@ -705,7 +705,7 @@ public class FrgAddActividad extends Fragment implements View.OnClickListener {
         getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
     }
 
-
+    /*
     ///////Eliminar
     int idDocente;
 
@@ -770,5 +770,6 @@ public class FrgAddActividad extends Fragment implements View.OnClickListener {
     }
     ////Eliminar
 
+    */
 }
 

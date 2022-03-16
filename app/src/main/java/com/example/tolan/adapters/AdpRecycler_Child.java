@@ -2,6 +2,7 @@ package com.example.tolan.adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,13 +23,18 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.bumptech.glide.Glide;
 import com.example.tolan.R;
+import com.example.tolan.clases.ClssStaticActivitiesComplete;
 import com.example.tolan.clases.ClssStaticGroup;
 import com.example.tolan.clases.ClssVolleySingleton;
 import com.example.tolan.models.ModelRecyclerItemSubnivel;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AdpRecycler_Child extends RecyclerView.Adapter<VHoldRecyclerChild_ItemSubnivel> {
@@ -58,15 +64,29 @@ public class AdpRecycler_Child extends RecyclerView.Adapter<VHoldRecyclerChild_I
     @Override
     public void onBindViewHolder(@NonNull VHoldRecyclerChild_ItemSubnivel holder, int position) {
 
+        String url = "https://db-bartolucci.herokuapp.com/actividad/bySubnivelAndDocente?idSubnivel=" + mData.get(position).getId() + "&idDocente=" + String.valueOf(ClssStaticGroup.iddocente);
+        cargarWebService(url, holder);
 
-        //holder.itemTextView.setText(items.get(position));
+        //Cargamos la imagen a su ImageView
+        Glide.with(mContext).load(mData.get(position).getImage()).into(holder.img_actividad);
+
+        //Seteamos su titulo.- Ej. Vocales
         holder.txt_actividad.setText(mData.get(position).getTitulo());
+
+        //Seteamos el id del Subnivel
         holder.txt_actividad.setId(mData.get(position).getId());
 
-        cargarWebService("https://db-bartolucci.herokuapp.com/actividad/bySubnivelAndDocente?idSubnivel="
-                + mData.get(position).getId()
-                + "&idDocente="
-                + String.valueOf(ClssStaticGroup.iddocente), holder);
+
+
+
+        //cargarImagenWebService(mData.get(position).getImage(), holder);
+
+
+        //holder.itemTextView.setText(items.get(position));
+
+        //
+        //
+
 
         //forma antigua de pasar las actividades
         //holder.lstitem_Activities = mData.get(position).getRecyclerItemActividades();
@@ -74,9 +94,9 @@ public class AdpRecycler_Child extends RecyclerView.Adapter<VHoldRecyclerChild_I
        /* Glide.with(mContext)
                 .load(mData.get(position).getImage())
                 .into(holder.img_actividad);*/
-        cargarImagenWebService(mData.get(position).getImage(), holder);
 
-/*
+
+        /*
         holder.cardView.setOnClickListener(v -> {
 
             //Llamado de las actividades de cada subnivel
@@ -193,7 +213,31 @@ public class AdpRecycler_Child extends RecyclerView.Adapter<VHoldRecyclerChild_I
         jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
+                //List<Integer> indices = new ArrayList<>();
+                try {
+                    for (int i = 0; i < response.length(); i++) {
+                        JSONObject item_actividad = response.getJSONObject(i);
+                        JSONArray historial = item_actividad.getJSONArray("historial");
+                        for (int j = 0; j < historial.length(); j++) {
+                            JSONObject item_historial = historial.getJSONObject(j);
+                            int idEstudiante = item_historial.getInt("idEstudiante");
+                            if (ClssStaticGroup.idestudiante == idEstudiante) {
+                                //indices.add(i);
+                                response.remove(i);
+                                i = -1;
+                                break;
+                            }
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
+                //System.out.println("Filtrado : " + response + " \n");
+                if (response.length() == 0) {
+                    holder.ry_fondo_superior_actividad.setBackgroundResource(R.drawable.fondo_superior_completado);
+                    //holder.cardView.setEnabled(false);
+                }
                 holder.lstitem_Activities = response;
             }
         }, new Response.ErrorListener() {
@@ -203,8 +247,10 @@ public class AdpRecycler_Child extends RecyclerView.Adapter<VHoldRecyclerChild_I
             }
         });
         ClssVolleySingleton.getIntanciaVolley(mContext).
-
                 addToRequestQueue(jsonArrayRequest);
+    }
+
+    public void removeItemsWithHistorial() {
 
     }
 }
