@@ -77,8 +77,6 @@ public class AdpRecycler_Child extends RecyclerView.Adapter<VHoldRecyclerChild_I
         holder.txt_actividad.setId(mData.get(position).getId());
 
 
-
-
         //cargarImagenWebService(mData.get(position).getImage(), holder);
 
 
@@ -213,32 +211,39 @@ public class AdpRecycler_Child extends RecyclerView.Adapter<VHoldRecyclerChild_I
         jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                //List<Integer> indices = new ArrayList<>();
-                try {
-                    for (int i = 0; i < response.length(); i++) {
-                        JSONObject item_actividad = response.getJSONObject(i);
-                        JSONArray historial = item_actividad.getJSONArray("historial");
-                        for (int j = 0; j < historial.length(); j++) {
-                            JSONObject item_historial = historial.getJSONObject(j);
-                            int idEstudiante = item_historial.getInt("idEstudiante");
-                            if (ClssStaticGroup.idestudiante == idEstudiante) {
-                                //indices.add(i);
-                                response.remove(i);
-                                i = -1;
-                                break;
+
+                if (response.length() > 0) {
+                    //List<Integer> indices = new ArrayList<>();
+                    try {
+                        for (int i = 0; i < response.length(); i++) {
+                            JSONObject item_actividad = response.getJSONObject(i);
+                            JSONArray historial = item_actividad.getJSONArray("historial");
+                            for (int j = 0; j < historial.length(); j++) {
+                                JSONObject item_historial = historial.getJSONObject(j);
+                                int idEstudiante = item_historial.getInt("idEstudiante");
+                                if (ClssStaticGroup.idestudiante == idEstudiante) {
+                                    //indices.add(i);
+                                    response.remove(i);
+                                    i = -1;
+                                    break;
+                                }
                             }
                         }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+
+                    //System.out.println("Filtrado : " + response + " \n");
+                    if (response.length() == 0) {
+                        holder.ry_fondo_superior_actividad.setBackgroundResource(R.drawable.fondo_superior_completado);
+                        //holder.cardView.setEnabled(false);
+                    }
+                    holder.lstitem_Activities = response;
+
+                } else {
+
                 }
 
-                //System.out.println("Filtrado : " + response + " \n");
-                if (response.length() == 0) {
-                    holder.ry_fondo_superior_actividad.setBackgroundResource(R.drawable.fondo_superior_completado);
-                    //holder.cardView.setEnabled(false);
-                }
-                holder.lstitem_Activities = response;
             }
         }, new Response.ErrorListener() {
             @Override

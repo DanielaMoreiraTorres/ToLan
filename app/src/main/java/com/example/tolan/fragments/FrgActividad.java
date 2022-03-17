@@ -30,6 +30,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.tolan.R;
 import com.example.tolan.adapters.AdpActividad;
+import com.example.tolan.clases.ClssConvertTextToSpeech;
 import com.example.tolan.clases.ClssVolleySingleton;
 import com.example.tolan.models.ModelActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -128,7 +129,7 @@ public class FrgActividad extends Fragment implements Response.Listener<JSONArra
     JsonArrayRequest jsonArrayRequest;
 
     private void cargarWebService() {
-        String url = "https://db-bartolucci.herokuapp.com/actividad";
+        String url = getString(R.string.urlBase) + "actividad";
         jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, this, this);
         ClssVolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonArrayRequest);
     }
@@ -143,8 +144,9 @@ public class FrgActividad extends Fragment implements Response.Listener<JSONArra
     }
 
     private Fragment fragment;
+
     public void onClick(View v) {
-        fragment= new FrgAddActividad("add");
+        fragment = new FrgAddActividad("add");
         getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
 
         //Intent intent = new Intent(getApplicationContext(), RegistrarActividades_Activity.class);
@@ -169,7 +171,7 @@ public class FrgActividad extends Fragment implements Response.Listener<JSONArra
                     Toast.LENGTH_LONG).show();
         } else if (error instanceof ParseError) {
             Toast.makeText(getContext(),
-                    "Oops. Parse Error! " + error.toString(),
+                    "Oops. Parse Error! " + error.getMessage(),
                     Toast.LENGTH_LONG).show();
         } else if (error instanceof NoConnectionError) {
             Toast.makeText(getContext(),
@@ -187,35 +189,44 @@ public class FrgActividad extends Fragment implements Response.Listener<JSONArra
 
             // Log.d("ERROR: ", error.toString());
         }
+
         ClssVolleySingleton.getIntanciaVolley(getContext()).getRequestQueue().stop();
+
         //progressBar.setVisibility(View.GONE);
     }
+
 
     @Override
     public void onResponse(JSONArray response) {
         courseModalArrayList = new ArrayList<>();
         try {
-            for (int i = 0; i < response.length(); i++) {
-                //Obtengo mi item de actividad del response
-                JSONObject activity_item = response.getJSONObject(i);
-                courseModalArrayList.add(new ModelActivity(
-                        activity_item.getInt("id"),
-                        activity_item.getInt("idSubnivel"),
-                        activity_item.getString("subnivel"),
-                        activity_item.getInt("idDocente"),
-                        activity_item.getString("docente"),
-                        activity_item.getString("nombre"),
-                        activity_item.getString("descripcion"),
-                        activity_item.getInt("recompensavalor"),
-                        activity_item.getString("tipo"),
-                        activity_item.getBoolean("activo")));
-            }
 
-            adapter = new AdpActividad(courseModalArrayList, this);
-            LinearLayoutManager manager = new LinearLayoutManager(getContext());
-            courseRV.setHasFixedSize(true);
-            courseRV.setLayoutManager(manager);
-            courseRV.setAdapter(adapter);
+            if (response.length() > 0) {
+                for (int i = 0; i < response.length(); i++) {
+                    //Obtengo mi item de actividad del response
+                    JSONObject activity_item = response.getJSONObject(i);
+                    courseModalArrayList.add(new ModelActivity(
+                            activity_item.getInt("id"),
+                            activity_item.getInt("idSubnivel"),
+                            activity_item.getString("subnivel"),
+                            activity_item.getInt("idDocente"),
+                            activity_item.getString("docente"),
+                            activity_item.getString("nombre"),
+                            activity_item.getString("descripcion"),
+                            activity_item.getInt("recompensavalor"),
+                            activity_item.getString("tipo"),
+                            activity_item.getBoolean("activo")));
+                }
+
+                adapter = new AdpActividad(courseModalArrayList, this);
+                LinearLayoutManager manager = new LinearLayoutManager(getContext());
+                courseRV.setHasFixedSize(true);
+                courseRV.setLayoutManager(manager);
+                courseRV.setAdapter(adapter);
+            } else {
+                Toast.makeText(getContext(), "No hay registros de actividades ", Toast.LENGTH_LONG).show();
+                ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("No hay registros de actividades");
+            }
 
         } catch (JSONException e) {
             e.printStackTrace();
