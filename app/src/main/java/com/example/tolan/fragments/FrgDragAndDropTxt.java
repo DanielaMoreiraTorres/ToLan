@@ -60,7 +60,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
-public class FrgDragAndDrop extends Fragment {
+public class FrgDragAndDropTxt extends Fragment {
 
     JSONArray jsonActivities;
     NavController navController;
@@ -90,12 +90,12 @@ public class FrgDragAndDrop extends Fragment {
     View textView;
     ViewGroup cardView, linearLayout;
 
-    public FrgDragAndDrop() {
+    public FrgDragAndDropTxt() {
         // Required empty public constructor
     }
 
-    public static FrgDragAndDrop newInstance(String param1, String param2) {
-        FrgDragAndDrop fragment = new FrgDragAndDrop();
+    public static FrgDragAndDropTxt newInstance(String param1, String param2) {
+        FrgDragAndDropTxt fragment = new FrgDragAndDropTxt();
         Bundle args = new Bundle();
         return fragment;
     }

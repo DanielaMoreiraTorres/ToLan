@@ -43,7 +43,7 @@ public class AdpOptionDragAndDropTxt extends RecyclerView.Adapter<AdpOptionDragA
     @Override
     public AdpOptionDragAndDropTxt.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflr = LayoutInflater.from(ccontext);
-        View view = inflr.inflate(R.layout.item_option_arrastrar_soltar_txt,null,false);
+        View view = inflr.inflate(R.layout.item_option_drag_and_drop_txt,null,false);
         view.setOnClickListener(this);
         view.setOnLongClickListener(this);
         return new ViewHolder(view);

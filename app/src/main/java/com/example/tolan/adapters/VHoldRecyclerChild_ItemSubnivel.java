@@ -132,6 +132,15 @@ public class VHoldRecyclerChild_ItemSubnivel extends RecyclerView.ViewHolder imp
                         navController.navigate(R.id.fragmentArrastrarSoltar, bundle);
                         break;
 
+                    case "Arrastrar y soltar imagen":
+
+                        //Toast.makeText(v.getContext(), "La actividad [" +actividad+"] no esta configurada aun", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(v.getContext(), actividad, Toast.LENGTH_SHORT).show();
+
+                        //navController.popBackStack(R.id.fragmentReconocerFiguras, true);
+                        navController.navigate(R.id.fragmentDragAndDropImg, bundle);
+                        break;
+
                     default:
                         //Toast.makeText(v.getContext(), "Revise que la actividad :" + actividad + " esté configurada por favor", Toast.LENGTH_SHORT).show();
                         System.out.println("Revise que la actividad :" + actividad + " esté configurada por favor");

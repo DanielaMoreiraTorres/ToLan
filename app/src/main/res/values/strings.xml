@@ -134,6 +134,7 @@
         <item>Seleccionar pares imagen con texto</item>
         <item>Seleccionar pares imagen con imagen</item>
         <item>Arrastrar y soltar texto</item>
+        <item>Arrastrar y soltar imagen</item>
     </string-array>
 
     <string-array name="tiposMultimedia_list">

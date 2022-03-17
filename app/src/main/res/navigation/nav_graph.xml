@@ -32,7 +32,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentArrastrarSoltar"
-        android:name="com.example.tolan.fragments.FrgDragAndDrop"
+        android:name="com.example.tolan.fragments.FrgDragAndDropTxt"
         android:label="fragment_ArrastrarSoltar"
         tools:layout="@layout/fragment_drag_and_drop">
         <!--
@@ -73,4 +73,9 @@
         android:name="com.example.tolan.fragments.FrgSeleccionarParesImagenTexto"
         android:label="fragment_seleccionar_pares_imagen_texto"
         tools:layout="@layout/fragment_seleccionar_pares_imagen_texto" />
+    <fragment
+        android:id="@+id/fragmentDragAndDropImg"
+        android:name="com.example.tolan.fragments.FrgDragAndDropImg"
+        android:label="fragment_drag_and_drop_img"
+        tools:layout="@layout/fragment_drag_and_drop_img" />
 </navigation>

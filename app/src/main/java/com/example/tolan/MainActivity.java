@@ -13,28 +13,53 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.tolan.adapters.VHoldRecyclerChild_ItemSubnivel;
 import com.example.tolan.clases.ClssConvertTextToSpeech;
+import com.example.tolan.clases.ClssPreferences;
+import com.example.tolan.clases.ClssStaticUser;
+import com.example.tolan.clases.ClssVolleySingleton;
+import com.example.tolan.controller.ControllerUser;
 import com.example.tolan.fragments.FrgContact;
 import com.example.tolan.fragments.FrgLogin;
 import com.example.tolan.fragments.FrgWelcome;
 import com.example.tolan.models.ModelUser;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
     private Fragment fragment;
+    private ControllerUser controllerUser;
+    ProgressBar progressBar;
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private int aux = 0, auxInfo = 0;
+    FrgLogin login = new FrgLogin();
+    private String usuario = "", clave = "";
     //static ClssConvertTextToSpeech tts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        progressBar = findViewById(R.id.progressBar);
+        controllerUser = new ControllerUser(this, progressBar);
+        usuario = ClssPreferences.getIntancia(this).leerValor("user");
+        clave = ClssPreferences.getIntancia(this).leerValor("password");
 
         //ArrarList de permisos
         ArrayList<String> permisos = new ArrayList<String>();
@@ -53,8 +78,14 @@ public class MainActivity extends AppCompatActivity {
         //tts = new ClssConvertTextToSpeech();
         //tts.init(this);
 
-        fragment = new FrgWelcome();
-        getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
+        if(usuario.length() > 0 & clave.length() > 0) {
+            progressBar.setVisibility(View.VISIBLE);
+            controllerUser.getUsuario(usuario, clave);
+        }
+        else {
+            fragment = new FrgWelcome();
+            getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
+        }
     }
 
     private void getPermission(ArrayList<String> permisosSolicitados)
@@ -87,6 +118,8 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }*/
 
+
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
@@ -116,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
         }
         if(id == R.id.btnLogIn) {
             ClssConvertTextToSpeech.getIntancia(this).reproduce("Cerrar sesión");
+            ClssPreferences.getIntancia(this).resetValor();
             fragment = new FrgLogin();
             int i = getSupportFragmentManager().getBackStackEntryCount();
             if(aux != 0)
