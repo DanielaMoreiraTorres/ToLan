@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,6 +38,7 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.tolan.FrgEditContent;
 import com.example.tolan.R;
 import com.example.tolan.clases.ClssVolleySingleton;
 import com.example.tolan.dialogs.Diag_Frg_CargaMultimedia;
@@ -49,6 +51,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class FrgContent extends Fragment {
@@ -93,6 +96,8 @@ public class FrgContent extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 modelActivitySelected = lst_activities.get(position);
+
+                loadContents_fromActivity("https://db-bartolucci.herokuapp.com/contenido/byActividad?idActividad=" + modelActivitySelected.getId());
                 //Toast.makeText(getContext(), modelActivitySelected.getId() + modelActivitySelected.getDescripcion() + modelActivitySelected.getNombre(), Toast.LENGTH_LONG).show();
             }
         });
@@ -287,6 +292,72 @@ public class FrgContent extends Fragment {
     }
 
 
+    public void loadContents_fromActivity(String urlR) {
+        jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, urlR, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            //Vaciamos la lista para cada listado de contenidos
+                            lstContenidos.clear();
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject content_item = response.getJSONObject(i);
+                                ModelContenido modelContenido = new ModelContenido(content_item.getInt("id"),
+                                        content_item.getString("descripcion"),
+                                        content_item.getBoolean("enunciado"),
+                                        content_item.getBoolean("respuesta"));
+                                lstContenidos.add(modelContenido);
+                                adaptadorContenido.notifyDataSetChanged();
+                                //content_item.getBoolean("activo");
+                                //content_item.getJSONArray("multimedia");
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        if (error instanceof NetworkError) {
+                            Toast.makeText(getContext(),
+                                    "Oops. Network Error! " + error.toString(),
+                                    Toast.LENGTH_LONG).show();
+                        } else if (error instanceof ServerError) {
+                            Toast.makeText(getContext(),
+                                    "Oops. Server Error! " + error.toString(),
+                                    Toast.LENGTH_LONG).show();
+                        } else if (error instanceof AuthFailureError) {
+                            Toast.makeText(getContext(),
+                                    "Oops. Auth FailureError! " + error.toString(),
+                                    Toast.LENGTH_LONG).show();
+                        } else if (error instanceof ParseError) {
+                            Toast.makeText(getContext(),
+                                    "Oops. Parse Error! " + error.toString(),
+                                    Toast.LENGTH_LONG).show();
+                        } else if (error instanceof NoConnectionError) {
+                            Toast.makeText(getContext(),
+                                    "Oops. NoConnection Error! " + error.toString(),
+                                    Toast.LENGTH_LONG).show();
+                        } else if (error instanceof TimeoutError) {
+                            Toast.makeText(getContext(),
+                                    "Oops. Timeout error! " + error.toString(),
+                                    Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(getContext(),
+                                    "No se puede conectar " + error.toString(), Toast.LENGTH_LONG).show();
+                        }
+                        ClssVolleySingleton.getIntanciaVolley(getContext()).getRequestQueue().stop();
+                    }
+                });
+        ClssVolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonArrayRequest);
+
+        //limpiar();
+
+    }
+
+
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.menu_toolbar, menu);
@@ -310,8 +381,23 @@ public class FrgContent extends Fragment {
             holder.fabtnAñadirMultimedia.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Diag_Frg_CargaMultimedia diag_frg_cargaMultimedia = new Diag_Frg_CargaMultimedia(lstContenidos.get(position).getIdContenido().toString());
+                    Diag_Frg_CargaMultimedia diag_frg_cargaMultimedia = new Diag_Frg_CargaMultimedia(lstContenidos.get(position).getIdContenido().toString(), lstContenidos.get(position).getDescripcion());
                     diag_frg_cargaMultimedia.show(getParentFragmentManager(), "Registro de contenido multimedia");
+                }
+            });
+
+            holder.cardview_contenido.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    //getFragmentManager().beginTransaction().setPrimaryNavigationFragment(getParentFragment());
+                    //List<Fragment> lst  = getFragmentManager().getPrimaryNavigationFragment().getChildFragmentManager().getFragments();
+
+                    Fragment fragment = new FrgEditContent(lst_activities,lstContenidos.get(position),modelActivitySelected);
+                    getFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
+
+
+                    //Toast.makeText(getActivity().getApplicationContext(), "Holi", Toast.LENGTH_LONG).show();
                 }
             });
         }
@@ -326,6 +412,7 @@ public class FrgContent extends Fragment {
             CheckBox chkEnunciado, chkRespuesta;
             TextView txt_DescripctionActividad, txt_IdActividad;
             FloatingActionButton fabtnAñadirMultimedia;
+            CardView cardview_contenido;
 
             public AdaptadorContenidoHolder(@NonNull View itemView) {
                 super(itemView);
@@ -335,6 +422,7 @@ public class FrgContent extends Fragment {
                 txt_DescripctionActividad = itemView.findViewById(R.id.txt_DescripctionActividad);
                 txt_IdActividad = itemView.findViewById(R.id.txt_IdActividad);
                 fabtnAñadirMultimedia = itemView.findViewById(R.id.fabtnAñadirMultimedia);
+                cardview_contenido = itemView.findViewById(R.id.cardview_contenido);
                 itemView.setOnClickListener(this);
             }
 

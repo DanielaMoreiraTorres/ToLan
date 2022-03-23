@@ -7,87 +7,100 @@
     android:layout_marginBottom="5dp"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/ryl_superior"
-        android:layout_width="match_parent"
+
+    <androidx.cardview.widget.CardView
+
+        android:id="@+id/cardview_contenido"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/borde"
+        android:layout_margin="5dp"
+        android:layout_weight="1"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
         android:gravity="center_horizontal"
         android:padding="5dp"
-        android:textAlignment="center">
+        android:textAlignment="center"
+        app:cardElevation="0dp">
 
-        <CheckBox
-            android:id="@+id/chkEnunciado"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/ryl_superior"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="60dp"
-            android:layout_marginTop="-4dp"
-            android:clickable="false"
-            android:gravity="center"
-            android:minHeight="48dp"
-            android:padding="5dp"
-            android:text="¿Es enunciado?"
-            android:textColor="#0F86C2"
-            android:textSize="12dp"
-            android:textStyle="bold"
-            tools:ignore="TouchTargetSizeCheck" />
+            android:background="@drawable/borde">
 
-        <CheckBox
-            android:id="@+id/chkRespuesta"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="-4dp"
-            android:clickable="false"
-            android:gravity="center"
-            android:minHeight="48dp"
-            android:padding="5dp"
-            android:text="¿Es respuesta?"
-            android:textColor="#0F86C2"
-            android:textSize="12dp"
-            android:textStyle="bold"
-            tools:ignore="TouchTargetSizeCheck" />
+            <CheckBox
+                android:id="@+id/chkEnunciado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="60dp"
+                android:layout_marginTop="-4dp"
+                android:enabled="false"
+                android:gravity="center"
+                android:minHeight="48dp"
+                android:padding="5dp"
+                android:text="¿Es enunciado?"
+                android:textColor="#0F86C2"
+                android:textSize="12dp"
+                android:textStyle="bold"
+                tools:ignore="TouchTargetSizeCheck" />
 
-        <TextView
-            android:id="@+id/txt_DescripctionActividad"
-            android:layout_width="330dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/chkRespuesta"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginBottom="10dp"
-            android:maxLength="255"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore " />
+            <CheckBox
+                android:id="@+id/chkRespuesta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="-4dp"
+                android:enabled="false"
+                android:gravity="center"
+                android:minHeight="48dp"
+                android:padding="5dp"
+                android:text="¿Es respuesta?"
+                android:textColor="#0F86C2"
+                android:textSize="12dp"
+                android:textStyle="bold"
+                tools:ignore="TouchTargetSizeCheck" />
 
-        <TextView
-            android:id="@+id/txt_IdActividad"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/chkRespuesta"
-            android:layout_alignParentRight="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="@font/baloo"
-            android:gravity="center"
-            android:text="999" />
+            <TextView
+                android:id="@+id/txt_DescripctionActividad"
+                android:layout_width="330dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/chkRespuesta"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_toLeftOf="@id/txt_IdActividad"
+                android:maxLength="255"
+                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore " />
 
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabtnAñadirMultimedia"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            app:backgroundTint="@color/principal"
-            app:fabSize="mini"
-            app:srcCompat="@drawable/ic_baseline_photo_library"
-            app:tint="@color/white"
-            tools:ignore="SpeakableTextPresentCheck" />
+            <TextView
+                android:id="@+id/txt_IdActividad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/chkRespuesta"
+                android:layout_alignParentRight="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/baloo"
+                android:gravity="center"
+                android:text="999" />
 
 
-    </RelativeLayout>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fabtnAñadirMultimedia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                app:backgroundTint="@color/principal"
+                app:fabSize="mini"
+                app:srcCompat="@drawable/ic_baseline_photo_library"
+                app:tint="@color/white"
+                tools:ignore="SpeakableTextPresentCheck" />
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
 
 
 </LinearLayout>

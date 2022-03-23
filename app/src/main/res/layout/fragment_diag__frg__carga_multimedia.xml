@@ -9,23 +9,44 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="10dp">
+        android:padding="5dp">
 
-        <TextView
-            android:id="@+id/txtIdContenido"
+        <RelativeLayout
+            android:id="@+id/ry_contenidos"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:fontFamily="@font/baloo"
-            android:text="id"
-            android:textSize="25dp" />
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtIdContenido"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:drawableTop="@drawable/icon_key"
+                android:fontFamily="@font/baloo"
+                android:text="id"
+                android:textAlignment="center"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/txtContenido"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_toLeftOf="@id/txtIdContenido"
+                android:fontFamily="@font/baloo"
+                android:text="contenido"
+                android:textAlignment="center"
+                android:textSize="18dp" />
+
+        </RelativeLayout>
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_descripcion_multimedia"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/txtIdContenido"
+            android:layout_below="@id/ry_contenidos"
             android:layout_marginBottom="10dp"
             android:hint="Descripción de multimedia">
 
@@ -67,7 +88,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/til_lst_tipoMultimedia"
             android:layout_marginBottom="10dp"
-            android:text="¿Es contenido de apoyo?" />
+            android:checked="true"
+            android:text="¿Es contenido de actividad?" />
 
         <ImageView
             android:id="@+id/imgMultimedia"
@@ -102,8 +124,8 @@
             android:layout_gravity="center"
             android:layout_marginTop="0dp"
             android:layout_marginBottom="10dp"
-            android:fontFamily="@font/baloo"
             android:backgroundTint="@color/verde"
+            android:fontFamily="@font/baloo"
             android:minHeight="48dp"
             android:text="Registrar"
             android:textAlignment="center"

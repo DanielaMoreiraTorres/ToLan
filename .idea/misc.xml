@@ -189,9 +189,14 @@
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/activity_navigation_graph_padre.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/activity_order_sequences.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/activity_select_pairs_img_img.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_actividades.xml" value="0.19166666666666668" />
+        <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_add_actividad.xml" value="0.19166666666666668" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_arrastrar_soltar.xml" value="0.25" />
+        <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_content.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_diag__frg__carga_multimedia.xml" value="0.25" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_diag__frg__opcion_incorrecta.xml" value="0.22" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_diag_ayuda_especial.xml" value="0.22" />
+        <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_edit_content.xml" value="0.33" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_grafomotricidad.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_identificar_respuesta_imagen.xml" value="0.19010416666666666" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_identificar_respuesta_palabra.xml" value="0.20416666666666666" />
@@ -205,6 +210,7 @@
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_seleccionar_pares_imagen_imagen.xml" value="0.33" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_seleccionar_pares_imagen_texto.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_welcome.xml" value="0.17592592592592593" />
+        <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/item_contenido.xml" value="0.33" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/item_image_seleccionar_pares_imagen_imagen.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/item_option_reconocer_figura.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/item_sublevel.xml" value="0.20416666666666666" />

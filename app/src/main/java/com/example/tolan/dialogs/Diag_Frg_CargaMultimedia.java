@@ -63,9 +63,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Diag_Frg_CargaMultimedia extends DialogFragment {
 
     Activity actividad;
-    TextView txtIdContenido;
+    TextView txtIdContenido, txtContenido;
 
-    String idContenido;
+    String idContenido, contenido;
     FloatingActionButton fabtn_seleccionarimg;
     private Uri imageUri;
     public static final int PICK_IMAGE = 1;
@@ -77,8 +77,9 @@ public class Diag_Frg_CargaMultimedia extends DialogFragment {
     EditText descripcion_multimedia;
     CheckBox chkIsEnunciado;
 
-    public Diag_Frg_CargaMultimedia(String idContenido) {
+    public Diag_Frg_CargaMultimedia(String idContenido, String contenido) {
         this.idContenido = idContenido;
+        this.contenido = contenido;
     }
 
     @NonNull
@@ -107,6 +108,10 @@ public class Diag_Frg_CargaMultimedia extends DialogFragment {
         chkIsEnunciado = v.findViewById(R.id.chkIsEnunciado);
         txtIdContenido = v.findViewById(R.id.txtIdContenido);
         txtIdContenido.setText(idContenido);
+
+        txtContenido = v.findViewById(R.id.txtContenido);
+        txtContenido.setText(contenido);
+
         fabtn_seleccionarimg = v.findViewById(R.id.fabtn_seleccionarimg);
         imgMultimedia = v.findViewById(R.id.imgMultimedia);
         fabtn_seleccionarimg.setOnClickListener(this::openGallery);
