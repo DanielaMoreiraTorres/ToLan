@@ -207,38 +207,54 @@ public class AdpRecycler_Child extends RecyclerView.Adapter<VHoldRecyclerChild_I
     // RequestQueue request;
     JsonArrayRequest jsonArrayRequest;
 
+    private JSONArray original_response;
+
     private void cargarWebService(String url, VHoldRecyclerChild_ItemSubnivel holder) {
         jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
+                original_response = new JSONArray();
 
                 if (response.length() > 0) {
+
                     //List<Integer> indices = new ArrayList<>();
+
+
+                    //Bloquear los subniveles ya completados
                     try {
                         for (int i = 0; i < response.length(); i++) {
                             JSONObject item_actividad = response.getJSONObject(i);
                             JSONArray historial = item_actividad.getJSONArray("historial");
+
+                            //Antes de removerlo lo añado a la lista
+                            original_response.put(response.get(i));
+
                             for (int j = 0; j < historial.length(); j++) {
                                 JSONObject item_historial = historial.getJSONObject(j);
                                 int idEstudiante = item_historial.getInt("idEstudiante");
                                 if (ClssStaticGroup.idestudiante == idEstudiante) {
                                     //indices.add(i);
+
                                     response.remove(i);
+                                    //num_Actividades++;
                                     i = -1;
                                     break;
                                 }
                             }
+
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
 
-                    //System.out.println("Filtrado : " + response + " \n");
+                    //En lugar de comparar si es cero, es decir que todas las actividades fueron completadas
                     if (response.length() == 0) {
+                        //if (response.length() == num_Actividades) {
                         holder.ry_fondo_superior_actividad.setBackgroundResource(R.drawable.fondo_superior_completado);
                         //holder.cardView.setEnabled(false);
                     }
-                    holder.lstitem_Activities = response;
+                    //holder.lstitem_Activities = response;
+                    holder.lstitem_Activities = original_response;
 
                 } else {
 
