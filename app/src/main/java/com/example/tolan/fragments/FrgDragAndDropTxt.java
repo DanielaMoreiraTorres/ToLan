@@ -56,6 +56,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
@@ -72,8 +74,10 @@ public class FrgDragAndDropTxt extends Fragment {
     private Button btnContinuar;
     private ListView lstLista;
     private RecyclerView rcvOptions;
+    private ImageView imgAudio;
     private LinearLayout state;
     ModelContent modelContent;
+    ModelContent enun = new ModelContent();
     private JSONArray contenido;
     List<ModelContent> modelContentsEnun;
     ArrayList<ModelContent> modelContentsOp;
@@ -143,6 +147,7 @@ public class FrgDragAndDropTxt extends Fragment {
             state.setVisibility(View.GONE);
             destino = view.findViewById(R.id.destino);
             lstLista = view.findViewById(R.id.lstEnunciado);
+            imgAudio = view.findViewById(R.id.imgAudio);
             rcvOptions = (RecyclerView) view.findViewById(R.id.rcvOption);
             rcvOptions.setLayoutManager(new GridLayoutManager(getContext(), 2));
             contenido = jsonActivities.getJSONObject(0).getJSONArray("contenido");
@@ -153,6 +158,12 @@ public class FrgDragAndDropTxt extends Fragment {
             msg_true = getResources().getStringArray(R.array.msg_true);
             modelContent = new ModelContent();
             modelContent.MapContenido(contenido, modelContentsEnun, modelContentsOp, respuestas);
+            Collections.sort(modelContentsEnun, new Comparator<ModelContent>() {
+                @Override
+                public int compare(ModelContent e1, ModelContent e2) {
+                    return new Integer(e1.getId()).compareTo(new Integer(e2.getId()));
+                }
+            });
             if (modelContentsEnun.size() > 0 & modelContentsOp.size() > 0 & respuestas.size() > 0) {
                 RespuestasOk();
             } else {
@@ -180,6 +191,15 @@ public class FrgDragAndDropTxt extends Fragment {
         }
     }
 
+    private void ReproduceEnunciado(){
+        int count = lstLista.getCount();
+        for(int c = 0; c < count; c++){
+            enun = ((ModelContent) lstLista.getItemAtPosition(c));
+            String mensaje = enun.getDescripcion();
+            ClssConvertTextToSpeech.getIntancia(getContext()).reproduce(mensaje);
+        }
+    }
+
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.menu_toolbar, menu);
@@ -196,6 +216,14 @@ public class FrgDragAndDropTxt extends Fragment {
                 destino.setTag("respuesta");
             adpEnunciado = new AdpStatement(getContext(), modelContentsEnun);
             lstLista.setAdapter(adpEnunciado);
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    ReproduceEnunciado();
+                }
+            }, 1200);
+            imgAudio.setOnClickListener(v -> ReproduceEnunciado());
             adpOptionArrastrarSoltarTxt = new AdpOptionDragAndDropTxt(getContext(), modelContentsOp, respuestas);
             rcvOptions.setAdapter(adpOptionArrastrarSoltarTxt);
             adpOptionArrastrarSoltarTxt.setOnClickListener(new View.OnClickListener() {

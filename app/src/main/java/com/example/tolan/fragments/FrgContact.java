@@ -226,7 +226,7 @@ public class FrgContact extends Fragment {
             List<ModelContact> listC = new ArrayList<ModelContact>();
             AdpContact adpContactC = new AdpContact(listC);
             rcvC.setAdapter(adpContactC);
-            ModelContact cc1 = new ModelContact("Félix Mesa Vélez");
+            ModelContact cc1 = new ModelContact("Félix Meza Vélez");
             final List<ModelContact> finalListC = new ArrayList<ModelContact>();
             finalListC.add(cc1);
             new Handler().postDelayed(new Runnable() {

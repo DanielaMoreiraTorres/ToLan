@@ -40,7 +40,7 @@ public class ControllerUser {
     private ProgressBar progressBar;
     private Fragment fragment;
     JSONObject grupo = new JSONObject();
-    String docente;
+    String docente, nombre;
     int idDocente = 0;
 
     public ControllerUser(Context context, ProgressBar progressBar) {
@@ -159,31 +159,42 @@ public class ControllerUser {
                     ClssConvertTextToSpeech.getIntancia(context).reproduce("Bienvenido Admin");
                 }
             }, 1500);
-        } else if (muser.getTipousuario().trim().equals("DC")) {
-            fragment = new FrgMenuTeacher();
-            ClssStaticGroup.iddocente = idDocente;
-            ClssStaticGroup.docente = docente;
-            Toast.makeText(context, "Bienvenido " + ClssStaticGroup.docente, Toast.LENGTH_SHORT).show();
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    //tts.reproduce("Bienvenido " + ClssStaticGroup.docente);
-                    ClssConvertTextToSpeech.getIntancia(context).reproduce("Bienvenido " + ClssStaticGroup.docente);
-                }
-            }, 1500);
         } else {
-            fragment = new ActivityHomeUser();
-            sendDataGroup(grupo);
-            Toast.makeText(context, "Bienvenido " + ClssStaticGroup.estudiante, Toast.LENGTH_SHORT).show();
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    ClssConvertTextToSpeech.getIntancia(context).reproduce("Bienvenido " + ClssStaticGroup.estudiante);
+            for (int i = 0; i < ClssStaticUser.nombres.length(); i++) {
+                String str = ClssStaticUser.nombres.substring(i,i+1);
+                if (str.equals(" ")) {
+                    nombre = ClssStaticUser.nombres.substring(0,i);
+                    break;
                 }
-            }, 1500);
-            //b.putString("grupo", grupo.toString());
+            }
+            if(nombre.length() == 0)
+                nombre = ClssStaticUser.nombres;
+            if (muser.getTipousuario().trim().equals("DC")) {
+                fragment = new FrgMenuTeacher();
+                ClssStaticGroup.iddocente = idDocente;
+                ClssStaticGroup.docente = docente;
+                Toast.makeText(context, "Bienvenido " + nombre, Toast.LENGTH_SHORT).show();
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //tts.reproduce("Bienvenido " + ClssStaticGroup.docente);
+                        ClssConvertTextToSpeech.getIntancia(context).reproduce("Bienvenido " + nombre);
+                    }
+                }, 1500);
+            } else {
+                fragment = new ActivityHomeUser();
+                sendDataGroup(grupo);
+                Toast.makeText(context, "Bienvenido " + nombre, Toast.LENGTH_SHORT).show();
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ClssConvertTextToSpeech.getIntancia(context).reproduce("Bienvenido " + nombre);
+                    }
+                }, 1500);
+                //b.putString("grupo", grupo.toString());
+            }
         }
         //Creamos la información a pasar entre fragments
         b.putString("user", muser.getUsuario().trim());

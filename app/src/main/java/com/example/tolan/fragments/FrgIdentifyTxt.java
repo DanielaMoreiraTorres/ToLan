@@ -52,6 +52,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
@@ -67,8 +69,10 @@ public class FrgIdentifyTxt extends Fragment implements View.OnClickListener {
     private ScrollView scrollView;
     private Button btnContinuar;
     ModelContent modelContent;
+    ModelContent enun = new ModelContent();
     private ListView lstLista;
     private RecyclerView rcvOptions;
+    private ImageView imgAudio;
     private CardView cvSel;
     private LinearLayout lySel, state;
     private JSONArray contenido;
@@ -136,6 +140,7 @@ public class FrgIdentifyTxt extends Fragment implements View.OnClickListener {
             state = view.findViewById(R.id.state);
             state.setVisibility(View.GONE);
             lstLista = view.findViewById(R.id.lstEnunciado);
+            imgAudio = view.findViewById(R.id.imgAudio);
             rcvOptions = (RecyclerView) view.findViewById(R.id.rcvTxt);
             rcvOptions.setLayoutManager(new GridLayoutManager(getContext(), 2));
             contenido = jsonActivities.getJSONObject(0).getJSONArray("contenido");
@@ -146,9 +151,23 @@ public class FrgIdentifyTxt extends Fragment implements View.OnClickListener {
             msg_true = getResources().getStringArray(R.array.msg_true);
             modelContent = new ModelContent();
             modelContent.MapContenido(contenido, modelContentsEnun, modelContentsOp, respuestas);
+            Collections.sort(modelContentsEnun, new Comparator<ModelContent>() {
+                @Override
+                public int compare(ModelContent e1, ModelContent e2) {
+                    return new Integer(e1.getId()).compareTo(new Integer(e2.getId()));
+                }
+            });
             if (modelContentsEnun.size() > 0 & modelContentsOp.size() > 0 & respuestas.size() > 0) {
                 adpEnunciado = new AdpStatement(getContext(), modelContentsEnun);
                 lstLista.setAdapter(adpEnunciado);
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ReproduceEnunciado();
+                    }
+                }, 1200);
+                imgAudio.setOnClickListener(v -> ReproduceEnunciado());
                 adpOptiosIdentifyTxt = new AdpOptionIdentifyTxt(getContext(), modelContentsOp);
                 rcvOptions.setAdapter(adpOptiosIdentifyTxt);
                 adpOptiosIdentifyTxt.setOnClickListener(this);
@@ -174,6 +193,15 @@ public class FrgIdentifyTxt extends Fragment implements View.OnClickListener {
             }
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void ReproduceEnunciado(){
+        int count = lstLista.getCount();
+        for(int c = 0; c < count; c++){
+            enun = ((ModelContent) lstLista.getItemAtPosition(c));
+            String mensaje = enun.getDescripcion();
+            ClssConvertTextToSpeech.getIntancia(getContext()).reproduce(mensaje);
         }
     }
 

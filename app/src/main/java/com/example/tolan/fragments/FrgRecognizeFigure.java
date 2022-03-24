@@ -53,6 +53,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
@@ -70,7 +72,7 @@ public class FrgRecognizeFigure extends Fragment implements View.OnClickListener
     private ListView lstLista;
     private RecyclerView rcvOption;
     private RelativeLayout rlSel;
-    private ImageView img;
+    private ImageView img, imgAudio;
     private LinearLayout lySel, state;
     ModelContent modelContent;
     private JSONArray contenido;
@@ -84,6 +86,7 @@ public class FrgRecognizeFigure extends Fragment implements View.OnClickListener
     private AdpStatement adpEnunciado;
     private AdpOptionRecognizeImg adpOptionReconocerImg;
     ModelContent opSelected = new ModelContent();
+    ModelContent enun = new ModelContent();
     private String url;
     Boolean respuesta = false;
 
@@ -140,6 +143,7 @@ public class FrgRecognizeFigure extends Fragment implements View.OnClickListener
             state = view.findViewById(R.id.state);
             state.setVisibility(View.GONE);
             img = view.findViewById(R.id.imgOp);
+            imgAudio = view.findViewById(R.id.imgAudio);
             lstLista = view.findViewById(R.id.lstEnunciado);
             rcvOption = (RecyclerView) view.findViewById(R.id.rcvOption);
             rcvOption.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -151,9 +155,23 @@ public class FrgRecognizeFigure extends Fragment implements View.OnClickListener
             msg_true = getResources().getStringArray(R.array.msg_true);
             modelContent = new ModelContent();
             MapContenido();
+            Collections.sort(modelContentsEnun, new Comparator<ModelContent>() {
+                @Override
+                public int compare(ModelContent e1, ModelContent e2) {
+                    return new Integer(e1.getId()).compareTo(new Integer(e2.getId()));
+                }
+            });
             if (modelContentsEnun.size() > 0 & modelContentsOp.size() > 0 & respuestas.size() > 0) {
                 adpEnunciado = new AdpStatement(getContext(), modelContentsEnun);
                 lstLista.setAdapter(adpEnunciado);
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ReproduceEnunciado();
+                    }
+                }, 1200);
+                imgAudio.setOnClickListener(v -> ReproduceEnunciado());
                 Glide.with(getContext())
                         .load(imgEnunciado.getMultimedia().getJSONObject(0).getString("url"))
                         .into(img);
@@ -211,6 +229,15 @@ public class FrgRecognizeFigure extends Fragment implements View.OnClickListener
             }
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void ReproduceEnunciado(){
+        int count = lstLista.getCount();
+        for(int c = 0; c < count; c++){
+            enun = ((ModelContent) lstLista.getItemAtPosition(c));
+            String mensaje = enun.getDescripcion();
+            ClssConvertTextToSpeech.getIntancia(getContext()).reproduce(mensaje);
         }
     }
 

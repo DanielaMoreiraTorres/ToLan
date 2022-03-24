@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
@@ -58,7 +60,12 @@ public class FrgLogin extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_login, container, false);
+        return inflater.inflate(R.layout.fragment_login, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         try {
             resetClssStatic();
             ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
@@ -82,7 +89,6 @@ public class FrgLogin extends Fragment {
             register.setOnClickListener(v -> RegisterUs());
         } catch (Exception e) {
         }
-        return view;
     }
 
     private void resetClssStatic() {
@@ -101,6 +107,7 @@ public class FrgLogin extends Fragment {
         ClssConvertTextToSpeech.getIntancia(getContext()).reproduce(btnLogin.getText().toString());
         if (validate.Validar(user, null, Lusuario, Merror) & validate.Validar(password, null, Lclave, Merror)) {
             progressBar.setVisibility(View.VISIBLE);
+            controllerUser.getUsuario(user.getText().toString().trim(),password.getText().toString().trim());
             controllerUser.getUsuario(user.getText().toString().trim(),password.getText().toString().trim());
         } else
             ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("Datos no válidos");

@@ -15,29 +15,17 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.tolan.adapters.VHoldRecyclerChild_ItemSubnivel;
 import com.example.tolan.clases.ClssConvertTextToSpeech;
 import com.example.tolan.clases.ClssPreferences;
-import com.example.tolan.clases.ClssStaticUser;
-import com.example.tolan.clases.ClssVolleySingleton;
 import com.example.tolan.controller.ControllerUser;
 import com.example.tolan.fragments.FrgContact;
 import com.example.tolan.fragments.FrgLogin;
 import com.example.tolan.fragments.FrgWelcome;
 import com.example.tolan.models.ModelUser;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,45 +35,40 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private int aux = 0, auxInfo = 0;
-    FrgLogin login = new FrgLogin();
     private String usuario = "", clave = "";
-    //static ClssConvertTextToSpeech tts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        progressBar = findViewById(R.id.progressBar);
-        controllerUser = new ControllerUser(this, progressBar);
-        usuario = ClssPreferences.getIntancia(this).leerValor("user");
-        clave = ClssPreferences.getIntancia(this).leerValor("password");
-
-        //ArrarList de permisos
-        ArrayList<String> permisos = new ArrayList<String>();
-        permisos.add(Manifest.permission.INTERNET);
-        permisos.add(Manifest.permission.CAMERA);
-        permisos.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        permisos.add(Manifest.permission.READ_EXTERNAL_STORAGE);
-        getPermission(permisos);
-
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
-        getSupportActionBar().hide();
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-
-        //tts = new ClssConvertTextToSpeech();
-        //tts.init(this);
-
-        if(usuario.length() > 0 & clave.length() > 0) {
-            progressBar.setVisibility(View.VISIBLE);
-            controllerUser.getUsuario(usuario, clave);
-        }
-        else {
-            fragment = new FrgWelcome();
-            getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
-        }
+        try {
+            progressBar = findViewById(R.id.progressBar);
+            controllerUser = new ControllerUser(this, progressBar);
+            usuario = ClssPreferences.getIntancia(this).leerValor("user");
+            clave = ClssPreferences.getIntancia(this).leerValor("password");
+            //ArrarList de permisos
+            ArrayList<String> permisos = new ArrayList<String>();
+            permisos.add(Manifest.permission.INTERNET);
+            permisos.add(Manifest.permission.CAMERA);
+            permisos.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            permisos.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+            getPermission(permisos);
+            toolbar = findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setTitle("");
+            getSupportActionBar().hide();
+            drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+            //tts = new ClssConvertTextToSpeech()
+            //tts.init(this);
+            if (usuario.length() > 0 & clave.length() > 0) {
+                progressBar.setVisibility(View.VISIBLE);
+                controllerUser.getUsuario(usuario, clave);
+            } else {
+                fragment = new FrgWelcome();
+                getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
+            }
+        } catch (Exception e) {}
     }
 
     private void getPermission(ArrayList<String> permisosSolicitados)
@@ -124,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if(id == R.id.btnCaritas) {
-            ClssConvertTextToSpeech.getIntancia(this).reproduce("Tienes "+ ModelUser.stockcaritas + " caritas ganadas");
+            ClssConvertTextToSpeech.getIntancia(this).reproduce("Tienes "+ ModelUser.stockcaritas + " recompensas ganadas");
             if(aux != 0)
                 aux = 0;
             if (auxInfo != 0)
@@ -162,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
         }
         if(id == R.id.btnContacts) {
-            ClssConvertTextToSpeech.getIntancia(this).reproduce("Información de contacto");
+            ClssConvertTextToSpeech.getIntancia(this).reproduce("Acerca de");
             if(aux == 0) {
                 fragment = new FrgContact();
                 aux += 1;
@@ -220,8 +203,13 @@ public class MainActivity extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
                 }
                 else if(nav == 0){
-                    if(i == 0)
+                    if(i == 0) {
+                        if(aux != 0)
+                            aux = 0;
+                        if (auxInfo != 0)
+                            auxInfo = 0;
                         super.onBackPressed();
+                    }
                     else {
                         c = null;
                         fragment = new FrgWelcome();

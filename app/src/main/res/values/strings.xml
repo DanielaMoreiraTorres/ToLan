@@ -84,13 +84,13 @@
         "Tecnologías de la Información y Comunicación enfocadas a la discapacidad en la zona de influencia de la UTEQ" (F&amp;C),
         de la Carrera de Ingeniería en Sistemas, perteneciente a la Facultad de Ciencias de la Ingeniería,
         de la Universidad Técnica Estatal de Quevedo, en cooperación con el Gobierno Autónomo Descentralizado de la Municipalidad de El Empalme.
-        Esta aplicación está enfocada en el aprendizaje contenidos referentes al área de lenguaje y comunicación,
+        Esta aplicación está enfocada en el aprendizaje de contenidos referentes al área de lenguaje y comunicación,
         con el fin de brindar una herramienta inclusiva de uso universal.</string>
     <string name="equipo">Desarrollada por:</string>
     <string name="dirigido">Dirigido por:</string>
     <string name="administracion">En la administración de:</string>
     <string name="colaboracion">Con la colaboración de:</string>
-    <string name="link">fyc.uteq.edu.ec</string>
+    <string name="link">http://fyc.uteq.edu.ec:8080/</string>
     <string name="linkfb">https://www.facebook.com/fycuteq</string>
     <string name="footerC">2022 - Todos los derechos reservados \n ToLan - (F&amp;C) UTEQ</string>
     <string name="cname">Contact Name</string>

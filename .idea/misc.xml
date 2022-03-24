@@ -217,10 +217,18 @@
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/item_text_seleccionar_pares_imagen_texto.xml" value="0.33" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/toolbar.xml" value="0.17314814814814813" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/menu/menu_toolbar.xml" value="0.1935185185185185" />
+        <entry key="..\:/Users/mishe/StudioProjects/ToLan/app/src/main/res/layout/fragment_contact.xml" value="0.1453804347826087" />
+        <entry key="..\:/Users/mishe/StudioProjects/ToLan/app/src/main/res/layout/fragment_drag_and_drop.xml" value="0.1796875" />
+        <entry key="..\:/Users/mishe/StudioProjects/ToLan/app/src/main/res/layout/fragment_drag_and_drop_img.xml" value="0.1796875" />
+        <entry key="..\:/Users/mishe/StudioProjects/ToLan/app/src/main/res/layout/fragment_identify_img.xml" value="0.1796875" />
+        <entry key="..\:/Users/mishe/StudioProjects/ToLan/app/src/main/res/layout/fragment_identify_txt.xml" value="0.1796875" />
+        <entry key="..\:/Users/mishe/StudioProjects/ToLan/app/src/main/res/layout/fragment_recognize_figure.xml" value="0.1796875" />
+        <entry key="..\:/Users/mishe/StudioProjects/ToLan/app/src/main/res/layout/item_enunciado.xml" value="0.1796875" />
+        <entry key="..\:/Users/mishe/StudioProjects/ToLan/app/src/main/res/layout/item_option_drag_and_drop_img.xml" value="0.1453804347826087" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

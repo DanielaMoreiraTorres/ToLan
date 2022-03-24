@@ -54,14 +54,29 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp">
 
-                    <ListView
-                        android:id="@+id/lstEnunciado"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:divider="@color/white"
-                        android:padding="10dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="30dp"/>
+                        android:orientation="horizontal">
+
+                        <ListView
+                            android:id="@+id/lstEnunciado"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:divider="@color/white"
+                            android:padding="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="30dp"/>
+
+                        <ImageView
+                            android:id="@+id/imgAudio"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="20dp"
+                            android:background="@drawable/icon_audio" />
+
+                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/destino"
