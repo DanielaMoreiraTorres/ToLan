@@ -84,7 +84,7 @@ public class FrgIdentifyTxt extends Fragment implements View.OnClickListener {
     private AdpStatement adpEnunciado;
     private AdpOptionIdentifyTxt adpOptiosIdentifyTxt;
     ModelContent opSelected = new ModelContent();
-    private String url;
+    private String url, mensaje = "";
     Boolean respuesta = false;
 
     public FrgIdentifyTxt() {
@@ -200,9 +200,10 @@ public class FrgIdentifyTxt extends Fragment implements View.OnClickListener {
         int count = lstLista.getCount();
         for(int c = 0; c < count; c++){
             enun = ((ModelContent) lstLista.getItemAtPosition(c));
-            String mensaje = enun.getDescripcion();
-            ClssConvertTextToSpeech.getIntancia(getContext()).reproduce(mensaje);
+            mensaje = mensaje + " " + enun.getDescripcion();
         }
+        ClssConvertTextToSpeech.getIntancia(getContext()).reproduce(mensaje);
+        mensaje = "";
     }
 
     @Override

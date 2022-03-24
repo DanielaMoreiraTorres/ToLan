@@ -86,7 +86,7 @@ public class FrgIdentifyImg extends Fragment implements View.OnClickListener {
     private AdpOptionIdentifyImg adpOptiosIdentifyImg;
     ModelContent opSelected = new ModelContent();
     //private RequestQueue requestQueue;
-    private String url;
+    private String url, mensaje = "";
     Boolean respuesta = false;
 
     public FrgIdentifyImg() {
@@ -202,9 +202,10 @@ public class FrgIdentifyImg extends Fragment implements View.OnClickListener {
         int count = lstLista.getCount();
         for(int c = 0; c < count; c++){
             enun = ((ModelContent) lstLista.getItemAtPosition(c));
-            String mensaje = enun.getDescripcion();
-            ClssConvertTextToSpeech.getIntancia(getContext()).reproduce(mensaje);
+            mensaje = mensaje + " " + enun.getDescripcion();
         }
+        ClssConvertTextToSpeech.getIntancia(getContext()).reproduce(mensaje);
+        mensaje = "";
     }
 
     @Override

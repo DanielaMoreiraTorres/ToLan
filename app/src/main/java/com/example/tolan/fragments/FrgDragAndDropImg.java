@@ -89,7 +89,7 @@ public class FrgDragAndDropImg extends Fragment {
     private AdpStatement adpEnunciado;
     private AdpOptionDragAndDropImg adpOptionArrastrarSoltarImg;
     ModelContent opSelected = new ModelContent();
-    private String url;
+    private String url, mensaje = "";
     Boolean respuesta = false;
     String uno, dos;
     View textView;
@@ -197,9 +197,10 @@ public class FrgDragAndDropImg extends Fragment {
         int count = lstLista.getCount();
         for(int c = 0; c < count; c++){
             enun = ((ModelContent) lstLista.getItemAtPosition(c));
-            String mensaje = enun.getDescripcion();
-            ClssConvertTextToSpeech.getIntancia(getContext()).reproduce(mensaje);
+            mensaje = mensaje + " " + enun.getDescripcion();
         }
+        ClssConvertTextToSpeech.getIntancia(getContext()).reproduce(mensaje);
+        mensaje = "";
     }
 
     @Override

@@ -40,7 +40,7 @@ public class ControllerUser {
     private ProgressBar progressBar;
     private Fragment fragment;
     JSONObject grupo = new JSONObject();
-    String docente, nombre;
+    String docente, nombre = "";
     int idDocente = 0;
 
     public ControllerUser(Context context, ProgressBar progressBar) {
