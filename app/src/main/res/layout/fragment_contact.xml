@@ -236,6 +236,42 @@
                             android:autoLink="phone|web"
                             android:padding="10dp" />
 
+                        <TextView
+                            android:id="@+id/Multimedia"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/Multimedia"
+                            android:textColor="@color/secundario"
+                            android:autoLink="phone|web"
+                            android:padding="10dp" />
+
+                        <TextView
+                            android:id="@+id/linkFlat"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/linkFlat"
+                            android:textColor="@color/secundario"
+                            android:autoLink="phone|web"
+                            android:padding="10dp" />
+
+                        <TextView
+                            android:id="@+id/linkLibro"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/linkLibro"
+                            android:textColor="@color/secundario"
+                            android:autoLink="phone|web"
+                            android:padding="10dp" />
+
+                        <TextView
+                            android:id="@+id/LibroLeng"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/LibroLeng"
+                            android:textColor="@color/secundario"
+                            android:autoLink="phone|web"
+                            android:padding="10dp" />
+
                     </LinearLayout>
 
                     </androidx.cardview.widget.CardView>

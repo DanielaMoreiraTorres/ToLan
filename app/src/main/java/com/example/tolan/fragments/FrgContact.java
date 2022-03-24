@@ -40,7 +40,7 @@ public class FrgContact extends Fragment {
     MenuItem mr;
     private RecyclerView rcvContacts, rcvD, rcvA, rcvC;
     private JustifiedTextView txtInf;
-    private TextView textviewDT, textviewD, textviewA, textviewC, txtIn,link, linkfb;
+    private TextView textviewDT, textviewD, textviewA, textviewC, txtIn,link, linkfb, linkFlat, linkLibro;
     private Toolbar toolbar;
 
     public FrgContact() {
@@ -249,10 +249,16 @@ public class FrgContact extends Fragment {
 
             link = view.findViewById(R.id.link);
             linkfb = view.findViewById(R.id.linkfb);
+            linkFlat = view.findViewById(R.id.linkFlat);
+            linkLibro = view.findViewById(R.id.linkLibro);
             Linkify.addLinks(link,Linkify.PHONE_NUMBERS | Linkify.WEB_URLS);
             Linkify.addLinks(linkfb,Linkify.PHONE_NUMBERS | Linkify.WEB_URLS);
+            Linkify.addLinks(linkFlat,Linkify.PHONE_NUMBERS | Linkify.WEB_URLS);
+            Linkify.addLinks(linkLibro,Linkify.PHONE_NUMBERS | Linkify.WEB_URLS);
             link.setOnClickListener(v -> goLink(v));
             linkfb.setOnClickListener(v -> goLink(v));
+            linkFlat.setOnClickListener(v -> goLink(v));
+            linkLibro.setOnClickListener(v -> goLink(v));
         }
         catch (Exception e) {}
         return view;

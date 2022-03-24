@@ -43,7 +43,7 @@
     <!-- Menú Toolbar -->
     <string name="myinfo">Mi información</string>
     <string name="cerrar">Cerrar sesión</string>
-    <string name="contactos">Contactos</string>
+    <string name="contactos">Acerca de</string>
     <!-- Activity Levels -->
     <string name="searchNivel">Buscar nivel</string>
     <!-- Item Activity Levels -->
@@ -92,6 +92,11 @@
     <string name="colaboracion">Con la colaboración de:</string>
     <string name="link">http://fyc.uteq.edu.ec:8080/</string>
     <string name="linkfb">https://www.facebook.com/fycuteq</string>
+    <string name="Multimedia">Información multimedia obtenida de:</string>
+    <string name="linkFlat">https://www.flaticon.com/</string>
+    <string name="linkLibro">http://www.plataformaconadis.gob.ec/~platafor/diccionario/</string>
+    <string name="LibroLeng">Guía de actividades basadas en el libro de Lengua y Literatura de 2° EGB
+        del Ministerio de Educación del Ecuador - 2016</string>
     <string name="footerC">2022 - Todos los derechos reservados \n ToLan - (F&amp;C) UTEQ</string>
     <string name="cname">Contact Name</string>
     <string name="cemail">Email</string>
