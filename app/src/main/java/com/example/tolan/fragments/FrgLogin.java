@@ -75,7 +75,6 @@ public class FrgLogin extends Fragment {
             Lusuario = view.findViewById(R.id.Lusuario);
             txtIni = view.findViewById(R.id.txtIni);
             txtIni.setOnClickListener(v -> ClssConvertTextToSpeech.getIntancia(v.getContext()).reproduce(txtIni.getText().toString()));
-            //tts.reproduce(txtIni.getText().toString()));
             user = view.findViewById(R.id.txtuser);
             validate.TextChanged(user, null, Lusuario, Merror);
             Lclave = view.findViewById(R.id.Lclave);
@@ -103,12 +102,10 @@ public class FrgLogin extends Fragment {
         //Ocultar teclado
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(getContext().INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(password.getWindowToken(), 0);
-        //tts.reproduce(btnLogin.getText().toString());
         ClssConvertTextToSpeech.getIntancia(getContext()).reproduce(btnLogin.getText().toString());
         if (validate.Validar(user, null, Lusuario, Merror) & validate.Validar(password, null, Lclave, Merror)) {
             progressBar.setVisibility(View.VISIBLE);
-            controllerUser.getUsuario(user.getText().toString().trim(),password.getText().toString().trim());
-            controllerUser.getUsuario(user.getText().toString().trim(),password.getText().toString().trim());
+            controllerUser.Login(user.getText().toString().trim(),password.getText().toString().trim());
         } else
             ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("Datos no válidos");
     }

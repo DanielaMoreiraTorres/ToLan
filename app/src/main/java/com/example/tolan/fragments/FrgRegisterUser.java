@@ -113,13 +113,10 @@ public class FrgRegisterUser extends Fragment {
             docentes = new ArrayList<>();
             txtReg = view.findViewById(R.id.txtReg);
             txtReg.setOnClickListener(v ->  ClssConvertTextToSpeech.getIntancia(v.getContext()).reproduce(txtReg.getText().toString()));
-            //tts.reproduce(txtReg.getText().toString()));
             txtDatPer = view.findViewById(R.id.txtDatPer);
             txtDatPer.setOnClickListener(v ->  ClssConvertTextToSpeech.getIntancia(v.getContext()).reproduce(txtDatPer.getText().toString()));
-            //tts.reproduce(txtDatPer.getText().toString()));
             txtDatUser = view.findViewById(R.id.txtDatUser);
             txtDatUser.setOnClickListener(v ->  ClssConvertTextToSpeech.getIntancia(v.getContext()).reproduce(txtDatUser.getText().toString()));
-            //tts.reproduce(txtDatUser.getText().toString()));
             Lnombres = view.findViewById(R.id.Lnombres);
             nombre = view.findViewById(R.id.nombres);
             validate.TextChanged(nombre, null, Lnombres, Merror);

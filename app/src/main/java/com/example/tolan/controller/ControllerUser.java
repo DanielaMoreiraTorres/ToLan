@@ -40,7 +40,7 @@ public class ControllerUser {
     private ProgressBar progressBar;
     private Fragment fragment;
     JSONObject grupo = new JSONObject();
-    String docente, nombre = "";
+    String docente, nombre = "", bienvenida = "";
     int idDocente = 0;
 
     public ControllerUser(Context context, ProgressBar progressBar) {
@@ -48,7 +48,7 @@ public class ControllerUser {
         this.progressBar = progressBar;
     }
 
-    public void getUsuario(String usuario, String clave) {
+    public void Login(String usuario, String clave) {
         try {
             String url = context.getString(R.string.urlBase) + "usuario/login";
             //Parámetros a enviar a la API
@@ -85,7 +85,6 @@ public class ControllerUser {
                                         Iniciar(user);
                                     } else
                                         Iniciar(user);
-                                    //tts.reproduce("Inicio exitoso");
                                     ClssPreferences.getIntancia(context).guardarValor("user", usuario);
                                     ClssPreferences.getIntancia(context).guardarValor("password", clave);
                                     ClssConvertTextToSpeech.getIntancia(context).reproduce("Inicio exitoso");
@@ -148,17 +147,11 @@ public class ControllerUser {
     private void Iniciar(ModelUser muser) throws JSONException {
         Bundle b = new Bundle();
         setDataUserLogin(muser);
+        bienvenida = "Bienvenido ";
         if (muser.getTipousuario().trim().equals("AD")) {
             fragment = new FrgMenuAdmin();
             Toast.makeText(context, "Bienvenido Admin", Toast.LENGTH_SHORT).show();
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    //tts.reproduce("Bienvenido Admin");
-                    ClssConvertTextToSpeech.getIntancia(context).reproduce("Bienvenido Admin");
-                }
-            }, 1500);
+            bienvenida = bienvenida + "Admin";
         } else {
             for (int i = 0; i < ClssStaticUser.nombres.length(); i++) {
                 String str = ClssStaticUser.nombres.substring(i,i+1);
@@ -169,33 +162,26 @@ public class ControllerUser {
             }
             if(nombre.length() == 0)
                 nombre = ClssStaticUser.nombres;
+            bienvenida = bienvenida + nombre;
             if (muser.getTipousuario().trim().equals("DC")) {
                 fragment = new FrgMenuTeacher();
                 ClssStaticGroup.iddocente = idDocente;
                 ClssStaticGroup.docente = docente;
                 Toast.makeText(context, "Bienvenido " + nombre, Toast.LENGTH_SHORT).show();
-                final Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        //tts.reproduce("Bienvenido " + ClssStaticGroup.docente);
-                        ClssConvertTextToSpeech.getIntancia(context).reproduce("Bienvenido " + nombre);
-                    }
-                }, 1500);
-            } else {
+            } else if (muser.getTipousuario().trim().equals("ES")) {
                 fragment = new ActivityHomeUser();
                 sendDataGroup(grupo);
                 Toast.makeText(context, "Bienvenido " + nombre, Toast.LENGTH_SHORT).show();
-                final Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        ClssConvertTextToSpeech.getIntancia(context).reproduce("Bienvenido " + nombre);
-                    }
-                }, 1500);
                 //b.putString("grupo", grupo.toString());
             }
         }
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ClssConvertTextToSpeech.getIntancia(context).reproduce(bienvenida);
+            }
+        }, 1500);
         //Creamos la información a pasar entre fragments
         b.putString("user", muser.getUsuario().trim());
         b.putString("tipousuario", muser.getTipousuario().trim());

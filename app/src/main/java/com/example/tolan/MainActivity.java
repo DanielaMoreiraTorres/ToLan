@@ -22,6 +22,7 @@ import com.example.tolan.clases.ClssPreferences;
 import com.example.tolan.controller.ControllerUser;
 import com.example.tolan.fragments.FrgContact;
 import com.example.tolan.fragments.FrgLogin;
+import com.example.tolan.fragments.FrgRegisterUser;
 import com.example.tolan.fragments.FrgWelcome;
 import com.example.tolan.models.ModelUser;
 
@@ -63,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
             //tts.init(this);
             if (usuario.length() > 0 & clave.length() > 0) {
                 progressBar.setVisibility(View.VISIBLE);
-                controllerUser.getUsuario(usuario, clave);
+                controllerUser.Login(usuario, clave);
             } else {
                 fragment = new FrgWelcome();
                 getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
@@ -101,8 +102,6 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }*/
 
-
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
@@ -114,12 +113,18 @@ public class MainActivity extends AppCompatActivity {
                 auxInfo = 0;
         }
         if(id == R.id.btnMyInfo) {
-            /*ClssConvertTextToSpeech.getIntancia(this).reproduce("Mi información");
-            if(auxInfo == 0) {
-                fragment = new FrgRegisterUser();
-                auxInfo += 1;
-                getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
-            }*/
+            ClssConvertTextToSpeech.getIntancia(this).reproduce("Mi información");
+            fragment = new FrgRegisterUser();
+            int i = getSupportFragmentManager().getBackStackEntryCount();
+            if(aux != 0)
+                aux = 0;
+            if (auxInfo != 0)
+                auxInfo = 0;
+            getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
+
+            /*if(auxInfo == 0) {
+
+            }
             /*else if (auxInfo != 0)
                 getSupportFragmentManager().popBackStack();
             else if(auxInfo == 0){
@@ -149,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
             if(aux == 0) {
                 fragment = new FrgContact();
                 aux += 1;
-                getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
             }
             /*else if(aux != 0) {
                 fragment = new FrgContact();
@@ -175,6 +180,10 @@ public class MainActivity extends AppCompatActivity {
                     getSupportFragmentManager().popBackStack();
                     getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
                 } else if (i == 1) {
+                    if(aux != 0) {
+                        aux = 0;
+                        super.onBackPressed();
+                    }
                     fragment = new FrgWelcome();
                     getSupportFragmentManager().popBackStack();
                     getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
