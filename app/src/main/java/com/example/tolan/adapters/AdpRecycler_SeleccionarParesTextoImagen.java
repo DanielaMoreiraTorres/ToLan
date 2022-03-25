@@ -45,6 +45,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -56,11 +57,11 @@ public class AdpRecycler_SeleccionarParesTextoImagen extends RecyclerView.Adapte
     Fragment fragment;
     int idActividad;
 
-    Map<String, String> map_MultimediaExtra;
+    Map<String, List<String>> map_MultimediaExtra;
 
     //private static ClssConvertTextToSpeech clssConvertirTextoAVoz;
 
-    public AdpRecycler_SeleccionarParesTextoImagen(Context mContext, ArrayList<String> listElements, ArrayList<String> listRutas, Map<String, String> map_DatosEmparejados, Fragment fragment, int idActividad, Map<String, String> map_MultimediaExtra) {
+    public AdpRecycler_SeleccionarParesTextoImagen(Context mContext, ArrayList<String> listElements, ArrayList<String> listRutas, Map<String, String> map_DatosEmparejados, Fragment fragment, int idActividad, Map<String, List<String>> map_MultimediaExtra) {
         this.mContext = mContext;
         this.listElements = listElements;
         this.listRutas = listRutas;
@@ -102,6 +103,18 @@ public class AdpRecycler_SeleccionarParesTextoImagen extends RecyclerView.Adapte
     public void onBindViewHolder(@NonNull txtHolder holder, @SuppressLint("RecyclerView") int position) {
 
         cargarImagenWebService(listRutas.get(position), holder, position);
+
+        holder.imagen_ayuda_especial.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(mContext, " Son :" + map_MultimediaExtra.get(rutaImagen), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mContext, "Ayuda especial", Toast.LENGTH_LONG).show();
+                String img = listRutas.get(position);
+                Diag_Frg_AyudaEspecial diag_frg_ayudaEspecial = new Diag_Frg_AyudaEspecial(img, map_DatosEmparejados.get(img), map_MultimediaExtra.get(img), "Seleccionar pares imagen con texto");
+                diag_frg_ayudaEspecial.show(fragment.getParentFragmentManager(), "Infromación de Ayuda Especial");
+            }
+        });
+
         //Glide.with(mContext)
         //      .load(listRutas.get(position))
         //    .into(holder.imagen);
@@ -499,17 +512,6 @@ public class AdpRecycler_SeleccionarParesTextoImagen extends RecyclerView.Adapte
             public void onResponse(Bitmap response) {
                 holder.imagen.setImageBitmap(response);
                 holder.imagen.setId(pos);
-
-
-                holder.imagen_ayuda_especial.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(mContext, " Son :" + map_MultimediaExtra.get(rutaImagen), Toast.LENGTH_SHORT).show();
-                        Toast.makeText(mContext, "Ayuda especial", Toast.LENGTH_LONG).show();
-                        Diag_Frg_AyudaEspecial diag_frg_ayudaEspecial = new Diag_Frg_AyudaEspecial(response, map_DatosEmparejados.get(rutaImagen), "", "Seleccionar pares imagen con texto");
-                        diag_frg_ayudaEspecial.show(fragment.getParentFragmentManager(), "Infromación de Ayuda Especial");
-                    }
-                });
             }
         }, 0, 0, ImageView.ScaleType.CENTER, null, new Response.ErrorListener() {
             @Override

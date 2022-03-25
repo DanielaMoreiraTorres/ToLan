@@ -13,14 +13,18 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.bumptech.glide.Glide;
 import com.example.tolan.R;
 import com.example.tolan.clases.ClssGifImageView;
+
+import java.util.List;
 
 
 public class Diag_Frg_AyudaEspecial extends DialogFragment {
@@ -29,17 +33,19 @@ public class Diag_Frg_AyudaEspecial extends DialogFragment {
     Activity actividad;
     Button btn_comprobar;
     TextView txt_titulo_original;
-    ImageView img_original;
-    String respuesta, url, frg_actividad;
+    ImageView img_original, img_ayudaEspecial, gif_ayudaEspecial;
+    String respuesta, url_img_ayuda, frg_actividad;
     Context mcontext;
 
+    List<String> lst_url_img_ayuda;
 
-    Bitmap response;
 
-    public Diag_Frg_AyudaEspecial(Bitmap response, String respuesta, String url, String frg_actividad) {
+    String response;
+
+    public Diag_Frg_AyudaEspecial(String response, String respuesta, List<String> lst_url_img_ayuda, String frg_actividad) {
         this.response = response;
         this.respuesta = respuesta;
-        this.url = url;
+        this.lst_url_img_ayuda = lst_url_img_ayuda;
         this.frg_actividad = frg_actividad;
     }
 
@@ -60,14 +66,39 @@ public class Diag_Frg_AyudaEspecial extends DialogFragment {
         txt_titulo_original.setText(respuesta);
 
         img_original = v.findViewById(R.id.img_original);
-        img_original.setImageBitmap(response);
+        Glide.with(getContext())
+                .load(response)
+                .into(img_original);
+        //img_original.setImageBitmap(response);
+
+        gif_ayudaEspecial = v.findViewById(R.id.gif_ayudaEspecial);
+        Glide.with(getContext())
+                .load(R.drawable.gif_senias)
+                .into(gif_ayudaEspecial);
+
+        if (lst_url_img_ayuda != null) {
+            //Toast.makeText(getContext(), "Size :" + lst_url_img_ayuda.size(), Toast.LENGTH_SHORT).show();
+            img_ayudaEspecial = v.findViewById(R.id.img_ayudaEspecial);
+
+            if (lst_url_img_ayuda.size() > 1) {
+                Glide.with(getContext())
+                        .load(lst_url_img_ayuda.get(0))
+                        .into(img_ayudaEspecial);
+                Glide.with(getContext())
+                        .load(lst_url_img_ayuda.get(1))
+                        .into(gif_ayudaEspecial);
+            } else {
+                Glide.with(getContext())
+                        .load(lst_url_img_ayuda.get(0))
+                        .into(img_ayudaEspecial);
+            }
+        }
 
         //Glide.with(getContext()).load(url).into(img_respuesta);
 
         //vid_ayudaEspecial = v.findViewById(R.id.vid_ayudaEspecial);
         //LoadVideo();
-        ClssGifImageView gifImageView = (ClssGifImageView) v.findViewById(R.id.gif_ayudaEspecial);
-        gifImageView.setGifImageResource(R.drawable.gif_senias);
+
 
         //txt_respuesta.setText(respuesta);
 

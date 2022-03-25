@@ -129,7 +129,9 @@ public class FrgSeleccionarParesImagenTexto extends Fragment implements View.OnC
 
     int idActividad;
 
-    Map<String, String> map_MultimediaExtra = new HashMap<>();
+
+    Map<String, List<String>> map_MultimediaExtra = new HashMap<>();
+
     String urlInicial;
 
     @Override
@@ -179,17 +181,37 @@ public class FrgSeleccionarParesImagenTexto extends Fragment implements View.OnC
                 } else {
                     listItemsMultimedia.add(item_contenido.getString("descripcion"));
                     JSONArray multimedia_contenido = item_contenido.getJSONArray("multimedia");
-                    for (int j = 0; j < multimedia_contenido.length(); j++) {
-                        JSONObject item_multimedia_contenido = multimedia_contenido.getJSONObject(j);
 
-                        if (item_multimedia_contenido.getBoolean("inicial")) {
-                            listRutasMultimedia.add(item_multimedia_contenido.getString("url"));
-                            urlInicial=item_multimedia_contenido.getString("url");
-                        } else {
-                            Toast.makeText(view.getContext(), item_multimedia_contenido.getString("descripcion"), Toast.LENGTH_LONG).show();
-                            map_MultimediaExtra.put(urlInicial, item_multimedia_contenido.getString("url"));
+                    if (multimedia_contenido.length() > 1) {
+                        for (int j = 0; j < multimedia_contenido.length(); j++) {
+                            JSONObject item_multimedia_contenido = multimedia_contenido.getJSONObject(j);
+                            if (item_multimedia_contenido.getBoolean("inicial")) {
+                                listRutasMultimedia.add(item_multimedia_contenido.getString("url"));
+                                urlInicial = item_multimedia_contenido.getString("url");
+                                break;
+                            }
                         }
+
+
+
+                        List<String> lstUrls_Ayuda= new ArrayList<>();
+
+                        for (int j = 0; j < multimedia_contenido.length(); j++) {
+                            JSONObject item_multimedia_contenido = multimedia_contenido.getJSONObject(j);
+                            if (!item_multimedia_contenido.getBoolean("inicial")) {
+                                lstUrls_Ayuda.add(item_multimedia_contenido.getString("url"));
+                                //Toast.makeText(view.getContext(), item_multimedia_contenido.getString("descripcion"), Toast.LENGTH_LONG).show();
+                            }
+                        }
+                        map_MultimediaExtra.put(urlInicial, lstUrls_Ayuda);
+
+
+                    } else {
+                        JSONObject item_multimedia_contenido = multimedia_contenido.getJSONObject(0);
+                        listRutasMultimedia.add(item_multimedia_contenido.getString("url"));
+
                     }
+
                 }
             }
 
@@ -200,7 +222,7 @@ public class FrgSeleccionarParesImagenTexto extends Fragment implements View.OnC
             }
             Collections.shuffle(listRutasMultimedia);
             Collections.shuffle(listItemsMultimedia);
-            AdpRecycler_SeleccionarParesTextoImagen adpRecycler_seleccionarPares = new AdpRecycler_SeleccionarParesTextoImagen(getContext(), listItemsMultimedia, listRutasMultimedia, map_DatosEmparejados, this, idActividad,map_MultimediaExtra);
+            AdpRecycler_SeleccionarParesTextoImagen adpRecycler_seleccionarPares = new AdpRecycler_SeleccionarParesTextoImagen(getContext(), listItemsMultimedia, listRutasMultimedia, map_DatosEmparejados, this, idActividad, map_MultimediaExtra);
             rcv_datosSeleccionarPares.setAdapter(adpRecycler_seleccionarPares);
 
 
