@@ -158,9 +158,9 @@ public class FrgRegisterUser extends Fragment {
             datosDocente = view.findViewById(R.id.datosDocente);
             Ldocente = view.findViewById(R.id.Ldocente);
             docente = view.findViewById(R.id.docente);
-            Accion();
             btnRegistrarse = view.findViewById(R.id.btnRegister);
             btnRegistrarse.setOnClickListener(v -> RegisterUser());
+            Accion();
         }
         catch (Exception e){}
         return view;
