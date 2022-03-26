@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
@@ -79,10 +80,10 @@ public class FrgDragAndDropImg extends Fragment {
     private TextView titulo;
     private ScrollView scrollView;
     private Button btnContinuar;
-    private ListView lstLista;
+    private RecyclerView lstLista;
     private RecyclerView rcvOptions;
     private ImageView imgAudio, img, imgAyuda;
-    private LinearLayout state, Enun,destino, dest;
+    private LinearLayout msg, state, Enun,destino, dest;
     ModelContent modelContent;
     ModelContent enun = new ModelContent();
     private JSONArray contenido;
@@ -153,6 +154,7 @@ public class FrgDragAndDropImg extends Fragment {
             url = getString(R.string.urlBase) + "historial/completeActividad";
             scrollView = view.findViewById(R.id.scrollAS);
             btnContinuar = view.findViewById(R.id.btn_comprobar_actividadesAS);
+            msg = view.findViewById(R.id.msg);
             state = view.findViewById(R.id.state);
             state.setVisibility(View.GONE);
             Enun = view.findViewById(R.id.Enun);
@@ -160,6 +162,7 @@ public class FrgDragAndDropImg extends Fragment {
             imgAyuda = view.findViewById(R.id.imgAyuda);
             destino = view.findViewById(R.id.destino);
             lstLista = view.findViewById(R.id.lstEnunciado);
+            lstLista.setLayoutManager(new LinearLayoutManager(getContext()));
             imgAudio = view.findViewById(R.id.imgAudio);
             rcvOptions = (RecyclerView) view.findViewById(R.id.rcvOption);
             rcvOptions.setLayoutManager(new GridLayoutManager(getContext(), 2));
@@ -194,8 +197,8 @@ public class FrgDragAndDropImg extends Fragment {
                 }, 1000);
                 Enun.setVisibility(View.GONE);
                 img.setVisibility(View.GONE);
-                state.getLayoutParams().height = LinearLayout.LayoutParams.MATCH_PARENT;
-                state.setGravity(Gravity.BOTTOM);
+                msg.getLayoutParams().height = LinearLayout.LayoutParams.MATCH_PARENT;
+                msg.setGravity(Gravity.BOTTOM);
                 state.setVisibility(View.VISIBLE);
                 state.setBackgroundColor(Color.WHITE);
                 state.getChildAt(0).setVisibility(View.GONE);
@@ -210,10 +213,10 @@ public class FrgDragAndDropImg extends Fragment {
     }
 
     private void ReproduceEnunciado(){
-        int count = lstLista.getCount();
+        int count = lstLista.getAdapter().getItemCount();
         for(int c = 0; c < count; c++){
-            enun = ((ModelContent) lstLista.getItemAtPosition(c));
-            mensaje = mensaje + " " + enun.getDescripcion();
+            enun = modelContentsEnun.get(c);
+            mensaje = mensaje + " " + enun.getDescripcion() + ". ";
         }
         ClssConvertTextToSpeech.getIntancia(getContext()).reproduce(mensaje);
         mensaje = "";
@@ -245,13 +248,16 @@ public class FrgDragAndDropImg extends Fragment {
             imgAudio.setOnClickListener(v -> ReproduceEnunciado());
             urlInicial = ModelContent.urlInicial;
             if (urlInicial.length() > 0) {
-                Enun.setVisibility(View.VISIBLE);
+                imgAyuda.setVisibility(View.VISIBLE);
                 img.setVisibility(View.VISIBLE);
                 Glide.with(getContext())
                         .load(urlInicial)
                         .into(img);
                 imgAyuda.setOnClickListener(v -> AbrirDiag());
-            } else Enun.setVisibility(View.GONE);
+            } else {
+                imgAyuda.setVisibility(View.GONE);
+                img.setVisibility(View.GONE);
+            }
             adpOptionArrastrarSoltarImg = new AdpOptionDragAndDropImg(getContext(), modelContentsOp, modelContentsIni,respuestas);
             rcvOptions.setAdapter(adpOptionArrastrarSoltarImg);
             adpOptionArrastrarSoltarImg.setOnClickListener(new View.OnClickListener() {
@@ -376,6 +382,8 @@ public class FrgDragAndDropImg extends Fragment {
                             state.getChildAt(3).setVisibility(View.VISIBLE);
                             state.getChildAt(3).setOnClickListener(vcont -> Navegacion(vcont));
                             //Ubicamos el layout visible
+                            msg.getLayoutParams().height = LinearLayout.LayoutParams.MATCH_PARENT;
+                            msg.setGravity(Gravity.BOTTOM);
                             state.setVisibility(View.VISIBLE);
                             CompleteActivity(v);
                         } else {
@@ -405,6 +413,8 @@ public class FrgDragAndDropImg extends Fragment {
                             //Seteamos evento click a boton OK
                             state.getChildAt(2).setVisibility(View.VISIBLE);
                             state.getChildAt(2).setOnClickListener(vok -> AccionOk());
+                            msg.getLayoutParams().height = LinearLayout.LayoutParams.MATCH_PARENT;
+                            msg.setGravity(Gravity.BOTTOM);
                             state.setVisibility(View.VISIBLE);
                         }
                     } else

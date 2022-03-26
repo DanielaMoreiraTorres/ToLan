@@ -75,11 +75,11 @@ public class FrgRecognizeFigure extends Fragment implements View.OnClickListener
     private Toolbar toolbar;
     private ScrollView scrollView;
     private Button btnContinuar;
-    private ListView lstLista;
+    private RecyclerView lstLista;
     private RecyclerView rcvOption;
     private RelativeLayout rlSel;
     private ImageView img, imgAudio, imgAyuda;
-    private LinearLayout lySel, state, Enun;
+    private LinearLayout lySel, msg, state, Enun;
     ModelContent modelContent;
     private JSONArray contenido;
     List<ModelContent> modelContentsEnun;
@@ -148,12 +148,14 @@ public class FrgRecognizeFigure extends Fragment implements View.OnClickListener
             scrollView = view.findViewById(R.id.scrollRF);
             btnContinuar = view.findViewById(R.id.btn_comprobar_actividadesRF);
             state = view.findViewById(R.id.state);
+            msg = view.findViewById(R.id.msg);
             state.setVisibility(View.GONE);
             Enun = view.findViewById(R.id.Enun);
             img = view.findViewById(R.id.imgOp);
             imgAudio = view.findViewById(R.id.imgAudio);
             imgAyuda = view.findViewById(R.id.imgAyuda);
             lstLista = view.findViewById(R.id.lstEnunciado);
+            lstLista.setLayoutManager(new LinearLayoutManager(getContext()));
             rcvOption = (RecyclerView) view.findViewById(R.id.rcvOption);
             rcvOption.setLayoutManager(new LinearLayoutManager(getContext()));
             contenido = jsonActivities.getJSONObject(0).getJSONArray("contenido");
@@ -206,8 +208,8 @@ public class FrgRecognizeFigure extends Fragment implements View.OnClickListener
                 }, 1000);
                 Enun.setVisibility(View.GONE);
                 img.setVisibility(View.GONE);
-                state.getLayoutParams().height = LinearLayout.LayoutParams.MATCH_PARENT;
-                state.setGravity(Gravity.BOTTOM);
+                msg.getLayoutParams().height = LinearLayout.LayoutParams.MATCH_PARENT;
+                msg.setGravity(Gravity.BOTTOM);
                 state.setVisibility(View.VISIBLE);
                 state.setBackgroundColor(Color.WHITE);
                 state.getChildAt(0).setVisibility(View.GONE);
@@ -259,10 +261,10 @@ public class FrgRecognizeFigure extends Fragment implements View.OnClickListener
     }
 
     private void ReproduceEnunciado(){
-        int count = lstLista.getCount();
+        int count = lstLista.getAdapter().getItemCount();
         for(int c = 0; c < count; c++){
-            enun = ((ModelContent) lstLista.getItemAtPosition(c));
-            mensaje = mensaje + " " + enun.getDescripcion();
+            enun = modelContentsEnun.get(c);
+            mensaje = mensaje + " " + enun.getDescripcion() + ". ";
         }
         ClssConvertTextToSpeech.getIntancia(getContext()).reproduce(mensaje);
         mensaje = "";
@@ -524,11 +526,12 @@ public class FrgRecognizeFigure extends Fragment implements View.OnClickListener
                     ImageView img = (ImageView) state.getChildAt(1);
                     img.setImageResource(R.drawable.icon_valor);
                     img.setColorFilter(Color.parseColor("#048710"));
-
                     state.getChildAt(3).setVisibility(View.VISIBLE);
                     state.getChildAt(2).setVisibility(View.GONE);
                     state.getChildAt(3).setOnClickListener(vcont -> Navegacion(vcont));
                     //Ubicamos el layout visible
+                    msg.getLayoutParams().height = LinearLayout.LayoutParams.MATCH_PARENT;
+                    msg.setGravity(Gravity.BOTTOM);
                     state.setVisibility(View.VISIBLE);
                     animar(true);
                     CompleteActivity(view);
@@ -566,6 +569,8 @@ public class FrgRecognizeFigure extends Fragment implements View.OnClickListener
                     //Seteamos evento click a boton OK
                     state.getChildAt(2).setVisibility(View.VISIBLE);
                     state.getChildAt(2).setOnClickListener(vok -> AccionOk());
+                    msg.getLayoutParams().height = LinearLayout.LayoutParams.MATCH_PARENT;
+                    msg.setGravity(Gravity.BOTTOM);
                     state.setVisibility(View.VISIBLE);
                 }
             } else if (respuestas.size() > 1) {

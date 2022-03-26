@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
@@ -75,11 +76,11 @@ public class FrgIdentifyTxt extends Fragment implements View.OnClickListener {
     private Button btnContinuar;
     ModelContent modelContent;
     ModelContent enun = new ModelContent();
-    private ListView lstLista;
+    private RecyclerView lstLista;
     private RecyclerView rcvOptions;
     private ImageView imgAudio, img, imgAyuda;
     private CardView cvSel;
-    private LinearLayout lySel, state, Enun;
+    private LinearLayout lySel, msg, state, Enun;
     private JSONArray contenido;
     List<ModelContent> modelContentsEnun;
     ArrayList<ModelContent> modelContentsOp;
@@ -145,12 +146,14 @@ public class FrgIdentifyTxt extends Fragment implements View.OnClickListener {
             url = getString(R.string.urlBase) + "historial/completeActividad";
             scrollView = view.findViewById(R.id.scrollRT);
             btnContinuar = view.findViewById(R.id.btn_comprobar_actividadesRT);
+            msg = view.findViewById(R.id.msg);
             state = view.findViewById(R.id.state);
             state.setVisibility(View.GONE);
             Enun = view.findViewById(R.id.Enun);
             img = view.findViewById(R.id.imgEnun);
             imgAyuda = view.findViewById(R.id.imgAyuda);
             lstLista = view.findViewById(R.id.lstEnunciado);
+            lstLista.setLayoutManager(new LinearLayoutManager(getContext()));
             imgAudio = view.findViewById(R.id.imgAudio);
             rcvOptions = (RecyclerView) view.findViewById(R.id.rcvTxt);
             rcvOptions.setLayoutManager(new GridLayoutManager(getContext(), 2));
@@ -206,8 +209,8 @@ public class FrgIdentifyTxt extends Fragment implements View.OnClickListener {
                 }, 1000);
                 Enun.setVisibility(View.GONE);
                 img.setVisibility(View.GONE);
-                state.getLayoutParams().height = LinearLayout.LayoutParams.MATCH_PARENT;
-                state.setGravity(Gravity.BOTTOM);
+                msg.getLayoutParams().height = LinearLayout.LayoutParams.MATCH_PARENT;
+                msg.setGravity(Gravity.BOTTOM);
                 state.setVisibility(View.VISIBLE);
                 state.setBackgroundColor(Color.WHITE);
                 state.getChildAt(0).setVisibility(View.GONE);
@@ -247,10 +250,10 @@ public class FrgIdentifyTxt extends Fragment implements View.OnClickListener {
 
 
     private void ReproduceEnunciado(){
-        int count = lstLista.getCount();
+        int count = lstLista.getAdapter().getItemCount();
         for(int c = 0; c < count; c++){
-            enun = ((ModelContent) lstLista.getItemAtPosition(c));
-            mensaje = mensaje + " " + enun.getDescripcion();
+            enun = modelContentsEnun.get(c);
+            mensaje = mensaje + " " + enun.getDescripcion() + ". ";
         }
         ClssConvertTextToSpeech.getIntancia(getContext()).reproduce(mensaje);
         mensaje = "";
@@ -414,11 +417,12 @@ public class FrgIdentifyTxt extends Fragment implements View.OnClickListener {
                     ImageView img = (ImageView) state.getChildAt(1);
                     img.setImageResource(R.drawable.icon_valor);
                     img.setColorFilter(Color.parseColor("#048710"));
-
                     state.getChildAt(3).setVisibility(View.VISIBLE);
                     state.getChildAt(2).setVisibility(View.GONE);
                     state.getChildAt(3).setOnClickListener(vcont -> Navegacion(vcont));
                     //Ubicamos el layout visible
+                    msg.getLayoutParams().height = LinearLayout.LayoutParams.MATCH_PARENT;
+                    msg.setGravity(Gravity.BOTTOM);
                     state.setVisibility(View.VISIBLE);
                     animar(true);
                     CompleteActivity(view);
@@ -456,6 +460,8 @@ public class FrgIdentifyTxt extends Fragment implements View.OnClickListener {
                     //Seteamos evento click a boton OK
                     state.getChildAt(2).setVisibility(View.VISIBLE);
                     state.getChildAt(2).setOnClickListener(vok -> AccionOk());
+                    msg.getLayoutParams().height = LinearLayout.LayoutParams.MATCH_PARENT;
+                    msg.setGravity(Gravity.BOTTOM);
                     state.setVisibility(View.VISIBLE);
                 }
             } else if (respuestas.size() > 1) {

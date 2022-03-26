@@ -34,7 +34,7 @@
         android:id="@+id/fragmentArrastrarSoltar"
         android:name="com.example.tolan.fragments.FrgDragAndDropTxt"
         android:label="fragment_ArrastrarSoltar"
-        tools:layout="@layout/fragment_drag_and_drop">
+        tools:layout="@layout/fragment_drag_and_drop_txt">
         <!--
         <action
             android:id="@+id/action_tercerFragment_to_inicioFragment"

@@ -34,6 +34,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Response;
@@ -77,10 +78,10 @@ public class FrgDragAndDropTxt extends Fragment {
     private TextView titulo;
     private ScrollView scrollView;
     private Button btnContinuar;
-    private ListView lstLista;
+    private RecyclerView lstLista;
     private RecyclerView rcvOptions;
     private ImageView imgAudio, img, imgAyuda;
-    private LinearLayout state, Enun;
+    private LinearLayout msg, state, Enun;
     ModelContent modelContent;
     ModelContent enun = new ModelContent();
     private JSONArray contenido;
@@ -134,7 +135,7 @@ public class FrgDragAndDropTxt extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_drag_and_drop, container, false);
+        return inflater.inflate(R.layout.fragment_drag_and_drop_txt, container, false);
     }
 
     @Override
@@ -152,6 +153,7 @@ public class FrgDragAndDropTxt extends Fragment {
             url = getString(R.string.urlBase) + "historial/completeActividad";
             scrollView = view.findViewById(R.id.scrollAS);
             btnContinuar = view.findViewById(R.id.btn_comprobar_actividadesAS);
+            msg = view.findViewById(R.id.msg);
             state = view.findViewById(R.id.state);
             state.setVisibility(View.GONE);
             Enun = view.findViewById(R.id.Enun);
@@ -159,6 +161,7 @@ public class FrgDragAndDropTxt extends Fragment {
             imgAyuda = view.findViewById(R.id.imgAyuda);
             destino = view.findViewById(R.id.destino);
             lstLista = view.findViewById(R.id.lstEnunciado);
+            lstLista.setLayoutManager(new LinearLayoutManager(getContext()));
             imgAudio = view.findViewById(R.id.imgAudio);
             rcvOptions = (RecyclerView) view.findViewById(R.id.rcvOption);
             rcvOptions.setLayoutManager(new GridLayoutManager(getContext(), 2));
@@ -194,8 +197,8 @@ public class FrgDragAndDropTxt extends Fragment {
                 }, 1000);
                 Enun.setVisibility(View.GONE);
                 img.setVisibility(View.GONE);
-                state.getLayoutParams().height = LinearLayout.LayoutParams.MATCH_PARENT;
-                state.setGravity(Gravity.BOTTOM);
+                msg.getLayoutParams().height = LinearLayout.LayoutParams.MATCH_PARENT;
+                msg.setGravity(Gravity.BOTTOM);
                 state.setVisibility(View.VISIBLE);
                 state.setBackgroundColor(Color.WHITE);
                 state.getChildAt(0).setVisibility(View.GONE);
@@ -210,10 +213,10 @@ public class FrgDragAndDropTxt extends Fragment {
     }
 
     private void ReproduceEnunciado(){
-        int count = lstLista.getCount();
+        int count = lstLista.getAdapter().getItemCount();
         for(int c = 0; c < count; c++){
-            enun = ((ModelContent) lstLista.getItemAtPosition(c));
-            mensaje = mensaje + " " + enun.getDescripcion();
+            enun = modelContentsEnun.get(c);
+            mensaje = mensaje + " " + enun.getDescripcion() + ". ";
         }
         ClssConvertTextToSpeech.getIntancia(getContext()).reproduce(mensaje);
         mensaje = "";
@@ -366,6 +369,8 @@ public class FrgDragAndDropTxt extends Fragment {
                             state.getChildAt(3).setVisibility(View.VISIBLE);
                             state.getChildAt(3).setOnClickListener(vcont -> Navegacion(vcont));
                             //Ubicamos el layout visible
+                            msg.getLayoutParams().height = LinearLayout.LayoutParams.MATCH_PARENT;
+                            msg.setGravity(Gravity.BOTTOM);
                             state.setVisibility(View.VISIBLE);
                             CompleteActivity(v);
                         } else {
@@ -395,6 +400,8 @@ public class FrgDragAndDropTxt extends Fragment {
                             //Seteamos evento click a boton OK
                             state.getChildAt(2).setVisibility(View.VISIBLE);
                             state.getChildAt(2).setOnClickListener(vok -> AccionOk());
+                            msg.getLayoutParams().height = LinearLayout.LayoutParams.MATCH_PARENT;
+                            msg.setGravity(Gravity.BOTTOM);
                             state.setVisibility(View.VISIBLE);
                         }
                     } else
