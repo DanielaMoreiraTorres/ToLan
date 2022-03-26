@@ -6,6 +6,7 @@ import org.json.JSONException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ModelContent implements Serializable {
 
@@ -15,6 +16,8 @@ public class ModelContent implements Serializable {
     private Boolean respuesta;
     private Boolean activo;
     private JSONArray multimedia;
+
+    public static String urlInicial = "";
 
     public int getId() {
         return id;
@@ -64,10 +67,14 @@ public class ModelContent implements Serializable {
         this.multimedia = multimedia;
     }
 
-    public void MapContenido(JSONArray contenido, List<ModelContent> modelContentsEnun,
-                             ArrayList<ModelContent> modelContentsOp, ArrayList<ModelContent> respuestas){
+    public void MapContenido(JSONArray contenido, ArrayList<String> listItemsMultimedia,
+                             ArrayList<String> listRutasMultimedia, Map<String, List<String>> map_MultimediaExtra,
+                             List<ModelContent> modelContentsEnun, ArrayList<ModelContent> modelContentsOp,
+                             ArrayList<ModelContent> modelContentsIni, ArrayList<ModelContent> respuestas){
         try {
             ModelContent modelContent = null;
+            urlInicial = "";
+            List<String> lstUrls_Ayuda= new ArrayList<>();
             for (int i=0;i<contenido.length();i++){
                 modelContent = new ModelContent();
                 modelContent.setId(contenido.getJSONObject(i).getInt("id"));
@@ -76,10 +83,26 @@ public class ModelContent implements Serializable {
                 modelContent.setRespuesta(contenido.getJSONObject(i).getBoolean("respuesta"));
                 modelContent.setActivo(contenido.getJSONObject(i).getBoolean("activo"));
                 modelContent.setMultimedia((JSONArray) contenido.getJSONObject(i).get("multimedia"));
-                if(contenido.getJSONObject(i).get("enunciado").equals(true))
-                    modelContentsEnun.add(modelContent);
-                else{
+                if(contenido.getJSONObject(i).get("enunciado").equals(true)) {
+                    if (((JSONArray) contenido.getJSONObject(i).get("multimedia")).length() > 0) {
+                        for (int c = 0; c < modelContent.getMultimedia().length(); c++) {
+                            if (modelContent.getMultimedia().getJSONObject(c).getBoolean("inicial")) {
+                                listItemsMultimedia.add(modelContent.getMultimedia().getJSONObject(c).getString("descripcion"));
+                                urlInicial = modelContent.getMultimedia().getJSONObject(c).getString("url");
+                                listRutasMultimedia.add(urlInicial);
+                            } else
+                                lstUrls_Ayuda.add(modelContent.getMultimedia().getJSONObject(c).getString("url"));
+                        }
+                        map_MultimediaExtra.put(urlInicial, lstUrls_Ayuda);
+                    } else
+                        modelContentsEnun.add(modelContent);
+                } else{
                     modelContentsOp.add(modelContent);
+                    int contMulti = modelContent.getMultimedia().length();
+                    for (int m = 0; m < contMulti; m++) {
+                        if (modelContent.getMultimedia().getJSONObject(m).getBoolean("inicial"))
+                            modelContentsIni.add(modelContent);
+                    }
                     if(contenido.getJSONObject(i).get("respuesta").equals(true))
                         respuestas.add(modelContent);
                 }

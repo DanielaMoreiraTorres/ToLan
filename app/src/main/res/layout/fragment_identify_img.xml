@@ -76,7 +76,32 @@
                             android:layout_marginTop="20dp"
                             android:background="@drawable/icon_audio" />
 
-                </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/Enun"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/imgEnun"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="180dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:padding="10dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/background_image" />
+
+                        <ImageView
+                            android:id="@+id/imgAyuda"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/icon_ayuda_especial" />
+
+                    </LinearLayout>
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rcvImg"

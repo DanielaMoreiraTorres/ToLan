@@ -1,22 +1,35 @@
 package com.example.tolan.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.tolan.R;
+import com.example.tolan.clases.ClssConvertTextToSpeech;
+import com.example.tolan.dialogs.Diag_Frg_AyudaEspecial;
 import com.example.tolan.models.ModelContent;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class AdpOptionIdentifyImg extends RecyclerView.Adapter<AdpOptionIdentifyImg.ViewHolder>
         implements View.OnClickListener {
@@ -24,10 +37,14 @@ public class AdpOptionIdentifyImg extends RecyclerView.Adapter<AdpOptionIdentify
     private Context ccontext;
     private View.OnClickListener listener;
     private ArrayList<ModelContent> lista;
+    Map<String, List<String>> map_MultimediaExtra = new HashMap<>();
+    ArrayList<String> listRutasMultimedia, listItemsMultimedia;
 
-    public AdpOptionIdentifyImg(Context context, ArrayList<ModelContent> lista) {
+    public AdpOptionIdentifyImg(Context context, ArrayList<ModelContent> lista, ArrayList<ModelContent> inicial, ArrayList<ModelContent> respuestas) {
         ccontext = context;
         this.lista = lista;
+        listItemsMultimedia = new ArrayList<>();
+        listRutasMultimedia = new ArrayList<>();
     }
 
     @Override
@@ -50,19 +67,40 @@ public class AdpOptionIdentifyImg extends RecyclerView.Adapter<AdpOptionIdentify
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AdpOptionIdentifyImg.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AdpOptionIdentifyImg.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         try {
             ModelContent content = lista.get(position);
-            Glide.with(ccontext)
-                    .load(content.getMultimedia().getJSONObject(0).getString("url"))
-                    .into(holder.imgOption);
+            String urlInicial = "";
+            List<String> lstUrls_Ayuda= new ArrayList<>();
+            int contMulti = content.getMultimedia().length();
+            for (int i = 0; i < contMulti; i++) {
+                if(content.getMultimedia().getJSONObject(i).getBoolean("inicial")) {
+                    urlInicial = content.getMultimedia().getJSONObject(i).getString("url");
+                    Glide.with(ccontext)
+                            .load(urlInicial)
+                            .into(holder.imgOption);
+                } else {
+                    lstUrls_Ayuda.add(content.getMultimedia().getJSONObject(i).getString("url"));
+                }
+            }
+            map_MultimediaExtra.put(urlInicial, lstUrls_Ayuda);
             holder.cvOpcion.setId(position);
             holder.cvOpcion.setOnClickListener(this);
             holder.imgView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     notifyDataSetChanged();
-                    Toast.makeText(ccontext,"Ver más multimedia",Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(ccontext,"Ver más multimedia",Toast.LENGTH_SHORT).show();
+                    try {
+                        if(contMulti > 0) {
+                            String img = content.getMultimedia().getJSONObject(0).getString("url");
+                            String descripcion = content.getMultimedia().getJSONObject(0).getString("descripcion");
+                            FragmentManager manager = ((AppCompatActivity) ccontext).getSupportFragmentManager();
+                            ClssConvertTextToSpeech.getIntancia(ccontext).reproduce("Ayuda");
+                            Diag_Frg_AyudaEspecial diag_frg_ayudaEspecial = new Diag_Frg_AyudaEspecial(img, descripcion, map_MultimediaExtra.get(img), "Identificar entre imágenes");
+                            diag_frg_ayudaEspecial.show(manager, "Ayuda");
+                        }
+                    } catch (Exception e) {}
                 }
             });
         }catch (Exception e){

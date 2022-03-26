@@ -2,6 +2,7 @@ package com.example.tolan.fragments;
 
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,6 +25,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -45,6 +48,7 @@ import com.example.tolan.clases.ClssConvertTextToSpeech;
 import com.example.tolan.clases.ClssNavegacionActividades;
 import com.example.tolan.clases.ClssStaticGroup;
 import com.example.tolan.clases.ClssVolleySingleton;
+import com.example.tolan.dialogs.Diag_Frg_AyudaEspecial;
 import com.example.tolan.models.ModelContent;
 import com.example.tolan.models.ModelUser;
 
@@ -55,8 +59,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Random;
 
 public class FrgRecognizeFigure extends Fragment implements View.OnClickListener {
@@ -72,12 +78,11 @@ public class FrgRecognizeFigure extends Fragment implements View.OnClickListener
     private ListView lstLista;
     private RecyclerView rcvOption;
     private RelativeLayout rlSel;
-    private ImageView img, imgAudio;
-    private LinearLayout lySel, state;
+    private ImageView img, imgAudio, imgAyuda;
+    private LinearLayout lySel, state, Enun;
     ModelContent modelContent;
     private JSONArray contenido;
     List<ModelContent> modelContentsEnun;
-    ModelContent imgEnunciado;
     ArrayList<ModelContent> modelContentsOp;
     List<Integer> lstIds;
     ArrayList<ModelContent> respuestas;
@@ -87,8 +92,10 @@ public class FrgRecognizeFigure extends Fragment implements View.OnClickListener
     private AdpOptionRecognizeImg adpOptionReconocerImg;
     ModelContent opSelected = new ModelContent();
     ModelContent enun = new ModelContent();
-    private String url, mensaje = "";
+    private String url, mensaje = "", urlInicial = "";
     Boolean respuesta = false;
+    Map<String, List<String>> map_MultimediaExtra = new HashMap<>();
+    ArrayList<String> listRutasMultimedia, listItemsMultimedia;
 
     public FrgRecognizeFigure() {
         // Required empty public constructor
@@ -142,8 +149,10 @@ public class FrgRecognizeFigure extends Fragment implements View.OnClickListener
             btnContinuar = view.findViewById(R.id.btn_comprobar_actividadesRF);
             state = view.findViewById(R.id.state);
             state.setVisibility(View.GONE);
+            Enun = view.findViewById(R.id.Enun);
             img = view.findViewById(R.id.imgOp);
             imgAudio = view.findViewById(R.id.imgAudio);
+            imgAyuda = view.findViewById(R.id.imgAyuda);
             lstLista = view.findViewById(R.id.lstEnunciado);
             rcvOption = (RecyclerView) view.findViewById(R.id.rcvOption);
             rcvOption.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -154,6 +163,8 @@ public class FrgRecognizeFigure extends Fragment implements View.OnClickListener
             resp = new ArrayList<>();
             msg_true = getResources().getStringArray(R.array.msg_true);
             modelContent = new ModelContent();
+            listItemsMultimedia = new ArrayList<>();
+            listRutasMultimedia = new ArrayList<>();
             MapContenido();
             Collections.sort(modelContentsEnun, new Comparator<ModelContent>() {
                 @Override
@@ -161,7 +172,7 @@ public class FrgRecognizeFigure extends Fragment implements View.OnClickListener
                     return new Integer(e1.getId()).compareTo(new Integer(e2.getId()));
                 }
             });
-            if (modelContentsEnun.size() > 0 & modelContentsOp.size() > 0 & respuestas.size() > 0) {
+            if (modelContentsEnun.size() > 0 & modelContentsOp.size() > 0 & urlInicial.length() > 0 & respuestas.size() > 0) {
                 adpEnunciado = new AdpStatement(getContext(), modelContentsEnun);
                 lstLista.setAdapter(adpEnunciado);
                 final Handler handler = new Handler();
@@ -172,9 +183,14 @@ public class FrgRecognizeFigure extends Fragment implements View.OnClickListener
                     }
                 }, 1200);
                 imgAudio.setOnClickListener(v -> ReproduceEnunciado());
-                Glide.with(getContext())
-                        .load(imgEnunciado.getMultimedia().getJSONObject(0).getString("url"))
-                        .into(img);
+                if (urlInicial.length() > 0) {
+                    Enun.setVisibility(View.VISIBLE);
+                    img.setVisibility(View.VISIBLE);
+                    Glide.with(getContext())
+                            .load(urlInicial)
+                            .into(img);
+                    imgAyuda.setOnClickListener(v -> AbrirDiag());
+                } else Enun.setVisibility(View.GONE);
                 adpOptionReconocerImg = new AdpOptionRecognizeImg(getContext(), modelContentsOp);
                 rcvOption.setAdapter(adpOptionReconocerImg);
                 adpOptionReconocerImg.setOnClickListener(this);
@@ -188,6 +204,7 @@ public class FrgRecognizeFigure extends Fragment implements View.OnClickListener
                         //tts.reproduce("La actividad no tiene contenido");
                     }
                 }, 1000);
+                Enun.setVisibility(View.GONE);
                 img.setVisibility(View.GONE);
                 state.getLayoutParams().height = LinearLayout.LayoutParams.MATCH_PARENT;
                 state.setGravity(Gravity.BOTTOM);
@@ -208,6 +225,7 @@ public class FrgRecognizeFigure extends Fragment implements View.OnClickListener
     private void MapContenido() {
         try {
             ModelContent modelContent = null;
+            List<String> lstUrls_Ayuda= new ArrayList<>();
             for (int i = 0; i < contenido.length(); i++) {
                 modelContent = new ModelContent();
                 modelContent.setId(contenido.getJSONObject(i).getInt("id"));
@@ -217,9 +235,17 @@ public class FrgRecognizeFigure extends Fragment implements View.OnClickListener
                 modelContent.setActivo(contenido.getJSONObject(i).getBoolean("activo"));
                 modelContent.setMultimedia((JSONArray) contenido.getJSONObject(i).get("multimedia"));
                 if (contenido.getJSONObject(i).get("enunciado").equals(true)) {
-                    if (((JSONArray) contenido.getJSONObject(i).get("multimedia")).length() > 0)
-                        imgEnunciado = modelContent;
-                    else
+                    if (((JSONArray) contenido.getJSONObject(i).get("multimedia")).length() > 0) {
+                        for (int c = 0; c < modelContent.getMultimedia().length(); c++) {
+                            if (modelContent.getMultimedia().getJSONObject(c).getBoolean("inicial")) {
+                                listItemsMultimedia.add(modelContent.getMultimedia().getJSONObject(c).getString("descripcion"));
+                                urlInicial = modelContent.getMultimedia().getJSONObject(c).getString("url");
+                                listRutasMultimedia.add(urlInicial);
+                            } else
+                                lstUrls_Ayuda.add(modelContent.getMultimedia().getJSONObject(c).getString("url"));
+                        }
+                        map_MultimediaExtra.put(urlInicial, lstUrls_Ayuda);
+                    } else
                         modelContentsEnun.add(modelContent);
                 } else {
                     modelContentsOp.add(modelContent);
@@ -240,6 +266,29 @@ public class FrgRecognizeFigure extends Fragment implements View.OnClickListener
         }
         ClssConvertTextToSpeech.getIntancia(getContext()).reproduce(mensaje);
         mensaje = "";
+    }
+
+    private void AbrirDiag() {
+        try {
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    imgAyuda.getLayoutParams().width + 5, imgAyuda.getLayoutParams().height + 5);
+            imgAyuda.setLayoutParams(params);
+            String img = listRutasMultimedia.get(0);
+            String descripcion = listItemsMultimedia.get(0);
+            FragmentManager manager = ((AppCompatActivity) getContext()).getSupportFragmentManager();
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("Ayuda");
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                            imgAyuda.getLayoutParams().width - 5, imgAyuda.getLayoutParams().height - 5);
+                    imgAyuda.setLayoutParams(params);
+                    Diag_Frg_AyudaEspecial diag_frg_ayudaEspecial = new Diag_Frg_AyudaEspecial(img, descripcion, map_MultimediaExtra.get(img), "Reconocer figura");
+                    diag_frg_ayudaEspecial.show(manager, "Ayuda");
+                }
+            }, 100);
+        } catch (Exception e) {}
     }
 
     @Override

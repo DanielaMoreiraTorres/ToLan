@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -41,6 +42,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.bumptech.glide.Glide;
 import com.example.tolan.R;
 import com.example.tolan.adapters.AdpOptionDragAndDropImg;
 import com.example.tolan.adapters.AdpStatement;
@@ -49,6 +51,7 @@ import com.example.tolan.clases.ClssConvertTextToSpeech;
 import com.example.tolan.clases.ClssNavegacionActividades;
 import com.example.tolan.clases.ClssStaticGroup;
 import com.example.tolan.clases.ClssVolleySingleton;
+import com.example.tolan.dialogs.Diag_Frg_AyudaEspecial;
 import com.example.tolan.models.ModelContent;
 import com.example.tolan.models.ModelUser;
 import com.google.android.material.card.MaterialCardView;
@@ -60,8 +63,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Random;
 
 public class FrgDragAndDropImg extends Fragment {
@@ -76,24 +81,27 @@ public class FrgDragAndDropImg extends Fragment {
     private Button btnContinuar;
     private ListView lstLista;
     private RecyclerView rcvOptions;
-    private ImageView imgAudio;
-    private LinearLayout state, destino, dest;
+    private ImageView imgAudio, img, imgAyuda;
+    private LinearLayout state, Enun,destino, dest;
     ModelContent modelContent;
     ModelContent enun = new ModelContent();
     private JSONArray contenido;
     List<ModelContent> modelContentsEnun;
     ArrayList<ModelContent> modelContentsOp;
+    ArrayList<ModelContent> modelContentsIni;
     ArrayList<ModelContent> respuestas;
     ArrayList<ModelContent> resp;
     private String[] msg_true = null;
     private AdpStatement adpEnunciado;
     private AdpOptionDragAndDropImg adpOptionArrastrarSoltarImg;
-    ModelContent opSelected = new ModelContent();
-    private String url, mensaje = "";
+    public ModelContent opSelected = new ModelContent();
+    private String url, mensaje = "", urlInicial = "";
     Boolean respuesta = false;
     String uno, dos;
     View textView;
     ViewGroup cardView, linearLayout, linearLayout2, relativeLayout;
+    Map<String, List<String>> map_MultimediaExtra = new HashMap<>();
+    ArrayList<String> listRutasMultimedia, listItemsMultimedia;
 
     public FrgDragAndDropImg() {
         // Required empty public constructor
@@ -147,6 +155,9 @@ public class FrgDragAndDropImg extends Fragment {
             btnContinuar = view.findViewById(R.id.btn_comprobar_actividadesAS);
             state = view.findViewById(R.id.state);
             state.setVisibility(View.GONE);
+            Enun = view.findViewById(R.id.Enun);
+            img = view.findViewById(R.id.imgEnun);
+            imgAyuda = view.findViewById(R.id.imgAyuda);
             destino = view.findViewById(R.id.destino);
             lstLista = view.findViewById(R.id.lstEnunciado);
             imgAudio = view.findViewById(R.id.imgAudio);
@@ -155,18 +166,21 @@ public class FrgDragAndDropImg extends Fragment {
             contenido = jsonActivities.getJSONObject(0).getJSONArray("contenido");
             modelContentsEnun = new ArrayList<>();
             modelContentsOp = new ArrayList<>();
+            modelContentsIni = new ArrayList<>();
             respuestas = new ArrayList<>();
             resp = new ArrayList<>();
             msg_true = getResources().getStringArray(R.array.msg_true);
             modelContent = new ModelContent();
-            modelContent.MapContenido(contenido, modelContentsEnun, modelContentsOp, respuestas);
+            listItemsMultimedia = new ArrayList<>();
+            listRutasMultimedia = new ArrayList<>();
+            modelContent.MapContenido(contenido,listItemsMultimedia,listRutasMultimedia,map_MultimediaExtra,modelContentsEnun, modelContentsOp, modelContentsIni, respuestas);
             Collections.sort(modelContentsEnun, new Comparator<ModelContent>() {
                 @Override
                 public int compare(ModelContent e1, ModelContent e2) {
                     return new Integer(e1.getId()).compareTo(new Integer(e2.getId()));
                 }
             });
-            if (modelContentsEnun.size() > 0 & modelContentsOp.size() > 0 & respuestas.size() > 0) {
+            if (modelContentsEnun.size() > 0 & modelContentsOp.size() > 0 & modelContentsIni.size() > 0 & respuestas.size() > 0) {
                 RespuestasOk();
             } else {
                 //jsonActivities.remove(0);
@@ -178,6 +192,8 @@ public class FrgDragAndDropImg extends Fragment {
                         ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("La actividad no tiene contenido");
                     }
                 }, 1000);
+                Enun.setVisibility(View.GONE);
+                img.setVisibility(View.GONE);
                 state.getLayoutParams().height = LinearLayout.LayoutParams.MATCH_PARENT;
                 state.setGravity(Gravity.BOTTOM);
                 state.setVisibility(View.VISIBLE);
@@ -227,13 +243,22 @@ public class FrgDragAndDropImg extends Fragment {
                 }
             }, 1200);
             imgAudio.setOnClickListener(v -> ReproduceEnunciado());
-            adpOptionArrastrarSoltarImg = new AdpOptionDragAndDropImg(getContext(), modelContentsOp, respuestas);
+            urlInicial = ModelContent.urlInicial;
+            if (urlInicial.length() > 0) {
+                Enun.setVisibility(View.VISIBLE);
+                img.setVisibility(View.VISIBLE);
+                Glide.with(getContext())
+                        .load(urlInicial)
+                        .into(img);
+                imgAyuda.setOnClickListener(v -> AbrirDiag());
+            } else Enun.setVisibility(View.GONE);
+            adpOptionArrastrarSoltarImg = new AdpOptionDragAndDropImg(getContext(), modelContentsOp, modelContentsIni,respuestas);
             rcvOptions.setAdapter(adpOptionArrastrarSoltarImg);
             adpOptionArrastrarSoltarImg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     int opcselec = rcvOptions.getChildAdapterPosition(view);
-                    opSelected = modelContentsOp.get(opcselec);
+                    opSelected = modelContentsIni.get(opcselec);
                     Toast.makeText(getContext(), opSelected.getDescripcion(), Toast.LENGTH_SHORT).show();
                     //tts.reproduce(opSelected.getDescripcion());
                     ClssConvertTextToSpeech.getIntancia(getContext()).reproduce(opSelected.getDescripcion());
@@ -241,6 +266,29 @@ public class FrgDragAndDropImg extends Fragment {
             });
             adpOptionArrastrarSoltarImg.setOnLongClickListener(v -> LongClickListener(v));
             destino.setOnDragListener((v, event) -> DragListener(v, event));
+        } catch (Exception e) {}
+    }
+
+    private void AbrirDiag() {
+        try {
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    imgAyuda.getLayoutParams().width + 5, imgAyuda.getLayoutParams().height + 5);
+            imgAyuda.setLayoutParams(params);
+            String img = listRutasMultimedia.get(0);
+            String descripcion = listItemsMultimedia.get(0);
+            FragmentManager manager = ((AppCompatActivity) getContext()).getSupportFragmentManager();
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("Ayuda");
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                            imgAyuda.getLayoutParams().width - 5, imgAyuda.getLayoutParams().height - 5);
+                    imgAyuda.setLayoutParams(params);
+                    Diag_Frg_AyudaEspecial diag_frg_ayudaEspecial = new Diag_Frg_AyudaEspecial(img, descripcion, map_MultimediaExtra.get(img), "Reconocer figura");
+                    diag_frg_ayudaEspecial.show(manager, "Ayuda");
+                }
+            }, 100);
         } catch (Exception e) {}
     }
 

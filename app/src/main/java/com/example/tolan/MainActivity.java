@@ -19,9 +19,12 @@ import android.widget.ProgressBar;
 import com.example.tolan.adapters.VHoldRecyclerChild_ItemSubnivel;
 import com.example.tolan.clases.ClssConvertTextToSpeech;
 import com.example.tolan.clases.ClssPreferences;
+import com.example.tolan.clases.ClssStaticUser;
 import com.example.tolan.controller.ControllerUser;
 import com.example.tolan.fragments.FrgContact;
 import com.example.tolan.fragments.FrgLogin;
+import com.example.tolan.fragments.FrgMenuAdmin;
+import com.example.tolan.fragments.FrgMenuTeacher;
 import com.example.tolan.fragments.FrgRegisterUser;
 import com.example.tolan.fragments.FrgWelcome;
 import com.example.tolan.models.ModelUser;
@@ -92,16 +95,6 @@ public class MainActivity extends AppCompatActivity {
         return list;
     }
 
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_toolbar,menu);
-        MenuItem mc = menu.findItem(R.id.btnCaritas);
-        mc.setVisible(false);
-        MenuItem mr = menu.findItem(R.id.btnRecompensa);
-        mr.setVisible(false);
-        return true;
-    }*/
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
@@ -114,13 +107,16 @@ public class MainActivity extends AppCompatActivity {
         }
         if(id == R.id.btnMyInfo) {
             ClssConvertTextToSpeech.getIntancia(this).reproduce("Mi información");
-            fragment = new FrgRegisterUser();
-            int i = getSupportFragmentManager().getBackStackEntryCount();
-            if(aux != 0)
-                aux = 0;
-            if (auxInfo != 0)
-                auxInfo = 0;
-            getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
+            if(auxInfo == 0) {
+                fragment = new FrgRegisterUser();
+                auxInfo += 1;
+                getSupportFragmentManager().popBackStack();
+                Bundle bundle = new Bundle();
+                //Añadmimos al bundle la lista que pasaremos como parametro
+                bundle.putBoolean("editar", true);
+                fragment.setArguments(bundle);
+                getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
+            }
 
             /*if(auxInfo == 0) {
 
@@ -154,6 +150,7 @@ public class MainActivity extends AppCompatActivity {
             if(aux == 0) {
                 fragment = new FrgContact();
                 aux += 1;
+                getSupportFragmentManager().popBackStack();
                 getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
             }
             /*else if(aux != 0) {
@@ -175,56 +172,108 @@ public class MainActivity extends AppCompatActivity {
             NavController c = VHoldRecyclerChild_ItemSubnivel.navController;
             int i = getSupportFragmentManager().getBackStackEntryCount();
             if (c == null) {
-                if (i == 2) {
-                    fragment = new FrgLogin();
-                    getSupportFragmentManager().popBackStack();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
-                } else if (i == 1) {
-                    if(aux != 0) {
-                        aux = 0;
-                        super.onBackPressed();
-                    }
-                    fragment = new FrgWelcome();
-                    getSupportFragmentManager().popBackStack();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
-                } else if (i == 0 || i > 2) {
-                    if(aux != 0)
+                if (i > 2) {
+                    if (aux != 0)
                         aux = 0;
                     if (auxInfo != 0)
                         auxInfo = 0;
                     super.onBackPressed();
                 }
+                else if (i == 2) {
+                    fragment = new FrgLogin();
+                    getSupportFragmentManager().popBackStack();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
+                } else if (i == 1) {
+                    fragment = new FrgWelcome();
+                    getSupportFragmentManager().popBackStack();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
+                } else if (i == 0) {
+                    if (aux != 0 || auxInfo != 0) {
+                        if(aux != 0) aux = 0;
+                        if(auxInfo != 0) auxInfo = 0;
+                        if(ClssStaticUser.tipousuario.equals("AD")) {
+                            fragment = new FrgMenuAdmin();
+                            getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
+                        } else if(ClssStaticUser.tipousuario.equals("DC")) {
+                            fragment = new FrgMenuTeacher();
+                            getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
+                        } else if(ClssStaticUser.tipousuario.equals("ES")) {
+                            fragment = new ActivityHomeUser();
+                            getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
+                        }
+                    }
+                    /*if (auxInfo != 0) {
+                        auxInfo = 0;
+                        if(ClssStaticUser.tipousuario.equals("AD")) {
+                            fragment = new FrgMenuAdmin();
+                            getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
+                        } else if(ClssStaticUser.tipousuario.equals("DC")) {
+                            fragment = new FrgMenuTeacher();
+                            getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
+                        } else if(ClssStaticUser.tipousuario.equals("ES")) {
+                            fragment = new ActivityHomeUser();
+                            getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
+                        }
+                    }*/
+                    else super.onBackPressed();
+                }
             } else {
                 @SuppressLint("RestrictedApi")
                 int nav = c.getBackStack().size();
                 if(nav > 2){
-                    if(aux != 0) {
-                        aux = 0;
-                        super.onBackPressed();
-                    }
-                    else
-                        c.popBackStack(R.id.inicioFragment,false);
+                    if(i == 0) {
+                        if (aux != 0 || auxInfo != 0) {
+                            if(aux != 0) aux = 0;
+                            if(auxInfo != 0) auxInfo = 0;
+                            if(ClssStaticUser.tipousuario.equals("AD")) {
+                                fragment = new FrgMenuAdmin();
+                                getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
+                            } else if(ClssStaticUser.tipousuario.equals("DC")) {
+                                fragment = new FrgMenuTeacher();
+                                getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
+                            } else if(ClssStaticUser.tipousuario.equals("ES")) {
+                                fragment = new ActivityHomeUser();
+                                getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
+                            }
+                        }
+                    } else c.popBackStack(R.id.inicioFragment, false);
                 }
                 else if (nav == 2){
-                    c.popBackStack();
-                    fragment = new FrgLogin();
-                    getSupportFragmentManager().popBackStack();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
-                }
-                else if(nav == 0){
-                    if(i == 0) {
-                        if(aux != 0)
-                            aux = 0;
-                        if (auxInfo != 0)
-                            auxInfo = 0;
-                        super.onBackPressed();
-                    }
-                    else {
-                        c = null;
+                    if(i > 1) {
+                        fragment = new FrgLogin();
+                        getSupportFragmentManager().popBackStack();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
+                    } else if(i == 1){
                         fragment = new FrgWelcome();
                         getSupportFragmentManager().popBackStack();
                         getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
                     }
+                    else super.onBackPressed();
+                /*} else if (nav == 1) {
+                    if(i != 0) {
+                        fragment = new FrgWelcome();
+                        getSupportFragmentManager().popBackStack();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
+                    }
+                    else super.onBackPressed();*/
+                } else if(nav == 0){
+                    if(i == 0) {
+                        if (aux != 0 || auxInfo != 0) {
+                            if(aux != 0) aux = 0;
+                            if(auxInfo != 0) auxInfo = 0;
+                            if(ClssStaticUser.tipousuario.equals("AD")) {
+                                fragment = new FrgMenuAdmin();
+                                getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
+                            } else if(ClssStaticUser.tipousuario.equals("DC")) {
+                                fragment = new FrgMenuTeacher();
+                                getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
+                            } else if(ClssStaticUser.tipousuario.equals("ES")) {
+                                fragment = new ActivityHomeUser();
+                                getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).addToBackStack(null).commit();
+                            }
+                        }
+                    }
+                    else super.onBackPressed();
                 }
             }
         } catch (Exception e) {

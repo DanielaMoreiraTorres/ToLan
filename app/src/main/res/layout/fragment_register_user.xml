@@ -226,6 +226,19 @@
                         android:layout_margin="10dp"
                         android:orientation="vertical">
 
+                        <CheckBox
+                            android:id="@+id/checkBoxUsuario"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:checked="true"
+                            android:enabled="false"
+                            android:fontFamily="sans-serif-medium"
+                            android:text="Activo"
+                            android:textColor="@color/secundario"
+                            android:textSize="18sp" />
+
+
                         <RadioGroup
                             android:id="@+id/rgTipoUser"
                             android:layout_width="match_parent"
@@ -316,6 +329,27 @@
                                 android:fontFamily="sans-serif-medium"
                                 android:inputType="text"
                                 android:maxLength="20"
+                                android:padding="16dp" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/LclaveAc"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:hint="Contraseña Actual"
+                            app:endIconMode="password_toggle"
+                            app:errorEnabled="true">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/claveAc"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:drawableStart="@drawable/password"
+                                android:fontFamily="sans-serif-medium"
+                                android:inputType="textPassword"
                                 android:padding="16dp" />
 
                         </com.google.android.material.textfield.TextInputLayout>

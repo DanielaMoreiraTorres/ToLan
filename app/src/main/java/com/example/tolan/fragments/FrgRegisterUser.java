@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -24,6 +25,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -33,6 +35,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.tolan.R;
 import com.example.tolan.adapters.AdpAutocompleteTeacher;
 import com.example.tolan.clases.ClssConvertTextToSpeech;
+import com.example.tolan.clases.ClssPreferences;
 import com.example.tolan.clases.ClssStaticGroup;
 import com.example.tolan.clases.ClssStaticUser;
 import com.example.tolan.clases.ClssValidations;
@@ -60,11 +63,12 @@ public class FrgRegisterUser extends Fragment {
     private View linea;
     private String url;
     private TextView txtReg,txtDatPer, txtDatUser;
-    private TextInputLayout Lnombres, Lapellidos, Ltelefono, Lemail, LFechaNac, Ldocente, Lusuario, Lclave, Lconfclave;
-    private TextInputEditText nombre, apellido, telefono, email, fechaNac, usuario, clave, confirclave;
+    private TextInputLayout Lnombres, Lapellidos, Ltelefono, Lemail, LFechaNac, Ldocente, Lusuario, LclaveAc, Lclave, Lconfclave;
+    private TextInputEditText nombre, apellido, telefono, email, fechaNac, usuario, claveAc, clave, confirclave;
+    private CheckBox checkBoxUsuario;
     private LinearLayout datosDocente;
     private RadioGroup rgTipoUser;
-    private MaterialRadioButton rbDocente;
+    private MaterialRadioButton rbDocente, rbEstudiante;
     private AutoCompleteTextView docente;
     private Button btnRegistrarse;
     private ClssValidations validate;
@@ -75,6 +79,7 @@ public class FrgRegisterUser extends Fragment {
     private AdpAutocompleteTeacher adp;
     private JSONObject selectedDocente;
     private ModelUser selectedDoc;
+    Boolean editar = false;
 
     public FrgRegisterUser() {
         // Required empty public constructor
@@ -91,6 +96,7 @@ public class FrgRegisterUser extends Fragment {
         //tts = new ClssConvertTextToSpeech();
         //tts.init(getContext());
         if (getArguments() != null) {
+            editar = getArguments().getBoolean("editar");
         }
     }
 
@@ -133,42 +139,84 @@ public class FrgRegisterUser extends Fragment {
             fechaNac = view.findViewById(R.id.txtFechaNac);
             validate.TextChanged(fechaNac, null, LFechaNac, Merror);
             fechaNac.setOnClickListener(v -> showDialog());
+            checkBoxUsuario = view.findViewById(R.id.checkBoxUsuario);
             Lusuario = view.findViewById(R.id.Lusuario);
             usuario = view.findViewById(R.id.txtusuario);
             validate.TextChanged(usuario, null, Lusuario, Merror);
             Lclave = view.findViewById(R.id.Lclave);
+            LclaveAc = view.findViewById(R.id.LclaveAc);
             clave = view.findViewById(R.id.clave);
+            claveAc = view.findViewById(R.id.claveAc);
             validate.TextChanged(clave, null, Lclave, Merror);
             Lconfclave = view.findViewById(R.id.Lconfclave);
             confirclave = view.findViewById(R.id.confclave);
             validate.TextChanged(confirclave, null, Lconfclave, Merror);
             rbDocente = view.findViewById(R.id.rbDocente);
+            rbEstudiante = view.findViewById(R.id.rbEstudiante);
             rgTipoUser = view.findViewById(R.id.rgTipoUser);
             rgTipoUser.setOnCheckedChangeListener((group, checkid) -> isChecked());
             datosDocente = view.findViewById(R.id.datosDocente);
             Ldocente = view.findViewById(R.id.Ldocente);
             docente = view.findViewById(R.id.docente);
-            if(ClssStaticGroup.docente != null) {
-                toolbar.setVisibility(View.VISIBLE);
-                linea.setVisibility(View.VISIBLE);
-                txtReg.setText("Registro de estudiante");
-                rbDocente.setEnabled(false);
-                docente.setText(ClssStaticGroup.docente);
-                docente.setEnabled(false);
-                selectedDocente = new JSONObject();
-                selectedDocente.put("id", ClssStaticGroup.iddocente);
-                selectedDocente.put("nombres", ClssStaticUser.nombres);
-                selectedDocente.put("apellidos", ClssStaticUser.apellidos);
-            } else {
-                txtReg.setText("Registro de usuario");
-                docente.setThreshold(1);
-                autocomplete();
-            }
+            Accion();
             btnRegistrarse = view.findViewById(R.id.btnRegister);
             btnRegistrarse.setOnClickListener(v -> RegisterUser());
         }
         catch (Exception e){}
         return view;
+    }
+
+    private void Accion() {
+        try {
+            if (!editar) {
+                checkBoxUsuario.setEnabled(false);
+                if (ClssStaticGroup.docente != null) {
+                    toolbar.setVisibility(View.VISIBLE);
+                    linea.setVisibility(View.VISIBLE);
+                    txtReg.setText("Registro de estudiante");
+                    rbDocente.setEnabled(false);
+                    docente.setText(ClssStaticGroup.docente);
+                    docente.setEnabled(false);
+                    selectedDocente = new JSONObject();
+                    selectedDocente.put("id", ClssStaticGroup.iddocente);
+                    selectedDocente.put("nombres", ClssStaticUser.nombres);
+                    selectedDocente.put("apellidos", ClssStaticUser.apellidos);
+                } else {
+                    txtReg.setText("Registro de usuario");
+                    docente.setThreshold(1);
+                    autocomplete();
+                }
+            }
+            else {
+                toolbar.setVisibility(View.VISIBLE);
+                linea.setVisibility(View.VISIBLE);
+                txtReg.setText("Editar mi información");
+                checkBoxUsuario.setEnabled(true);
+                checkBoxUsuario.setChecked(ClssStaticUser.activo);
+                nombre.setText(ClssStaticUser.nombres.trim());
+                apellido.setText(ClssStaticUser.apellidos.trim());
+                telefono.setText(ClssStaticUser.telefono.trim());
+                email.setText(ClssStaticUser.correo.trim());
+                fechaNac.setText(ClssStaticUser.fechanacimiento.trim());
+                usuario.setText(ClssStaticUser.usuario.trim());
+                LclaveAc.setVisibility(View.VISIBLE);
+                //clave.setText(ClssStaticUser.clave.trim());
+                btnRegistrarse.setText("Aceptar");
+                if(ClssStaticUser.tipousuario.equals("DC")) {
+                    rgTipoUser.check(rbDocente.getId());
+                    rbDocente.setEnabled(true);
+                    rbEstudiante.setEnabled(false);
+                    datosDocente.setVisibility(View.GONE);
+                } else if(ClssStaticUser.tipousuario.equals("ES")) {
+                    rgTipoUser.check(rbEstudiante.getId());
+                    rbDocente.setEnabled(false);
+                    rbEstudiante.setEnabled(true);
+                    docente.setText(ClssStaticGroup.docente);
+                    docente.setEnabled(false);
+                    datosDocente.setVisibility(View.VISIBLE);
+                }
+            }
+        } catch (Exception e) {}
     }
 
     @Override
@@ -274,38 +322,68 @@ public class FrgRegisterUser extends Fragment {
     }
 
     private void RegisterUser(){
-        ClssConvertTextToSpeech.getIntancia(getContext()).reproduce(btnRegistrarse.getText().toString().trim());
-        if(!rbDocente.isChecked()){
-            if(!validate.Validar(null,docente,Ldocente,Merror)){
-                Ldocente.setError("Docente no válido");
-                //tts.reproduce("Docente no válido");
-                ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("Docente no válido");
-                return;
-            }
-        }
-        if(validate.Validar(nombre,null,Lnombres,Merror) & validate.Validar(apellido,null,Lapellidos,Merror) &
-                validate.Validar(telefono,null,Ltelefono,Merror) & validate.Validar(email,null,Lemail,Merror) &
-                validate.Validar(fechaNac,null,LFechaNac,Merror) & validate.Validar(usuario,null,Lusuario,Merror) &
-                validate.Validar(clave,null,Lclave,Merror) & validate.Validar(confirclave,null,Lconfclave,Merror)){
-            if(clave.getText().toString().trim().equals(confirclave.getText().toString().trim())){
-                Lconfclave.setError(null);
-                try {
-                    createUsuario();
-                } catch (JSONException e) {
-                    e.printStackTrace();
+        try {
+            if (!editar) {
+                ClssConvertTextToSpeech.getIntancia(getContext()).reproduce(btnRegistrarse.getText().toString().trim());
+                if (!rbDocente.isChecked()) {
+                    if (!validate.Validar(null, docente, Ldocente, Merror)) {
+                        Ldocente.setError("Docente no válido");
+                        //tts.reproduce("Docente no válido");
+                        ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("Docente no válido");
+                        return;
+                    }
+                }
+                if (validate.Validar(nombre, null, Lnombres, Merror) & validate.Validar(apellido, null, Lapellidos, Merror) &
+                        validate.Validar(telefono, null, Ltelefono, Merror) & validate.Validar(email, null, Lemail, Merror) &
+                        validate.Validar(fechaNac, null, LFechaNac, Merror) & validate.Validar(usuario, null, Lusuario, Merror) &
+                        validate.Validar(clave, null, Lclave, Merror) & validate.Validar(confirclave, null, Lconfclave, Merror)) {
+                    if (clave.getText().toString().trim().equals(confirclave.getText().toString().trim())) {
+                        Lconfclave.setError(null);
+                        try {
+                            createUsuario();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        //tts.reproduce("Las contraseñas no coinciden");
+                        ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("Las contraseñas no coinciden");
+                        Lconfclave.setError("Las contraseñas no coinciden");
+                    }
+                } else {
+                    //tts.reproduce("Datos no válidos");
+                    ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("Datos no válidos");
+                    Toast.makeText(getContext(), "Datos no válidos", Toast.LENGTH_SHORT).show();
                 }
             }
-            else{
-                //tts.reproduce("Las contraseñas no coinciden");
-                ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("Las contraseñas no coinciden");
-                Lconfclave.setError("Las contraseñas no coinciden");
+            else {
+                ClssConvertTextToSpeech.getIntancia(getContext()).reproduce(btnRegistrarse.getText().toString().trim());
+                if (validate.Validar(nombre, null, Lnombres, Merror) & validate.Validar(apellido, null, Lapellidos, Merror) &
+                        validate.Validar(telefono, null, Ltelefono, Merror) & validate.Validar(email, null, Lemail, Merror) &
+                        validate.Validar(fechaNac, null, LFechaNac, Merror) & validate.Validar(usuario, null, Lusuario, Merror) &
+                        validate.Validar(claveAc, null, LclaveAc, Merror) & validate.Validar(clave, null, Lclave, Merror) &
+                        validate.Validar(confirclave, null, Lconfclave, Merror)) {
+                    if(claveAc.getText().toString().trim().equals(ClssPreferences.getIntancia(getContext()).leerValor("password"))) {
+                        if (clave.getText().toString().trim().equals(confirclave.getText().toString().trim())) {
+                            Lconfclave.setError(null);
+                            try {
+                                updateUsuario();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("Las contraseñas no coinciden");
+                            Lconfclave.setError("Las contraseñas no coinciden");
+                        }
+                    } else {
+                        ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("Contraseña actual incorrecta");
+                        LclaveAc.setError("Contraseña actual incorrecta");
+                    }
+                } else {
+                    ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("Datos no válidos");
+                    Toast.makeText(getContext(), "Datos no válidos", Toast.LENGTH_SHORT).show();
+                }
             }
-        }
-        else{
-            //tts.reproduce("Datos no válidos");
-            ClssConvertTextToSpeech.getIntancia(getContext()).reproduce("Datos no válidos");
-            Toast.makeText(getContext(),"Datos no válidos",Toast.LENGTH_SHORT).show();
-        }
+        } catch (Exception e) {}
     }
 
     private void createUsuario() throws JSONException {
@@ -381,6 +459,48 @@ public class FrgRegisterUser extends Fragment {
         // Añadir petición a la cola
         //requestQueue.add(request_json);
         ClssVolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(request_json);
+    }
+
+    public void updateUsuario () throws JSONException {
+        try {
+            //Parámetros a enviar a la API
+            JSONObject param = new JSONObject();
+            param.put("id", ClssStaticUser.id);
+            param.put("usuario", usuario.getText().toString().trim());
+            param.put("clave", clave.getText().toString().trim());
+            param.put("isDocente", rbDocente.isChecked());
+            param.put("nombres", nombre.getText().toString().trim());
+            param.put("apellidos", apellido.getText().toString().trim());
+            param.put("telefono", telefono.getText().toString().trim());
+            param.put("correo", email.getText().toString().trim());
+            param.put("fechanacimiento", fechaNac.getText().toString().trim());
+            param.put("activo", checkBoxUsuario.isChecked());
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, param,
+                    new com.android.volley.Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Toast.makeText(getContext(),"Datos actualizados exitosamente", Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.GONE);
+                            redirectLogin();
+                        }
+                    },
+                    new com.android.volley.Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            //Toast.makeText(getContext(),error.getMessage(), Toast.LENGTH_LONG).show();
+                            try {
+                                updateUsuario();
+                            } catch (JSONException authFailureError) {
+                                authFailureError.printStackTrace();
+                            }
+                            //System.out.println("Este es el error:" + error.networkResponse.data);
+                        }
+                    });
+            // Añadir petición a la cola
+            ClssVolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);
+        } catch (Exception e) {
+            //Toast.makeText(getContext(),e.getMessage(), Toast.LENGTH_LONG).show();
+        }
     }
 
     private void redirectLogin() {
