@@ -255,6 +255,20 @@ public class FrgRecognizeFigure extends Fragment implements View.OnClickListener
                         respuestas.add(modelContent);
                 }
             }
+            if(modelContentsEnun.size() == 0) {
+                for (int i=0;i<contenido.length();i++) {
+                    modelContent = new ModelContent();
+                    modelContent.setId(contenido.getJSONObject(i).getInt("id"));
+                    modelContent.setDescripcion(contenido.getJSONObject(i).getString("descripcion"));
+                    modelContent.setEnunciado(contenido.getJSONObject(i).getBoolean("enunciado"));
+                    modelContent.setRespuesta(contenido.getJSONObject(i).getBoolean("respuesta"));
+                    modelContent.setActivo(contenido.getJSONObject(i).getBoolean("activo"));
+                    modelContent.setMultimedia((JSONArray) contenido.getJSONObject(i).get("multimedia"));
+                    if(contenido.getJSONObject(i).get("enunciado").equals(true)) {
+                        modelContentsEnun.add(modelContent);
+                    }
+                }
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
