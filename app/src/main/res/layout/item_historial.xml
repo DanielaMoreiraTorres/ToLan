@@ -41,6 +41,7 @@
                 android:layout_below="@+id/txtNombre"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="5dp"
+                android:textStyle="bold"
 
                 android:text="abreviatura"
                 android:textColor="#8A000000" />
@@ -75,8 +76,10 @@
                     android:id="@+id/txtDescripcion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
                     android:cursorVisible="false"
                     android:inputType="textMultiLine"
+                    android:text="item"
                     android:textAlignment="textStart" />
 
 

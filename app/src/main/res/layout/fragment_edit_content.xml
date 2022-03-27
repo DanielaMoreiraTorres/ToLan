@@ -49,41 +49,52 @@
                     android:layout_below="@id/topView"
                     android:background="@drawable/ic_down" />
 
-                <TextView
-                    android:id="@+id/txt_TituloFrg"
+
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/rl_superior"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="20dp"
-                    android:fontFamily="sans-serif-black"
-                    android:padding="10dp"
-                    android:shadowColor="@color/secundario"
-                    android:shadowRadius="4"
-                    android:text="Editar Contenido"
-                    android:textColor="@color/white"
-                    android:textSize="30sp"
-                    android:textStyle="bold"
-                    tools:ignore="NotSibling" />
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/txt_TituloFrg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/rl_superior"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1"
+                        android:fontFamily="sans-serif-black"
+                        android:padding="10dp"
+                        android:shadowColor="@color/secundario"
+                        android:shadowRadius="4"
+                        android:text="Editar Contenido"
+                        android:textColor="@color/white"
+                        android:textSize="30sp"
+                        android:textStyle="bold"
+                        tools:ignore="NotSibling" />
 
 
-                <RelativeLayout
-                    android:layout_width="130dp"
-                    android:layout_height="130dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/fondo_blanco"
-                    android:padding="10dp">
-
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/civ"
+                    <RelativeLayout
                         android:layout_width="130dp"
                         android:layout_height="130dp"
                         android:layout_alignParentRight="true"
-                        android:src="@drawable/img_edit_activity">
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/fondo_blanco"
+                        android:padding="10dp">
 
-                    </de.hdodenhof.circleimageview.CircleImageView>
-                </RelativeLayout>
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/civ"
+                            android:layout_width="130dp"
+                            android:layout_height="130dp"
+                            android:layout_alignParentRight="true"
+                            android:src="@drawable/img_edit_activity">
+
+                        </de.hdodenhof.circleimageview.CircleImageView>
+                    </RelativeLayout>
+                </LinearLayout>
+
+
             </RelativeLayout>
 
 
@@ -162,9 +173,9 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <RelativeLayout
-                        android:layout_marginTop="5dp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp">
 
                         <CheckBox
                             android:id="@+id/chkEnunciado"
@@ -196,8 +207,6 @@
 
 
                     </RelativeLayout>
-
-
 
 
                 </LinearLayout>

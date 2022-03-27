@@ -20,6 +20,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -35,7 +36,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Random;
 import java.util.stream.IntStream;
 
@@ -49,7 +53,9 @@ public class FrgSeleccionarParesImagenImagen extends Fragment implements View.On
     private Toolbar toolbar;
     static TextToSpeech textToSpeech;
     //ClssConvertTextToSpeech tts;
-    private TextView titulo;
+    private TextView titulo, txt_enunciadoImagen;
+
+    private ImageView imgAudio;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -112,7 +118,7 @@ public class FrgSeleccionarParesImagenImagen extends Fragment implements View.On
     JSONArray jsonActivities;
 
 
-    ArrayList<String> listElements;
+    ArrayList<String> listElements,listTitlesImages;
     RecyclerView rcv_datosSeleccionarPares;
     TextView txt_enunciado;
     LinearLayout ry_state;
@@ -120,14 +126,24 @@ public class FrgSeleccionarParesImagenImagen extends Fragment implements View.On
     ScrollView mScrollView;
     int idActividad;
 
+
+    Map<String, List<String>> map_MultimediaExtra = new HashMap<>();
+    String urlInicial;
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         titulo = view.findViewById(R.id.txtMenu);
+        txt_enunciadoImagen = view.findViewById(R.id.txt_enunciadoImagen);
         titulo.setOnClickListener(v -> ClssConvertTextToSpeech.getIntancia(v.getContext()).reproduce(titulo.getText().toString()));
         //tts.reproduce(titulo.getText().toString()));
+
+        imgAudio = view.findViewById(R.id.imgAudio);
+        imgAudio.setOnClickListener(v -> ClssConvertTextToSpeech.getIntancia(v.getContext()).reproduce(txt_enunciadoImagen.getText().toString()));
+        txt_enunciadoImagen.setOnClickListener(v -> ClssConvertTextToSpeech.getIntancia(v.getContext()).reproduce(txt_enunciadoImagen.getText().toString()));
+
 
         toolbar = view.findViewById(R.id.toolbar);
         setHasOptionsMenu(true);
@@ -144,6 +160,7 @@ public class FrgSeleccionarParesImagenImagen extends Fragment implements View.On
 
 
         listElements = new ArrayList<>();
+        listTitlesImages= new ArrayList<>();
         try {
             String lst_Activities = getArguments().getString("activities");
             jsonActivities = new JSONArray(lst_Activities);
@@ -160,11 +177,38 @@ public class FrgSeleccionarParesImagenImagen extends Fragment implements View.On
                 } else {
                     //listElements.add(item_contenido.getString("descripcion"));
                     JSONArray multimedia_contenido = item_contenido.getJSONArray("multimedia");
-                    for (int j = 0; j < multimedia_contenido.length(); j++) {
-                        JSONObject item_multimedia_contenido = multimedia_contenido.getJSONObject(j);
+
+                    if (multimedia_contenido.length() > 1) {
+
+
+                        for (int j = 0; j < multimedia_contenido.length(); j++) {
+                            JSONObject item_multimedia_contenido = multimedia_contenido.getJSONObject(j);
+                            //listElements.add(item_multimedia_contenido.getString("url"));
+                            if (item_multimedia_contenido.getBoolean("inicial")) {
+                                listElements.add(item_multimedia_contenido.getString("url"));
+                                listTitlesImages.add(item_multimedia_contenido.getString("descripcion"));
+                                urlInicial = item_multimedia_contenido.getString("url");
+                                break;
+                            }
+                        }
+
+
+                        List<String> lstUrls_Ayuda = new ArrayList<>();
+                        for (int j = 0; j < multimedia_contenido.length(); j++) {
+                            JSONObject item_multimedia_contenido = multimedia_contenido.getJSONObject(j);
+                            if (!item_multimedia_contenido.getBoolean("inicial")) {
+                                lstUrls_Ayuda.add(item_multimedia_contenido.getString("url"));
+                            }
+                        }
+                        map_MultimediaExtra.put(urlInicial, lstUrls_Ayuda);
+
+
+                    } else {
+                        JSONObject item_multimedia_contenido = multimedia_contenido.getJSONObject(0);
                         listElements.add(item_multimedia_contenido.getString("url"));
-                        System.out.println("ok");
+                        listTitlesImages.add(item_multimedia_contenido.getString("descripcion"));
                     }
+
                 }
 
             }
@@ -172,7 +216,7 @@ public class FrgSeleccionarParesImagenImagen extends Fragment implements View.On
 
             //Genero un vector con numeros aleatorios
             getShuffleNumbers(listElements);
-            AdpRecycler_SeleccionarParesImagenImagen adpRecycler_seleccionarParesImagenImagen = new AdpRecycler_SeleccionarParesImagenImagen(getContext(), listElements, numerosAleatorios, ry_state, mScrollView, idActividad);
+            AdpRecycler_SeleccionarParesImagenImagen adpRecycler_seleccionarParesImagenImagen = new AdpRecycler_SeleccionarParesImagenImagen(getContext(), listElements, numerosAleatorios, ry_state, mScrollView, idActividad, map_MultimediaExtra, this,listTitlesImages);
             rcv_datosSeleccionarPares.setAdapter(adpRecycler_seleccionarParesImagenImagen);
 
 

@@ -19,6 +19,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -119,11 +120,13 @@ public class FrgSeleccionarParesImagenTexto extends Fragment implements View.OnC
     JSONArray jsonActivities;
 
 
-    ArrayList<String> listRutasMultimedia, listItemsMultimedia;
+    ArrayList<String> listRutasMultimedia, listItemsMultimedia, listTitlesImages;
     RecyclerView rcv_datosSeleccionarPares;
     TextView txt_enunciado;
+    ImageView imgAudio;
 
     Map<String, String> map_DatosEmparejados = new HashMap<>();
+    Map<String, String> map_TitlesEmparejados = new HashMap<>();
     CardView cardview_imagen;
     LinearLayout ry_state;
 
@@ -151,6 +154,7 @@ public class FrgSeleccionarParesImagenTexto extends Fragment implements View.OnC
 
         txt_enunciado = view.findViewById(R.id.txt_enunciado);
         ry_state = view.findViewById(R.id.ry_state);
+        imgAudio = view.findViewById(R.id.imgAudio);
 
         //Centrar los elementos
         FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(getContext());
@@ -162,6 +166,7 @@ public class FrgSeleccionarParesImagenTexto extends Fragment implements View.OnC
 
         listItemsMultimedia = new ArrayList<>();
         listRutasMultimedia = new ArrayList<>();
+        listTitlesImages = new ArrayList<>();
         try {
             String lst_Activities = getArguments().getString("activities");
             jsonActivities = new JSONArray(lst_Activities);
@@ -177,6 +182,7 @@ public class FrgSeleccionarParesImagenTexto extends Fragment implements View.OnC
                     //contenido.remove(i);
                     txt_enunciado.setText(item_contenido.getString("descripcion"));
                     txt_enunciado.setOnClickListener(v -> ClssConvertTextToSpeech.getIntancia(v.getContext()).reproduce(txt_enunciado.getText().toString()));
+                    imgAudio.setOnClickListener(v -> ClssConvertTextToSpeech.getIntancia(v.getContext()).reproduce(txt_enunciado.getText().toString()));
                     //tts.reproduce(txt_enunciado.getText().toString()));
                 } else {
                     listItemsMultimedia.add(item_contenido.getString("descripcion"));
@@ -187,14 +193,14 @@ public class FrgSeleccionarParesImagenTexto extends Fragment implements View.OnC
                             JSONObject item_multimedia_contenido = multimedia_contenido.getJSONObject(j);
                             if (item_multimedia_contenido.getBoolean("inicial")) {
                                 listRutasMultimedia.add(item_multimedia_contenido.getString("url"));
+                                listTitlesImages.add(item_multimedia_contenido.getString("descripcion"));
                                 urlInicial = item_multimedia_contenido.getString("url");
                                 break;
                             }
                         }
 
 
-
-                        List<String> lstUrls_Ayuda= new ArrayList<>();
+                        List<String> lstUrls_Ayuda = new ArrayList<>();
 
                         for (int j = 0; j < multimedia_contenido.length(); j++) {
                             JSONObject item_multimedia_contenido = multimedia_contenido.getJSONObject(j);
@@ -209,6 +215,7 @@ public class FrgSeleccionarParesImagenTexto extends Fragment implements View.OnC
                     } else {
                         JSONObject item_multimedia_contenido = multimedia_contenido.getJSONObject(0);
                         listRutasMultimedia.add(item_multimedia_contenido.getString("url"));
+                        listTitlesImages.add(item_multimedia_contenido.getString("descripcion"));
 
                     }
 
@@ -219,10 +226,11 @@ public class FrgSeleccionarParesImagenTexto extends Fragment implements View.OnC
 
             for (int i = 0; i < listRutasMultimedia.size(); i++) {
                 map_DatosEmparejados.put(listRutasMultimedia.get(i), listItemsMultimedia.get(i));
+                map_TitlesEmparejados.put(listRutasMultimedia.get(i), listTitlesImages.get(i));
             }
             Collections.shuffle(listRutasMultimedia);
             Collections.shuffle(listItemsMultimedia);
-            AdpRecycler_SeleccionarParesTextoImagen adpRecycler_seleccionarPares = new AdpRecycler_SeleccionarParesTextoImagen(getContext(), listItemsMultimedia, listRutasMultimedia, map_DatosEmparejados, this, idActividad, map_MultimediaExtra);
+            AdpRecycler_SeleccionarParesTextoImagen adpRecycler_seleccionarPares = new AdpRecycler_SeleccionarParesTextoImagen(getContext(), listItemsMultimedia, listRutasMultimedia, map_DatosEmparejados, this, idActividad, map_MultimediaExtra,map_TitlesEmparejados);
             rcv_datosSeleccionarPares.setAdapter(adpRecycler_seleccionarPares);
 
 

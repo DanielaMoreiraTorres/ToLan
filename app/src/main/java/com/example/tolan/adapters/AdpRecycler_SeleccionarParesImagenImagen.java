@@ -1,5 +1,6 @@
 package com.example.tolan.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
@@ -33,34 +35,43 @@ import com.example.tolan.clases.ClssAnimation;
 import com.example.tolan.clases.ClssConvertTextToSpeech;
 import com.example.tolan.clases.ClssStaticGroup;
 import com.example.tolan.clases.ClssVolleySingleton;
+import com.example.tolan.dialogs.Diag_Frg_AyudaEspecial;
 import com.example.tolan.models.ModelUser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 public class AdpRecycler_SeleccionarParesImagenImagen extends RecyclerView.Adapter<imgHolder> {
 
 
     private final Context mContext;
-    private final ArrayList<String> listElements;
+    private final ArrayList<String> listElements, listTitlesImages;
     int[] numerosAleatorios;
     LinearLayout ry_state;
     ScrollView mScrollView;
     int idActividad;
 
+    Map<String, List<String>> map_MultimediaExtra;
+    Fragment fragment;
+
     //private static ClssConvertTextToSpeech clssConvertirTextoAVoz;
 
 
-    public AdpRecycler_SeleccionarParesImagenImagen(Context mContext, ArrayList<String> listElements, int[] numerosAleatorios, LinearLayout ry_state, ScrollView mScrollView, int idActividad) {
+    public AdpRecycler_SeleccionarParesImagenImagen(Context mContext, ArrayList<String> listElements, int[] numerosAleatorios, LinearLayout ry_state, ScrollView mScrollView, int idActividad, Map<String, List<String>> map_MultimediaExtra, Fragment fragment, ArrayList<String> listTitlesImages) {
         this.mContext = mContext;
         this.listElements = listElements;
         this.numerosAleatorios = numerosAleatorios;
         this.ry_state = ry_state;
         this.mScrollView = mScrollView;
         this.idActividad = idActividad;
+        this.map_MultimediaExtra = map_MultimediaExtra;
+        this.fragment = fragment;
+        this.listTitlesImages = listTitlesImages;
 
     }
 
@@ -88,9 +99,21 @@ public class AdpRecycler_SeleccionarParesImagenImagen extends RecyclerView.Adapt
     private static boolean estadoAplicacion = false;
 
     @Override
-    public void onBindViewHolder(@NonNull imgHolder holder, int position) {
+    public void onBindViewHolder(@NonNull imgHolder holder, @SuppressLint("RecyclerView") int position) {
         cargarImagenWebService(listElements.get(position), holder.img_Left, position);
         cargarImagenWebService(listElements.get(numerosAleatorios[position]), holder.img_Right, numerosAleatorios[position]);
+
+
+        holder.imagen_ayuda_especial.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(mContext, " Son :" + map_MultimediaExtra.get(rutaImagen), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mContext, "Ayuda especial", Toast.LENGTH_LONG).show();
+                String img = listElements.get(position);
+                Diag_Frg_AyudaEspecial diag_frg_ayudaEspecial = new Diag_Frg_AyudaEspecial(img, listTitlesImages.get(position), map_MultimediaExtra.get(img), "Seleccionar pares imagen con imagen");
+                diag_frg_ayudaEspecial.show(fragment.getParentFragmentManager(), "Infromación de Ayuda Especial");
+            }
+        });
 
         holder.cardview_left.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,6 +123,7 @@ public class AdpRecycler_SeleccionarParesImagenImagen extends RecyclerView.Adapt
                 } else {
                     //Toast.makeText(mContext, "Reproducir audio", Toast.LENGTH_LONG).show();
                 }
+                ClssConvertTextToSpeech.getIntancia(v.getContext()).reproduce(listTitlesImages.get(position));
             }
         });
 
@@ -112,6 +136,7 @@ public class AdpRecycler_SeleccionarParesImagenImagen extends RecyclerView.Adapt
                 } else {
                     // Toast.makeText(mContext, "Reproducir audio", Toast.LENGTH_LONG).show();
                 }
+                ClssConvertTextToSpeech.getIntancia(v.getContext()).reproduce(listTitlesImages.get(numerosAleatorios[position]));
             }
         });
     }
@@ -250,7 +275,7 @@ public class AdpRecycler_SeleccionarParesImagenImagen extends RecyclerView.Adapt
                 if (elementosCorrectos == listElements.size()) {
                     //Toast.makeText(mContext, "No hay mas parejas", Toast.LENGTH_LONG).show();
                     msg_true = mContext.getResources().getStringArray(R.array.msg_true);
-                    String mensaje=generarAleatorio();
+                    String mensaje = generarAleatorio();
 
                     //ClssConvertTextToSpeech.getIntancia(mContext).reproduce(mensaje);
                     final Handler handler = new Handler();
@@ -262,7 +287,6 @@ public class AdpRecycler_SeleccionarParesImagenImagen extends RecyclerView.Adapt
                             ClssConvertTextToSpeech.getIntancia(mContext).reproduce(mensaje);
                         }
                     }, 1000);
-
 
 
                     elementosCorrectos = 0;
@@ -457,6 +481,13 @@ public class AdpRecycler_SeleccionarParesImagenImagen extends RecyclerView.Adapt
             public void onResponse(Bitmap response) {
                 img.setImageBitmap(response);
                 img.setId(pos);
+               /* img.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ClssConvertTextToSpeech.getIntancia(v.getContext()).reproduce(listTitlesImages.get(pos));
+                    }
+                });
+                */
             }
         }, 0, 0, ImageView.ScaleType.CENTER, null, new Response.ErrorListener() {
             @Override
@@ -506,7 +537,7 @@ class imgHolder extends RecyclerView.ViewHolder {
 
     CardView cardview_left, cardview_right;
 
-    ImageView img_Left, img_Right;
+    ImageView img_Left, img_Right, imagen_ayuda_especial;
     RelativeLayout ryl_bordes_left, ryl_bordes_right;
 
 
@@ -518,6 +549,7 @@ class imgHolder extends RecyclerView.ViewHolder {
 
         img_Left = (ImageView) itemView.findViewById(R.id.img_Left);
         img_Right = (ImageView) itemView.findViewById(R.id.img_Right);
+        imagen_ayuda_especial = (ImageView) itemView.findViewById(R.id.imagen_ayuda_especial);
 
         ryl_bordes_left = (RelativeLayout) itemView.findViewById(R.id.ryl_bordes_left);
         ryl_bordes_right = (RelativeLayout) itemView.findViewById(R.id.ryl_bordes_right);

@@ -196,8 +196,11 @@
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_diag__frg__carga_multimedia.xml" value="0.25" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_diag__frg__opcion_incorrecta.xml" value="0.22" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_diag_ayuda_especial.xml" value="0.22" />
-        <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_edit_content.xml" value="0.33" />
+        <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_drag_and_drop.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_drag_and_drop_txt.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_edit_content.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_grafomotricidad.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_historial.xml" value="0.1638888888888889" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_identificar_respuesta_imagen.xml" value="0.19010416666666666" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_identificar_respuesta_palabra.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_inicio.xml" value="0.18" />
@@ -205,41 +208,29 @@
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_level.xml" value="0.20102564102564102" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_niveles.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_ordenar_secuencias_imagenes.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_recognize_figure.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_reconocer_figuras.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_section_subnivel.xml" value="0.33" />
-        <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_seleccionar_pares_imagen_imagen.xml" value="0.33" />
+        <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_seleccionar_pares_imagen_imagen.xml" value="0.25" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_seleccionar_pares_imagen_texto.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/fragment_welcome.xml" value="0.17592592592592593" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/item_contenido.xml" value="0.33" />
-        <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/item_image_seleccionar_pares_imagen_imagen.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/item_group_admin.xml" value="0.33" />
+        <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/item_group_student.xml" value="0.25" />
+        <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/item_historial.xml" value="0.33" />
+        <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/item_image_seleccionar_pares_imagen_imagen.xml" value="0.25" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/item_option_reconocer_figura.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/item_sublevel.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/item_text_seleccionar_pares_imagen_texto.xml" value="0.33" />
+        <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/ly_item_actividades.xml" value="0.33" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/layout/toolbar.xml" value="0.17314814814814813" />
         <entry key="..\:/Users/bryan/AndroidStudioProjects/ToLan/app/src/main/res/menu/menu_toolbar.xml" value="0.1935185185185185" />
-        <entry key="..\:/Users/mishe/StudioProjects/ToLan/app/src/main/res/drawable-anydpi/icon_close.xml" value="0.17" />
-        <entry key="..\:/Users/mishe/StudioProjects/ToLan/app/src/main/res/drawable-xhdpi/fondo_interno_actividad.xml" value="0.1105" />
-        <entry key="..\:/Users/mishe/StudioProjects/ToLan/app/src/main/res/drawable-xhdpi/fondo_superior_actividad.xml" value="0.1105" />
-        <entry key="..\:/Users/mishe/StudioProjects/ToLan/app/src/main/res/drawable/borde.xml" value="0.1145" />
-        <entry key="..\:/Users/mishe/StudioProjects/ToLan/app/src/main/res/drawable/borde2.xml" value="0.1145" />
-        <entry key="..\:/Users/mishe/StudioProjects/ToLan/app/src/main/res/drawable/borde_black.xml" value="0.17" />
-        <entry key="..\:/Users/mishe/StudioProjects/ToLan/app/src/main/res/drawable/borde_diag_help.xml" value="0.14666666666666667" />
-        <entry key="..\:/Users/mishe/StudioProjects/ToLan/app/src/main/res/drawable/circle_close.xml" value="0.1105" />
-        <entry key="..\:/Users/mishe/StudioProjects/ToLan/app/src/main/res/drawable/fondo_bordes_imagen.xml" value="0.1105" />
-        <entry key="..\:/Users/mishe/StudioProjects/ToLan/app/src/main/res/drawable/fondo_bordes_imagen_complete.xml" value="0.1105" />
-        <entry key="..\:/Users/mishe/StudioProjects/ToLan/app/src/main/res/drawable/fondo_bordes_imagen_error.xml" value="0.1105" />
-        <entry key="..\:/Users/mishe/StudioProjects/ToLan/app/src/main/res/drawable/fondo_superior_completado.xml" value="0.1105" />
-        <entry key="..\:/Users/mishe/StudioProjects/ToLan/app/src/main/res/layout/fragment_add_level.xml" value="0.16822916666666668" />
         <entry key="..\:/Users/mishe/StudioProjects/ToLan/app/src/main/res/layout/fragment_contact.xml" value="0.1453804347826087" />
-        <entry key="..\:/Users/mishe/StudioProjects/ToLan/app/src/main/res/layout/fragment_diag_ayuda_especial.xml" value="0.22" />
         <entry key="..\:/Users/mishe/StudioProjects/ToLan/app/src/main/res/layout/fragment_drag_and_drop.xml" value="0.1796875" />
         <entry key="..\:/Users/mishe/StudioProjects/ToLan/app/src/main/res/layout/fragment_drag_and_drop_img.xml" value="0.1796875" />
-        <entry key="..\:/Users/mishe/StudioProjects/ToLan/app/src/main/res/layout/fragment_drag_and_drop_txt.xml" value="0.14285714285714285" />
         <entry key="..\:/Users/mishe/StudioProjects/ToLan/app/src/main/res/layout/fragment_identify_img.xml" value="0.1796875" />
         <entry key="..\:/Users/mishe/StudioProjects/ToLan/app/src/main/res/layout/fragment_identify_txt.xml" value="0.1796875" />
-        <entry key="..\:/Users/mishe/StudioProjects/ToLan/app/src/main/res/layout/fragment_level.xml" value="0.16822916666666668" />
-        <entry key="..\:/Users/mishe/StudioProjects/ToLan/app/src/main/res/layout/fragment_recognize_figure.xml" value="0.13756388415672913" />
-        <entry key="..\:/Users/mishe/StudioProjects/ToLan/app/src/main/res/layout/fragment_register_user.xml" value="0.16822916666666668" />
+        <entry key="..\:/Users/mishe/StudioProjects/ToLan/app/src/main/res/layout/fragment_recognize_figure.xml" value="0.1796875" />
         <entry key="..\:/Users/mishe/StudioProjects/ToLan/app/src/main/res/layout/item_enunciado.xml" value="0.1796875" />
         <entry key="..\:/Users/mishe/StudioProjects/ToLan/app/src/main/res/layout/item_option_drag_and_drop_img.xml" value="0.1453804347826087" />
         <entry key="..\:/Users/mishe/StudioProjects/ToLan/app/src/main/res/menu/menu_toolbar.xml" value="0.1796875" />

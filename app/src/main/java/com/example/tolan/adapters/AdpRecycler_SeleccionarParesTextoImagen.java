@@ -53,7 +53,7 @@ public class AdpRecycler_SeleccionarParesTextoImagen extends RecyclerView.Adapte
 
     private final Context mContext;
     private final ArrayList<String> listElements, listRutas;
-    Map<String, String> map_DatosEmparejados;
+    Map<String, String> map_DatosEmparejados, map_TitlesEmparejados;
     Fragment fragment;
     int idActividad;
 
@@ -61,7 +61,7 @@ public class AdpRecycler_SeleccionarParesTextoImagen extends RecyclerView.Adapte
 
     //private static ClssConvertTextToSpeech clssConvertirTextoAVoz;
 
-    public AdpRecycler_SeleccionarParesTextoImagen(Context mContext, ArrayList<String> listElements, ArrayList<String> listRutas, Map<String, String> map_DatosEmparejados, Fragment fragment, int idActividad, Map<String, List<String>> map_MultimediaExtra) {
+    public AdpRecycler_SeleccionarParesTextoImagen(Context mContext, ArrayList<String> listElements, ArrayList<String> listRutas, Map<String, String> map_DatosEmparejados, Fragment fragment, int idActividad, Map<String, List<String>> map_MultimediaExtra, Map<String, String> map_TitlesEmparejados) {
         this.mContext = mContext;
         this.listElements = listElements;
         this.listRutas = listRutas;
@@ -69,6 +69,7 @@ public class AdpRecycler_SeleccionarParesTextoImagen extends RecyclerView.Adapte
         this.fragment = fragment;
         this.idActividad = idActividad;
         this.map_MultimediaExtra = map_MultimediaExtra;
+        this.map_TitlesEmparejados = map_TitlesEmparejados;
 
         //clssConvertirTextoAVoz = new ClssConvertTextToSpeech();
         //clssConvertirTextoAVoz.init(mContext);
@@ -110,7 +111,7 @@ public class AdpRecycler_SeleccionarParesTextoImagen extends RecyclerView.Adapte
                 //Toast.makeText(mContext, " Son :" + map_MultimediaExtra.get(rutaImagen), Toast.LENGTH_SHORT).show();
                 //Toast.makeText(mContext, "Ayuda especial", Toast.LENGTH_LONG).show();
                 String img = listRutas.get(position);
-                Diag_Frg_AyudaEspecial diag_frg_ayudaEspecial = new Diag_Frg_AyudaEspecial(img, map_DatosEmparejados.get(img), map_MultimediaExtra.get(img), "Seleccionar pares imagen con texto");
+                Diag_Frg_AyudaEspecial diag_frg_ayudaEspecial = new Diag_Frg_AyudaEspecial(img, map_TitlesEmparejados.get(img), map_MultimediaExtra.get(img), "Seleccionar pares imagen con texto");
                 diag_frg_ayudaEspecial.show(fragment.getParentFragmentManager(), "Infromación de Ayuda Especial");
             }
         });
@@ -146,6 +147,7 @@ public class AdpRecycler_SeleccionarParesTextoImagen extends RecyclerView.Adapte
                 } else {
                     //Toast.makeText(mContext, "Ok para continuar...", Toast.LENGTH_LONG).show();
                 }
+                ClssConvertTextToSpeech.getIntancia(mContext).reproduce(map_TitlesEmparejados.get(listRutas.get(position)));
                 //clssConvertirTextoAVoz.reproduce("Imagen de " + listElements.get(position));
             }
         });
