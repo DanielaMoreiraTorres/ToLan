@@ -102,7 +102,9 @@ public class FrgDragAndDropImg extends Fragment {
     View textView;
     ViewGroup cardView, linearLayout, linearLayout2, relativeLayout;
     Map<String, List<String>> map_MultimediaExtra = new HashMap<>();
+    Map<String, List<String>> map_MultimediaExtraOp = new HashMap<>();
     ArrayList<String> listRutasMultimedia, listItemsMultimedia;
+    ArrayList<String> listRutasMultimediaOp, listItemsMultimediaOp;
 
     public FrgDragAndDropImg() {
         // Required empty public constructor
@@ -176,7 +178,11 @@ public class FrgDragAndDropImg extends Fragment {
             modelContent = new ModelContent();
             listItemsMultimedia = new ArrayList<>();
             listRutasMultimedia = new ArrayList<>();
-            modelContent.MapContenido(contenido,listItemsMultimedia,listRutasMultimedia,map_MultimediaExtra,modelContentsEnun, modelContentsOp, modelContentsIni, respuestas);
+            listItemsMultimediaOp = new ArrayList<>();
+            listRutasMultimediaOp = new ArrayList<>();
+            modelContent.MapContenido(contenido,listRutasMultimedia, listItemsMultimedia, map_MultimediaExtra,
+                    listRutasMultimediaOp, listItemsMultimediaOp, map_MultimediaExtraOp,
+                    modelContentsEnun, modelContentsOp, modelContentsIni, respuestas);
             Collections.sort(modelContentsEnun, new Comparator<ModelContent>() {
                 @Override
                 public int compare(ModelContent e1, ModelContent e2) {
@@ -258,7 +264,8 @@ public class FrgDragAndDropImg extends Fragment {
                 imgAyuda.setVisibility(View.GONE);
                 img.setVisibility(View.GONE);
             }
-            adpOptionArrastrarSoltarImg = new AdpOptionDragAndDropImg(getContext(), modelContentsOp, modelContentsIni,respuestas);
+            adpOptionArrastrarSoltarImg = new AdpOptionDragAndDropImg(getContext(), modelContentsOp, modelContentsIni,
+                    listRutasMultimediaOp, listItemsMultimediaOp,respuestas);
             rcvOptions.setAdapter(adpOptionArrastrarSoltarImg);
             adpOptionArrastrarSoltarImg.setOnClickListener(new View.OnClickListener() {
                 @Override

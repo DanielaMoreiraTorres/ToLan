@@ -96,7 +96,9 @@ public class FrgIdentifyImg extends Fragment implements View.OnClickListener {
     private String url, mensaje = "", urlInicial = "";
     Boolean respuesta = false;
     Map<String, List<String>> map_MultimediaExtra = new HashMap<>();
+    Map<String, List<String>> map_MultimediaExtraOp = new HashMap<>();
     ArrayList<String> listRutasMultimedia, listItemsMultimedia;
+    ArrayList<String> listRutasMultimediaOp, listItemsMultimediaOp;
 
     public FrgIdentifyImg() {
         // Required empty public constructor
@@ -169,7 +171,10 @@ public class FrgIdentifyImg extends Fragment implements View.OnClickListener {
             modelContent = new ModelContent();
             listItemsMultimedia = new ArrayList<>();
             listRutasMultimedia = new ArrayList<>();
-            modelContent.MapContenido(contenido, listItemsMultimedia, listRutasMultimedia, map_MultimediaExtra,
+            listItemsMultimediaOp = new ArrayList<>();
+            listRutasMultimediaOp = new ArrayList<>();
+            modelContent.MapContenido(contenido, listRutasMultimedia, listItemsMultimedia, map_MultimediaExtra,
+                    listRutasMultimediaOp, listItemsMultimediaOp, map_MultimediaExtraOp,
                     modelContentsEnun, modelContentsOp, modelContentsIni, respuestas);
             Collections.sort(modelContentsEnun, new Comparator<ModelContent>() {
                 @Override
@@ -197,7 +202,7 @@ public class FrgIdentifyImg extends Fragment implements View.OnClickListener {
                             .into(img);
                     imgAyuda.setOnClickListener(v -> AbrirDiag());
                 } else Enun.setVisibility(View.GONE);
-                adpOptiosIdentifyImg = new AdpOptionIdentifyImg(getContext(), modelContentsOp, modelContentsIni, respuestas);
+                adpOptiosIdentifyImg = new AdpOptionIdentifyImg(getContext(), modelContentsOp, listRutasMultimediaOp, listItemsMultimediaOp, respuestas);
                 rcvOptions.setAdapter(adpOptiosIdentifyImg);
                 adpOptiosIdentifyImg.setOnClickListener(this);
             } else {

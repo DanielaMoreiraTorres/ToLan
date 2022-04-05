@@ -102,7 +102,9 @@ public class FrgDragAndDropTxt extends Fragment {
     View textView;
     ViewGroup cardView, linearLayout;
     Map<String, List<String>> map_MultimediaExtra = new HashMap<>();
+    Map<String, List<String>> map_MultimediaExtraOp = new HashMap<>();
     ArrayList<String> listRutasMultimedia, listItemsMultimedia;
+    ArrayList<String> listRutasMultimediaOp, listItemsMultimediaOp;
 
     public FrgDragAndDropTxt() {
         // Required empty public constructor
@@ -175,7 +177,10 @@ public class FrgDragAndDropTxt extends Fragment {
             modelContent = new ModelContent();
             listItemsMultimedia = new ArrayList<>();
             listRutasMultimedia = new ArrayList<>();
-            modelContent.MapContenido(contenido, listItemsMultimedia, listRutasMultimedia, map_MultimediaExtra,
+            listItemsMultimediaOp = new ArrayList<>();
+            listRutasMultimediaOp = new ArrayList<>();
+            modelContent.MapContenido(contenido, listRutasMultimedia, listItemsMultimedia, map_MultimediaExtra,
+                    listRutasMultimediaOp, listItemsMultimediaOp, map_MultimediaExtraOp,
                     modelContentsEnun, modelContentsOp, modelContentsIni, respuestas);
             Collections.sort(modelContentsEnun, new Comparator<ModelContent>() {
                 @Override

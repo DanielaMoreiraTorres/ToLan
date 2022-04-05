@@ -40,13 +40,15 @@ public class AdpOptionDragAndDropImg extends RecyclerView.Adapter<AdpOptionDragA
     Map<String, List<String>> map_MultimediaExtra = new HashMap<>();
     ArrayList<String> listRutasMultimedia, listItemsMultimedia;
 
-    public AdpOptionDragAndDropImg(Context context, ArrayList<ModelContent> lista, ArrayList<ModelContent> inicial, ArrayList<ModelContent> respuestas) {
+    public AdpOptionDragAndDropImg(Context context, ArrayList<ModelContent> lista, ArrayList<ModelContent> inicial,
+                                   ArrayList<String> listRutasMultimedia, ArrayList<String> listItemsMultimedia,
+                                   ArrayList<ModelContent> respuestas) {
         ccontext = context;
         this.lista = lista;
         this.inicial = inicial;
         this.respuestas = respuestas;
-        listItemsMultimedia = new ArrayList<>();
-        listRutasMultimedia = new ArrayList<>();
+        this.listItemsMultimedia = listItemsMultimedia;
+        this.listRutasMultimedia = listRutasMultimedia;
     }
 
     @Override
@@ -114,8 +116,10 @@ public class AdpOptionDragAndDropImg extends RecyclerView.Adapter<AdpOptionDragA
                     try {
                         /*int opcselec = rcvOptions.getChildAdapterPosition(view);*/
                         if(contMulti > 0) {
-                            String img = content.getMultimedia().getJSONObject(0).getString("url");
-                            String descripcion = content.getMultimedia().getJSONObject(0).getString("descripcion");
+                            String img = listRutasMultimedia.get(position);
+                            String descripcion = listItemsMultimedia.get(position);
+                            /* String img = content.getMultimedia().getJSONObject(0).getString("url");
+                            String descripcion = content.getMultimedia().getJSONObject(0).getString("descripcion"); */
                             FragmentManager manager = ((AppCompatActivity) ccontext).getSupportFragmentManager();
                             ClssConvertTextToSpeech.getIntancia(ccontext).reproduce("Ayuda");
                             Diag_Frg_AyudaEspecial diag_frg_ayudaEspecial = new Diag_Frg_AyudaEspecial(img, descripcion, map_MultimediaExtra.get(img), "Arrastrar y soltar imagen");

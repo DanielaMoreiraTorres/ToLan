@@ -17,7 +17,7 @@ public class ModelContent implements Serializable {
     private Boolean activo;
     private JSONArray multimedia;
 
-    public static String urlInicial = "";
+    public static String urlInicial = "", urlInicialOp = "";
 
     public int getId() {
         return id;
@@ -67,14 +67,18 @@ public class ModelContent implements Serializable {
         this.multimedia = multimedia;
     }
 
-    public void MapContenido(JSONArray contenido, ArrayList<String> listItemsMultimedia,
-                             ArrayList<String> listRutasMultimedia, Map<String, List<String>> map_MultimediaExtra,
+    public void MapContenido(JSONArray contenido, ArrayList<String> listRutasMultimedia,
+                             ArrayList<String> listItemsMultimedia, Map<String, List<String>> map_MultimediaExtra,
+                             ArrayList<String> listRutasMultimediaOp, ArrayList<String> listItemsMultimediaOp,
+                             Map<String, List<String>> map_MultimediaExtraOp,
                              List<ModelContent> modelContentsEnun, ArrayList<ModelContent> modelContentsOp,
                              ArrayList<ModelContent> modelContentsIni, ArrayList<ModelContent> respuestas){
         try {
             ModelContent modelContent = null;
             urlInicial = "";
-            List<String> lstUrls_Ayuda= new ArrayList<>();
+            urlInicialOp = "";
+            List<String> lstUrls_Ayuda = new ArrayList<>();
+            List<String> lstUrls_AyudaOp = new ArrayList<>();
             for (int i=0;i<contenido.length();i++){
                 modelContent = new ModelContent();
                 modelContent.setId(contenido.getJSONObject(i).getInt("id"));
@@ -98,10 +102,22 @@ public class ModelContent implements Serializable {
                         modelContentsEnun.add(modelContent);
                 } else{
                     modelContentsOp.add(modelContent);
-                    int contMulti = modelContent.getMultimedia().length();
+                    /* int contMulti = modelContent.getMultimedia().length();
                     for (int m = 0; m < contMulti; m++) {
                         if (modelContent.getMultimedia().getJSONObject(m).getBoolean("inicial"))
                             modelContentsIni.add(modelContent);
+                    }*/
+                    if (((JSONArray) contenido.getJSONObject(i).get("multimedia")).length() > 0) {
+                        for (int c = 0; c < modelContent.getMultimedia().length(); c++) {
+                            if (modelContent.getMultimedia().getJSONObject(c).getBoolean("inicial")) {
+                                listItemsMultimediaOp.add(modelContent.getMultimedia().getJSONObject(c).getString("descripcion"));
+                                urlInicialOp = modelContent.getMultimedia().getJSONObject(c).getString("url");
+                                listRutasMultimediaOp.add(urlInicialOp);
+                                modelContentsIni.add(modelContent);
+                            } else
+                                lstUrls_AyudaOp.add(modelContent.getMultimedia().getJSONObject(c).getString("url"));
+                        }
+                        map_MultimediaExtraOp.put(urlInicialOp, lstUrls_AyudaOp);
                     }
                     if(contenido.getJSONObject(i).get("respuesta").equals(true))
                         respuestas.add(modelContent);
